@@ -30,5 +30,233 @@ return [
         ],
     ],
 
+    'category-model' => [
+        'title' => 'Category',
+
+        'actions' => [
+            'index' => 'Category',
+            'create' => 'New Category',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'slug' => 'Slug',
+            'icon' => 'Icon',
+            
+        ],
+    ],
+
+    'category' => [
+        'title' => 'Category',
+
+        'actions' => [
+            'index' => 'Category',
+            'create' => 'New Category',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'slug' => 'Slug',
+            'icon' => 'Icon',
+            
+        ],
+    ],
+
+    'theme' => [
+        'title' => 'Category',
+
+        'actions' => [
+            'index' => 'Category',
+            'create' => 'New Category',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'slug' => 'Slug',
+            'icon' => 'Icon',
+            
+        ],
+    ],
+
+    'page' => [
+        'title' => 'Category',
+
+        'actions' => [
+            'index' => 'Category',
+            'create' => 'New Category',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'slug' => 'Slug',
+            'icon' => 'Icon',
+            
+        ],
+    ],
+
+    'event' => [
+        'title' => 'Category',
+
+        'actions' => [
+            'index' => 'Category',
+            'create' => 'New Category',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'slug' => 'Slug',
+            'icon' => 'Icon',
+            
+        ],
+    ],
+
+    'event-periodic' => [
+        'title' => 'Category',
+
+        'actions' => [
+            'index' => 'Category',
+            'create' => 'New Category',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'slug' => 'Slug',
+            'icon' => 'Icon',
+            
+        ],
+    ],
+
+    'event-template' => [
+        'title' => 'Category',
+
+        'actions' => [
+            'index' => 'Category',
+            'create' => 'New Category',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'slug' => 'Slug',
+            'icon' => 'Icon',
+            
+        ],
+    ],
+
+    'theme' => [
+        'title' => 'Theme',
+
+        'actions' => [
+            'index' => 'Theme',
+            'create' => 'New Theme',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'slug' => 'Slug',
+            'icon' => 'Icon',
+            
+        ],
+    ],
+
+    'event-template' => [
+        'title' => 'Event Template',
+
+        'actions' => [
+            'index' => 'Event Template',
+            'create' => 'New Event Template',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'theme_id' => 'Theme',
+            'category_id' => 'Category',
+            'created_by' => 'Created by',
+            'updated_by' => 'Updated by',
+            'title' => 'Title',
+            'subtitle' => 'Subtitle',
+            'description' => 'Description',
+            'links' => 'Links',
+            
+        ],
+    ],
+
+    'event-periodic' => [
+        'title' => 'Event Periodic',
+
+        'actions' => [
+            'index' => 'Event Periodic',
+            'create' => 'New Event Periodic',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'theme_id' => 'Theme',
+            'category_id' => 'Category',
+            'periodic_position' => 'Periodic position',
+            'periodic_weekday' => 'Periodic weekday',
+            'created_by' => 'Created by',
+            'updated_by' => 'Updated by',
+            'title' => 'Title',
+            'subtitle' => 'Subtitle',
+            'description' => 'Description',
+            'links' => 'Links',
+            'event_date' => 'Event date',
+            'event_time' => 'Event time',
+            'price' => 'Price',
+            'is_published' => 'Is published',
+            
+        ],
+    ],
+
+    'page' => [
+        'title' => 'Page',
+
+        'actions' => [
+            'index' => 'Page',
+            'create' => 'New Page',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'created_by' => 'Created by',
+            'updated_by' => 'Updated by',
+            'title' => 'Title',
+            'slug' => 'Slug',
+            'body' => 'Body',
+            'is_published' => 'Is published',
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

@@ -18,3 +18,4 @@ yarn-error.log
 /.phpstorm.meta.php
 /.phpunit.result.cache
 /_ide_helper.php
+/stubs/
