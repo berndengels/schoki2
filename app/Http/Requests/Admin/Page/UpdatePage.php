@@ -2,12 +2,15 @@
 
 namespace App\Http\Requests\Admin\Page;
 
+use App\Http\Requests\Admin\ext\HasCategory;
+use App\Http\Requests\Admin\ext\HasTheme;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class UpdatePage extends FormRequest
 {
+    use HasCategory, HasTheme;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,13 +29,10 @@ class UpdatePage extends FormRequest
     public function rules(): array
     {
         return [
-            'created_by' => ['sometimes', 'integer'],
-            'updated_by' => ['sometimes', 'integer'],
             'title' => ['sometimes', 'string'],
-            'slug' => ['sometimes', Rule::unique('page', 'slug')->ignore($this->page->getKey(), $this->page->getKeyName()), 'string'],
             'body' => ['sometimes', 'string'],
             'is_published' => ['sometimes', 'boolean'],
-            
+
         ];
     }
 
@@ -44,9 +44,8 @@ class UpdatePage extends FormRequest
     public function getSanitized(): array
     {
         $sanitized = $this->validated();
-
-
-        //Add your code for manipulation with request data here
+        $sanitized['category_id'] = $this->getCategoryId();
+        $sanitized['theme_id'] = $this->getThemeId();
 
         return $sanitized;
     }

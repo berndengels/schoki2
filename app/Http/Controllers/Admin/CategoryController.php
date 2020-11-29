@@ -43,7 +43,7 @@ class CategoryController extends Controller
             ['id', 'name', 'icon'],
 
             // set columns to searchIn
-            ['id', 'name', 'slug', 'icon']
+            ['id', 'name', 'icon']
         );
 
         if ($request->ajax()) {

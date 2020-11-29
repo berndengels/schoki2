@@ -2,12 +2,16 @@
 
 namespace App\Http\Requests\Admin\Page;
 
+use App\Http\Requests\Admin\ext\HasCategory;
+use App\Http\Requests\Admin\ext\HasTheme;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class StorePage extends FormRequest
 {
+    use HasCategory, HasTheme;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,13 +30,9 @@ class StorePage extends FormRequest
     public function rules(): array
     {
         return [
-            'created_by' => ['required', 'integer'],
-            'updated_by' => ['required', 'integer'],
             'title' => ['required', 'string'],
-            'slug' => ['required', Rule::unique('page', 'slug'), 'string'],
             'body' => ['required', 'string'],
             'is_published' => ['required', 'boolean'],
-            
         ];
     }
 
@@ -44,8 +44,8 @@ class StorePage extends FormRequest
     public function getSanitized(): array
     {
         $sanitized = $this->validated();
-
-        //Add your code for manipulation with request data here
+        $sanitized['category_id'] = $this->getCategoryId();
+        $sanitized['theme_id'] = $this->getThemeId();
 
         return $sanitized;
     }

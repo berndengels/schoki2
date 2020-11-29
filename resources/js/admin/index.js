@@ -6,3 +6,5 @@ import './theme';
 import './event-template';
 import './event-periodic';
 import './page';
+import './event';
+import './image';

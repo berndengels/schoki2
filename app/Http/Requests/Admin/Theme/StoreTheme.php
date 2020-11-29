@@ -27,9 +27,7 @@ class StoreTheme extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'slug' => ['required', Rule::unique('theme', 'slug'), 'string'],
             'icon' => ['nullable', 'string'],
-            
         ];
     }
 

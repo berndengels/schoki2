@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use App\Models\Ext\HasAdminUser;
@@ -23,6 +22,8 @@ class Event extends Model
         'event_time',
         'is_periodic',
         'is_published',
+        'created_by',
+        'updated_by',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'event_date'];
@@ -59,5 +60,4 @@ class Event extends Model
     {
         return $this->hasMany(Image::class);
     }
-
 }

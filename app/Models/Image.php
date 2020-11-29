@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-use App\Models\Ext\HasAdminUser;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    use HasAdminUser;
-
     protected $table = 'images';
-
     protected $fillable = [
-
+        'external_filename',
+        'internal_filename',
+        'title',
+        'extension',
+        'filesize',
+        'width',
+        'height',
     ];
     public $timestamps = false;
 

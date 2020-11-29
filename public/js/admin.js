@@ -117066,6 +117066,164 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/admin/event/Form.js":
+/*!******************************************!*\
+  !*** ./resources/js/admin/event/Form.js ***!
+  \******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app_components_Form_AppForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../app-components/Form/AppForm */ "./resources/js/admin/app-components/Form/AppForm.js");
+
+Vue.component('event-form', {
+  props: ['categories', 'themes'],
+  mixins: [_app_components_Form_AppForm__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  data: function data() {
+    return {
+      category: '',
+      theme: '',
+      form: {
+        theme_id: '',
+        category_id: '',
+        title: '',
+        subtitle: '',
+        description: '',
+        links: '',
+        event_date: '',
+        event_time: '',
+        price: '',
+        is_published: false
+      },
+      datePickerConfig: {
+        dateFormat: 'Y-m-d',
+        altInput: true,
+        altFormat: 'd.m.Y',
+        locale: 'de'
+      },
+      timePickerConfig: {
+        enableTime: true,
+        noCalendar: true,
+        time_24hr: true,
+        enableSeconds: true,
+        dateFormat: 'H:i:S',
+        altInput: true,
+        altFormat: 'H:i',
+        locale: null
+      }
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/event/Listing.js":
+/*!*********************************************!*\
+  !*** ./resources/js/admin/event/Listing.js ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../app-components/Listing/AppListing */ "./resources/js/admin/app-components/Listing/AppListing.js");
+
+Vue.component('event-listing', {
+  mixins: [_app_components_Listing_AppListing__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  props: ['categories', 'themes'],
+  data: function data() {
+    return {
+      categorySelect: {},
+      themeSelect: {},
+      showCategoryFilter: true,
+      showThemeFilter: true,
+      filters: {
+        categories: [],
+        themes: []
+      }
+    };
+  },
+  computed: {},
+  watch: {
+    showCategoryFilter: function showCategoryFilter(newVal, oldVal) {
+      this.categorySelect = [];
+    },
+    showThemeFilter: function showThemeFilter(newVal, oldVal) {
+      this.themeSelect = [];
+    },
+    categorySelect: function categorySelect(newVal, oldVal) {
+      this.filters.categories = newVal.map(function (object) {
+        return object['key'];
+      });
+      this.filter('categories', this.filters.categories);
+    },
+    themeSelect: function themeSelect(newVal, oldVal) {
+      this.filters.themes = newVal.map(function (object) {
+        return object['key'];
+      });
+      this.filter('themes', this.filters.themes);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/event/index.js":
+/*!*******************************************!*\
+  !*** ./resources/js/admin/event/index.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Listing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Listing */ "./resources/js/admin/event/Listing.js");
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form */ "./resources/js/admin/event/Form.js");
+
+
+
+/***/ }),
+
+/***/ "./resources/js/admin/image/Form.js":
+/*!******************************************!*\
+  !*** ./resources/js/admin/image/Form.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//import AppForm from '../app-components/Form/AppForm';
+Vue.component('image-form', {
+  name: 'ImageForm',
+  //    mixins: [AppForm],
+  props: ['event', 'theme', 'event_periodic', 'event_template'],
+  data: function data() {
+    return {
+      form: {
+        internal_filename: '',
+        title: ''
+      }
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/image/index.js":
+/*!*******************************************!*\
+  !*** ./resources/js/admin/image/index.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form */ "./resources/js/admin/image/Form.js");
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Form__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/***/ }),
+
 /***/ "./resources/js/admin/index.js":
 /*!*************************************!*\
   !*** ./resources/js/admin/index.js ***!
@@ -117083,6 +117241,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _event_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./event-template */ "./resources/js/admin/event-template/index.js");
 /* harmony import */ var _event_periodic__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./event-periodic */ "./resources/js/admin/event-periodic/index.js");
 /* harmony import */ var _page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./page */ "./resources/js/admin/page/index.js");
+/* harmony import */ var _event__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./event */ "./resources/js/admin/event/index.js");
+/* harmony import */ var _image__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./image */ "./resources/js/admin/image/index.js");
+
+
 
 
 

@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 trait HasAdminUser
 {
-	public static function bootHasUser()
+	public static function bootHasAdminUser()
 	{
 		/**
 		 * @var $user AdminUser
@@ -27,13 +27,9 @@ trait HasAdminUser
 			static::creating(function($table) use ($user)  {
 				$table->created_by = $user->id;
 			});
-			static::saving(function($table) use ($user) {
-				if( $table->id > 0 ) {
-					$table->updated_by = $user->id;
-				} else {
-					$table->created_by = $user->id;
-				}
-			});
+            static::updating(function($table) use ($user)  {
+                $table->updated_by = $user->id;
+            });
 		}
 	}
 

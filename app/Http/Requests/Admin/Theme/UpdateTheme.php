@@ -27,9 +27,7 @@ class UpdateTheme extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string'],
-            'slug' => ['sometimes', Rule::unique('theme', 'slug')->ignore($this->theme->getKey(), $this->theme->getKeyName()), 'string'],
             'icon' => ['nullable', 'string'],
-            
         ];
     }
 

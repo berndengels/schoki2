@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use App\Models\Ext\HasAdminUser;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Str;
 
 class Page extends Model
 {
@@ -13,7 +12,6 @@ class Page extends Model
 
     protected $table = 'page';
     public $timestamps = true;
-
     protected $fillable = [
         'created_by',
         'updated_by',
@@ -35,10 +33,6 @@ class Page extends Model
 
     public static function boot() {
         parent::boot();
-
-        Page::saving(function($entity) {
-            $entity->slug = Str::slug( str_replace('.','-',$entity->title), '-', 'de');
-        });
         Page::creating(function($entity) {
             $entity->slug = Str::slug(str_replace('.','-',$entity->title), '-', 'de');
         });

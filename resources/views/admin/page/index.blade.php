@@ -1,14 +1,12 @@
-@extends('brackets/admin-ui::admin.layout.default')
+@extends('admin.layout.default')
 
 @section('title', trans('admin.page.actions.index'))
-
 @section('body')
 
     <page-listing
         :data="{{ $data->toJson() }}"
         :url="'{{ url('admin/pages') }}'"
         inline-template>
-
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -31,7 +29,7 @@
                                     </div>
                                     <div class="col-sm-auto form-group ">
                                         <select class="form-control" v-model="pagination.state.per_page">
-                                            
+
                                             <option value="10">10</option>
                                             <option value="25">25</option>
                                             <option value="100">100</option>
@@ -51,10 +49,10 @@
                                         </th>
 
                                         <th is='sortable' :column="'id'">{{ trans('admin.page.columns.id') }}</th>
-                                        <th is='sortable' :column="'created_by'">{{ trans('admin.page.columns.created_by') }}</th>
-                                        <th is='sortable' :column="'updated_by'">{{ trans('admin.page.columns.updated_by') }}</th>
                                         <th is='sortable' :column="'title'">{{ trans('admin.page.columns.title') }}</th>
                                         <th is='sortable' :column="'is_published'">{{ trans('admin.page.columns.is_published') }}</th>
+                                        <th is='sortable' :column="'created_by'">{{ trans('admin.page.columns.created_by') }}</th>
+                                        <th is='sortable' :column="'updated_by'">{{ trans('admin.page.columns.updated_by') }}</th>
 
                                         <th></th>
                                     </tr>
@@ -79,8 +77,6 @@
                                         </td>
 
                                     <td>@{{ item.id }}</td>
-                                        <td>@{{ item.created_by }}</td>
-                                        <td>@{{ item.updated_by }}</td>
                                         <td>@{{ item.title }}</td>
                                         <td>
                                             <label class="switch switch-3d switch-success">
@@ -88,8 +84,9 @@
                                                 <span class="switch-slider"></span>
                                             </label>
                                         </td>
+                                        <td>@{{ item.created_by.full_name }}</td>
+                                        <td>@{{ item.updated_by ? item.updated_by.full_name : null }}</td>
 
-                                        
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">

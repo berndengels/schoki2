@@ -258,5 +258,34 @@ return [
         ],
     ],
 
+    'event' => [
+        'title' => 'Event',
+
+        'actions' => [
+            'index' => 'Event',
+            'create' => 'New Event',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'theme_id' => 'Theme',
+            'category_id' => 'Category',
+            'created_by' => 'Created by',
+            'updated_by' => 'Updated by',
+            'title' => 'Title',
+            'subtitle' => 'Subtitle',
+            'description' => 'Description',
+            'links' => 'Links',
+            'event_date' => 'Event date',
+            'event_time' => 'Event time',
+            'price' => 'Price',
+            'is_published' => 'Is published',
+            'is_periodic' => 'Is periodic',
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

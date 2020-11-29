@@ -43,7 +43,6 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
     });
 });
 
-
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
@@ -59,7 +58,6 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
         });
     });
 });
-
 
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
@@ -121,6 +119,23 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
             Route::post('/{page}',                                      'PageController@update')->name('update');
             Route::delete('/{page}',                                    'PageController@destroy')->name('destroy');
             Route::get('/export',                                       'PageController@export')->name('export');
+        });
+    });
+});
+
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+        Route::prefix('events')->name('events/')->group(static function() {
+            Route::get('/',                                             'EventController@index')->name('index');
+            Route::get('/create',                                       'EventController@create')->name('create');
+            Route::post('/',                                            'EventController@store')->name('store');
+            Route::get('/{event}/edit',                                 'EventController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'EventController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{event}',                                     'EventController@update')->name('update');
+            Route::delete('/{event}',                                   'EventController@destroy')->name('destroy');
+            Route::get('/export',                                       'EventController@export')->name('export');
         });
     });
 });

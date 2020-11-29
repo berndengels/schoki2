@@ -35,7 +35,8 @@ class PageController extends Controller
     public function index(IndexPage $request)
     {
         // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(Page::class)->processRequestAndGet(
+        $data = AdminListing::create(Page::class)
+            ->processRequestAndGet(
             // pass the request with params
             $request,
 
@@ -43,7 +44,11 @@ class PageController extends Controller
             ['id', 'created_by', 'updated_by', 'title', 'is_published'],
 
             // set columns to searchIn
-            ['id', 'title', 'slug', 'body']
+            ['id', 'title', 'body'],
+
+            function ($query) use ($request) {
+                $query->with(['createdBy','updatedBy']);
+            }
         );
 
         if ($request->ajax()) {
