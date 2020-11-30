@@ -23,7 +23,7 @@ class CreatePageTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->foreign('updated_by')
                 ->references('id')
                 ->on('admin_users')

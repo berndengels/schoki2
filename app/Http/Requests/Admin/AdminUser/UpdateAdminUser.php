@@ -34,9 +34,7 @@ class UpdateAdminUser extends FormRequest
             'password' => ['sometimes', 'confirmed', 'min:7', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'forbidden' => ['sometimes', 'boolean'],
             'language' => ['sometimes', 'string'],
-                
             'roles' => ['sometimes', 'array'],
-                
         ];
 
         if (Config::get('admin-auth.activation_enabled')) {

@@ -16,7 +16,7 @@ class CreateEventPeriodicTable extends Migration
         Schema::create('event_periodic', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger('theme_id');
+            $table->unsignedInteger('theme_id')->nullable();
             $table->foreign('theme_id')
                 ->references('id')
                 ->on('theme')
@@ -40,7 +40,7 @@ class CreateEventPeriodicTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->foreign('updated_by')
                 ->references('id')
                 ->on('admin_users')
@@ -48,9 +48,9 @@ class CreateEventPeriodicTable extends Migration
                 ->onDelete('cascade');
 
             $table->string('title');
-            $table->string('subtitle');
-            $table->longText('description');
-            $table->longText('links');
+            $table->string('subtitle')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('links')->nullable();
             $table->date('event_date');
             $table->time('event_time');
             $table->decimal('price')->nullable();

@@ -16,7 +16,7 @@ class CreateEventTemplateTable extends Migration
         Schema::create('event_template', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger('theme_id');
+            $table->unsignedInteger('theme_id')->nullable();
             $table->foreign('theme_id')
                 ->references('id')
                 ->on('theme')
@@ -37,7 +37,7 @@ class CreateEventTemplateTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->foreign('updated_by')
                 ->references('id')
                 ->on('admin_users')
@@ -45,9 +45,9 @@ class CreateEventTemplateTable extends Migration
                 ->onDelete('cascade');
 
             $table->string('title');
-            $table->string('subtitle');
-            $table->longText('description');
-            $table->longText('links');
+            $table->string('subtitle')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('links')->nullable();
             $table->timestamps();
         });
     }

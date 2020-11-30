@@ -1,10 +1,10 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Category;
+use Database\Seeders\Inc\Importer;
 
-class CategoryImportSeeder extends Seeder
+class CategoryImportSeeder extends Importer
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class CategoryImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        parent::import(new Category);
     }
 }

@@ -8,3 +8,5 @@ import './event-periodic';
 import './page';
 import './event';
 import './image';
+import './role';
+import './permission';

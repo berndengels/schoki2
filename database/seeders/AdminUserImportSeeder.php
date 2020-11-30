@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use Brackets\AdminAuth\Models\AdminUser;
+use Database\Seeders\Inc\Importer;
 
-class AdminUserImportSeeder extends Seeder
+class AdminUserImportSeeder extends Importer
 {
     /**
      * Run the database seeds.
@@ -13,6 +14,6 @@ class AdminUserImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        parent::import(new AdminUser);
     }
 }

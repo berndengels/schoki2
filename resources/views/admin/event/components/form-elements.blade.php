@@ -88,7 +88,15 @@
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
         <div class="input-group input-group--custom">
             <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
-            <datetime v-model="form.event_time" :config="timePickerConfig" v-validate="'required|date_format:HH:mm:ss'" class="flatpickr" :class="{'form-control-danger': errors.has('event_time'), 'form-control-success': fields.event_time && fields.event_time.valid}" id="event_time" name="event_time" placeholder="{{ trans('brackets/admin-ui::admin.forms.select_a_time') }}"
+            <datetime
+                id="event_time"
+                name="event_time"
+                class="flatpickr"
+                v-model="form.event_time"
+                v-validate="'required|date_format:HH:mm:ss'"
+                :config="timePickerConfig"
+                :class="{'form-control-danger': errors.has('event_time'), 'form-control-success': fields.event_time && fields.event_time.valid}"
+                placeholder="{{ trans('brackets/admin-ui::admin.forms.select_a_time') }}"
             ></datetime>
         </div>
         <div v-if="errors.has('event_time')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('event_time') }}</div>

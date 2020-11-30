@@ -32,8 +32,8 @@ Vue.component('event-form', {
                 enableTime: true,
                 noCalendar: true,
                 time_24hr: true,
-                enableSeconds: true,
-                dateFormat: 'H:i:S',
+                enableSeconds: false,
+                dateFormat: 'H:i:s',
                 altInput: true,
                 altFormat: 'H:i',
                 locale: null

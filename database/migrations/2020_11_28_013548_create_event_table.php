@@ -46,7 +46,7 @@ class CreateEventTable extends Migration
 
             $table->string('title');
             $table->string('subtitle')->nullable();
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->longText('links')->nullable();
             $table->date('event_date');
             $table->time('event_time');

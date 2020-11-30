@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Theme;
+use Database\Seeders\Inc\Importer;
 
-class ThemeImportSeeder extends Seeder
+class ThemeImportSeeder extends Importer
 {
     /**
      * Run the database seeds.
@@ -13,6 +14,6 @@ class ThemeImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        parent::import(new Theme);
     }
 }

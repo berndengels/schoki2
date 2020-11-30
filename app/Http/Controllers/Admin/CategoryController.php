@@ -66,7 +66,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.category.create');
+        $this->authorize('category.create');
 
         return view('admin.category.create');
     }
@@ -101,7 +101,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $this->authorize('admin.category.show', $category);
+        $this->authorize('category.show', $category);
 
         // TODO your code goes here
     }
@@ -115,9 +115,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $this->authorize('admin.category.edit', $category);
-
-
+        $this->authorize('category.edit', $category);
         return view('admin.category.edit', [
             'category' => $category,
         ]);
@@ -158,6 +156,7 @@ class CategoryController extends Controller
      */
     public function destroy(DestroyCategory $request, Category $category)
     {
+        $this->authorize('category.delete', $category);
         $category->delete();
 
         if ($request->ajax()) {
@@ -176,12 +175,12 @@ class CategoryController extends Controller
      */
     public function bulkDestroy(BulkDestroyCategory $request) : Response
     {
+        $this->authorize('category.bulk-delete');
         DB::transaction(static function () use ($request) {
             collect($request->data['ids'])
                 ->chunk(1000)
                 ->each(static function ($bulkChunk) {
                     Category::whereIn('id', $bulkChunk)->delete();
-
                     // TODO your code goes here
                 });
         });

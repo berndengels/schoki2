@@ -131,7 +131,7 @@
                                         <td>@{{ item.category.name }}</td>
                                         <td>@{{ item.created_by.full_name }}</td>
                                         <td>@{{ item.updated_by ? item.updated_by.full_name : null }}</td>
-                                        <td>@{{ item.title }}</td>
+                                        <td v-html="item.title"></td>
                                         <td>@{{ item.subtitle }}</td>
                                         <td>@{{ item.event_date | date('DD.MM.Y') }}</td>
                                         <td>@{{ item.event_time | time('HH.mm') }}</td>

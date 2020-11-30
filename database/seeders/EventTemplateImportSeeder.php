@@ -1,10 +1,10 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\EventTemplate;
+use Database\Seeders\Inc\Importer;
 
-class EventTemplateImportSeeder extends Seeder
+class EventTemplateImportSeeder extends Importer
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class EventTemplateImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $this->import(new EventTemplate);
     }
 }

@@ -69,7 +69,10 @@ class AdminUsersController extends Controller
             return ['data' => $data, 'activation' => Config::get('admin-auth.activation_enabled')];
         }
 
-        return view('admin.admin-user.index', ['data' => $data, 'activation' => Config::get('admin-auth.activation_enabled')]);
+        return view('admin.admin-user.index', [
+            'data' => $data,
+            'activation' => Config::get('admin-auth.activation_enabled')
+        ]);
     }
 
     /**
@@ -138,11 +141,10 @@ class AdminUsersController extends Controller
         $this->authorize('admin.admin-user.edit', $adminUser);
 
         $adminUser->load('roles');
-
         return view('admin.admin-user.edit', [
-            'adminUser' => $adminUser,
-            'activation' => Config::get('admin-auth.activation_enabled'),
-            'roles' => Role::where('guard_name', $this->guard)->get(),
+            'adminUser'     => $adminUser,
+            'activation'    => Config::get('admin-auth.activation_enabled'),
+            'roles'         => Role::where('guard_name', $this->guard)->get(),
         ]);
     }
 

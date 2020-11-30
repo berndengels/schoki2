@@ -139,3 +139,33 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
         });
     });
 });
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+        Route::prefix('roles')->name('roles/')->group(static function() {
+            Route::get('/',                                             'RoleController@index')->name('index');
+            Route::get('/create',                                       'RoleController@create')->name('create');
+            Route::post('/',                                            'RoleController@store')->name('store');
+            Route::get('/{role}/edit',                                  'RoleController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'RoleController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{role}',                                      'RoleController@update')->name('update');
+            Route::delete('/{role}',                                    'RoleController@destroy')->name('destroy');
+        });
+    });
+});
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+        Route::prefix('permissions')->name('permissions/')->group(static function() {
+            Route::get('/',                                             'PermissionController@index')->name('index');
+            Route::get('/create',                                       'PermissionController@create')->name('create');
+            Route::post('/',                                            'PermissionController@store')->name('store');
+            Route::get('/{permission}/edit',                            'PermissionController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'PermissionController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{permission}',                                'PermissionController@update')->name('update');
+            Route::delete('/{permission}',                              'PermissionController@destroy')->name('destroy');
+        });
+    });
+});

@@ -59,7 +59,8 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::MYSQL_ATTR_INIT_COMMAND    => 'SET NAMES utf8',
+                PDO::MYSQL_ATTR_SSL_CA          => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
 
@@ -78,8 +79,11 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
+            'fetch' => PDO::FETCH_ASSOC,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::MYSQL_ATTR_INIT_COMMAND    => 'SET NAMES utf8',
+                PDO::ATTR_DEFAULT_FETCH_MODE    => PDO::FETCH_ASSOC,
+                PDO::MYSQL_ATTR_SSL_CA          => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
 

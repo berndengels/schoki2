@@ -1,10 +1,10 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\EventPeriodic;
+use Database\Seeders\Inc\Importer;
 
-class EventPeriodicImportSeeder extends Seeder
+class EventPeriodicImportSeeder extends Importer
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class EventPeriodicImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $this->import(new EventPeriodic);
     }
 }
