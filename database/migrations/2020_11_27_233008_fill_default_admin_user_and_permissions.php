@@ -41,13 +41,14 @@ class FillDefaultAdminUserAndPermissions extends Migration
     /**
      * @var string
      */
-    protected $password = 'WP3m653k1e';
+    protected $password;
 
     /**
      * FillDefaultAdminUserAndPermissions constructor.
      */
     public function __construct()
     {
+        $this->password = env('ADMIN_PASSWORD', 'WP3m653k1e');
         $this->guardName = config('admin-auth.defaults.guard');
         $providerName = config('auth.guards.' . $this->guardName . '.provider');
         $provider = config('auth.providers.' . $providerName);
@@ -61,21 +62,21 @@ class FillDefaultAdminUserAndPermissions extends Migration
             'admin',
 
             // manage translations
-            'admin.translation.index',
-            'admin.translation.edit',
-            'admin.translation.rescan',
+            'translation.index',
+            'translation.edit',
+            'translation.rescan',
 
             // manage users (access)
-            'admin.admin-user.index',
-            'admin.admin-user.create',
-            'admin.admin-user.edit',
-            'admin.admin-user.delete',
+            'admin-user.index',
+            'admin-user.create',
+            'admin-user.edit',
+            'admin-user.delete',
 
             // ability to upload
-            'admin.upload',
+            'upload',
 
             //ability to impersonal login
-            'admin.admin-user.impersonal-login'
+            'admin-user.impersonal-login'
         ]);
 
         //Add new permissions
@@ -96,7 +97,7 @@ class FillDefaultAdminUserAndPermissions extends Migration
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'permissions' => $defaultPermissions->reject(function ($permission) {
-                    return $permission === 'admin.admin-user.impersonal-login';
+                    return $permission === 'admin-user.impersonal-login';
                 }),
             ],
         ];
@@ -104,9 +105,9 @@ class FillDefaultAdminUserAndPermissions extends Migration
         //Add new users
         $this->users = [
             [
-                'first_name' => 'Administrator',
-                'last_name' => 'Administrator',
-                'email' => 'administrator@brackets.sk',
+                'first_name' => 'Bernd',
+                'last_name' => 'Engels',
+                'email' => 'engels@goldenacker.de',
                 'password' => Hash::make($this->password),
                 'remember_token' => null,
                 'created_at' => Carbon::now(),

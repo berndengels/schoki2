@@ -14,8 +14,6 @@ class CreateAdminUsersMusicStyleTable extends Migration
     public function up()
     {
         Schema::create('admin_users_music_style', function (Blueprint $table) {
-            $table->increments('id');
-
             $table->unsignedInteger('admin_user_id')->nullable();
             $table->foreign('admin_user_id')
                 ->references('id')
@@ -29,6 +27,8 @@ class CreateAdminUsersMusicStyleTable extends Migration
                 ->on('music_style')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
+            $table->primary(['admin_user_id','music_style_id']);
         });
     }
 

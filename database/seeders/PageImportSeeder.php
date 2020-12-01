@@ -1,13 +1,22 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Page;
+use Database\Seeders\Inc\Importer;
 
-class PageImportSeeder extends Seeder
+class PageImportSeeder extends Importer
 {
     protected $tableParams = [
+        'sourceTable' => 'page',
+        'sourceCols' => null,
+        'destCols' => null,
     ];
+
+    public function __construct()
+    {
+        $this->model = new Page();
+        parent::__construct();
+    }
     /**
      * Run the database seeds.
      *
@@ -15,6 +24,6 @@ class PageImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        parent::import(false);
     }
 }

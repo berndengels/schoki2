@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Models\Theme;
@@ -12,6 +11,12 @@ class ThemeImportSeeder extends Importer
         'sourceCols' => ['id','name','slug','icon'],
         'destCols' => ['id','name','slug','icon'],
     ];
+
+    public function __construct()
+    {
+        $this->model = new Theme();
+        parent::__construct();
+    }
     /**
      * Run the database seeds.
      *
@@ -19,6 +24,6 @@ class ThemeImportSeeder extends Importer
      */
     public function run()
     {
-        parent::import(new Theme);
+        parent::import(false);
     }
 }

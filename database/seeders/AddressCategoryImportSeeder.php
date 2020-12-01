@@ -1,7 +1,7 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Event;
+use App\Models\AddressCategory;
 use Database\Seeders\Inc\Importer;
 
 class AddressCategoryImportSeeder extends Importer
@@ -14,7 +14,7 @@ class AddressCategoryImportSeeder extends Importer
 
     public function __construct()
     {
-        $this->model = new Event;
+        $this->model = new AddressCategory();
         parent::__construct();
     }
     /**
@@ -24,6 +24,6 @@ class AddressCategoryImportSeeder extends Importer
      */
     public function run()
     {
-        //
+        parent::import(false);
     }
 }

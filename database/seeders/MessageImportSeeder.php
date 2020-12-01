@@ -1,13 +1,22 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Message;
+use Database\Seeders\Inc\Importer;
 
-class MessageImportSeeder extends Seeder
+class MessageImportSeeder extends Importer
 {
     protected $tableParams = [
+        'sourceTable' => 'message',
+        'sourceCols' => null,
+        'destCols' => null,
     ];
+
+    public function __construct()
+    {
+        $this->model = new Message();
+        parent::__construct();
+    }
     /**
      * Run the database seeds.
      *
@@ -15,6 +24,6 @@ class MessageImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        parent::import();
     }
 }

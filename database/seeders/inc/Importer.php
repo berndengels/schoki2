@@ -31,11 +31,11 @@ class Importer extends Seeder
     /**
      * @var string
      */
-    protected $table;
+    protected $table = null;
     /**
      * @var Model
      */
-    protected $model;
+    protected $model = null;
     /**
      * @var int
      */
@@ -68,7 +68,7 @@ class Importer extends Seeder
      *
      * @return void
      */
-    public function import($delayed = false) {
+    public function import($delayed = true) {
         if(!$this->tableParams) {
             $this->command->getOutput()->writeln("<error>Bitte \$tableParams für $this->table Seeder setzen!</error>");
         } else {
@@ -95,23 +95,25 @@ class Importer extends Seeder
     {
         $success = 0;
         $error = 0;
-        foreach($data as $row) {
-            try {
-                $this->model->insertOrIgnore($row);
-                $success++;
-            } catch(Exception $e) {
-                $error++;
-                Log::error("Error: cant't import $this->table: " . $e->getMessage());
-            }
-        }
+        $this->command->getOutput()->writeln("Import progress for table $this->table");
+        $this->command->withProgressBar($data, function($row) use (&$success, &$error) {
+                try {
+                    $this->model->insertOrIgnore($row);
+                    $success++;
+                } catch(Exception $e) {
+                    $error++;
+                    Log::error("Error: cant't import $this->table: " . $e->getMessage());
+                }
+            });
+
+        $this->command->newLine();
         $msg = "all Data: $this->count, imported: $success, errors: $error";
         $this->command->getOutput()->writeln("<info>$msg</info>");
     }
 
     private function prepare($source)
     {
-        $data = [];
-        if($this->tableParams['destCols']) {
+        if(is_array($this->tableParams['destCols']) && count($this->tableParams['destCols']) > 0) {
             $data   = [];
             foreach( $source as $index => $row) {
                 $i = 0;

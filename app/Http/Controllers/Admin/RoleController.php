@@ -63,10 +63,14 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $defaultPermissions = Permission::where('name','NOT LIKE','admin%')
+            ->where('name','NOT LIKE','role%')
+            ->where('name','NOT LIKE','permission%')
+            ->get();
         $this->authorize('role.create');
         return view('admin.role.create', [
-            'allPermissions' => Permission::all(['id','name']),
-            'myPermissions' => null,
+            'allPermissions'    => Permission::all(['id','name']),
+            'myPermissions'     => $defaultPermissions,
         ]);
     }
 
@@ -120,9 +124,9 @@ class RoleController extends Controller
         $this->authorize('role.edit', $role);
         $hasPermissions = $role->getAllPermissions();
         return view('admin.role.edit', [
-            'role'           => $role,
-            'allPermissions' => Permission::all(['id','name']),
-            'myPermissions' => $role->getAllPermissions(),
+            'role'              => $role,
+            'allPermissions'    => Permission::all(['id','name']),
+            'myPermissions'     => $role->getAllPermissions(),
         ]);
     }
 

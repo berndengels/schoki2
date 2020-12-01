@@ -1,13 +1,22 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\MusicStyle;
+use Database\Seeders\Inc\Importer;
 
-class MusicStyleImportSeeder extends Seeder
+class MusicStyleImportSeeder extends Importer
 {
     protected $tableParams = [
+        'sourceTable' => 'music_style',
+        'sourceCols' => null,
+        'destCols' => null,
     ];
+
+    public function __construct()
+    {
+        $this->model = new MusicStyle();
+        parent::__construct();
+    }
     /**
      * Run the database seeds.
      *
@@ -15,6 +24,6 @@ class MusicStyleImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        parent::import(false);
     }
 }

@@ -1,13 +1,22 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Menu;
+use Database\Seeders\Inc\Importer;
 
-class MenuImportSeeder extends Seeder
+class MenuImportSeeder extends Importer
 {
     protected $tableParams = [
+        'sourceTable' => 'menu',
+        'sourceCols' => null,
+        'destCols' => null,
     ];
+
+    public function __construct()
+    {
+        $this->model = new Menu();
+        parent::__construct();
+    }
     /**
      * Run the database seeds.
      *
@@ -15,6 +24,6 @@ class MenuImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        parent::import(false);
     }
 }

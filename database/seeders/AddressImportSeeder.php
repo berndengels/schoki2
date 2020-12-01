@@ -1,16 +1,22 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Address;
+use Database\Seeders\Inc\Importer;
 
-class AddressImportSeeder extends Seeder
+class AddressImportSeeder extends Importer
 {
     protected $tableParams = [
         'sourceTable' => 'address',
         'sourceCols' => null,
         'destCols' => null,
     ];
+
+    public function __construct()
+    {
+        $this->model = new Address();
+        parent::__construct();
+    }
     /**
      * Run the database seeds.
      *
@@ -18,6 +24,6 @@ class AddressImportSeeder extends Seeder
      */
     public function run()
     {
-        //
+        parent::import();
     }
 }

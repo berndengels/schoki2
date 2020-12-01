@@ -28,6 +28,6 @@ class EventImportSeeder extends Importer
     public function run()
     {
         $this->sanitizeTimeColumn('event_time');
-        $this->import(true);
+        $this->import();
     }
 }

@@ -11,6 +11,12 @@ class EventTemplateImportSeeder extends Importer
         'sourceCols' => null,
         'destCols' => null,
     ];
+
+    public function __construct()
+    {
+        $this->model = new EventTemplate();
+        parent::__construct();
+    }
     /**
      * Run the database seeds.
      *
@@ -18,6 +24,6 @@ class EventTemplateImportSeeder extends Importer
      */
     public function run()
     {
-        $this->import(new EventTemplate);
+        $this->import(false);
     }
 }

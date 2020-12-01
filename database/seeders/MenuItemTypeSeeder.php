@@ -1,20 +1,20 @@
 <?php
 namespace Database\Seeders;
 
+use App\Models\MenuItemType;
 use Database\Seeders\Inc\Importer;
-use App\Models\AdminUsersMusicStyle;
 
-class AdminUserMusicStyleImportSeeder extends Importer
+class MenuItemTypeSeeder extends Importer
 {
     protected $tableParams = [
-        'sourceTable'   => 'user_music_styles',
-        'sourceCols'    => ['user_id','music_style_id'],
-        'destCols'      => ['admin_user_id','music_style_id'],
+        'sourceTable' => 'menu_item_type',
+        'sourceCols' => null,
+        'destCols' => null,
     ];
 
     public function __construct()
     {
-        $this->model = new AdminUsersMusicStyle();
+        $this->model = new MenuItemType();
         parent::__construct();
     }
     /**

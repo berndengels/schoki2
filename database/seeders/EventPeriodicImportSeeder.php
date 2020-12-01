@@ -11,6 +11,12 @@ class EventPeriodicImportSeeder extends Importer
         'sourceCols' => null,
         'destCols' => null,
     ];
+
+    public function __construct()
+    {
+        $this->model = new EventPeriodic();
+        parent::__construct();
+    }
     /**
      * Run the database seeds.
      *
@@ -19,6 +25,6 @@ class EventPeriodicImportSeeder extends Importer
     public function run()
     {
         $this->sanitizeTimeColumn('event_time');
-        $this->import(new EventPeriodic);
+        $this->import(false);
     }
 }

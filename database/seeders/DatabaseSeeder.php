@@ -14,12 +14,20 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-//            CategoryImportSeeder::class,
-//            ThemeImportSeeder::class,
-//            AdminUserImportSeeder::class,
-//            EventImportSeeder::class,
+            MusicStyleImportSeeder::class,
+            AdminUserImportSeeder::class,
+            AdminUserMusicStyleImportSeeder::class,
+            CategoryImportSeeder::class,
+            ThemeImportSeeder::class,
+            EventImportSeeder::class,
             EventPeriodicImportSeeder::class,
             EventTemplateImportSeeder::class,
+            AddressCategoryImportSeeder::class,
+            AddressImportSeeder::class,
+            MenuItemTypeSeeder::class,
+            MenuImportSeeder::class,
+            MessageImportSeeder::class,
+            PageImportSeeder::class,
         ]);
     }
 }

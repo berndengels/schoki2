@@ -10,8 +10,8 @@
 
         <role-form
             :action="'{{ url('admin/roles') }}'"
-            :permissions="{{ $permissions->toJson() }}"
-            :has-permissions="[]"
+            :all-permissions="{{ $allPermissions->toJson() }}"
+            :my-permissions="{{ $myPermissions ? $myPermissions->toJson() : null }}"
             v-cloak
             inline-template>
 

@@ -11,6 +11,12 @@ class CategoryImportSeeder extends Importer
         'sourceCols' => ['id','name','slug','icon'],
         'destCols' => ['id','name','slug','icon'],
     ];
+
+    public function __construct()
+    {
+        $this->model = new Category();
+        parent::__construct();
+    }
     /**
      * Run the database seeds.
      *
@@ -18,6 +24,6 @@ class CategoryImportSeeder extends Importer
      */
     public function run()
     {
-        parent::import(new Category);
+        parent::import(false);
     }
 }
