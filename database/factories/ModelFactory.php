@@ -293,3 +293,17 @@ $factory->define(App\Models\Newsletter::class, static function (Faker\Generator 
 
     ];
 });
+/** @var  Factory $factory */
+$factory->define(App\Models\Product::class, static function (Faker\Generator $faker) {
+    return [
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\Order::class, static function (Faker\Generator $faker) {
+    return [
+
+
+    ];
+});

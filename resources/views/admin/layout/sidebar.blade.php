@@ -30,6 +30,8 @@
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/menus') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.menu.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/newsletter-statuses') }}"><i class="nav-icon icon-drop"></i> {{ trans('admin.newsletter-status.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/newsletters') }}"><i class="nav-icon icon-flag"></i> {{ trans('admin.newsletter.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/products') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.product.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/orders') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.order.title') }}</a></li>
            {{-- Do not delete me :) I'm used for auto-generation menu items --}}
 
             <li class="nav-title">{{ trans('brackets/admin-ui::admin.sidebar.settings') }}</li>

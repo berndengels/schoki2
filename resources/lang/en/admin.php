@@ -499,5 +499,35 @@ return [
         ],
     ],
 
+    'product' => [
+        'title' => 'Product',
+
+        'actions' => [
+            'index' => 'Product',
+            'create' => 'New Product',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            
+        ],
+    ],
+
+    'order' => [
+        'title' => 'Order',
+
+        'actions' => [
+            'index' => 'Order',
+            'create' => 'New Order',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

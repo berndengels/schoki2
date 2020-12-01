@@ -310,3 +310,33 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
         });
     });
 });
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+        Route::prefix('products')->name('products/')->group(static function() {
+            Route::get('/',                                             'ProductController@index')->name('index');
+            Route::get('/create',                                       'ProductController@create')->name('create');
+            Route::post('/',                                            'ProductController@store')->name('store');
+            Route::get('/{product}/edit',                               'ProductController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'ProductController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{product}',                                   'ProductController@update')->name('update');
+            Route::delete('/{product}',                                 'ProductController@destroy')->name('destroy');
+        });
+    });
+});
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+        Route::prefix('orders')->name('orders/')->group(static function() {
+            Route::get('/',                                             'OrderController@index')->name('index');
+            Route::get('/create',                                       'OrderController@create')->name('create');
+            Route::post('/',                                            'OrderController@store')->name('store');
+            Route::get('/{order}/edit',                                 'OrderController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'OrderController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{order}',                                     'OrderController@update')->name('update');
+            Route::delete('/{order}',                                   'OrderController@destroy')->name('destroy');
+        });
+    });
+});

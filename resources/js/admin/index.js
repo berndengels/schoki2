@@ -18,3 +18,5 @@ import './news';
 import './menu';
 import './newsletter-status';
 import './newsletter';
+import './product';
+import './order';
