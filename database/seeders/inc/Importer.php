@@ -3,13 +3,11 @@ namespace Database\Seeders\Inc;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
-use PDO;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
-use Symfony\Component\Console;
 
 /**
  * Class Importer
@@ -17,44 +15,11 @@ use Symfony\Component\Console;
  */
 class Importer extends Seeder
 {
+
     /**
      * @var array[]
      */
-    protected $tables = [
-        'admin_users' => [
-            'sourceTable' => 'my_user',
-            'sourceCols' => ['id','username','email','password','remember_token','enabled','last_login','created_at','updated_at'],
-            'destCols' => ['id','first_name','email','password','remember_token','activated','last_login_at','created_at','updated_at'],
-        ],
-        'category'  => [
-            'sourceTable' => 'category',
-            'sourceCols' => ['id','name','slug','icon'],
-            'destCols' => ['id','name','slug','icon'],
-        ],
-        'theme' => [
-            'sourceTable' => 'theme',
-            'sourceCols' => ['id','name','slug','icon'],
-            'destCols' => ['id','name','slug','icon'],
-        ],
-        'event' => [
-            'sourceTable' => 'event',
-//            'sourceCols' => ['id','','','','','','','','','','','','','','','',''],
-            'sourceCols' => null,
-            'destCols' => null,
-        ],
-        'event_periodic' => [
-            'sourceTable' => 'event_periodic',
-//            'sourceCols' => ['id','','','','','','','','','','','','','','','',''],
-            'sourceCols' => null,
-            'destCols' => null,
-        ],
-        'event_template' => [
-            'sourceTable' => 'event_template',
-//            'sourceCols' => ['id','','','','','','','','','','','','','','','',''],
-            'sourceCols' => null,
-            'destCols' => null,
-        ],
-    ];
+    protected $tableParams = null;
     /**
      * @var Connection $sourceConnection
      */
@@ -104,9 +69,13 @@ class Importer extends Seeder
      * @return void
      */
     public function import($delayed = false) {
-        $source = $this->getSourceData();
-        $data = $this->prepare($source);
-        $delayed ? $this->insertDelayed($data) : $this->insert($data);
+        if(!$this->tableParams) {
+            $this->command->getOutput()->writeln("<error>Bitte \$tableParams für $this->table Seeder setzen!</error>");
+        } else {
+            $source = $this->getSourceData();
+            $data = $this->prepare($source);
+            $delayed ? $this->insertDelayed($data) : $this->insert($data);
+        }
     }
 
     protected function insert($data)
@@ -142,13 +111,13 @@ class Importer extends Seeder
     private function prepare($source)
     {
         $data = [];
-        if($this->tables[$this->table]['destCols']) {
+        if($this->tableParams['destCols']) {
             $data   = [];
             foreach( $source as $index => $row) {
                 $i = 0;
                 $data[$index] = [];
                 foreach($row as $key => $value) {
-                    $data[$index][$this->tables[$this->table]['destCols'][$i]] = $value;
+                    $data[$index][$this->tableParams['destCols'][$i]] = $value;
                     $i++;
                 }
             }
@@ -163,8 +132,8 @@ class Importer extends Seeder
         Schema::disableForeignKeyConstraints();
         $this->model->truncate();
         $source = $this->sourceConnection
-            ->table($this->tables[$this->table]['sourceTable'])
-            ->select($this->tables[$this->table]['sourceCols'] ?? $this->getTableColumns($this->model))
+            ->table($this->tableParams['sourceTable'])
+            ->select($this->tableParams['sourceCols'] ?? $this->getTableColumns($this->model))
             ->get()
         ;
         $this->count = $source->count();
@@ -172,4 +141,44 @@ class Importer extends Seeder
         return json_decode(json_encode($source), true);
     }
 
+    protected function sanitizeTimeColumn($column)
+    {
+        $data = [];
+        $query = $this->sourceConnection->table($this->table);
+
+        if(0 === $query->where($column, '=', '')->count()) {
+            return null;
+        }
+
+        $query
+            ->select(['id',$column])
+            ->get()
+            ->each(function ($model) use (&$data, $column) {
+                if('' === $model->$column) {
+                    $data[$model->id] = [$column => '19:00:00'];
+                } else {
+                    preg_match('/^([0-9]{2})(:[0-9]{0,2})([a-z ]*)$/i', $model->$column, $matches);
+                    if(count($matches) > 0 && '' !== $matches[1]) {
+                        $newValue = $matches[1];
+                        if('' !== $matches[2]) {
+                            $newValue .= $matches[2];
+                        } else {
+                            $newValue .= ':00';
+                        }
+                        $data[$model->id] = [$column => $newValue];
+                    }
+                }
+            });
+
+        if(count($data) > 0) {
+            $this->model->lockForUpdate();
+            foreach ($data as $id => $item) {
+                $eventTime = $item[$column];
+                $this->sourceConnection
+                    ->update("UPDATE $this->table SET ? = ? where id = ?", [$column, $eventTime, $id])
+                ;
+            }
+            $this->model->lock(false);
+        }
+    }
 }

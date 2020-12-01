@@ -17,7 +17,7 @@ class UpdateAdminUser extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('admin.admin-user.edit', $this->adminUser);
+        return Gate::allows('admin-user.edit', $this->adminUser);
     }
 
     /**

@@ -63,9 +63,10 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.role.create');
+        $this->authorize('role.create');
         return view('admin.role.create', [
-            'permissions'   => Permission::all(['id','name']),
+            'allPermissions' => Permission::all(['id','name']),
+            'myPermissions' => null,
         ]);
     }
 
@@ -102,7 +103,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $this->authorize('admin.role.show', $role);
+        $this->authorize('role.show', $role);
 
         // TODO your code goes here
     }
@@ -116,12 +117,12 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $this->authorize('admin.role.edit', $role);
+        $this->authorize('role.edit', $role);
         $hasPermissions = $role->getAllPermissions();
         return view('admin.role.edit', [
-            'role'          => $role,
-            'permissions'   => Permission::all(['id','name']),
-            'hasPermissions'    => $role->getAllPermissions(),
+            'role'           => $role,
+            'allPermissions' => Permission::all(['id','name']),
+            'myPermissions' => $role->getAllPermissions(),
         ]);
     }
 

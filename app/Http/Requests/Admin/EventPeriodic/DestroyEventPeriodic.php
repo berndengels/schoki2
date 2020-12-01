@@ -14,7 +14,7 @@ class DestroyEventPeriodic extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event-periodic.delete', $this->eventPeriodic);
+        return Gate::allows('event-periodic.delete', $this->eventPeriodic);
     }
 
     /**

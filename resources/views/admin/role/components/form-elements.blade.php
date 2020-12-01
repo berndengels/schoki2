@@ -33,14 +33,14 @@
             id="permissions"
             name="permissions"
             class="form-control"
-            v-model="hasPermissions"
+            v-model="form.permissions"
             placeholder="{{ trans('brackets/admin-ui::admin.forms.select_options') }}"
             label="name"
             track-by="id"
-            :options="permissions"
+            :options="allPermissions"
             :multiple="true"
-            open-direction="bottom">
-        </multiselect>
+            open-direction="bottom"
+        />
         <div v-if="errors.has('permissions')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('permissions') }}</div>
     </div>
 </div>

@@ -14,7 +14,7 @@ class IndexTheme extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.theme.index');
+        return Gate::allows('theme.index');
     }
 
     /**

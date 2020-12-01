@@ -14,7 +14,7 @@ class IndexRole extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.role.index');
+        return Gate::allows('role.index');
     }
 
     /**
@@ -30,7 +30,6 @@ class IndexRole extends FormRequest
             'search' => 'string|nullable',
             'page' => 'integer|nullable',
             'per_page' => 'integer|nullable',
-
         ];
     }
 }

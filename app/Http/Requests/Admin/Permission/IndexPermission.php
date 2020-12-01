@@ -14,7 +14,7 @@ class IndexPermission extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.permission.index');
+        return Gate::allows('permission.index');
     }
 
     /**

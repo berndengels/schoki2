@@ -14,7 +14,7 @@ class BulkDestroyEventPeriodic extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event-periodic.bulk-delete');
+        return Gate::allows('event-periodic.bulk-delete');
     }
 
     /**

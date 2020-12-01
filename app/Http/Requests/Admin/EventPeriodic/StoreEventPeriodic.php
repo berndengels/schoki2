@@ -15,7 +15,7 @@ class StoreEventPeriodic extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event-periodic.create');
+        return Gate::allows('event-periodic.create');
     }
 
     /**
@@ -40,7 +40,7 @@ class StoreEventPeriodic extends FormRequest
             'event_time' => ['required', 'date_format:H:i:s'],
             'price' => ['nullable', 'numeric'],
             'is_published' => ['required', 'boolean'],
-            
+
         ];
     }
 

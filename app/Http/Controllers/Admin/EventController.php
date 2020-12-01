@@ -88,7 +88,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.event.create');
+        $this->authorize('event.create');
 
         return view('admin.event.create', [
             'categories'    => Category::all(['id', 'name']),
@@ -125,7 +125,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        $this->authorize('admin.event.show', $event);
+        $this->authorize('event.show', $event);
 
         // TODO your code goes here
     }
@@ -139,8 +139,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        $this->authorize('admin.event.edit', $event);
-
+        $this->authorize('event.edit', $event);
         return view('admin.event.edit', [
             'event'         => $event,
             'categories'    => Category::all(['id', 'name']),

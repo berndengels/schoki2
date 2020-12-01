@@ -63,7 +63,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.permission.create');
+        $this->authorize('permission.create');
 
         return view('admin.permission.create');
     }
@@ -98,7 +98,7 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission)
     {
-        $this->authorize('admin.permission.show', $permission);
+        $this->authorize('permission.show', $permission);
 
         // TODO your code goes here
     }
@@ -112,7 +112,7 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        $this->authorize('admin.permission.edit', $permission);
+        $this->authorize('permission.edit', $permission);
 
 
         return view('admin.permission.edit', [

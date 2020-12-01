@@ -66,7 +66,7 @@ class EventTemplateController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.event-template.create');
+        $this->authorize('event-template.create');
 
         return view('admin.event-template.create');
     }
@@ -101,7 +101,7 @@ class EventTemplateController extends Controller
      */
     public function show(EventTemplate $eventTemplate)
     {
-        $this->authorize('admin.event-template.show', $eventTemplate);
+        $this->authorize('event-template.show', $eventTemplate);
 
         // TODO your code goes here
     }
@@ -115,7 +115,7 @@ class EventTemplateController extends Controller
      */
     public function edit(EventTemplate $eventTemplate)
     {
-        $this->authorize('admin.event-template.edit', $eventTemplate);
+        $this->authorize('event-template.edit', $eventTemplate);
 
 
         return view('admin.event-template.edit', [

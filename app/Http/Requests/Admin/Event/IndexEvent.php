@@ -14,7 +14,7 @@ class IndexEvent extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event.index');
+        return Gate::allows('event.index');
     }
 
     /**

@@ -15,7 +15,7 @@ class StoreCategory extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.category.create');
+        return Gate::allows('category.create');
     }
 
     /**

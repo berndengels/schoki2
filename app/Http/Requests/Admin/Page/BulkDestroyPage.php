@@ -14,7 +14,7 @@ class BulkDestroyPage extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.page.bulk-delete');
+        return Gate::allows('page.bulk-delete');
     }
 
     /**

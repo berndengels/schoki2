@@ -19,7 +19,7 @@ class StorePage extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.page.create');
+        return Gate::allows('page.create');
     }
 
     /**

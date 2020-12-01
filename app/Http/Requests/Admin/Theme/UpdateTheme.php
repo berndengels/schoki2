@@ -15,7 +15,7 @@ class UpdateTheme extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.theme.edit', $this->theme);
+        return Gate::allows('theme.edit', $this->theme);
     }
 
     /**

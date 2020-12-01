@@ -15,7 +15,7 @@ class StoreTheme extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.theme.create');
+        return Gate::allows('theme.create');
     }
 
     /**

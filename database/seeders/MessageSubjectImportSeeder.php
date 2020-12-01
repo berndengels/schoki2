@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 
 class MessageSubjectImportSeeder extends Seeder
 {
+    protected $tableParams = [
+    ];
     /**
      * Run the database seeds.
      *

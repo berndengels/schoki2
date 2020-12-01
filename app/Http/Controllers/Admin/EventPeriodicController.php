@@ -66,7 +66,7 @@ class EventPeriodicController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.event-periodic.create');
+        $this->authorize('event-periodic.create');
 
         return view('admin.event-periodic.create');
     }
@@ -101,7 +101,7 @@ class EventPeriodicController extends Controller
      */
     public function show(EventPeriodic $eventPeriodic)
     {
-        $this->authorize('admin.event-periodic.show', $eventPeriodic);
+        $this->authorize('event-periodic.show', $eventPeriodic);
 
         // TODO your code goes here
     }
@@ -115,7 +115,7 @@ class EventPeriodicController extends Controller
      */
     public function edit(EventPeriodic $eventPeriodic)
     {
-        $this->authorize('admin.event-periodic.edit', $eventPeriodic);
+        $this->authorize('event-periodic.edit', $eventPeriodic);
 
 
         return view('admin.event-periodic.edit', [

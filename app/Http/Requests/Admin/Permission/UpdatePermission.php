@@ -15,7 +15,7 @@ class UpdatePermission extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.permission.edit', $this->permission);
+        return Gate::allows('permission.edit', $this->permission);
     }
 
     /**
@@ -28,7 +28,7 @@ class UpdatePermission extends FormRequest
         return [
             'name' => ['sometimes', 'string'],
             'guard_name' => ['sometimes', 'string'],
-            
+
         ];
     }
 

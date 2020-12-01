@@ -14,7 +14,7 @@ class DestroyTheme extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.theme.delete', $this->theme);
+        return Gate::allows('theme.delete', $this->theme);
     }
 
     /**

@@ -14,7 +14,7 @@ class BulkDestroyCategory extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.category.bulk-delete');
+        return Gate::allows('category.bulk-delete');
     }
 
     /**

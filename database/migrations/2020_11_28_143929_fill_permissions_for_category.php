@@ -28,13 +28,13 @@ class FillPermissionsForCategory extends Migration
         $this->guardName = config('admin-auth.defaults.guard');
 
         $permissions = collect([
-            'admin.category',
-            'admin.category.index',
-            'admin.category.create',
-            'admin.category.show',
-            'admin.category.edit',
-            'admin.category.delete',
-            'admin.category.bulk-delete',
+            'category',
+            'category.index',
+            'category.create',
+            'category.show',
+            'category.edit',
+            'category.delete',
+            'category.bulk-delete',
         ]);
 
         //Add New permissions
@@ -50,7 +50,7 @@ class FillPermissionsForCategory extends Migration
         //Role should already exists
         $this->roles = [
             [
-                'name' => 'Administrator',
+                'name' => 'Booker',
                 'guard_name' => $this->guardName,
                 'permissions' => $permissions,
             ],
@@ -128,7 +128,7 @@ class FillPermissionsForCategory extends Migration
             'model_has_roles' => 'model_has_roles',
             'role_has_permissions' => 'role_has_permissions',
         ]);
-        
+
         DB::transaction(function () use ($tableNames){
             foreach ($this->permissions as $permission) {
                 $permissionItem = DB::table($tableNames['permissions'])->where([

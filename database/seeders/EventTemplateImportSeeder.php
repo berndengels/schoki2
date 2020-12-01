@@ -6,6 +6,11 @@ use Database\Seeders\Inc\Importer;
 
 class EventTemplateImportSeeder extends Importer
 {
+    protected $tableParams = [
+        'sourceTable' => 'event_template',
+        'sourceCols' => null,
+        'destCols' => null,
+    ];
     /**
      * Run the database seeds.
      *

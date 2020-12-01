@@ -8,8 +8,9 @@ use App\Http\Requests\Admin\AdminUser\ImpersonalLoginAdminUser;
 use App\Http\Requests\Admin\AdminUser\IndexAdminUser;
 use App\Http\Requests\Admin\AdminUser\StoreAdminUser;
 use App\Http\Requests\Admin\AdminUser\UpdateAdminUser;
-use Brackets\AdminAuth\Models\AdminUser;
-use Spatie\Permission\Models\Role;
+use App\Models\Permission;
+use App\Models\AdminUser;
+use App\Models\Role;
 use Brackets\AdminAuth\Activation\Facades\Activation;
 use Brackets\AdminAuth\Services\ActivationService;
 use Brackets\AdminListing\Facades\AdminListing;
@@ -53,6 +54,24 @@ class AdminUsersController extends Controller
      */
     public function index(IndexAdminUser $request)
     {
+/*
+        $adminUsers = AdminUser::all();
+        $role = Role::findByName('Booker');
+        $permissions = Permission::query()
+            ->where('name','NOT LIKE','admin%')
+            ->where('name','NOT LIKE','role%')
+            ->where('name','NOT LIKE','permission%')
+            ->where('name','NOT LIKE','%.%')
+            ->get()
+        ;
+        foreach ($adminUsers as $user) {
+            if($user->email === 'engels@goldenacker.de') {
+                continue;
+            }
+            $role->givePermissionTo($permissions);
+//            $user->assignRole($role);
+        }
+*/
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(AdminUser::class)->processRequestAndGet(
             // pass the request with params
@@ -83,11 +102,12 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.admin-user.create');
+        $this->authorize('admin-user.create');
 
         return view('admin.admin-user.create', [
             'activation' => Config::get('admin-auth.activation_enabled'),
-            'roles' => Role::where('guard_name', $this->guard)->get(),
+//            'roles'         => Role::where('guard_name', $this->guard)->get(),
+            'roles'         => Role::all(),
         ]);
     }
 
@@ -124,8 +144,7 @@ class AdminUsersController extends Controller
      */
     public function show(AdminUser $adminUser)
     {
-        $this->authorize('admin.admin-user.show', $adminUser);
-
+        $this->authorize('admin-user.show', $adminUser);
         // TODO your code goes here
     }
 
@@ -138,13 +157,14 @@ class AdminUsersController extends Controller
      */
     public function edit(AdminUser $adminUser)
     {
-        $this->authorize('admin.admin-user.edit', $adminUser);
+        $this->authorize('admin-user.edit', $adminUser);
 
         $adminUser->load('roles');
         return view('admin.admin-user.edit', [
             'adminUser'     => $adminUser,
             'activation'    => Config::get('admin-auth.activation_enabled'),
-            'roles'         => Role::where('guard_name', $this->guard)->get(),
+//            'roles'         => Role::where('guard_name', $this->guard)->get(),
+            'roles'         => Role::all(),
         ]);
     }
 

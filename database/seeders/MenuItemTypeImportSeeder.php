@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 
 class MenuItemTypeImportSeeder extends Seeder
 {
+    protected $tableParams = [
+    ];
     /**
      * Run the database seeds.
      *

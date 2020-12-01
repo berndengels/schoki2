@@ -15,7 +15,7 @@ class StorePermission extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.permission.create');
+        return Gate::allows('permission.create');
     }
 
     /**
@@ -28,7 +28,7 @@ class StorePermission extends FormRequest
         return [
             'name' => ['required', 'string'],
             'guard_name' => ['required', 'string'],
-            
+
         ];
     }
 

@@ -14,7 +14,7 @@ class DestroyPage extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.page.delete', $this->page);
+        return Gate::allows('page.delete', $this->page);
     }
 
     /**

@@ -3,15 +3,15 @@ import AppForm from '../app-components/Form/AppForm';
 Vue.component('role-form', {
     mixins: [AppForm],
     props: [
-        'permissions',
-        'hasPermissions',
+        'allPermissions',
+        'myPermissions',
     ],
     data: function() {
         return {
             form: {
                 name: '',
                 guard_name: '',
-                permissions: [],
+                permissions: this.myPermissions ?? [],
             }
         }
     }

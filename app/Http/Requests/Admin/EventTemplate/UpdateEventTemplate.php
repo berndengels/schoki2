@@ -15,7 +15,7 @@ class UpdateEventTemplate extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event-template.edit', $this->eventTemplate);
+        return Gate::allows('event-template.edit', $this->eventTemplate);
     }
 
     /**
@@ -34,7 +34,7 @@ class UpdateEventTemplate extends FormRequest
             'subtitle' => ['sometimes', 'string'],
             'description' => ['sometimes', 'string'],
             'links' => ['sometimes', 'string'],
-            
+
         ];
     }
 

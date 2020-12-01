@@ -14,7 +14,7 @@ class IndexPage extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.page.index');
+        return Gate::allows('page.index');
     }
 
     /**

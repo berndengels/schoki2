@@ -15,7 +15,7 @@ class UpdateRole extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.role.edit', $this->role);
+        return Gate::allows('role.edit', $this->role);
     }
 
     /**

@@ -14,7 +14,7 @@ class DestroyCategory extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.category.delete', $this->category);
+        return Gate::allows('category.delete', $this->category);
     }
 
     /**

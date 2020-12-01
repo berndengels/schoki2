@@ -28,13 +28,13 @@ class FillPermissionsForEventTemplate extends Migration
         $this->guardName = config('admin-auth.defaults.guard');
 
         $permissions = collect([
-            'admin.event-template',
-            'admin.event-template.index',
-            'admin.event-template.create',
-            'admin.event-template.show',
-            'admin.event-template.edit',
-            'admin.event-template.delete',
-            'admin.event-template.bulk-delete',
+            'event-template',
+            'event-template.index',
+            'event-template.create',
+            'event-template.show',
+            'event-template.edit',
+            'event-template.delete',
+            'event-template.bulk-delete',
         ]);
 
         //Add New permissions
@@ -50,7 +50,7 @@ class FillPermissionsForEventTemplate extends Migration
         //Role should already exists
         $this->roles = [
             [
-                'name' => 'Administrator',
+                'name' => 'Booker',
                 'guard_name' => $this->guardName,
                 'permissions' => $permissions,
             ],
@@ -128,7 +128,7 @@ class FillPermissionsForEventTemplate extends Migration
             'model_has_roles' => 'model_has_roles',
             'role_has_permissions' => 'role_has_permissions',
         ]);
-        
+
         DB::transaction(function () use ($tableNames){
             foreach ($this->permissions as $permission) {
                 $permissionItem = DB::table($tableNames['permissions'])->where([

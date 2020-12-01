@@ -1,4 +1,4 @@
-@extends('brackets/admin-ui::admin.layout.default')
+@extends('admin.layout.default')
 
 @section('title', trans('admin.role.actions.edit', ['name' => $role->name]))
 
@@ -10,8 +10,8 @@
             <role-form
                 :action="'{{ $role->resource_url }}'"
                 :data="{{ $role->toJson() }}"
-                :permissions="{{ $permissions->toJson() }}"
-                :has-permissions="{{ $hasPermissions->toJson() }}"
+                :all-permissions="{{ $allPermissions->toJson() }}"
+                :my-permissions="{{ $myPermissions->toJson() }}"
                 v-cloak
                 inline-template>
 

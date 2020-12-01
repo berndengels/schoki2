@@ -14,7 +14,7 @@ class BulkDestroyPermission extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.permission.bulk-delete');
+        return Gate::allows('permission.bulk-delete');
     }
 
     /**

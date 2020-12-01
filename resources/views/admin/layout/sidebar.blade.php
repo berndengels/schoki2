@@ -5,21 +5,31 @@
             @can('event.index')
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/events') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.event.title') }}</a></li>
             @endcan
-            @can('admin.event-template.index')
+            @can('event-template.index')
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/event-templates') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.event-template.title') }}</a></li>
             @endcan
-            @can('admin.event-periodic.index')
+            @can('event-periodic.index')
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/event-periodics') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.event-periodic.title') }}</a></li>
             @endcan
             @can('category.index')
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/categories') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.category.title') }}</a></li>
             @endcan
-            @can('admin.theme.index')
+            @can('theme.index')
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/themes') }}"><i class="nav-icon icon-ghost"></i> {{ trans('admin.theme.title') }}</a></li>
             @endcan
-            @can('admin.page.index')
+            @can('page.index')
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/pages') }}"><i class="nav-icon icon-diamond"></i> {{ trans('admin.page.title') }}</a></li>
             @endcan
+
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/customers') }}"><i class="nav-icon icon-ghost"></i> {{ __('Customers') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/address-categories') }}"><i class="nav-icon icon-drop"></i> {{ trans('admin.address-category.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/addresses') }}"><i class="nav-icon icon-globe"></i> {{ trans('admin.address.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/music-styles') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.music-style.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/messages') }}"><i class="nav-icon icon-book-open"></i> {{ trans('admin.message.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/news') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.news.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/menus') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.menu.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/newsletter-statuses') }}"><i class="nav-icon icon-drop"></i> {{ trans('admin.newsletter-status.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/newsletters') }}"><i class="nav-icon icon-flag"></i> {{ trans('admin.newsletter.title') }}</a></li>
            {{-- Do not delete me :) I'm used for auto-generation menu items --}}
 
             <li class="nav-title">{{ trans('brackets/admin-ui::admin.sidebar.settings') }}</li>

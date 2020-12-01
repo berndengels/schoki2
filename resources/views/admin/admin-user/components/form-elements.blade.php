@@ -88,7 +88,6 @@
             track-by="id"
             :options="{{ $roles->toJson() }}"
             :multiple="true"
-            limit="2"
             open-direction="bottom">
         </multiselect>
         <div v-if="errors.has('roles')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('roles') }}</div>

@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 
 class PageImportSeeder extends Seeder
 {
+    protected $tableParams = [
+    ];
     /**
      * Run the database seeds.
      *

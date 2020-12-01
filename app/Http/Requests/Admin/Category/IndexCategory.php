@@ -14,7 +14,7 @@ class IndexCategory extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.category.index');
+        return Gate::allows('category.index');
     }
 
     /**

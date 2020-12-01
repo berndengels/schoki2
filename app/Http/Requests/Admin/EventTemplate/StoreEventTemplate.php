@@ -15,7 +15,7 @@ class StoreEventTemplate extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event-template.create');
+        return Gate::allows('event-template.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class StoreEventTemplate extends FormRequest
             'subtitle' => ['required', 'string'],
             'description' => ['required', 'string'],
             'links' => ['required', 'string'],
-            
+
         ];
     }
 

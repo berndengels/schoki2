@@ -6,6 +6,11 @@ use Illuminate\Database\Seeder;
 
 class AddressImportSeeder extends Seeder
 {
+    protected $tableParams = [
+        'sourceTable' => 'address',
+        'sourceCols' => null,
+        'destCols' => null,
+    ];
     /**
      * Run the database seeds.
      *

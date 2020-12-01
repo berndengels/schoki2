@@ -14,7 +14,7 @@ class BulkDestroyTheme extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.theme.bulk-delete');
+        return Gate::allows('theme.bulk-delete');
     }
 
     /**

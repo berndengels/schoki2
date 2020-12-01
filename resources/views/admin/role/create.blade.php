@@ -1,4 +1,4 @@
-@extends('brackets/admin-ui::admin.layout.default')
+@extends('admin.layout.default')
 
 @section('title', trans('admin.role.actions.create'))
 
@@ -11,6 +11,7 @@
         <role-form
             :action="'{{ url('admin/roles') }}'"
             :permissions="{{ $permissions->toJson() }}"
+            :has-permissions="[]"
             v-cloak
             inline-template>
 

@@ -18,7 +18,7 @@ class UpdatePage extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.page.edit', $this->page);
+        return Gate::allows('page.edit', $this->page);
     }
 
     /**

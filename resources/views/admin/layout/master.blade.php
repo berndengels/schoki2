@@ -12,20 +12,19 @@
 	{{-- TODO translatable suffix --}}
     <title>@yield('title', 'Craftable') - {{ trans('brackets/admin-ui::admin.page_title_suffix') }}</title>
 
-	@include('brackets/admin-ui::admin.partials.main-styles')
+	@include('admin.partials.main-styles')
     @include('admin.partials.favicon')
     @yield('styles')
 </head>
 
 <body class="app header-fixed sidebar-fixed sidebar-lg-show">
+
     @yield('header')
-
     @yield('content')
-
     @yield('footer')
 
-    @include('brackets/admin-ui::admin.partials.wysiwyg-svgs')
-    @include('brackets/admin-ui::admin.partials.main-bottom-scripts')
+    @include('admin.partials.wysiwyg-svgs')
+    @include('admin.partials.main-bottom-scripts')
     @yield('bottom-scripts')
 </body>
 

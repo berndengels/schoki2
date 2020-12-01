@@ -15,8 +15,6 @@ Vue.component('event-listing', {
             },
         }
     },
-    computed: {
-    },
     watch: {
         showCategoryFilter: function (newVal, oldVal) {
             this.categorySelect = [];

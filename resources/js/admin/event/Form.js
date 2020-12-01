@@ -10,6 +10,7 @@ Vue.component('event-form', {
         return {
             category: '',
             theme: '',
+            mediaCollections: ['images'],
             form: {
                 theme_id:  '',
                 category_id:  '',

@@ -28,13 +28,13 @@ class FillPermissionsForEventPeriodic extends Migration
         $this->guardName = config('admin-auth.defaults.guard');
 
         $permissions = collect([
-            'admin.event-periodic',
-            'admin.event-periodic.index',
-            'admin.event-periodic.create',
-            'admin.event-periodic.show',
-            'admin.event-periodic.edit',
-            'admin.event-periodic.delete',
-            'admin.event-periodic.bulk-delete',
+            'event-periodic',
+            'event-periodic.index',
+            'event-periodic.create',
+            'event-periodic.show',
+            'event-periodic.edit',
+            'event-periodic.delete',
+            'event-periodic.bulk-delete',
         ]);
 
         //Add New permissions
@@ -50,7 +50,7 @@ class FillPermissionsForEventPeriodic extends Migration
         //Role should already exists
         $this->roles = [
             [
-                'name' => 'Administrator',
+                'name' => 'Booker',
                 'guard_name' => $this->guardName,
                 'permissions' => $permissions,
             ],
@@ -128,7 +128,7 @@ class FillPermissionsForEventPeriodic extends Migration
             'model_has_roles' => 'model_has_roles',
             'role_has_permissions' => 'role_has_permissions',
         ]);
-        
+
         DB::transaction(function () use ($tableNames){
             foreach ($this->permissions as $permission) {
                 $permissionItem = DB::table($tableNames['permissions'])->where([

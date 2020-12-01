@@ -18,7 +18,7 @@ class UpdateEvent extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event.edit', $this->event);
+        return Gate::allows('event.edit', $this->event);
     }
 
     /**
@@ -39,7 +39,6 @@ class UpdateEvent extends FormRequest
             'is_published' => ['required', 'boolean'],
             'links' => ['nullable', 'string'],
             'subtitle' => '',
-            'is_periodic' => '',
         ];
     }
 

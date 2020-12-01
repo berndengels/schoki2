@@ -14,7 +14,7 @@ class DestroyEvent extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event.delete', $this->event);
+        return Gate::allows('event.delete', $this->event);
     }
 
     /**

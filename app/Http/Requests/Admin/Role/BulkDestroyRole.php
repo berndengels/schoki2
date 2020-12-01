@@ -14,7 +14,7 @@ class BulkDestroyRole extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.role.bulk-delete');
+        return Gate::allows('role.bulk-delete');
     }
 
     /**

@@ -14,7 +14,7 @@ class BulkDestroyEvent extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event.bulk-delete');
+        return Gate::allows('event.bulk-delete');
     }
 
     /**

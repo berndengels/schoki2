@@ -66,7 +66,7 @@ class ThemeController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.theme.create');
+        $this->authorize('theme.create');
 
         return view('admin.theme.create');
     }
@@ -101,7 +101,7 @@ class ThemeController extends Controller
      */
     public function show(Theme $theme)
     {
-        $this->authorize('admin.theme.show', $theme);
+        $this->authorize('theme.show', $theme);
 
         // TODO your code goes here
     }
@@ -115,7 +115,7 @@ class ThemeController extends Controller
      */
     public function edit(Theme $theme)
     {
-        $this->authorize('admin.theme.edit', $theme);
+        $this->authorize('theme.edit', $theme);
 
 
         return view('admin.theme.edit', [

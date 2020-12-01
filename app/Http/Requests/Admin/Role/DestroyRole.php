@@ -14,7 +14,7 @@ class DestroyRole extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.role.delete', $this->role);
+        return Gate::allows('role.delete', $this->role);
     }
 
     /**

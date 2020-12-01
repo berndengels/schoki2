@@ -14,7 +14,7 @@ class DestroyPermission extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.permission.delete', $this->permission);
+        return Gate::allows('permission.delete', $this->permission);
     }
 
     /**

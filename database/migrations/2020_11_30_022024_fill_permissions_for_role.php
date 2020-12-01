@@ -28,13 +28,13 @@ class FillPermissionsForRole extends Migration
         $this->guardName = config('admin-auth.defaults.guard');
 
         $permissions = collect([
-            'admin.role',
-            'admin.role.index',
-            'admin.role.create',
-            'admin.role.show',
-            'admin.role.edit',
-            'admin.role.delete',
-            'admin.role.bulk-delete',
+            'role',
+            'role.index',
+            'role.create',
+            'role.show',
+            'role.edit',
+            'role.delete',
+            'role.bulk-delete',
         ]);
 
         //Add New permissions
@@ -128,7 +128,7 @@ class FillPermissionsForRole extends Migration
             'model_has_roles' => 'model_has_roles',
             'role_has_permissions' => 'role_has_permissions',
         ]);
-        
+
         DB::transaction(function () use ($tableNames){
             foreach ($this->permissions as $permission) {
                 $permissionItem = DB::table($tableNames['permissions'])->where([

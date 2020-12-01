@@ -28,13 +28,13 @@ class FillPermissionsForTheme extends Migration
         $this->guardName = config('admin-auth.defaults.guard');
 
         $permissions = collect([
-            'admin.theme',
-            'admin.theme.index',
-            'admin.theme.create',
-            'admin.theme.show',
-            'admin.theme.edit',
-            'admin.theme.delete',
-            'admin.theme.bulk-delete',
+            'theme',
+            'theme.index',
+            'theme.create',
+            'theme.show',
+            'theme.edit',
+            'theme.delete',
+            'theme.bulk-delete',
         ]);
 
         //Add New permissions
@@ -50,7 +50,7 @@ class FillPermissionsForTheme extends Migration
         //Role should already exists
         $this->roles = [
             [
-                'name' => 'Administrator',
+                'name' => 'Booker',
                 'guard_name' => $this->guardName,
                 'permissions' => $permissions,
             ],
@@ -128,7 +128,7 @@ class FillPermissionsForTheme extends Migration
             'model_has_roles' => 'model_has_roles',
             'role_has_permissions' => 'role_has_permissions',
         ]);
-        
+
         DB::transaction(function () use ($tableNames){
             foreach ($this->permissions as $permission) {
                 $permissionItem = DB::table($tableNames['permissions'])->where([

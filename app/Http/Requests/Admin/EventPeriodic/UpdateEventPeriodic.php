@@ -15,7 +15,7 @@ class UpdateEventPeriodic extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event-periodic.edit', $this->eventPeriodic);
+        return Gate::allows('event-periodic.edit', $this->eventPeriodic);
     }
 
     /**
@@ -40,7 +40,7 @@ class UpdateEventPeriodic extends FormRequest
             'event_time' => ['sometimes', 'date_format:H:i:s'],
             'price' => ['nullable', 'numeric'],
             'is_published' => ['sometimes', 'boolean'],
-            
+
         ];
     }
 

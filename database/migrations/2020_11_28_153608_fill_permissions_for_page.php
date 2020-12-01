@@ -28,13 +28,13 @@ class FillPermissionsForPage extends Migration
         $this->guardName = config('admin-auth.defaults.guard');
 
         $permissions = collect([
-            'admin.page',
-            'admin.page.index',
-            'admin.page.create',
-            'admin.page.show',
-            'admin.page.edit',
-            'admin.page.delete',
-            'admin.page.bulk-delete',
+            'page',
+            'page.index',
+            'page.create',
+            'page.show',
+            'page.edit',
+            'page.delete',
+            'page.bulk-delete',
         ]);
 
         //Add New permissions
@@ -50,7 +50,7 @@ class FillPermissionsForPage extends Migration
         //Role should already exists
         $this->roles = [
             [
-                'name' => 'Administrator',
+                'name' => 'Booker',
                 'guard_name' => $this->guardName,
                 'permissions' => $permissions,
             ],
@@ -128,7 +128,7 @@ class FillPermissionsForPage extends Migration
             'model_has_roles' => 'model_has_roles',
             'role_has_permissions' => 'role_has_permissions',
         ]);
-        
+
         DB::transaction(function () use ($tableNames){
             foreach ($this->permissions as $permission) {
                 $permissionItem = DB::table($tableNames['permissions'])->where([

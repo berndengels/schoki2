@@ -14,7 +14,7 @@ class IndexEventPeriodic extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event-periodic.index');
+        return Gate::allows('event-periodic.index');
     }
 
     /**

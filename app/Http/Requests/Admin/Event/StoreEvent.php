@@ -18,7 +18,7 @@ class StoreEvent extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.event.create');
+        return Gate::allows('event.create');
     }
 
     /**
@@ -39,7 +39,6 @@ class StoreEvent extends FormRequest
             'is_published' => ['required', 'boolean'],
             'links' => ['nullable', 'string'],
             'subtitle' => '',
-            'is_periodic' => '',
         ];
     }
 

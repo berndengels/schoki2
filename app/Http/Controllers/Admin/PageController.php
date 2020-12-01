@@ -71,7 +71,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.page.create');
+        $this->authorize('page.create');
 
         return view('admin.page.create');
     }
@@ -106,7 +106,7 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
-        $this->authorize('admin.page.show', $page);
+        $this->authorize('page.show', $page);
 
         // TODO your code goes here
     }
@@ -120,7 +120,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        $this->authorize('admin.page.edit', $page);
+        $this->authorize('page.edit', $page);
 
 
         return view('admin.page.edit', [

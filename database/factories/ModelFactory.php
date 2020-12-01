@@ -180,3 +180,116 @@ $factory->define(App\Models\Permission::class, static function (Faker\Generator 
 
     ];
 });
+/** @var  Factory $factory */
+$factory->define(App\Models\Customer::class, static function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->firstName,
+        'email' => $faker->email,
+        'email_verified_at' => $faker->dateTime,
+        'password' => bcrypt($faker->password),
+        'remember_token' => null,
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+        'stripe_id' => $faker->sentence,
+        'card_brand' => $faker->sentence,
+        'card_last_four' => $faker->sentence,
+        'trial_ends_at' => $faker->dateTime,
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\AddressCategory::class, static function (Faker\Generator $faker) {
+    return [
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\Address::class, static function (Faker\Generator $faker) {
+    return [
+        'address_category_id' => $faker->randomNumber(5),
+        'email' => $faker->email,
+        'token' => $faker->sentence,
+        'info_on_changes' => $faker->boolean(),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\MusicStyle::class, static function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->firstName,
+        'slug' => $faker->unique()->slug,
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\Message::class, static function (Faker\Generator $faker) {
+    return [
+        'music_style_id' => $faker->randomNumber(5),
+        'email' => $faker->email,
+        'name' => $faker->firstName,
+        'message' => $faker->text(),
+        'created_at' => $faker->dateTime,
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\News::class, static function (Faker\Generator $faker) {
+    return [
+        'end_date' => $faker->date(),
+        'title' => $faker->sentence,
+        'text' => $faker->text(),
+        'created_by' => $faker->randomNumber(5),
+        'updated_by' => $faker->randomNumber(5),
+        'show_item' => $faker->boolean(),
+        'is_published' => $faker->boolean(),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\Menu::class, static function (Faker\Generator $faker) {
+    return [
+        'parent_id' => $faker->randomNumber(5),
+        'menu_item_type_id' => $faker->randomNumber(5),
+        'name' => $faker->firstName,
+        'icon' => $faker->sentence,
+        'fa_icon' => $faker->sentence,
+        'url' => $faker->sentence,
+        'lft' => $faker->randomNumber(5),
+        'rgt' => $faker->randomNumber(5),
+        'lvl' => $faker->randomNumber(5),
+        'api_enabled' => $faker->boolean(),
+        'is_published' => $faker->boolean(),
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\NewsletterStatus::class, static function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->firstName,
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\Newsletter::class, static function (Faker\Generator $faker) {
+    return [
+        'tag_id' => $faker->randomNumber(5),
+        'created_by' => $faker->randomNumber(5),
+        'updated_by' => $faker->randomNumber(5),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+
+
+    ];
+});
