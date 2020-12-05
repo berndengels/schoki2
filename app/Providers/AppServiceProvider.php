@@ -54,5 +54,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('inp.submit', Submit::class);
         Blade::component('inp.textarea', Textarea::class);
         Blade::component('inp.select', Select::class);
+        Blade::extend(function($value) {
+            return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
+        });
     }
 }

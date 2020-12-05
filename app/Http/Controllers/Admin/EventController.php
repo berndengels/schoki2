@@ -13,10 +13,12 @@ use App\Models\Category;
 use App\Models\Event;
 use App\Models\Theme;
 use Brackets\AdminListing\Facades\AdminListing;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -56,11 +58,12 @@ class EventController extends Controller
             // set columns to searchIn
             ['id', 'title', 'subtitle', 'description', 'links'],
 
-            function ($query) use ($request) {
-                $query->with(['category','createdBy','updatedBy']);
+            function (Builder $query) use ($request) {
+                $query->with(['category','theme','createdBy','updatedBy']);
                 if($request->has('categories')){
                     $query->whereIn('category_id', $request->get('categories'));
                 }
+                $query->orderBy('event_date', 'DESC');
             }
         );
 

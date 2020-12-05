@@ -35,9 +35,9 @@ class StoreEvent extends FormRequest
             'description' => ['required', 'string'],
             'event_date' => ['required', 'date'],
             'event_time' => ['required', 'date_format:H:i:s'],
-            'price' => ['nullable', 'decimal'],
             'is_published' => ['required', 'boolean'],
-            'links' => ['nullable', 'string'],
+            'price' => '',
+            'links' => '',
             'subtitle' => '',
         ];
     }

@@ -35,9 +35,9 @@ class UpdateEvent extends FormRequest
             'description' => ['required', 'string'],
             'event_date' => ['required', 'date'],
             'event_time' => ['required', 'date_format:H:i:s'],
-            'price' => ['nullable', 'numeric'],
             'is_published' => ['required', 'boolean'],
-            'links' => ['nullable', 'string'],
+            'price' => '',
+            'links' => '',
             'subtitle' => '',
         ];
     }

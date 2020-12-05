@@ -470,3 +470,4 @@ Route::get('/logout', function() {
     Session::invalidate();
     return redirect()->route('public.events');
 });
+

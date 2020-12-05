@@ -32,15 +32,14 @@
     </div>
 
 </div>
-
 <div id="{{ $domID }}" class="eventBody collapse col-12 mt-0 pt-0">
     @if($event->getImages()->count() === 1)
         {? $img = $event->getImages()->first() ?}
         <div class="col-12 text-center w-100 m-0 p-0 imageWrapper">
-            <img src="/media/images/{{ $img->internal_filename }}"
+            <img src="{{ asset($img->getUrl()) }}"
                  class="w-auto m-auto"
-                 title="{{ $img->title }}"
-                 alt="{{ $img->title }}"
+                 title=""
+                 alt=""
             >
         </div>
     @elseif ($event->getImages()->count() > 1 )
@@ -59,16 +58,11 @@
             <div class="carousel-inner text-center col-12 w-100 m-0 p-0">
                 @foreach($event->getImages() as $index => $img)
                     <div class="carousel-item w-100 m-0 p-0 @if($index == 0) active @endif">
-                        <img src="/media/images/{{ $img->internal_filename }}"
+                        <img src="{{ asset($img->getUrl()) }}"
                              class="w-auto m-auto"
-                             title="{{ $img->title }}"
-                             alt="{{ $img->title }}"
+                             title=""
+                             alt=""
                         >
-                        @if('' != $img->title)
-                        <div class="carousel-caption">
-                            <h3>{{ $img->title }}</h3>
-                        </div>
-                        @endif
                     </div>
                 @endforeach()
             </div>

@@ -9,9 +9,10 @@
 
 namespace App\Entities;
 
+use phpDocumentor\Reflection\Types\This;
+
 /**
  * Class ImageEntity
  */
 class ImageEntity extends MediaEntity {
-
 }

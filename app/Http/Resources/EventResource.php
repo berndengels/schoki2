@@ -6,6 +6,8 @@ use App\Entities\ImageEntity;
 use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\MediaLibrary\Conversions\ImageGenerators\Image;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EventResource extends JsonResource
 {
@@ -26,12 +28,16 @@ class EventResource extends JsonResource
 
 		if($images && $images->count()) {
 			/**
-			 * @var $image Images
+			 * @var $image Media
 			 */
 			foreach($images as $image) {
 				$img = new ImageEntity();
 				$img
-					->setInternalName($image->url)
+                    ->setId($image->getId())
+                    ->setFileName($image->getFileName())
+                    ->setSize($image->getSize())
+                    ->setUrl($image->getUrl())
+                    ->setThumbUrl($image->getThumbUrl())
 				;
 				$imageEntities[] = $img->toObject();
 			}

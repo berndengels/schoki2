@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use Eloquent;
+use Carbon\Carbon;
 use App\Helper\MyDate;
 use App\Models\Ext\HasAdminUser;
 use App\Repositories\EventEntityRepository;
@@ -9,17 +11,10 @@ use Brackets\Media\HasMedia\AutoProcessMediaTrait;
 use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
 use Brackets\Media\HasMedia\HasMediaThumbsTrait;
 use Brackets\Media\HasMedia\ProcessMediaTrait;
-use Carbon\Carbon;
-use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\Conversions\Conversion;
 use Spatie\MediaLibrary\HasMedia as HasMediaAlias;
-use Spatie\MediaLibrary\MediaCollections\FileAdder;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -78,6 +73,7 @@ class Event extends Model implements HasMediaAlias
     use HasMediaCollectionsTrait;
     use HasMediaThumbsTrait;
 
+    private $mediaName = 'images';
     protected $table = 'event';
     protected $fillable = [
         'title',
@@ -94,7 +90,7 @@ class Event extends Model implements HasMediaAlias
         'updated_by',
     ];
     protected $dates = ['created_at', 'updated_at', 'event_date'];
-    protected $appends = ['resource_url','images'];
+    protected $appends = ['resource_url','images','thumbnails','mediaName'];
 
     public function setEventDateAttribute( $value ) {
         $this->event_date = (new Carbon($value))->format('Y-m-d');
@@ -111,11 +107,22 @@ class Event extends Model implements HasMediaAlias
         return url('/admin/events/'.$this->getKey());
     }
 
-    public function setImagesAttribute() {
-        $this->images = collect([]);
+    public function getMediaNameAttribute()
+    {
+        return $this->mediaName;
     }
 
     public function getImagesAttribute() {
+        if($this->hasMedia($this->mediaName)) {
+            return $this->getMedia($this->mediaName);
+        }
+        return collect([]);
+    }
+
+    public function getThumbnailsAttribute() {
+        if($this->hasMedia($this->mediaName)) {
+            return $this->getThumbs200ForCollection($this->mediaName);
+        }
         return collect([]);
     }
 
@@ -135,17 +142,6 @@ class Event extends Model implements HasMediaAlias
     public function theme()
     {
         return $this->belongsTo(Theme::class);
-    }
-
-    /**
-     * @param string $value
-     * @return array
-     */
-    public function getLinksAttribute($value = '')
-    {
-        if('' !== $value) {
-            return collect(preg_split("/[\n\r]+/", $value));
-        }
     }
 
     public function scopeAllActual(Builder $query)
@@ -357,12 +353,12 @@ class Event extends Model implements HasMediaAlias
         $this->addMediaConversion('detail_hd')
             ->width(1920)
             ->height(1080)
-            ->performOnCollections('images');
+            ->performOnCollections($this->mediaName);
     }
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('images')
+        $this->addMediaCollection($this->mediaName)
             ->useDisk('images')
             ->accepts('image/jpeg','image/jpg')
             ->maxNumberOfFiles(3) // Set the file count limit

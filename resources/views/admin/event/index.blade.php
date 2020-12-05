@@ -25,7 +25,7 @@
                             <form @submit.prevent="">
                                 <div class="row justify-content-md-between">
 
-                                    <div class="row" v-if="showCategoryFilter">
+                                    <div class="col" v-if="showCategoryFilter">
                                         <div class="col-sm-auto form-group">
                                             <p>{{ __('Select category') }}</p>
                                         </div>
@@ -44,7 +44,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row" v-if="showThemeFilter">
+                                    <div class="col" v-if="showThemeFilter">
                                         <div class="col-sm-auto form-group">
                                             <p>{{ __('Select theme') }}</p>
                                         </div>

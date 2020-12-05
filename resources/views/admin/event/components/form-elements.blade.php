@@ -77,7 +77,7 @@
     <label for="links" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.event.columns.links') }}</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
         <div>
-            <textarea class="form-control" v-model="form.links" v-validate="'nullable|string'" id="links" name="links"></textarea>
+            <textarea class="form-control" v-model="form.links" v-validate="''" id="links" name="links"></textarea>
         </div>
         <div v-if="errors.has('links')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('links') }}</div>
     </div>
