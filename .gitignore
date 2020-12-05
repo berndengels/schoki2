@@ -22,3 +22,5 @@ yarn-error.log
 /_ide_helper.php
 /stubs/
 /stuff/
+/public/info.php
+/.htaccess

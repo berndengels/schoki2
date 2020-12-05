@@ -2,6 +2,7 @@ import AppForm from '../app-components/Form/AppForm';
 
 Vue.component('admin-user-form', {
     mixins: [AppForm],
+    props: ['userMusicStyles'],
     data: function() {
         return {
             form: {
@@ -12,7 +13,8 @@ Vue.component('admin-user-form', {
                 activated:  false,
                 forbidden:  false,
                 language:  '',
-
+                roles: [],
+                music_styles: this.userMusicStyles ?? [],
             }
         }
     }

@@ -26,7 +26,11 @@ class UpdateProduct extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'name' => ['sometimes', 'string'],
+            'description' => ['sometimes', 'string'],
+            'price' => ['sometimes', 'numeric'],
+            'is_published' => ['sometimes', 'boolean'],
+            'is_available' => ['sometimes', 'boolean'],
         ];
     }
 

@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\AdminUser\ImpersonalLoginAdminUser;
 use App\Http\Requests\Admin\AdminUser\IndexAdminUser;
 use App\Http\Requests\Admin\AdminUser\StoreAdminUser;
 use App\Http\Requests\Admin\AdminUser\UpdateAdminUser;
+use App\Models\MusicStyle;
 use App\Models\Permission;
 use App\Models\AdminUser;
 use App\Models\Role;
@@ -54,24 +55,6 @@ class AdminUsersController extends Controller
      */
     public function index(IndexAdminUser $request)
     {
-/*
-        $adminUsers = AdminUser::all();
-        $role = Role::findByName('Booker');
-        $permissions = Permission::query()
-            ->where('name','NOT LIKE','admin%')
-            ->where('name','NOT LIKE','role%')
-            ->where('name','NOT LIKE','permission%')
-            ->where('name','NOT LIKE','%.%')
-            ->get()
-        ;
-        foreach ($adminUsers as $user) {
-            if($user->email === 'engels@goldenacker.de') {
-                continue;
-            }
-            $role->givePermissionTo($permissions);
-//            $user->assignRole($role);
-        }
-*/
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(AdminUser::class)->processRequestAndGet(
             // pass the request with params
@@ -108,6 +91,7 @@ class AdminUsersController extends Controller
             'activation' => Config::get('admin-auth.activation_enabled'),
 //            'roles'         => Role::where('guard_name', $this->guard)->get(),
             'roles'         => Role::all(),
+            'musicStyles'   => MusicStyle::all(),
         ]);
     }
 
@@ -127,6 +111,7 @@ class AdminUsersController extends Controller
 
         // But we do have a roles, so we need to attach the roles to the adminUser
         $adminUser->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
+        $adminUser->musicStyles()->sync(collect($request->input('musicStyles', []))->map->id->toArray());
 
         if ($request->ajax()) {
             return ['redirect' => url('admin/admin-users'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
@@ -159,12 +144,14 @@ class AdminUsersController extends Controller
     {
         $this->authorize('admin-user.edit', $adminUser);
 
-        $adminUser->load('roles');
+        $adminUser->load(['roles','musicStyles']);
         return view('admin.admin-user.edit', [
             'adminUser'     => $adminUser,
             'activation'    => Config::get('admin-auth.activation_enabled'),
 //            'roles'         => Role::where('guard_name', $this->guard)->get(),
             'roles'         => Role::all(),
+            'musicStyles'   => MusicStyle::all(),
+            'userMusicStyles'   => $adminUser->musicStyles,
         ]);
     }
 
@@ -186,6 +173,9 @@ class AdminUsersController extends Controller
         // But we do have a roles, so we need to attach the roles to the adminUser
         if ($request->input('roles')) {
             $adminUser->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
+        }
+        if ($request->input('musicStyles')) {
+            $adminUser->musicStyles()->sync(collect($request->input('musicStyles', []))->map->id->toArray());
         }
 
         if ($request->ajax()) {

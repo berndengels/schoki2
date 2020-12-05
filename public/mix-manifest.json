@@ -2,5 +2,10 @@
     "/js/admin.js": "/js/admin.js",
     "/js/app.js": "/js/app.js",
     "/css/admin.css": "/css/admin.css",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/css/red.css": "/css/red.css",
+    "/css/dark.css": "/css/dark.css",
+    "/vendor/calendar/css/zabuto_calendar.min.css": "/vendor/calendar/css/zabuto_calendar.min.css",
+    "/vendor/calendar/js/zabuto_calendar.min.js": "/vendor/calendar/js/zabuto_calendar.min.js",
+    "/vendor/jstree/js/jstree.js": "/vendor/jstree/js/jstree.js"
 }

@@ -3,7 +3,6 @@
 @section('title', trans('admin.product.actions.index'))
 
 @section('body')
-
     <product-listing
         :data="{{ $data->toJson() }}"
         :url="'{{ url('admin/products') }}'"
@@ -14,6 +13,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i> {{ trans('admin.product.actions.index') }}
+                        <a class="btn btn-primary btn-sm pull-right m-b-0 ml-2" href="{{ url('admin/products/export') }}" role="button"><i class="fa fa-file-excel-o"></i>&nbsp; {{ trans('admin.product.actions.export') }}</a>
                         <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/products/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.product.actions.create') }}</a>
                     </div>
                     <div class="card-body" v-cloak>
@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="col-sm-auto form-group ">
                                         <select class="form-control" v-model="pagination.state.per_page">
-                                            
+
                                             <option value="10">10</option>
                                             <option value="25">25</option>
                                             <option value="100">100</option>
@@ -49,11 +49,18 @@
                                             </label>
                                         </th>
 
+                                        <th is='sortable' :column="'id'">{{ trans('admin.product.columns.id') }}</th>
+                                        <th is='sortable' :column="'name'">{{ trans('admin.product.columns.name') }}</th>
+                                        <th is='sortable' :column="'price'">{{ trans('admin.product.columns.price') }}</th>
+                                        <th is='sortable' :column="'is_published'">{{ trans('admin.product.columns.is_published') }}</th>
+                                        <th is='sortable' :column="'is_available'">{{ trans('admin.product.columns.is_available') }}</th>
+                                        <th is='sortable' :column="'created_by'">{{ trans('admin.product.columns.created_by') }}</th>
+                                        <th is='sortable' :column="'updated_by'">{{ trans('admin.product.columns.updated_by') }}</th>
 
                                         <th></th>
                                     </tr>
                                     <tr v-show="(clickedBulkItemsCount > 0) || isClickedAll">
-                                        <td class="bg-bulk-info d-table-cell text-center" colspan="2">
+                                        <td class="bg-bulk-info d-table-cell text-center" colspan="9">
                                             <span class="align-middle font-weight-light text-dark">{{ trans('brackets/admin-ui::admin.listing.selected_items') }} @{{ clickedBulkItemsCount }}.  <a href="#" class="text-primary" @click="onBulkItemsClickedAll('/admin/products')" v-if="(clickedBulkItemsCount < pagination.state.total)"> <i class="fa" :class="bulkCheckingAllLoader ? 'fa-spinner' : ''"></i> {{ trans('brackets/admin-ui::admin.listing.check_all_items') }} @{{ pagination.state.total }}</a> <span class="text-primary">|</span> <a
                                                         href="#" class="text-primary" @click="onBulkItemsClickedAllUncheck()">{{ trans('brackets/admin-ui::admin.listing.uncheck_all_items') }}</a>  </span>
 
@@ -72,7 +79,25 @@
                                             </label>
                                         </td>
 
-                                    
+                                        <td>@{{ item.id }}</td>
+                                        <td>@{{ item.name }}</td>
+                                        <td>@{{ item.price }}</td>
+                                        <td>
+                                            <label class="switch switch-3d switch-success">
+                                                <input type="checkbox" class="switch-input" v-model="collection[index].is_published" @change="toggleSwitch(item.resource_url, 'is_published', collection[index])">
+                                                <span class="switch-slider"></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label class="switch switch-3d switch-success">
+                                                <input type="checkbox" class="switch-input" v-model="collection[index].is_available" @change="toggleSwitch(item.resource_url, 'is_available', collection[index])">
+                                                <span class="switch-slider"></span>
+                                            </label>
+                                        </td>
+
+                                        <td>@{{ item.created_by.full_name }}</td>
+                                        <td>@{{ item.updated_by ? item.updated_by.full_name : null }}</td>
+
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">

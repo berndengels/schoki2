@@ -1,22 +1,76 @@
 <?php
 namespace App\Models;
 
+use App\Helper\MyDate;
 use App\Models\Ext\HasAdminUser;
+use App\Repositories\EventEntityRepository;
+use App\Repositories\EventPeriodicRepository;
 use Brackets\Media\HasMedia\AutoProcessMediaTrait;
 use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
 use Brackets\Media\HasMedia\HasMediaThumbsTrait;
 use Brackets\Media\HasMedia\ProcessMediaTrait;
+use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\Conversions\Conversion;
-use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\HasMedia as HasMediaAlias;
 use Spatie\MediaLibrary\MediaCollections\FileAdder;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Event extends Model implements HasMedia
+/**
+ * App\Models\Event
+ *
+ * @property int $id
+ * @property int|null $theme_id
+ * @property int $category_id
+ * @property int $created_by
+ * @property int|null $updated_by
+ * @property string $title
+ * @property string|null $subtitle
+ * @property string|null $description
+ * @property string|null $links
+ * @property \Illuminate\Support\Carbon $event_date
+ * @property string $event_time
+ * @property string|null $price
+ * @property int $is_published
+ * @property int|null $is_periodic
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Category $category
+ * @property-read \Brackets\AdminAuth\Models\AdminUser $createdBy
+ * @property-read mixed $resource_url
+ * @property-read MediaCollection|\App\Models\Media[] $media
+ * @property-read int|null $media_count
+ * @property-read Theme|null $theme
+ * @property-read \Brackets\AdminAuth\Models\AdminUser|null $updatedBy
+ * @method static Builder|Event newModelQuery()
+ * @method static Builder|Event newQuery()
+ * @method static Builder|Event query()
+ * @method static Builder|Event whereCategoryId($value)
+ * @method static Builder|Event whereCreatedAt($value)
+ * @method static Builder|Event whereCreatedBy($value)
+ * @method static Builder|Event whereDescription($value)
+ * @method static Builder|Event whereEventDate($value)
+ * @method static Builder|Event whereEventTime($value)
+ * @method static Builder|Event whereId($value)
+ * @method static Builder|Event whereIsPeriodic($value)
+ * @method static Builder|Event whereIsPublished($value)
+ * @method static Builder|Event whereLinks($value)
+ * @method static Builder|Event wherePrice($value)
+ * @method static Builder|Event whereSubtitle($value)
+ * @method static Builder|Event whereThemeId($value)
+ * @method static Builder|Event whereTitle($value)
+ * @method static Builder|Event whereUpdatedAt($value)
+ * @method static Builder|Event whereUpdatedBy($value)
+ * @mixin Eloquent
+ */
+class Event extends Model implements HasMediaAlias
 {
     use HasAdminUser;
     use ProcessMediaTrait;
@@ -39,16 +93,30 @@ class Event extends Model implements HasMedia
         'created_by',
         'updated_by',
     ];
-
     protected $dates = ['created_at', 'updated_at', 'event_date'];
+    protected $appends = ['resource_url','images'];
 
-    protected $appends = ['resource_url'];
+    public function setEventDateAttribute( $value ) {
+        $this->event_date = (new Carbon($value))->format('Y-m-d');
+    }
+
+    public function getEventDateAttribute( $value ) {
+        return (new Carbon($value))->format('Y-m-d');
+    }
 
     /* ************************ ACCESSOR ************************* */
 
     public function getResourceUrlAttribute()
     {
         return url('/admin/events/'.$this->getKey());
+    }
+
+    public function setImagesAttribute() {
+        $this->images = collect([]);
+    }
+
+    public function getImagesAttribute() {
+        return collect([]);
     }
 
     /* ************************ RELATIONS ************************* */
@@ -69,12 +137,168 @@ class Event extends Model implements HasMedia
         return $this->belongsTo(Theme::class);
     }
 
-/*
-    public function images()
+    /**
+     * @param string $value
+     * @return array
+     */
+    public function getLinksAttribute($value = '')
     {
-        return $this->hasMany(Image::class);
+        if('' !== $value) {
+            return collect(preg_split("/[\n\r]+/", $value));
+        }
     }
-*/
+
+    public function scopeAllActual(Builder $query)
+    {
+        $result = $query
+            ->with(['category','theme'])
+            ->where('is_published', 1)
+            ->whereDate('event_date','>=', MyDate::getUntilValidDate())
+            ->orderBy('event_date')
+        ;
+
+        return $result;
+    }
+
+    public function scopeAllActualMerged()
+    {
+        $repo			= new EventPeriodicRepository();
+        $repoEntity		= new EventEntityRepository();
+
+        $periodicEvents	= $repo->getAllPeriodicDates(true, true);
+        $datedEvents	= self::allActual()->get()->keyBy('event_date');
+
+        $mapped	= $repoEntity->mapToEventEntityCollection($datedEvents);
+        $merged	= $periodicEvents->merge($mapped)->sortKeys();
+
+        return $merged;
+    }
+
+    public function scopeByCategorySlug(Builder $query, $slug, $sinceToday = true)
+    {
+        $result = $query
+            ->with(['category','theme'])
+            ->where('is_published', 1)
+            ->when($sinceToday, function($query) {
+                return $query->whereDate('event_date','>=', MyDate::getUntilValidDate());
+            })
+            ->whereHas('category', function($query) use ($slug) {
+                $query->where('slug', $slug);
+            });
+        return $result;
+    }
+
+    public function scopeByThemeSlug(Builder $query, $slug, $sinceToday = true)
+    {
+        $result = $query
+            ->with(['category','theme'])
+            ->where('is_published', 1)
+            ->when($sinceToday, function($query) {
+                return $query->whereDate('event_date','>=', MyDate::getUntilValidDate());
+            })
+            ->whereHas('theme', function($query) use ($slug) {
+                $query->where('slug', $slug);
+            });
+
+        return $result;
+    }
+
+    public function scopeMergedByCategorySlug(Builder $query, $slug, $sinceToday = true)
+    {
+        $repo 		= new EventPeriodicRepository();
+        $repoEntity	= new EventEntityRepository();
+
+        $periodicEvents	= $repo->getAllPeriodicDatesByCategory($slug);
+        $datedEvents = $this->scopeByCategorySlug($query, $slug, $sinceToday)->get()->keyBy('event_date');
+
+        $mappedEvents = $repoEntity->mapToEventEntityCollection($datedEvents);
+//		$merged = $periodicEvents->merge($mappedEvents)->sortKeys()->paginate(config('event.paginationLimit'));
+        $merged = $periodicEvents->merge($mappedEvents)->sortKeys();
+
+        return $merged;
+    }
+
+    public function scopeMergedByDate(Builder $query, $date )
+    {
+        $repo 	= new EventPeriodicRepository();
+        $event	= self::whereDate('event_date', $date)->first();
+
+        if( $event ) {
+            return $event;
+        }
+
+        $periodicEvent	= $repo->getPeriodicEventByDate($date);
+        if( $periodicEvent ) {
+            return $periodicEvent;
+        }
+        return null;
+    }
+
+    public function scopeMergedByDateAndCategory(Builder $query, $date, $slug )
+    {
+        $repo 		= new EventPeriodicRepository();
+        $repoEntity	= new EventEntityRepository();
+
+        $event = self::whereDate('event_date', $date)
+            ->where('is_published', 1)
+            ->whereHas('category', function($query) use ($slug) {
+                $query->where('slug', $slug);
+            })
+            ->first();
+        if($event) {
+            $entity = $repoEntity->mapToEventEntity($event, $date);
+            if($entity) {
+                return $entity;
+            }
+        }
+
+        $periodicEvent	= $repo->getPeriodicEventByDateAndCategory($date, $slug);
+        if($periodicEvent) {
+            return $periodicEvent;
+        }
+        return null;
+    }
+
+    public function scopeMergedByDateAndTheme(Builder $query, $date, $slug )
+    {
+        $repo 		= new EventPeriodicRepository();
+        $repoEntity	= new EventEntityRepository();
+
+        $event = self::whereDate('event_date', $date)
+            ->where('is_published', 1)
+            ->whereHas('theme', function($query) use ($slug) {
+                $query->where('slug', $slug);
+            })
+            ->first();
+        if($event) {
+            $entity = $repoEntity->mapToEventEntity($event, $date);
+            if($entity) {
+                return $entity;
+            }
+        }
+
+        $periodicEvent	= $repo->getPeriodicEventByDateAndCategory($date, $slug);
+        if($periodicEvent) {
+            return $periodicEvent;
+        }
+        return null;
+    }
+
+    public function scopeMergedByThemeSlug(Builder $query, $slug, $sinceToday = true)
+    {
+        $repo 		= new EventPeriodicRepository();
+        $repoEntity	= new EventEntityRepository();
+
+        $periodicEvents	= $repo->getAllPeriodicDatesByTheme($slug);
+        $datedEvents = $this->scopeByThemeSlug($query, $slug, $sinceToday)->get()->keyBy('event_date');
+
+        $mappedEvents = $repoEntity->mapToEventEntityCollection($datedEvents);
+//		$merged = $periodicEvents->merge($mappedEvents)->sortKeys()->paginate(config('event.paginationLimit'));
+        $merged = $periodicEvents->merge($mappedEvents)->sortKeys();
+
+        return $merged;
+    }
+
     /* ************************ MEDIA ************************* */
 
     /*

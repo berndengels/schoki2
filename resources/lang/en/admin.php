@@ -529,5 +529,51 @@ return [
         ],
     ],
 
+    'product' => [
+        'title' => 'Product',
+
+        'actions' => [
+            'index' => 'Product',
+            'create' => 'New Product',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'description' => 'Description',
+            'price' => 'Price',
+            'is_published' => 'Is published',
+            'is_available' => 'Is available',
+            'created_by' => 'Created by',
+            'updated_by' => 'Updated by',
+            
+        ],
+    ],
+
+    'order' => [
+        'title' => 'Order',
+
+        'actions' => [
+            'index' => 'Order',
+            'create' => 'New Order',
+            'edit' => 'Edit :name',
+            'export' => 'Export',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'shoppingcart_id' => 'Shoppingcart',
+            'instance' => 'Instance',
+            'content' => 'Content',
+            'price_total' => 'Price total',
+            'created_by' => 'Created by',
+            'updated_by' => 'Updated by',
+            'delivered' => 'Delivered',
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

@@ -25,7 +25,7 @@ class IndexOrder extends FormRequest
     public function rules(): array
     {
         return [
-            'orderBy' => 'in:|nullable',
+            'orderBy' => 'in:id,shoppingcart_id,instance,price_total,created_by,updated_by,delivered|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

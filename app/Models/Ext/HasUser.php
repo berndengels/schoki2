@@ -1,12 +1,11 @@
 <?php
 /**
- * Userable.php
+ * HasUser.php
  *
  * @author    Bernd Engels
  * @created   12.03.19 17:27
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
-
 namespace App\Models\Ext;
 
 //use Auth;
@@ -28,6 +27,9 @@ trait HasUser
 			static::creating(function($table) use ($user)  {
 				$table->created_by = $user->id;
 			});
+            static::updating(function($table) use ($user)  {
+                $table->created_by = $user->id;
+            });
 			static::saving(function($table) use ($user) {
 				if( $table->id > 0 ) {
 					$table->updated_by = $user->id;

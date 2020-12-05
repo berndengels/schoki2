@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\BulkDestroyProduct;
 use App\Http\Requests\Admin\Product\DestroyProduct;
@@ -18,6 +19,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -37,10 +40,14 @@ class ProductController extends Controller
             $request,
 
             // set columns to query
-            [''],
+            ['id', 'name', 'price', 'is_published', 'is_available', 'created_by', 'updated_by'],
 
             // set columns to searchIn
-            ['']
+            ['id', 'name', 'description'],
+
+            function ($query) use ($request) {
+                $query->with(['createdBy','updatedBy']);
+            }
         );
 
         if ($request->ajax()) {
@@ -114,7 +121,6 @@ class ProductController extends Controller
     {
         $this->authorize('admin.product.edit', $product);
 
-
         return view('admin.product.edit', [
             'product' => $product,
         ]);
@@ -184,5 +190,15 @@ class ProductController extends Controller
         });
 
         return response(['message' => trans('brackets/admin-ui::admin.operation.succeeded')]);
+    }
+
+    /**
+     * Export entities
+     *
+     * @return BinaryFileResponse|null
+     */
+    public function export(): ?BinaryFileResponse
+    {
+        return Excel::download(app(ProductExport::class), 'products.xlsx');
     }
 }

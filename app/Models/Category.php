@@ -2,10 +2,36 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
+/**
+ * App\Models\Category
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string|null $icon
+ * @property-read Collection|EventPeriodic[] $eventPeriodics
+ * @property-read int|null $event_periodics_count
+ * @property-read Collection|EventTemplate[] $eventTemplates
+ * @property-read int|null $event_templates_count
+ * @property-read Collection|Event[] $events
+ * @property-read int|null $events_count
+ * @property-read mixed $resource_url
+ * @method static Builder|Category newModelQuery()
+ * @method static Builder|Category newQuery()
+ * @method static Builder|Category query()
+ * @method static Builder|Category whereIcon($value)
+ * @method static Builder|Category whereId($value)
+ * @method static Builder|Category whereName($value)
+ * @method static Builder|Category whereSlug($value)
+ * @mixin Eloquent
+ */
 class Category extends Model
 {
     protected $table = 'category';

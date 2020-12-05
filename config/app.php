@@ -176,6 +176,17 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
 
+        /* extras */
+        Laravelium\Feed\FeedServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
+        Ixudra\Curl\CurlServiceProvider::class,
+        Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
+        Lavary\Menu\ServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+        MisterPhilip\MaintenanceMode\MaintenanceModeServiceProvider::class,
+        MisterPhilip\MaintenanceMode\MaintenanceCommandServiceProvider::class,
     ],
 
     /*
@@ -190,7 +201,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -226,8 +236,16 @@ return [
         'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View' => Illuminate\Support\Facades\View::class,
 
+        'View' => Illuminate\Support\Facades\View::class,
+        /* extra */
+        'Feed'  => Laravelium\Feed\Feed::class,
+        'FormBuilder'   => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
+        'NoCaptcha'     => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+        'Agent'         => Jenssegers\Agent\Facades\Agent::class,
+        'Menu'          => Lavary\Menu\Facade::class,
+		'Curl'			=> Ixudra\Curl\Facades\Curl::class,
+		'Newsletter' 	=> Spatie\Newsletter\NewsletterFacade::class,
     ],
 
 ];

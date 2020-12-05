@@ -126,7 +126,7 @@
                                             </label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
+                                        <td>@{{ item.id }}</td>
                                         <td>@{{ item.theme ? item.theme.name : null }}</td>
                                         <td>@{{ item.category.name }}</td>
                                         <td>@{{ item.created_by.full_name }}</td>

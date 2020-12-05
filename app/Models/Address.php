@@ -2,8 +2,34 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\Address
+ *
+ * @property int $id
+ * @property int $address_category_id
+ * @property string $email
+ * @property string $token
+ * @property int $info_on_changes
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read mixed $resource_url
+ * @method static Builder|Address newModelQuery()
+ * @method static Builder|Address newQuery()
+ * @method static Builder|Address query()
+ * @method static Builder|Address whereAddressCategoryId($value)
+ * @method static Builder|Address whereCreatedAt($value)
+ * @method static Builder|Address whereEmail($value)
+ * @method static Builder|Address whereId($value)
+ * @method static Builder|Address whereInfoOnChanges($value)
+ * @method static Builder|Address whereToken($value)
+ * @method static Builder|Address whereUpdatedAt($value)
+ * @mixin Eloquent
+ */
 class Address extends Model
 {
     protected $table = 'address';
@@ -13,16 +39,16 @@ class Address extends Model
         'email',
         'token',
         'info_on_changes',
-    
+
     ];
-    
-    
+
+
     protected $dates = [
         'created_at',
         'updated_at',
-    
+
     ];
-    
+
     protected $appends = ['resource_url'];
 
     /* ************************ ACCESSOR ************************* */

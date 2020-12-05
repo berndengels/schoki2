@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\BulkDestroyOrder;
 use App\Http\Requests\Admin\Order\DestroyOrder;
@@ -18,6 +19,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -37,10 +40,10 @@ class OrderController extends Controller
             $request,
 
             // set columns to query
-            [''],
+            ['id', 'shoppingcart_id', 'instance', 'price_total', 'created_by', 'updated_by', 'delivered'],
 
             // set columns to searchIn
-            ['']
+            ['id', 'shoppingcart_id', 'instance', 'content']
         );
 
         if ($request->ajax()) {
@@ -184,5 +187,15 @@ class OrderController extends Controller
         });
 
         return response(['message' => trans('brackets/admin-ui::admin.operation.succeeded')]);
+    }
+
+    /**
+     * Export entities
+     *
+     * @return BinaryFileResponse|null
+     */
+    public function export(): ?BinaryFileResponse
+    {
+        return Excel::download(app(OrderExport::class), 'orders.xlsx');
     }
 }

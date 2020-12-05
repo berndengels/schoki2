@@ -26,6 +26,13 @@ class StoreOrder extends FormRequest
     public function rules(): array
     {
         return [
+            'shoppingcart_id' => ['required', 'string'],
+            'instance' => ['required', 'string'],
+            'content' => ['required', 'string'],
+            'price_total' => ['required', 'numeric'],
+            'created_by' => ['required', 'integer'],
+            'updated_by' => ['nullable', 'integer'],
+            'delivered' => ['required', 'boolean'],
             
         ];
     }

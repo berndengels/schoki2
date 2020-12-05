@@ -14,6 +14,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i> {{ trans('admin.order.actions.index') }}
+                        <a class="btn btn-primary btn-sm pull-right m-b-0 ml-2" href="{{ url('admin/orders/export') }}" role="button"><i class="fa fa-file-excel-o"></i>&nbsp; {{ trans('admin.order.actions.export') }}</a>
                         <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/orders/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.order.actions.create') }}</a>
                     </div>
                     <div class="card-body" v-cloak>
@@ -49,11 +50,18 @@
                                             </label>
                                         </th>
 
+                                        <th is='sortable' :column="'id'">{{ trans('admin.order.columns.id') }}</th>
+                                        <th is='sortable' :column="'shoppingcart_id'">{{ trans('admin.order.columns.shoppingcart_id') }}</th>
+                                        <th is='sortable' :column="'instance'">{{ trans('admin.order.columns.instance') }}</th>
+                                        <th is='sortable' :column="'price_total'">{{ trans('admin.order.columns.price_total') }}</th>
+                                        <th is='sortable' :column="'created_by'">{{ trans('admin.order.columns.created_by') }}</th>
+                                        <th is='sortable' :column="'updated_by'">{{ trans('admin.order.columns.updated_by') }}</th>
+                                        <th is='sortable' :column="'delivered'">{{ trans('admin.order.columns.delivered') }}</th>
 
                                         <th></th>
                                     </tr>
                                     <tr v-show="(clickedBulkItemsCount > 0) || isClickedAll">
-                                        <td class="bg-bulk-info d-table-cell text-center" colspan="2">
+                                        <td class="bg-bulk-info d-table-cell text-center" colspan="9">
                                             <span class="align-middle font-weight-light text-dark">{{ trans('brackets/admin-ui::admin.listing.selected_items') }} @{{ clickedBulkItemsCount }}.  <a href="#" class="text-primary" @click="onBulkItemsClickedAll('/admin/orders')" v-if="(clickedBulkItemsCount < pagination.state.total)"> <i class="fa" :class="bulkCheckingAllLoader ? 'fa-spinner' : ''"></i> {{ trans('brackets/admin-ui::admin.listing.check_all_items') }} @{{ pagination.state.total }}</a> <span class="text-primary">|</span> <a
                                                         href="#" class="text-primary" @click="onBulkItemsClickedAllUncheck()">{{ trans('brackets/admin-ui::admin.listing.uncheck_all_items') }}</a>  </span>
 
@@ -72,7 +80,14 @@
                                             </label>
                                         </td>
 
-                                    
+                                    <td>@{{ item.id }}</td>
+                                        <td>@{{ item.shoppingcart_id }}</td>
+                                        <td>@{{ item.instance }}</td>
+                                        <td>@{{ item.price_total }}</td>
+                                        <td>@{{ item.created_by }}</td>
+                                        <td>@{{ item.updated_by }}</td>
+                                        <td>@{{ item.delivered }}</td>
+                                        
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">

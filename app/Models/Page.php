@@ -2,10 +2,42 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use App\Models\Ext\HasAdminUser;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Page
+ *
+ * @property int $id
+ * @property int $created_by
+ * @property int|null $updated_by
+ * @property string $title
+ * @property string $slug
+ * @property array $body
+ * @property int $is_published
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read \Brackets\AdminAuth\Models\AdminUser $createdBy
+ * @property-read mixed $resource_url
+ * @property-read \Brackets\AdminAuth\Models\AdminUser|null $updatedBy
+ * @method static Builder|Page newModelQuery()
+ * @method static Builder|Page newQuery()
+ * @method static Builder|Page query()
+ * @method static Builder|Page whereBody($value)
+ * @method static Builder|Page whereCreatedAt($value)
+ * @method static Builder|Page whereCreatedBy($value)
+ * @method static Builder|Page whereId($value)
+ * @method static Builder|Page whereIsPublished($value)
+ * @method static Builder|Page whereSlug($value)
+ * @method static Builder|Page whereTitle($value)
+ * @method static Builder|Page whereUpdatedAt($value)
+ * @method static Builder|Page whereUpdatedBy($value)
+ * @mixin Eloquent
+ */
 class Page extends Model
 {
     use HasAdminUser;

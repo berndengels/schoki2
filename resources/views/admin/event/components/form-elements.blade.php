@@ -123,10 +123,19 @@
     </div>
 </div>
 
-@include('brackets/admin-ui::admin.includes.media-uploader', [
-    'id'    => 'images',
-    'name'  => 'images',
-    'mediaCollection' => app(App\Models\Event::class)->getMediaCollection('images'),
-    'media' => $event->getThumbs200ForCollection('images'),
-    'label' => 'Images'
-])
+@if(isset($event))
+    @include('brackets/admin-ui::admin.includes.media-uploader', [
+        'id'    => 'images',
+        'name'  => 'images',
+        'label' => 'Images',
+        'mediaCollection' => app(App\Models\Event::class)->getMediaCollection('images'),
+        'media' => $event->getThumbs200ForCollection('images'),
+    ])
+@else
+    @include('brackets/admin-ui::admin.includes.media-uploader', [
+        'id'    => 'images',
+        'name'  => 'images',
+        'label' => 'Images',
+        'mediaCollection' => app(App\Models\Event::class)->getMediaCollection('images'),
+    ])
+@endif

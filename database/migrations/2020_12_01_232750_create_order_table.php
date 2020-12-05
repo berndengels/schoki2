@@ -15,15 +15,13 @@ class CreateOrderTable extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('shoppingcart_id');
-            $table->string('instance');
-            $table->longText('content');
             $table->unsignedDecimal('price_total');
 
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')
                 ->references('id')
                 ->on('users')
+                ->onUpdate('cascade')
 //                ->onDelete('cascade')
             ;
 
@@ -35,7 +33,7 @@ class CreateOrderTable extends Migration
 //                ->onDelete('cascade')
             ;
 
-            $table->boolean('delivered')->default(false);
+            $table->timestamp('delivered_at')->nullable();
             $table->timestamps();
         });
     }

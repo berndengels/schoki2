@@ -307,3 +307,35 @@ $factory->define(App\Models\Order::class, static function (Faker\Generator $fake
 
     ];
 });
+/** @var  Factory $factory */
+$factory->define(App\Models\Product::class, static function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->firstName,
+        'description' => $faker->text(),
+        'price' => $faker->randomNumber(5),
+        'is_published' => $faker->boolean(),
+        'is_available' => $faker->boolean(),
+        'created_by' => $faker->randomNumber(5),
+        'updated_by' => $faker->randomNumber(5),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\Order::class, static function (Faker\Generator $faker) {
+    return [
+        'shoppingcart_id' => $faker->sentence,
+        'instance' => $faker->sentence,
+        'content' => $faker->text(),
+        'price_total' => $faker->randomNumber(5),
+        'created_by' => $faker->randomNumber(5),
+        'updated_by' => $faker->randomNumber(5),
+        'delivered' => $faker->boolean(),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+
+
+    ];
+});

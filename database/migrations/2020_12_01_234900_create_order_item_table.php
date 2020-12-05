@@ -32,20 +32,6 @@ class CreateOrderItemTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->unsignedInteger('created_by');
-            $table->foreign('created_by')
-                ->references('id')
-                ->on('admin_users')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->unsignedInteger('updated_by')->nullable();
-            $table->foreign('updated_by')
-                ->references('id')
-                ->on('admin_users')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
             $table->timestamps();
         });
     }

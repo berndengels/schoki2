@@ -34,9 +34,8 @@ class StoreAdminUser extends FormRequest
             'password' => ['required', 'confirmed', 'min:7', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'forbidden' => ['required', 'boolean'],
             'language' => ['required', 'string'],
-
             'roles' => ['array'],
-
+            'musicStyles' => ['nullable','array'],
         ];
 
         if (Config::get('admin-auth.activation_enabled')) {

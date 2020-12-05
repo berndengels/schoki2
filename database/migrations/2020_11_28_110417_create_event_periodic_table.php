@@ -51,7 +51,7 @@ class CreateEventPeriodicTable extends Migration
             $table->string('subtitle')->nullable();
             $table->longText('description')->nullable();
             $table->longText('links')->nullable();
-            $table->date('event_date');
+            $table->date('event_date')->nullable();
             $table->time('event_time');
             $table->decimal('price')->nullable();
             $table->boolean('is_published')->default(false);

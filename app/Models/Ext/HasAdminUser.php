@@ -1,10 +1,10 @@
 <?php
 /**
- * Userable.php
+ * HasAdminUser.php
  *
  * @author    Bernd Engels
  * @created   12.03.19 17:27
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 
 namespace App\Models\Ext;

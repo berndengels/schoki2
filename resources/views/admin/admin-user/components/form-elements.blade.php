@@ -1,3 +1,4 @@
+
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('first_name'), 'has-success': fields.first_name && fields.first_name.valid }">
     <label for="first_name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">{{ trans('admin.admin-user.columns.first_name') }}</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
@@ -91,5 +92,23 @@
             open-direction="bottom">
         </multiselect>
         <div v-if="errors.has('roles')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('roles') }}</div>
+    </div>
+</div>
+
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('musicStyles'), 'has-success': fields.musicStyles && fields.musicStyles.valid }">
+    <label for="musicStyles" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">{{ trans('Music Styles') }}</label>
+    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
+        <multiselect
+            id="musicStyles"
+            name="musicStyles"
+            v-model="form.music_styles"
+            placeholder="{{ trans('brackets/admin-ui::admin.forms.select_options') }}"
+            label="name"
+            track-by="id"
+            :options="{{ $musicStyles->toJson() }}"
+            :multiple="true"
+            open-direction="bottom">
+        </multiselect>
+        <div v-if="errors.has('musicStyles')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('musicStyles') }}</div>
     </div>
 </div>
