@@ -1,9 +1,9 @@
 <?php
 
+use My\Migration\Main\MainMigration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
-class CreateTranslationsTable extends Migration
+class CreateTranslationsTable extends MainMigration
 {
     /**
      * Run the migrations.
@@ -19,8 +19,8 @@ class CreateTranslationsTable extends Migration
             $table->string('group');
             $table->index('group');
             $table->text('key');
-            $table->jsonb('text');
-            $table->jsonb('metadata')->nullable();
+            $this->jsonSupported ? $table->jsonb('text') : $table->text('text');
+            $this->jsonSupported ? $table->jsonb('metadata')->nullable() : $table->text('metadata')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

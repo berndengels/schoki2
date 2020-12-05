@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use My\Migration\Main\MainMigration;
 
-class CreateMediaTable extends Migration
+class CreateMediaTable extends MainMigration
 {
     public function up()
     {
@@ -20,9 +20,9 @@ class CreateMediaTable extends Migration
             $table->string('disk');
             $table->string('conversions_disk')->nullable();
             $table->unsignedBigInteger('size');
-            $table->json('manipulations');
-            $table->json('custom_properties');
-            $table->json('responsive_images');
+            $this->jsonSupported ? $table->json('manipulations') : $table->text('manipulations');
+            $this->jsonSupported ? $table->json('custom_properties') : $table->text('custom_properties');
+            $this->jsonSupported ? $table->json('responsive_images') : $table->text('responsive_images');
             $table->unsignedInteger('order_column')->nullable();
 
             $table->nullableTimestamps();
