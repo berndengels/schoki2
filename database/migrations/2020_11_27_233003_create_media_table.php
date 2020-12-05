@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use My\Migration\Main\MainMigration;
+use Database\Migrations\Inc\MainMigration;
 
 class CreateMediaTable extends MainMigration
 {

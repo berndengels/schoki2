@@ -1,6 +1,6 @@
 <?php
 
-use My\Migration\Main\MainMigration;
+use Database\Migrations\Inc\MainMigration;
 use Illuminate\Database\Schema\Blueprint;
 
 class CreateTranslationsTable extends MainMigration
