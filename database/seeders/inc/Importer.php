@@ -177,7 +177,7 @@ class Importer extends Seeder
             foreach ($data as $id => $item) {
                 $eventTime = $item[$column];
                 $this->sourceConnection
-                    ->update("UPDATE $this->table SET ? = ? where id = ?", [$column, $eventTime, $id])
+                    ->update("UPDATE $this->table SET $column = '?' where id = ?", [$eventTime, $id])
                 ;
             }
             $this->model->lock(false);
