@@ -1,10 +1,10 @@
 <?php
+require_once base_path(). '/database/migrations/inc/MyMigration.php';
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Database\Migrations\Inc\MainMigration;
 
-class CreateMediaTable extends MainMigration
+class CreateMediaTable extends MyMigration
 {
     public function up()
     {

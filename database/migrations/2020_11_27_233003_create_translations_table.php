@@ -1,9 +1,10 @@
 <?php
+require_once base_path(). '/database/migrations/inc/MyMigration.php';
 
-use Database\Migrations\Inc\MainMigration;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTranslationsTable extends MainMigration
+class CreateTranslationsTable extends MyMigration
 {
     /**
      * Run the migrations.

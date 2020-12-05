@@ -1,10 +1,10 @@
 <?php
-namespace Database\Migrations\Inc;
+//namespace Database\Migrations\Inc;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
 
-class MainMigration extends Migration
+class MyMigration extends Migration
 {
     protected $dbServerVersion = null;
     protected $dbServerName = null;
