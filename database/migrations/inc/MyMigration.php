@@ -15,7 +15,7 @@ class MyMigration extends Migration
         $result = DB::select( DB::raw('SHOW VARIABLES LIKE "version"') );
         if($result && count($result) > 0) {
             list($this->dbServerVersion, $this->dbServerName) = explode('-', $result[0]->Value);
-            if($this->dbServerVersion >= $this->mustVersion) {
+            if(version_compare($this->dbServerVersion, $this->mustVersion, '>=')) {
                 $this->jsonSupported = true;
             }
         }
