@@ -130,10 +130,10 @@ class EventController extends BaseController
 		]);
 	}
 
-	public function getActualMergedEventsByCategory()
+	public function getActualMergedEventsByCategory($slug)
 	{
-		$routeArr   = explode('.', Route::currentRouteName()) ;
-		$slug       = array_pop($routeArr);
+//		$routeArr   = explode('.', Route::currentRouteName()) ;
+//		$slug       = array_pop($routeArr);
 		$cacheKey   = $this->cacheEventCategoryKey . ucfirst( Str::camel($slug));
 
         if(!Cache::has($cacheKey)) {
@@ -159,10 +159,10 @@ class EventController extends BaseController
 		]);
 	}
 
-	public function getActualMergedEventsByTheme()
+	public function getActualMergedEventsByTheme($slug)
 	{
-		$routeArr   = explode('.', Route::currentRouteName()) ;
-		$slug       = array_pop($routeArr);
+//		$routeArr   = explode('.', Route::currentRouteName()) ;
+//		$slug       = array_pop($routeArr);
         $cacheKey   = $this->cacheEventThemeKey . ucfirst( Str::camel($slug));
 
         if(!Cache::has($cacheKey)) {

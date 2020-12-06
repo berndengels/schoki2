@@ -11,15 +11,11 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StaticPageController;
-/*
-Route::get('', function () {
-    return view('start');
-})->name('start');
-*/
+
 Auth::routes();
 
 Route::permanentRedirect('/intern', '/admin/events');
-Route::permanentRedirect('/admin', '/admin/events');
+//Route::permanentRedirect('/admin', '/admin/events');
 Route::permanentRedirect('/events', '');
 
 /* Auto-generated admin routes */
@@ -449,22 +445,8 @@ Route::get('', [EventController::class,'getActualMergedEvents'])->name('public.e
 Route::get('/show/{date}', [EventController::class,'show'])->name('public.event.eventsShow');
 Route::get('/calendar/{year}/{month}', [EventController::class,'calendar'])->name('public.eventCalendar');
 
-//Route::post('/events/lazy/{date}', 'EventController@lazy')->name('public.eventLazy');
-//Route::post('/events/lazyByCategory/{category}/{date}', 'EventController@lazyByCategory')->name('public.eventLazyByCategory');
-//Route::post('/events/lazyByTheme/{theme}/{date}', 'EventController@lazyByTheme')->name('public.eventLazyByTheme');
-
-$categories = Category::all();
-foreach($categories as $item) {
-    Route::get('/category/'.$item->slug, [EventController::class,'getActualMergedEventsByCategory'])
-        ->name('public.eventsByCategory.' . $item->slug)
-    ;
-}
-$themes = Theme::all();
-foreach($themes as $item) {
-    Route::get('/theme/'.$item->slug, [EventController::class,'getActualMergedEventsByTheme'])
-        ->name('public.eventsByTheme.'. $item->slug)
-    ;
-}
+Route::get('/category/{slug}', [EventController::class,'getActualMergedEventsByCategory'])->name('public.eventsByCategory');
+Route::get('/theme/{slug}', [EventController::class,'getActualMergedEventsByTheme'])->name('public.eventsByTheme');
 Route::get('/page/{slug}', [PageController::class, 'get'])->name('public.page');
 
 Route::prefix('contact')->group(function () {
@@ -475,10 +457,10 @@ Route::prefix('contact')->group(function () {
     Route::get('/formNewsletter', [ContactController::class, 'formNewsletterSubscribe'])->name('public.formNewsletterSubscribe');
     Route::post('/sendNewsletter', [ContactController::class, 'sendNewsletterSubscribe'])->name('action.sendNewsletterSubscribe');
 });
-
+/*
 Route::get('/logout', function() {
     Auth::logout();
     Session::invalidate();
     return redirect()->route('public.events');
 });
-
+*/
