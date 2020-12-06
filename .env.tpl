@@ -4,6 +4,7 @@ APP_KEY=
 APP_DEBUG=true
 APP_URL=https://www.schokoladen-mitte.de
 ADMIN_PASSWORD=
+REDIRECT_HTTPS=false
 
 LOG_CHANNEL=stack
 LOG_LEVEL=debug
