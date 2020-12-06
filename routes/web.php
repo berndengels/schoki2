@@ -11,16 +11,16 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StaticPageController;
-
-Route::get('/', function () {
+/*
+Route::get('', function () {
     return view('start');
 })->name('start');
-
+*/
 Auth::routes();
 
 Route::permanentRedirect('/intern', '/admin/events');
 Route::permanentRedirect('/admin', '/admin/events');
-Route::permanentRedirect('/events', '/');
+Route::permanentRedirect('/events', '');
 
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
@@ -283,21 +283,6 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
-        Route::prefix('menus')->name('menus/')->group(static function() {
-            Route::get('/',	'MenuController@index')->name('index');
-            Route::get('/create',	'MenuController@create')->name('create');
-            Route::post('/',	'MenuController@store')->name('store');
-            Route::get('/{menu}/edit',	'MenuController@edit')->name('edit');
-            Route::post('/bulk-destroy',	'MenuController@bulkDestroy')->name('bulk-destroy');
-            Route::post('/{menu}',	'MenuController@update')->name('update');
-            Route::delete('/{menu}',	'MenuController@destroy')->name('destroy');
-        });
-    });
-});
-
-/* Auto-generated admin routes */
-Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
-    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
         Route::prefix('newsletter-statuses')->name('newsletter-statuses/')->group(static function() {
             Route::get('/',	'NewsletterStatusController@index')->name('index');
             Route::get('/create',	'NewsletterStatusController@create')->name('create');
@@ -341,6 +326,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
 });
 
 /* Auto-generated admin routes */
+/*
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
         Route::prefix('orders')->name('orders/')->group(static function() {
@@ -354,7 +340,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
         });
     });
 });
-
+*/
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
@@ -383,6 +369,31 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
             Route::post('/{order}',	'OrderController@update')->name('update');
             Route::delete('/{order}',	'OrderController@destroy')->name('destroy');
             Route::get('/export',	'OrderController@export')->name('export');
+        });
+    });
+});
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')
+        ->namespace('App\Http\Controllers\Admin')
+        ->group(static function() {
+        Route::prefix('menu')->group(static function() {
+
+/*
+            Route::get('/',	'MenuController@index')->name('index');
+            Route::get('/create',	'MenuController@create')->name('create');
+            Route::post('/',	'MenuController@store')->name('store');
+            Route::get('/{menu}/edit',	'MenuController@edit')->name('edit');
+            Route::post('/bulk-destroy',	'MenuController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{menu}',	'MenuController@update')->name('update');
+            Route::delete('/{menu}',	'MenuController@destroy')->name('destroy');
+*/
+            Route::get('/', 'MenuController@show')->name('admin.menuShow');
+            Route::get('edit', 'MenuController@edit')->name('admin.menuNew');
+            Route::post('operation/{operation}', 'MenuController@operation')->name('admin.menuOperation');
+            Route::post('store', 'MenuController@store')->name('admin.menuStore');
+            Route::get('icons', 'MenuController@icons')->name('admin.menuIcons');
         });
     });
 });
@@ -434,7 +445,7 @@ Route::get('/ical', [EventController::class,'ical'])->name('public.ical');
 Route::get('/remove/address/show/{token}', [ContactController::class,'removeAddressShow'])->name('public.removeAddressShow');
 Route::post('/remove/address/hard/{token}', [ContactController::class,'removeAddressHard'])->name('public.removeAddressHard');
 
-Route::get('/', [EventController::class,'getActualMergedEvents'])->name('public.events');
+Route::get('', [EventController::class,'getActualMergedEvents'])->name('public.events');
 Route::get('/show/{date}', [EventController::class,'show'])->name('public.event.eventsShow');
 Route::get('/calendar/{year}/{month}', [EventController::class,'calendar'])->name('public.eventCalendar');
 

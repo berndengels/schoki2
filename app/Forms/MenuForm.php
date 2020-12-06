@@ -11,7 +11,7 @@ class MenuForm extends Form
 {
     protected $formOptions = [
 		'id'		=> 'frmMenu',
-        'url'		=> '/admin/menus/store',
+        'url'		=> '/admin/menu/store',
 		'method'	=> 'POST',
     ];
 

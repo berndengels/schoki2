@@ -10,8 +10,8 @@ Vue.component('event-listing', {
             showCategoryFilter: true,
             showThemeFilter: true,
             filters: {
-                categories: [],
-                themes: [],
+                category: null,
+                theme: null,
             },
         }
     },
@@ -23,12 +23,12 @@ Vue.component('event-listing', {
             this.themeSelect = [];
         },
         categorySelect: function(newVal, oldVal) {
-            this.filters.categories = newVal.map(function(object) { return object['key']; });
-            this.filter('categories', this.filters.categories);
+            this.filters.category = newVal;
+            this.filter('category', this.filters.category);
         },
         themeSelect: function(newVal, oldVal) {
-            this.filters.themes = newVal.map(function(object) { return object['key']; });
-            this.filter('themes', this.filters.themes);
+            this.filters.theme = newVal;
+            this.filter('theme', this.filters.theme);
         }
     }
 });

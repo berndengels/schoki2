@@ -15,7 +15,7 @@ import './address';
 import './music-style';
 import './message';
 import './news';
-import './menu';
+//import './menu';
 import './newsletter-status';
 import './newsletter';
 import './product';

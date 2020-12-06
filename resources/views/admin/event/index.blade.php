@@ -17,6 +17,47 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i> {{ trans('admin.event.actions.index') }}
+                        <form @submit.prevent class="d-inline-block justify-content-between align-middle">
+                            <div class="col-sm-auto form-inline d-inline-block" v-if="showCategoryFilter">
+                                <div class="input-group">
+                                    <select
+                                        id="category"
+                                        name="category"
+                                        class="form-control"
+                                        v-model="categorySelect"
+                                    >
+                                        <option value="">{{ __('Type to search a category') }}</option>
+                                        <option v-for="item in categories" :key="item.id" :value="item.id">
+                                            @{{ item.name }}
+                                        </option>
+                                    </select>
+                                    <span class="d-inline input-group-append">
+                                        <button type="button" class="btn btn-primary"
+                                                @click="filter('category', categorySelect)"><i class="fa fa-search"></i> Kategorie</button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-auto form-inline d-inline-block" v-if="showThemeFilter">
+                                <div class="input-group">
+                                    <select
+                                        id="theme"
+                                        name="theme"
+                                        class="form-control d-inline"
+                                        v-model="themeSelect"
+                                    >
+                                        <option value="">{{ __('Type to search a theme') }}</option>
+                                        <option v-for="item in themes" :key="item.id" :value="item.id">
+                                            @{{ item.name }}
+                                        </option>
+                                    </select>
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary"
+                                                @click="filter('theme', themeSelect)"><i class="fa fa-search"></i> Theme</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
                         <a class="btn btn-primary btn-sm pull-right m-b-0 ml-2" href="{{ url('admin/events/export') }}" role="button"><i class="fa fa-file-excel-o"></i>&nbsp; {{ trans('admin.event.actions.export') }}</a>
                         <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/events/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.event.actions.create') }}</a>
                     </div>
@@ -25,53 +66,21 @@
                             <form @submit.prevent="">
                                 <div class="row justify-content-md-between">
 
-                                    <div class="col" v-if="showCategoryFilter">
-                                        <div class="col-sm-auto form-group">
-                                            <p>{{ __('Select category') }}</p>
-                                        </div>
-                                        <div class="col form-group">
-                                            <select
-                                                id="categories"
-                                                name="categories"
-                                                class="form-control"
-                                                v-model="categorySelect"
-                                            >
-                                                <option value="">{{ __('Type to search a category') }}</option>
-                                                <option v-for="item in categories" :key="item.id" :value="item.id">
-                                                    @{{ item.name }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col" v-if="showThemeFilter">
-                                        <div class="col-sm-auto form-group">
-                                            <p>{{ __('Select theme') }}</p>
-                                        </div>
-                                        <div class="col col-lg-12 col-xl-12 form-group">
-                                            <select
-                                                    id="themes"
-                                                    name="themes"
-                                                    class="form-control"
-                                                    v-model="themeSelect"
-                                            >
-                                                <option value="">{{ __('Type to search a theme') }}</option>
-                                                <option v-for="item in themes" :key="item.id" :value="item.id">
-                                                    @{{ item.name }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col col-lg-7 col-xl-5 form-group">
+                                    <div class="col-sm-3 form-group">
                                         <div class="input-group">
-                                            <input class="form-control" placeholder="{{ trans('brackets/admin-ui::admin.placeholder.search') }}" v-model="search" @keyup.enter="filter('search', $event.target.value)" />
+                                            <input class="form-control"
+                                                   placeholder="{{ trans('brackets/admin-ui::admin.placeholder.search') }}"
+                                                   v-model="search"
+                                                   @keyup.enter="filter('search', $event.target.value)"
+                                            />
                                             <span class="input-group-append">
-                                                <button type="button" class="btn btn-primary" @click="filter('search', search)"><i class="fa fa-search"></i>&nbsp; {{ trans('brackets/admin-ui::admin.btn.search') }}</button>
+                                                <button type="button" class="btn btn-primary"
+                                                        @click="filter('search', search)"><i class="fa fa-search"></i>&nbsp; {{ trans('brackets/admin-ui::admin.btn.search') }}</button>
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-auto form-group ">
+
+                                    <div class="col-sm-2 form-group float-right">
                                         <select class="form-control" v-model="pagination.state.per_page">
                                             <option value="10">10</option>
                                             <option value="25">25</option>

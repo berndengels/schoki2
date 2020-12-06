@@ -56,12 +56,14 @@ class EventController extends Controller
                 'is_published'
             ],
             // set columns to searchIn
-            ['id', 'title', 'subtitle', 'description', 'links'],
-
+            ['id', 'title', 'subtitle', 'description'],
             function (Builder $query) use ($request) {
                 $query->with(['category','theme','createdBy','updatedBy']);
-                if($request->has('categories')){
-                    $query->whereIn('category_id', $request->get('categories'));
+                if($request->has('category')){
+                    $query->where('category_id', $request->get('category'));
+                }
+                if($request->has('theme')){
+                    $query->where('theme_id', $request->get('theme'));
                 }
                 $query->orderBy('event_date', 'DESC');
             }

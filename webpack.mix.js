@@ -22,7 +22,7 @@ mix.autoload({
     .sass('resources/sass/dark.scss', 'css/dark.css')
     .copy('resources/vendor/calendar/zabuto_calendar.min.css', 'public/vendor/calendar/css')
     .copy('resources/vendor/calendar/zabuto_calendar.min.js', 'public/vendor/calendar/js')
-    .copy('node_modules/jstree/dist/jstree.js', 'public/vendor/jstree/js')
+    .copy('node_modules/jstree/dist/jstree.min.js', 'public/vendor/jstree/js')
     .copy('node_modules/jstree/dist/themes', 'public/vendor/jstree/css')
     .copy('node_modules/leaflet/dist', 'public/vendor/leaflet')
 //    .postCss('resources/css/app.css', 'public/css', [])

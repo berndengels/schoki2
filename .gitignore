@@ -27,3 +27,4 @@ yarn-error.log
 /public_html/
 /public/vendor/
 public_html
+/composer.lock

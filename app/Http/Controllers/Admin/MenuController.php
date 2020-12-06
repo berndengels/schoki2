@@ -1,188 +1,272 @@
 <?php
-
+/**
+ * UserController.php
+ *
+ * @author    Bernd Engels
+ * @created   28.02.19 17:17
+ * @copyright Webwerk Berlin GmbH
+ */
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Menu\BulkDestroyMenu;
-use App\Http\Requests\Admin\Menu\DestroyMenu;
-use App\Http\Requests\Admin\Menu\IndexMenu;
-use App\Http\Requests\Admin\Menu\StoreMenu;
-use App\Http\Requests\Admin\Menu\UpdateMenu;
-use App\Models\Menu;
-use Brackets\AdminListing\Facades\AdminListing;
+use App\Libs\Icons;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
+use Request;
+use Response;
+use App\Models\Menu;
+use App\Forms\MenuForm;
+use App\Repositories\MenuRepository;
+use App\Repositories\Tree;
+use Illuminate\Support\Str;
+use Kalnoy\Nestedset\NestedSet;
+use App\Http\Controllers\Controller;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Illuminate\Database\Eloquent\Collection;
 
 class MenuController extends Controller
 {
+    use FormBuilderTrait;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param IndexMenu $request
-     * @return array|Factory|View
-     */
-    public function index(IndexMenu $request)
+	/**
+	 * @var MenuForm
+	 */
+    static protected $form = MenuForm::class;
+	/**
+	 * @var MenuRepository
+	 */
+	protected $repo;
+	/**
+	 * @var Tree
+	 */
+	protected $tree;
+	/**
+	 * @var Menu
+	 */
+	protected $root;
+	protected $title = 'Menu';
+
+	public function __construct(){
+		parent::__construct();
+		$this->middleware('auth');
+
+		$this->repo = new MenuRepository();
+		$this->tree = new Tree();
+		$this->root = Menu::find(1);
+	}
+
+	public function show( FormBuilder $formBuilder )
     {
-        // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(Menu::class)->processRequestAndGet(
-            // pass the request with params
-            $request,
-
-            // set columns to query
-            ['id', 'parent_id', 'menu_item_type_id', 'name', 'icon', 'fa_icon', 'url', 'lft', 'rgt', 'lvl', 'api_enabled', 'is_published'],
-
-            // set columns to searchIn
-            ['id', 'icon', 'fa_icon', 'url']
-        );
-
-        if ($request->ajax()) {
-            if ($request->has('bulk')) {
-                return [
-                    'bulkItems' => $data->pluck('id')
-                ];
-            }
-            return ['data' => $data];
-        }
-
-        return view('admin.menu.index', ['data' => $data]);
+		try {
+			$form  = $formBuilder->create(MenuForm::class);
+			$options    = [
+				'form'      => $form,
+				'title'     => $this->title,
+			];
+			return view('admin.menus', $options);
+		} catch(Exception $e) {
+			die($e->getMessage());
+		}
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @throws AuthorizationException
-     * @return Factory|View
-     */
-    public function create()
-    {
-        $this->authorize('admin.menu.create');
+	public function icons()
+	{
+		$icons = Icons::getCachedList();
 
-        return view('admin.menu.create');
-    }
+		if($icons->count()) {
+			$response = ['icons' => $icons];
+			return response()->json($response);
+		}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param StoreMenu $request
-     * @return array|RedirectResponse|Redirector
-     */
-    public function store(StoreMenu $request)
-    {
-        // Sanitize input
-        $sanitized = $request->getSanitized();
+		return null;
+	}
 
-        // Store the Menu
-        $menu = Menu::create($sanitized);
+	public function operation( $operation )
+	{
+		/**
+		 * @var Menu $parent
+		 * @var NestedSet $node
+		 */
+		$request		= request();
+		$id				= ('#' === $request->get('id')) ? null : (int)$request->get('id');
+		$text			= $request->get('text');
+		$parentId		= (int)$request->get('parent');
+		$oldParentId	= (int)$request->get('old_parent');
+		$parent			= Menu::withDepth()->find($parentId) ?: null;
+		$lvl			= $parent ? $parent->depth + 1 : 1;
+		$position		= $request->get('position');
+		$oldPosition	= $request->get('old_position');
+		$result			= ['error' => true];
 
-        if ($request->ajax()) {
-            return ['redirect' => url('admin/menus'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
-        }
+		switch($operation) {
+			case 'get_node':
+				if ( null === $id ) {
+					$data = Menu::defaultOrder()->where('parent_id', null)->with('descendants')->get();
+//                    $data = Menu::defaultOrder()->where('parent_id', null)->get();
+				} else {
+					$data = Menu::defaultOrder()->descendantsOf($id)->toTree();
+				}
+				$result = [];
+				if( $data->count() > 0 ) {
+					foreach( $data as $v ) {
+						$result[] = [
+							'id'		=> $v->id,
+							'text'		=> $v->name,
+							'children'	=> count($v->children) > 0,
+						];
+					}
+				}
+				break;
+			case 'get_content':
+				$node = Menu::with('ancestors')->find($id);
+				if($node) {
+					/**
+					 * @var $nodeWithAncestors Collection
+					 */
+					if($node->ancestors->count()) {
+						$nodeWithAncestors = $node->ancestors->pluck('name')->add($node->name);
+					} else {
+						$nodeWithAncestors = collect(['Top Level',$node->name]);
+					}
 
-        return redirect('admin/menus');
-    }
+					$result = [
+						'nodeWithAncestors'	=> $nodeWithAncestors->toArray(),
+						'id'	        => $node->id,
+						'name'	        => $node->name,
+						'icon'	        => $node->icon,
+                        'fa_icon'	    => $node->fa_icon,
+						'url'	        => $node->url,
+						'menuItemType'	=> isset($node->menuItemType) ? $node->menuItemType : null,
+						'is_published' 	=> isset($node->is_published) ? $node->is_published : null,
+                        'api_enabled' 	=> isset($node->api_enabled) ? $node->api_enabled : null,
+					];
+				} else {
+					$result = ['error' => 'no node found by id: ' . $id];
+				}
+				break;
+			case 'create_node':
+				$node = Menu::create([
+					'parent_id'		=> $parentId,
+					'name' 			=> $text,
+					'lvl'			=> $lvl,
+					'is_published'	=> 0,
+                    'api_enabled'   => 0,
+				]);
+				$node->save();
+				$result = [
+					'id'	=> $node->id,
+					'text'	=> $node->name,
+					'parent'	=> $parentId,
+					'position'	=> $position,
+					'children'	=> (count($node->children) > 0 ) ? true : false,
+				];
+				break;
+			case 'move_node':
+				$node = Menu::find($id);
+				$node->lvl = $lvl;
+				$moved = false;
+				$msg = '';
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Menu $menu
-     * @throws AuthorizationException
-     * @return void
-     */
-    public function show(Menu $menu)
-    {
-        $this->authorize('admin.menu.show', $menu);
+				if( $oldParentId !== $parentId ) {
+					// parent changed
+					if($parent) {
+						$node->appendToNode($parent);
+						$moved = $node->moveNode($node->getKey(), $position);
+						$msg = "moved on parent: $moved new pos: $position (oldParent: $oldParentId newParent: $parentId)";
+					} else {
+						$node->appendToNode($this->root);
+						$moved = $node->moveNode($node->getKey(), $position);
+						$msg = "moved on parent: $moved new pos: $position (oldParent: $oldParentId newParent: $parentId)";
+					}
+				} else {
+					// move only in siblings
+					if($oldPosition > $position) {
+						// we move up
+						$offset = $oldPosition - $position;
+						$moved = $node->up($offset);
+					} else {
+						// we move down
+						$offset = $position - $oldPosition;
+						$moved = $node->down($offset);
+					}
+					$msg = "in siblings old: $oldPosition new: $position moved: $moved";
+				}
 
-        // TODO your code goes here
-    }
+				if($moved) {
+					$node->save();
+				}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Menu $menu
-     * @throws AuthorizationException
-     * @return Factory|View
-     */
-    public function edit(Menu $menu)
-    {
-        $this->authorize('admin.menu.edit', $menu);
+				$result = [
+					'id'		=> $node->id,
+					'text'		=> $node->name,
+					'position'	=> $position,
+					'moved'		=> $moved,
+					'children'	=> (count($node->children) > 0 ) ? true : false,
+					'msg'		=> $msg,
+				];
+				break;
+			case 'delete_node':
+				$result = [
+					'id' 		=> $id,
+					'delete'	=> Menu::find($id)->delete(),
+				];
+				break;
+			case 'rename_node':
+				$node = Menu::find($id);
+				$node->name = $text;
+				$node->slug = Str::slug($text, '-');
+				$node->save();
+				$result = [
+					'id'	=> $node->id,
+					'text'	=> $node->name,
+					'position'	=> $position,
+					'children'	=> (count($node->children) > 0 ) ? true : false,
+				];
+				break;
+			case 'analyze':
+				$result = Menu::countErrors();
+				break;
+			case 'fix':
+				$result = Menu::fixTree();
+				break;
+		}
+		return response()->json($result);
+	}
 
+	/**
+	 * Store a newly created resource in storage.
+	 * @param  Request  $request
+	 * @return Response
+	 */
+	public function store() {
 
-        return view('admin.menu.edit', [
-            'menu' => $menu,
-        ]);
-    }
+		if(Request::json()) {
+			$data = request()->post();
+			/**
+			 * @var Menu $node
+			 */
+			$node = Menu::find($data['id']);
+			$type = (int)$data['menuItemType'];
+			try {
+				// EXTERNAL LINK
+				$node->url					= isset($data['url']) ? $data['url'] : null;
+				$node->icon					= $data['icon'];
+                $node->fa_icon				= $data['fa_icon'];
+				$node->name					= $data['name'];
+				$node->is_published 		= isset($data['is_published']) ? 1 : 0;
+                $node->api_enabled 		    = isset($data['api_enabled']) ? 1 : 0;
+				$node->menu_item_type_id	= $type;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateMenu $request
-     * @param Menu $menu
-     * @return array|RedirectResponse|Redirector
-     */
-    public function update(UpdateMenu $request, Menu $menu)
-    {
-        // Sanitize input
-        $sanitized = $request->getSanitized();
+				$result = $node->save();
+				$response = ['result' => $result, 'node' => $node,];
 
-        // Update changed values Menu
-        $menu->update($sanitized);
+			} catch(Exception $e) {
+				$response = ['error' => $e->getMessage()];
+			}
+		}
+		else {
+			$response = ['error' => 'no valid ajax request!'];
+		}
 
-        if ($request->ajax()) {
-            return [
-                'redirect' => url('admin/menus'),
-                'message' => trans('brackets/admin-ui::admin.operation.succeeded'),
-            ];
-        }
-
-        return redirect('admin/menus');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param DestroyMenu $request
-     * @param Menu $menu
-     * @throws Exception
-     * @return ResponseFactory|RedirectResponse|Response
-     */
-    public function destroy(DestroyMenu $request, Menu $menu)
-    {
-        $menu->delete();
-
-        if ($request->ajax()) {
-            return response(['message' => trans('brackets/admin-ui::admin.operation.succeeded')]);
-        }
-
-        return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resources from storage.
-     *
-     * @param BulkDestroyMenu $request
-     * @throws Exception
-     * @return Response|bool
-     */
-    public function bulkDestroy(BulkDestroyMenu $request) : Response
-    {
-        DB::transaction(static function () use ($request) {
-            collect($request->data['ids'])
-                ->chunk(1000)
-                ->each(static function ($bulkChunk) {
-                    Menu::whereIn('id', $bulkChunk)->delete();
-
-                    // TODO your code goes here
-                });
-        });
-
-        return response(['message' => trans('brackets/admin-ui::admin.operation.succeeded')]);
-    }
+		return response()->json($response);
+	}
 }

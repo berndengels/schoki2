@@ -27,7 +27,7 @@
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/music-styles') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.music-style.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/messages') }}"><i class="nav-icon icon-book-open"></i> {{ trans('admin.message.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/news') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.news.title') }}</a></li>
-           <li class="nav-item"><a class="nav-link" href="{{ url('admin/menus') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.menu.title') }}</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url('admin/menu') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.menu.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/newsletter-statuses') }}"><i class="nav-icon icon-drop"></i> {{ trans('admin.newsletter-status.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/newsletters') }}"><i class="nav-icon icon-flag"></i> {{ trans('admin.newsletter.title') }}</a></li>
            <li class="nav-item"><a class="nav-link" href="{{ url('admin/products') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.product.title') }}</a></li>

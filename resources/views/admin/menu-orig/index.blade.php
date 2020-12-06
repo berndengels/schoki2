@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="col-sm-auto form-group ">
                                         <select class="form-control" v-model="pagination.state.per_page">
-                                            
+
                                             <option value="10">10</option>
                                             <option value="25">25</option>
                                             <option value="100">100</option>
@@ -80,13 +80,13 @@
                                     <tr v-for="(item, index) in collection" :key="item.id" :class="bulkItems[item.id] ? 'bg-bulk' : ''">
                                         <td class="bulk-checkbox">
                                             <input class="form-check-input" :id="'enabled' + item.id" type="checkbox" v-model="bulkItems[item.id]" v-validate="''" :data-vv-name="'enabled' + item.id"  :name="'enabled' + item.id + '_fake_element'" @click="onBulkItemClicked(item.id)" :disabled="bulkCheckingAllLoader">
-                                            <label class="form-check-label" :for="'enabled' + item.id">
-                                            </label>
+                                            <label class="form-check-label" :for="'enabled' + item.id"></label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
-                                        <td>@{{ item.parent_id }}</td>
-                                        <td>@{{ item.menu_item_type_id }}</td>
+                                        <td>@{{ item.id }}</td>
+                                        <td v-if="item.parent">@{{ item.parent.name }}</td>
+                                        <td v-else>TOP</td>
+                                        <td>@{{-- item.menuItemType.label --}}</td>
                                         <td>@{{ item.name }}</td>
                                         <td>@{{ item.icon }}</td>
                                         <td>@{{ item.fa_icon }}</td>
@@ -94,7 +94,12 @@
                                         <td>@{{ item.lft }}</td>
                                         <td>@{{ item.rgt }}</td>
                                         <td>@{{ item.lvl }}</td>
-                                        <td>@{{ item.api_enabled }}</td>
+                                        <td>
+                                            <label class="switch switch-3d switch-success">
+                                                <input type="checkbox" class="switch-input" v-model="collection[index].api_enabled" @change="toggleSwitch(item.resource_url, 'api_enabled', collection[index])">
+                                                <span class="switch-slider"></span>
+                                            </label>
+                                        </td>
                                         <td>
                                             <label class="switch switch-3d switch-success">
                                                 <input type="checkbox" class="switch-input" v-model="collection[index].is_published" @change="toggleSwitch(item.resource_url, 'is_published', collection[index])">
@@ -102,7 +107,7 @@
                                             </label>
                                         </td>
 
-                                        
+
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">
