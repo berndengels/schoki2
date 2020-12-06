@@ -47,7 +47,7 @@ class MenuController extends Controller
 
 	public function __construct(){
 		parent::__construct();
-		$this->middleware('auth');
+		$this->middleware('admin');
 
 		$this->repo = new MenuRepository();
 		$this->tree = new Tree();

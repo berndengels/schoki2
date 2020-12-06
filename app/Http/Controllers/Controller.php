@@ -50,7 +50,6 @@ class Controller extends BaseController
      */
     public function __construct()
     {
-//        $this->middleware('web-public');
         $this->agent = new Agent();
     }
 }
