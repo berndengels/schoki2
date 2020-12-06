@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment('local')) {
+        if (!$this->app->environment('prod')) {
             $this->app->register(IdeHelperServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
             $this->app->register(\PrettyRoutes\ServiceProvider::class);
