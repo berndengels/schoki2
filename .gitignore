@@ -24,3 +24,6 @@ yarn-error.log
 /stuff/
 /public/info.php
 /.htaccess
+/public_html/
+/public/vendor/
+public_html
