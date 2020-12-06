@@ -23,6 +23,39 @@ class MyMigration extends Migration
 
     public function info()
     {
-        echo 'we need version: '.$this->mustVersion.', you have: '.$this->dbServerVersion;
+
+        echo 'we need version: '.$this->mustVersion.', you have: '.$this->dbServerVersion .', json support: '.($this->jsonSupported ? 'OK' : 'NO') ;
+    }
+
+    /**
+     * @return null
+     */
+    public function getDbServerVersion()
+    {
+        return $this->dbServerVersion;
+    }
+
+    /**
+     * @return null
+     */
+    public function getDbServerName()
+    {
+        return $this->dbServerName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMustVersion(): string
+    {
+        return $this->mustVersion;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isJsonSupported(): bool
+    {
+        return $this->jsonSupported;
     }
 }
