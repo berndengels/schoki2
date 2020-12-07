@@ -354,8 +354,12 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
 });
 
 /* Auto-generated admin routes */
-Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
-    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
+    ->group(static function () {
+    Route::prefix('admin')
+        ->namespace('App\Http\Controllers\Admin')
+        ->name('admin/')
+        ->group(static function() {
         Route::prefix('orders')->name('orders/')->group(static function() {
             Route::get('/',	'OrderController@index')->name('index');
             Route::get('/create',	'OrderController@create')->name('create');
@@ -370,7 +374,8 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
 });
 
 /* Auto-generated admin routes */
-Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
+    ->group(static function () {
     Route::prefix('admin')
         ->namespace('App\Http\Controllers\Admin')
         ->group(static function() {
