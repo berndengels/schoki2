@@ -2,6 +2,8 @@
 
 namespace App\Libs;
 
+use App\Models\Category;
+use App\Models\Theme;
 use App\Repositories\PageRepository;
 use Route;
 
@@ -27,7 +29,7 @@ class Routes
 
 		foreach($routes as $k => $r) {
 			if( !preg_match("/\{[^\}]+\}/", $r->uri) ) {
-				$uri = '/'.$r->uri;
+				$uri = $r->uri;
 				self::$routes[$uri] = $uri;
 			}
 		}
@@ -41,8 +43,28 @@ class Routes
 		return collect(PageRepository::getRoutes());
 	}
 
+	public static function getCategoryRoutes() {
+        return Category::all()
+            ->pluck('slug')
+            ->mapWithKeys(function ($item) {
+                return ["/category/$item" => "/category/$item"];
+            });
+
+    }
+
+    public static function getThemeRoutes() {
+        return Theme::all()->pluck('slug')
+            ->mapWithKeys(function ($item) {
+                return ["/theme/$item" => "/theme/$item"];
+            });
+
+    }
+
 	public static function getPublicRoutes()
 	{
-		return self::getPageRoutes()->merge(self::getRoutes('public'));
+        return self::getPageRoutes()
+            ->merge(self::getRoutes('public'))
+            ->merge(self::getCategoryRoutes())
+            ->merge(self::getThemeRoutes());
 	}
 }
