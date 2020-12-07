@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Support\Carbon;
@@ -12,6 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
+use Laravel\Cashier\Subscription;
 
 /**
  * App\Models\User
@@ -47,6 +49,8 @@ use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
  * @method static Builder|User whereTrialEndsAt($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read Collection|Subscription[] $subscriptions
+ * @property-read int|null $subscriptions_count
  */
 class User extends Authenticatable implements InstanceIdentifier
 {

@@ -1,10 +1,7 @@
 import AppForm from '../app-components/Form/AppForm';
 
 Vue.component('event-form', {
-    props: [
-        'categories',
-        'themes',
-    ],
+    props: ['categories', 'themes'],
     mixins: [AppForm],
     data: function() {
         return {

@@ -41,6 +41,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Order whereUpdatedAt($value)
  * @method static Builder|Order whereUpdatedBy($value)
  * @mixin Eloquent
+ * @property Carbon|null $delivered_at
+ * @method static Builder|Order whereDeliveredAt($value)
  */
 class Order extends Model
 {

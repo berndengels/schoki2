@@ -26,15 +26,12 @@ class StoreEventTemplate extends FormRequest
     public function rules(): array
     {
         return [
-            'theme_id' => ['required', 'integer'],
+            'theme_id' => '',
             'category_id' => ['required', 'integer'],
-            'created_by' => ['required', 'integer'],
-            'updated_by' => ['required', 'integer'],
             'title' => ['required', 'string'],
-            'subtitle' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'links' => ['required', 'string'],
-
+            'description' => '',
+            'subtitle' => '',
+            'links' => '',
         ];
     }
 

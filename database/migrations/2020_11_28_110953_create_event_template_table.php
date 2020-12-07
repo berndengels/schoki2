@@ -47,7 +47,7 @@ class CreateEventTemplateTable extends Migration
             $table->string('title');
             $table->string('subtitle')->nullable();
             $table->longText('description')->nullable();
-            $table->longText('links')->nullable();
+            $table->text('links')->nullable();
             $table->timestamps();
         });
     }

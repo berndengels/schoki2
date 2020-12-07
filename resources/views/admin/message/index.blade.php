@@ -3,9 +3,9 @@
 @section('title', trans('admin.message.actions.index'))
 
 @section('body')
-
     <message-listing
         :data="{{ $data->toJson() }}"
+        :music_styles="{{ $musicStyles->toJson() }}"
         :url="'{{ url('admin/messages') }}'"
         inline-template>
 
@@ -14,6 +14,27 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i> {{ trans('admin.message.actions.index') }}
+                        <form @submit.prevent class="d-inline-block justify-content-between align-middle">
+                            <div class="col-sm-auto form-inline d-inline-block">
+                                <div class="input-group">
+                                    <select
+                                        id="musicStyle"
+                                        name="musicStyle"
+                                        class="form-control d-inline"
+                                        v-model="musicStyleSelect"
+                                    >
+                                        <option value="">{{ __('Type to search a Music Style') }}</option>
+                                        <option v-for="item in music_styles" :key="item.id" :value="item.id">
+                                            @{{ item.name }}
+                                        </option>
+                                    </select>
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary"
+                                                @click="filter('musicStyle', musicStyleSelect)"><i class="fa fa-search"></i> Style</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
                         <a class="btn btn-primary btn-sm pull-right m-b-0 ml-2" href="{{ url('admin/messages/export') }}" role="button"><i class="fa fa-file-excel-o"></i>&nbsp; {{ trans('admin.message.actions.export') }}</a>
                         <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/messages/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.message.actions.create') }}</a>
                     </div>
@@ -31,7 +52,7 @@
                                     </div>
                                     <div class="col-sm-auto form-group ">
                                         <select class="form-control" v-model="pagination.state.per_page">
-                                            
+
                                             <option value="10">10</option>
                                             <option value="25">25</option>
                                             <option value="100">100</option>
@@ -78,14 +99,14 @@
                                         </td>
 
                                     <td>@{{ item.id }}</td>
-                                        <td>@{{ item.music_style_id }}</td>
+                                        <td>@{{ item.music_style ? item.music_style.name : null }}</td>
                                         <td>@{{ item.email }}</td>
                                         <td>@{{ item.name }}</td>
-                                        
+
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">
-                                                    <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/show'" title="{{ trans('show') }}" role="button"><i class="fa fa-eye"></i></a>
                                                 </div>
                                                 <form class="col" @submit.prevent="deleteItem(item.resource_url)">
                                                     <button type="submit" class="btn btn-sm btn-danger" title="{{ trans('brackets/admin-ui::admin.btn.delete') }}"><i class="fa fa-trash-o"></i></button>

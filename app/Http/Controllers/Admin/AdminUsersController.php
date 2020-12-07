@@ -16,6 +16,7 @@ use Brackets\AdminAuth\Activation\Facades\Activation;
 use Brackets\AdminAuth\Services\ActivationService;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -55,16 +56,22 @@ class AdminUsersController extends Controller
      */
     public function index(IndexAdminUser $request)
     {
+        $user = auth('admin')->user();
+        $isAdmin = $user->hasRole('Administrator');
+
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(AdminUser::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'first_name', 'last_name', 'email', 'activated', 'forbidden', 'language', 'last_login_at'],
-
             // set columns to searchIn
-            ['id', 'first_name', 'last_name', 'email', 'language']
+            ['id', 'first_name', 'last_name', 'email', 'language'],
+            function (Builder $query) use ($request, $user, $isAdmin) {
+                if($user && !$isAdmin) {
+                    $query->whereId($user->id);
+                }
+            }
         );
 
         if ($request->ajax()) {
@@ -148,7 +155,6 @@ class AdminUsersController extends Controller
         return view('admin.admin-user.edit', [
             'adminUser'     => $adminUser,
             'activation'    => Config::get('admin-auth.activation_enabled'),
-//            'roles'         => Role::where('guard_name', $this->guard)->get(),
             'roles'         => Role::all(),
             'musicStyles'   => MusicStyle::all(),
             'userMusicStyles'   => $adminUser->musicStyles,

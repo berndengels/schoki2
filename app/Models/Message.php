@@ -31,22 +31,22 @@ use Illuminate\Support\Carbon;
 class Message extends Model
 {
     protected $table = 'message';
-
     protected $fillable = [
         'music_style_id',
         'email',
         'name',
         'message',
-
     ];
-
-
+    protected $timestamp = 'created_at';
     protected $dates = [
         'created_at',
-
     ];
-
     protected $appends = ['resource_url'];
+
+    public function musicStyle()
+    {
+        return $this->belongsTo(MusicStyle::class);
+    }
 
     /* ************************ ACCESSOR ************************* */
 

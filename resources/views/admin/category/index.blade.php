@@ -52,7 +52,6 @@
 
                                         <th is='sortable' :column="'id'" class="col-auto">{{ trans('admin.category.columns.id') }}</th>
                                         <th is='sortable' :column="'name'" class="col-auto">{{ trans('admin.category.columns.name') }}</th>
-                                        <th is='sortable' :column="'icon'">{{ trans('admin.category.columns.icon') }}</th>
 
                                         <th></th>
                                     </tr>
@@ -78,7 +77,6 @@
 
                                         <td class="col-auto">@{{ item.id }}</td>
                                         <td class="col-auto">@{{ item.name }}</td>
-                                        <td>@{{ item.icon }}</td>
 
                                         <td>
                                             <div class="row no-gutters">

@@ -10,11 +10,13 @@ use App\Http\Requests\Admin\Message\IndexMessage;
 use App\Http\Requests\Admin\Message\StoreMessage;
 use App\Http\Requests\Admin\Message\UpdateMessage;
 use App\Models\Message;
+use App\Models\MusicStyle;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -38,12 +40,16 @@ class MessageController extends Controller
         $data = AdminListing::create(Message::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'music_style_id', 'email', 'name'],
-
             // set columns to searchIn
-            ['id', 'email', 'name', 'message']
+            ['id', 'email', 'name', 'message'],
+            function (Builder $query) use ($request) {
+                $query->with('musicStyle');
+                if($request->has('musicStyle')){
+                    $query->where('music_style_id', $request->get('musicStyle'));
+                }
+            }
         );
 
         if ($request->ajax()) {
@@ -55,7 +61,10 @@ class MessageController extends Controller
             return ['data' => $data];
         }
 
-        return view('admin.message.index', ['data' => $data]);
+        return view('admin.message.index', [
+            'data' => $data,
+            'musicStyles'   => MusicStyle::all(),
+        ]);
     }
 
     /**
@@ -102,8 +111,8 @@ class MessageController extends Controller
     public function show(Message $message)
     {
         $this->authorize('admin.message.show', $message);
-
-        // TODO your code goes here
+        $message->load('musicStyle');
+        return view('admin.message.show', ['message' => $message]);
     }
 
     /**
@@ -116,7 +125,6 @@ class MessageController extends Controller
     public function edit(Message $message)
     {
         $this->authorize('admin.message.edit', $message);
-
 
         return view('admin.message.edit', [
             'message' => $message,

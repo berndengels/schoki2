@@ -53,10 +53,9 @@
                                         <th is='sortable' :column="'id'">{{ trans('admin.event-template.columns.id') }}</th>
                                         <th is='sortable' :column="'theme_id'">{{ trans('admin.event-template.columns.theme_id') }}</th>
                                         <th is='sortable' :column="'category_id'">{{ trans('admin.event-template.columns.category_id') }}</th>
+                                        <th is='sortable' :column="'title'">{{ trans('admin.event-template.columns.title') }}</th>
                                         <th is='sortable' :column="'created_by'">{{ trans('admin.event-template.columns.created_by') }}</th>
                                         <th is='sortable' :column="'updated_by'">{{ trans('admin.event-template.columns.updated_by') }}</th>
-                                        <th is='sortable' :column="'title'">{{ trans('admin.event-template.columns.title') }}</th>
-                                        <th is='sortable' :column="'subtitle'">{{ trans('admin.event-template.columns.subtitle') }}</th>
 
                                         <th></th>
                                     </tr>
@@ -80,13 +79,12 @@
                                             </label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
-                                        <td>@{{ item.theme_id }}</td>
-                                        <td>@{{ item.category_id }}</td>
-                                        <td>@{{ item.created_by }}</td>
-                                        <td>@{{ item.updated_by }}</td>
+                                        <td>@{{ item.id }}</td>
+                                        <td>@{{ item.theme ? item.theme.name : null }}</td>
+                                        <td>@{{ item.category.name }}</td>
                                         <td>@{{ item.title }}</td>
-                                        <td>@{{ item.subtitle }}</td>
+                                        <td>@{{ item.created_by.full_name }}</td>
+                                        <td>@{{ item.updated_by ? item.updated_by.full_name : null }}</td>
 
                                         <td>
                                             <div class="row no-gutters">

@@ -103,15 +103,11 @@
                                         <th is='sortable' :column="'id'">{{ trans('admin.event.columns.id') }}</th>
                                         <th is='sortable' :column="'theme_id'">{{ trans('admin.event.columns.theme_id') }}</th>
                                         <th is='sortable' :column="'category_id'">{{ trans('admin.event.columns.category_id') }}</th>
+                                        <th is='sortable' :column="'title'">{{ trans('admin.event.columns.title') }}</th>
+                                        <th is='sortable' :column="'event_date'">{{ trans('admin.event.columns.event_date') }}</th>
+                                        <th is='sortable' :column="'is_published'">{{ trans('admin.event.columns.is_published') }}</th>
                                         <th is='sortable' :column="'created_by'">{{ trans('admin.event.columns.created_by') }}</th>
                                         <th is='sortable' :column="'updated_by'">{{ trans('admin.event.columns.updated_by') }}</th>
-                                        <th is='sortable' :column="'title'">{{ trans('admin.event.columns.title') }}</th>
-                                        <th is='sortable' :column="'subtitle'">{{ trans('admin.event.columns.subtitle') }}</th>
-                                        <th is='sortable' :column="'event_date'">{{ trans('admin.event.columns.event_date') }}</th>
-                                        <th is='sortable' :column="'event_time'">{{ trans('admin.event.columns.event_time') }}</th>
-                                        <th is='sortable' :column="'price'">{{ trans('admin.event.columns.price') }}</th>
-                                        <th is='sortable' :column="'is_published'">{{ trans('admin.event.columns.is_published') }}</th>
-                                        <th is='sortable' :column="'is_periodic'">{{ trans('admin.event.columns.is_periodic') }}</th>
 
                                         <th></th>
                                     </tr>
@@ -131,26 +127,22 @@
                                     <tr v-for="(item, index) in collection" :key="item.id" :class="bulkItems[item.id] ? 'bg-bulk' : ''">
                                         <td class="bulk-checkbox">
                                             <input class="form-check-input" :id="'enabled' + item.id" type="checkbox" v-model="bulkItems[item.id]" v-validate="''" :data-vv-name="'enabled' + item.id"  :name="'enabled' + item.id + '_fake_element'" @click="onBulkItemClicked(item.id)" :disabled="bulkCheckingAllLoader">
-                                            <label class="form-check-label" :for="'enabled' + item.id">
-                                            </label>
+                                            <label class="form-check-label" :for="'enabled' + item.id"></label>
                                         </td>
 
                                         <td>@{{ item.id }}</td>
                                         <td>@{{ item.theme ? item.theme.name : null }}</td>
                                         <td>@{{ item.category.name }}</td>
-                                        <td>@{{ item.created_by.full_name }}</td>
-                                        <td>@{{ item.updated_by ? item.updated_by.full_name : null }}</td>
                                         <td v-html="item.title"></td>
-                                        <td>@{{ item.subtitle }}</td>
                                         <td>@{{ item.event_date | date('DD.MM.Y') }}</td>
-                                        <td>@{{ item.event_time | time('HH.mm') }}</td>
-                                        <td>@{{ item.price }}</td>
                                         <td>
                                             <label class="switch switch-3d switch-success">
                                                 <input type="checkbox" class="switch-input" v-model="collection[index].is_published" @change="toggleSwitch(item.resource_url, 'is_published', collection[index])">
                                                 <span class="switch-slider"></span>
                                             </label>
                                         </td>
+                                        <td>@{{ item.created_by.full_name }}</td>
+                                        <td>@{{ item.updated_by ? item.updated_by.full_name : null }}</td>
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">

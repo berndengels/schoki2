@@ -26,21 +26,18 @@ class UpdateEventPeriodic extends FormRequest
     public function rules(): array
     {
         return [
-            'theme_id' => ['sometimes', 'integer'],
-            'category_id' => ['sometimes', 'integer'],
-            'periodic_position' => ['sometimes', 'string'],
-            'periodic_weekday' => ['sometimes', 'string'],
-            'created_by' => ['sometimes', 'integer'],
-            'updated_by' => ['sometimes', 'integer'],
-            'title' => ['sometimes', 'string'],
-            'subtitle' => ['sometimes', 'string'],
-            'description' => ['sometimes', 'string'],
-            'links' => ['sometimes', 'string'],
-            'event_date' => ['sometimes', 'date'],
-            'event_time' => ['sometimes', 'date_format:H:i:s'],
-            'price' => ['nullable', 'numeric'],
-            'is_published' => ['sometimes', 'boolean'],
-
+            'theme_id' => '',
+            'category_id' => ['required'],
+            'periodic_position' => ['required'],
+            'periodic_weekday' => ['required'],
+            'title' => ['required'],
+            'event_time' => ['required', 'date_format:H:i:s'],
+            'is_published' => ['required', 'boolean'],
+            'subtitle' => '',
+            'description' => '',
+            'links' => '',
+            'event_date' => '',
+            'price' => '',
         ];
     }
 

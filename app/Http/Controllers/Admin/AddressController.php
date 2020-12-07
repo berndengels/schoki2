@@ -10,11 +10,14 @@ use App\Http\Requests\Admin\Address\IndexAddress;
 use App\Http\Requests\Admin\Address\StoreAddress;
 use App\Http\Requests\Admin\Address\UpdateAddress;
 use App\Models\Address;
+use App\Models\AddressCategory;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -38,14 +41,14 @@ class AddressController extends Controller
         $data = AdminListing::create(Address::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'address_category_id', 'email', 'token', 'info_on_changes'],
-
             // set columns to searchIn
-            ['id', 'email', 'token']
+            ['id', 'email', 'token'],
+            function (Builder $query) use ($request) {
+                $query->with('addressCategory');
+            }
         );
-
         if ($request->ajax()) {
             if ($request->has('bulk')) {
                 return [
@@ -55,7 +58,10 @@ class AddressController extends Controller
             return ['data' => $data];
         }
 
-        return view('admin.address.index', ['data' => $data]);
+        return view('admin.address.index', [
+            'data' => $data,
+            'addressCategories' => AddressCategory::all(),
+        ]);
     }
 
     /**
@@ -68,7 +74,9 @@ class AddressController extends Controller
     {
         $this->authorize('admin.address.create');
 
-        return view('admin.address.create');
+        return view('admin.address.create', [
+            'addressCategories' => AddressCategory::all(),
+        ]);
     }
 
     /**
@@ -120,6 +128,7 @@ class AddressController extends Controller
 
         return view('admin.address.edit', [
             'address' => $address,
+            'addressCategories' => AddressCategory::all(),
         ]);
     }
 

@@ -22,5 +22,11 @@ class AdminUsersMusicStyle extends Model
     protected $table = 'admin_users_music_style';
     public $timestamps = false;
 
+    public function adminUsers() {
+        return $this->hasMany(AdminUser::class);
+    }
 
+    public function messages() {
+        return $this->hasMany(Message::class);
+    }
 }

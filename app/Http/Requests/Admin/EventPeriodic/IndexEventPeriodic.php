@@ -30,7 +30,6 @@ class IndexEventPeriodic extends FormRequest
             'search' => 'string|nullable',
             'page' => 'integer|nullable',
             'per_page' => 'integer|nullable',
-
         ];
     }
 }

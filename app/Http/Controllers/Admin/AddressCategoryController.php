@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -35,14 +36,14 @@ class AddressCategoryController extends Controller
         $data = AdminListing::create(AddressCategory::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
-            [''],
-
+            ['id', 'tag_id', 'name'],
             // set columns to searchIn
-            ['']
+            ['id', 'name'],
+            function (Builder $query) use ($request) {
+                $query->withCount('addresses');
+            }
         );
-
         if ($request->ajax()) {
             if ($request->has('bulk')) {
                 return [

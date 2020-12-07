@@ -26,7 +26,8 @@ class UpdateAddressCategory extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'tag_id' => ['sometimes', 'integer'],
+            'name' => ['sometimes', 'string'],
         ];
     }
 

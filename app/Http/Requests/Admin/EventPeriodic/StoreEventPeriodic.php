@@ -26,21 +26,18 @@ class StoreEventPeriodic extends FormRequest
     public function rules(): array
     {
         return [
-            'theme_id' => ['required', 'integer'],
+            'theme_id' => '',
             'category_id' => ['required', 'integer'],
             'periodic_position' => ['required', 'string'],
             'periodic_weekday' => ['required', 'string'],
-            'created_by' => ['required', 'integer'],
-            'updated_by' => ['required', 'integer'],
             'title' => ['required', 'string'],
-            'subtitle' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'links' => ['required', 'string'],
-            'event_date' => ['required', 'date'],
             'event_time' => ['required', 'date_format:H:i:s'],
-            'price' => ['nullable', 'numeric'],
             'is_published' => ['required', 'boolean'],
-
+            'subtitle' => '',
+            'description' => '',
+            'links' => '',
+            'event_date' => '',
+            'price' => '',
         ];
     }
 

@@ -10,7 +10,5 @@ return [
     | Contains an array with the applications available locales.
     |
     */
-    'locales' => [
-        'en',
-    ],
+    'locales' => ['en','de'],
 ];

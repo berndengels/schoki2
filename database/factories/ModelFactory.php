@@ -339,3 +339,12 @@ $factory->define(App\Models\Order::class, static function (Faker\Generator $fake
 
     ];
 });
+/** @var  Factory $factory */
+$factory->define(App\Models\AddressCategory::class, static function (Faker\Generator $faker) {
+    return [
+        'tag_id' => $faker->randomNumber(5),
+        'name' => $faker->firstName,
+
+
+    ];
+});

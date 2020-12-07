@@ -2,12 +2,51 @@
 namespace App\Models;
 
 use Eloquent;
+use Kalnoy\Nestedset\Collection;
 use Kalnoy\Nestedset\NodeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Kalnoy\Nestedset\QueryBuilder;
 
 /**
  * App\Models\Menu
+ *
+ * @property int $id
+ * @property int|null $parent_id
+ * @property int|null $menu_item_type_id
+ * @property mixed $name
+ * @property string|null $icon
+ * @property string|null $fa_icon
+ * @property string|null $url
+ * @property int $lft
+ * @property int $rgt
+ * @property int $lvl
+ * @property int $api_enabled
+ * @property int $is_published
+ * @property-read Collection|Menu[] $children
+ * @property-read int|null $children_count
+ * @property-read mixed $resource_url
+ * @property-read MenuItemType|null $menuItemType
+ * @property Menu|null $parent
+ * @method static Collection|static[] all($columns = ['*'])
+ * @method static Builder|Menu d()
+ * @method static Collection|static[] get($columns = ['*'])
+ * @method static QueryBuilder|Menu newModelQuery()
+ * @method static QueryBuilder|Menu newQuery()
+ * @method static QueryBuilder|Menu query()
+ * @method static Builder|Menu whereApiEnabled($value)
+ * @method static Builder|Menu whereFaIcon($value)
+ * @method static Builder|Menu whereIcon($value)
+ * @method static Builder|Menu whereId($value)
+ * @method static Builder|Menu whereIsPublished($value)
+ * @method static Builder|Menu whereLft($value)
+ * @method static Builder|Menu whereLvl($value)
+ * @method static Builder|Menu whereMenuItemTypeId($value)
+ * @method static Builder|Menu whereName($value)
+ * @method static Builder|Menu whereParentId($value)
+ * @method static Builder|Menu whereRgt($value)
+ * @method static Builder|Menu whereUrl($value)
+ * @mixin Eloquent
  */
 class Menu extends Model
 {

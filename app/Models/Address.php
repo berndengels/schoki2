@@ -33,22 +33,12 @@ use Illuminate\Support\Carbon;
 class Address extends Model
 {
     protected $table = 'address';
-
     protected $fillable = [
         'address_category_id',
         'email',
         'token',
         'info_on_changes',
-
     ];
-
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-
-    ];
-
     protected $appends = ['resource_url'];
 
     /* ************************ ACCESSOR ************************* */
@@ -56,5 +46,9 @@ class Address extends Model
     public function getResourceUrlAttribute()
     {
         return url('/admin/addresses/'.$this->getKey());
+    }
+
+    public function addressCategory() {
+        return $this->belongsTo(AddressCategory::class);
     }
 }

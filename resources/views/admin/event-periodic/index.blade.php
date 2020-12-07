@@ -53,16 +53,10 @@
                                         <th is='sortable' :column="'id'">{{ trans('admin.event-periodic.columns.id') }}</th>
                                         <th is='sortable' :column="'theme_id'">{{ trans('admin.event-periodic.columns.theme_id') }}</th>
                                         <th is='sortable' :column="'category_id'">{{ trans('admin.event-periodic.columns.category_id') }}</th>
-                                        <th is='sortable' :column="'periodic_position'">{{ trans('admin.event-periodic.columns.periodic_position') }}</th>
-                                        <th is='sortable' :column="'periodic_weekday'">{{ trans('admin.event-periodic.columns.periodic_weekday') }}</th>
+                                        <th is='sortable' :column="'title'">{{ trans('admin.event-periodic.columns.title') }}</th>
+                                        <th is='sortable' :column="'is_published'">{{ trans('admin.event-periodic.columns.is_published') }}</th>
                                         <th is='sortable' :column="'created_by'">{{ trans('admin.event-periodic.columns.created_by') }}</th>
                                         <th is='sortable' :column="'updated_by'">{{ trans('admin.event-periodic.columns.updated_by') }}</th>
-                                        <th is='sortable' :column="'title'">{{ trans('admin.event-periodic.columns.title') }}</th>
-                                        <th is='sortable' :column="'subtitle'">{{ trans('admin.event-periodic.columns.subtitle') }}</th>
-                                        <th is='sortable' :column="'event_date'">{{ trans('admin.event-periodic.columns.event_date') }}</th>
-                                        <th is='sortable' :column="'event_time'">{{ trans('admin.event-periodic.columns.event_time') }}</th>
-                                        <th is='sortable' :column="'price'">{{ trans('admin.event-periodic.columns.price') }}</th>
-                                        <th is='sortable' :column="'is_published'">{{ trans('admin.event-periodic.columns.is_published') }}</th>
 
                                         <th></th>
                                     </tr>
@@ -86,25 +80,18 @@
                                             </label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
-                                        <td>@{{ item.theme_id }}</td>
-                                        <td>@{{ item.category_id }}</td>
-                                        <td>@{{ item.periodic_position }}</td>
-                                        <td>@{{ item.periodic_weekday }}</td>
-                                        <td>@{{ item.created_by }}</td>
-                                        <td>@{{ item.updated_by }}</td>
+                                        <td>@{{ item.id }}</td>
+                                        <td>@{{ item.theme ? item.theme.name : null }}</td>
+                                        <td>@{{ item.category.name }}</td>
                                         <td>@{{ item.title }}</td>
-                                        <td>@{{ item.subtitle }}</td>
-                                        <td>@{{ item.event_date | date }}</td>
-                                        <td>@{{ item.event_time | time }}</td>
-                                        <td>@{{ item.price }}</td>
                                         <td>
                                             <label class="switch switch-3d switch-success">
                                                 <input type="checkbox" class="switch-input" v-model="collection[index].is_published" @change="toggleSwitch(item.resource_url, 'is_published', collection[index])">
                                                 <span class="switch-slider"></span>
                                             </label>
                                         </td>
-
+                                        <td>@{{ item.created_by.full_name }}</td>
+                                        <td>@{{ item.updated_by ? item.updated_by.full_name : null }}</td>
 
                                         <td>
                                             <div class="row no-gutters">

@@ -26,15 +26,12 @@ class UpdateEventTemplate extends FormRequest
     public function rules(): array
     {
         return [
-            'theme_id' => ['sometimes', 'integer'],
-            'category_id' => ['sometimes', 'integer'],
-            'created_by' => ['sometimes', 'integer'],
-            'updated_by' => ['sometimes', 'integer'],
-            'title' => ['sometimes', 'string'],
-            'subtitle' => ['sometimes', 'string'],
-            'description' => ['sometimes', 'string'],
-            'links' => ['sometimes', 'string'],
-
+            'theme_id' => '',
+            'category_id' => ['required', 'integer'],
+            'title' => ['required', 'string'],
+            'description' => '',
+            'subtitle' => '',
+            'links' => '',
         ];
     }
 

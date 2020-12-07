@@ -64,6 +64,18 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @method static Builder|Event whereUpdatedAt($value)
  * @method static Builder|Event whereUpdatedBy($value)
  * @mixin Eloquent
+ * @property-read mixed $images
+ * @property-read mixed $media_name
+ * @property-read mixed $thumbnails
+ * @method static Builder|Event allActual()
+ * @method static Builder|Event allActualMerged()
+ * @method static Builder|Event byCategorySlug($slug, $sinceToday = true)
+ * @method static Builder|Event byThemeSlug($slug, $sinceToday = true)
+ * @method static Builder|Event mergedByCategorySlug($slug, $sinceToday = true)
+ * @method static Builder|Event mergedByDate($date)
+ * @method static Builder|Event mergedByDateAndCategory($date, $slug)
+ * @method static Builder|Event mergedByDateAndTheme($date, $slug)
+ * @method static Builder|Event mergedByThemeSlug($slug, $sinceToday = true)
  */
 class Event extends Model implements HasMediaAlias
 {

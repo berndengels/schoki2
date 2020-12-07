@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\EventExport;
+use App\Helper\MyDate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Event\BulkDestroyEvent;
 use App\Http\Requests\Admin\Event\DestroyEvent;
@@ -47,16 +48,16 @@ class EventController extends Controller
                 'id',
                 'theme_id',
                 'category_id',
-                'created_by',
-                'updated_by',
                 'title',
                 'description',
                 'event_date',
                 'event_time',
-                'is_published'
+                'is_published',
+                'created_by',
+                'updated_by',
             ],
             // set columns to searchIn
-            ['id', 'title', 'subtitle', 'description'],
+            ['id', 'title', 'description'],
             function (Builder $query) use ($request) {
                 $query->with(['category','theme','createdBy','updatedBy']);
                 if($request->has('category')){
@@ -65,7 +66,10 @@ class EventController extends Controller
                 if($request->has('theme')){
                     $query->where('theme_id', $request->get('theme'));
                 }
-                $query->orderBy('event_date', 'DESC');
+                $query
+                    ->whereDate('event_date','>=', MyDate::getUntilValidDate())
+                    ->orderBy('event_date', 'DESC')
+                ;
             }
         );
 

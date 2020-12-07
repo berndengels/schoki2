@@ -1,8 +1,21 @@
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('address_category_id'), 'has-success': fields.address_category_id && fields.address_category_id.valid }">
-    <label for="address_category_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.address.columns.address_category_id') }}</label>
-        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-        <input type="text" v-model="form.address_category_id" v-validate="'required|integer'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('address_category_id'), 'form-control-success': fields.address_category_id && fields.address_category_id.valid}" id="address_category_id" name="address_category_id" placeholder="{{ trans('admin.address.columns.address_category_id') }}">
-        <div v-if="errors.has('address_category_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('address_category_id') }}</div>
+
+<div class="form-group row align-items-center"
+     :class="{'has-danger': errors.has('address_category_id'), 'has-success': this.fields.address_category_id && this.fields.address_category_id.valid }">
+    <label for="address_category_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ __('Address Category') }}</label>
+    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+        <select
+            id="address_category_id"
+            name="address_category_id"
+            v-model="form.address_category_id"
+            class="form-control"
+            v-validate="'required|integer'"
+        >
+            <option  value="">{{ __('Select Address Category') }}</option>
+            <option v-for="item in address_categories" :key="item.id" :value="item.id">@{{ item.name }}</option>
+        </select>
+        <div v-if="errors.has('address_category_id')" class="form-control-feedback form-text" v-cloak>
+            @{{ errors.first('address_category_id') }}
+        </div>
     </div>
 </div>
 

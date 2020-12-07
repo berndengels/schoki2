@@ -9,12 +9,15 @@ use App\Http\Requests\Admin\EventPeriodic\DestroyEventPeriodic;
 use App\Http\Requests\Admin\EventPeriodic\IndexEventPeriodic;
 use App\Http\Requests\Admin\EventPeriodic\StoreEventPeriodic;
 use App\Http\Requests\Admin\EventPeriodic\UpdateEventPeriodic;
+use App\Models\Category;
 use App\Models\EventPeriodic;
+use App\Models\Theme;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -40,10 +43,24 @@ class EventPeriodicController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'theme_id', 'category_id', 'periodic_position', 'periodic_weekday', 'created_by', 'updated_by', 'title', 'subtitle', 'event_date', 'event_time', 'price', 'is_published'],
+            [
+                'id',
+                'theme_id',
+                'category_id',
+                'title',
+                'event_time',
+                'periodic_position',
+                'periodic_weekday',
+                'is_published',
+                'created_by',
+                'updated_by'
+            ],
 
             // set columns to searchIn
-            ['id', 'periodic_position', 'periodic_weekday', 'title', 'subtitle', 'description', 'links']
+            ['id', 'title', 'description'],
+            function (Builder $query) use ($request) {
+                $query->with(['category','theme','createdBy','updatedBy']);
+            }
         );
 
         if ($request->ajax()) {
@@ -55,7 +72,9 @@ class EventPeriodicController extends Controller
             return ['data' => $data];
         }
 
-        return view('admin.event-periodic.index', ['data' => $data]);
+        return view('admin.event-periodic.index', [
+            'data' => $data
+        ]);
     }
 
     /**
@@ -68,7 +87,12 @@ class EventPeriodicController extends Controller
     {
         $this->authorize('event-periodic.create');
 
-        return view('admin.event-periodic.create');
+        return view('admin.event-periodic.create', [
+            'categories'    => Category::all(['id', 'name']),
+            'themes'        => Theme::all(['id', 'name']),
+            'periodicPositions' => collect(config('my.periodicPositions')),
+            'periodicWeekdays' => collect(config('my.periodicWeekdays')),
+        ]);
     }
 
     /**
@@ -116,10 +140,12 @@ class EventPeriodicController extends Controller
     public function edit(EventPeriodic $eventPeriodic)
     {
         $this->authorize('event-periodic.edit', $eventPeriodic);
-
-
         return view('admin.event-periodic.edit', [
             'eventPeriodic' => $eventPeriodic,
+            'categories'    => Category::all(['id', 'name']),
+            'themes'        => Theme::all(['id', 'name']),
+            'periodicPositions' => collect(config('my.periodicPositions')),
+            'periodicWeekdays' => collect(config('my.periodicWeekdays')),
         ]);
     }
 

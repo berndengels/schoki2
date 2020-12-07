@@ -2,6 +2,7 @@ import AppForm from '../app-components/Form/AppForm';
 
 Vue.component('event-periodic-form', {
     mixins: [AppForm],
+    props: ['categories', 'themes', 'periodic_positions', 'periodic_weekdays'],
     data: function() {
         return {
             form: {
@@ -9,8 +10,6 @@ Vue.component('event-periodic-form', {
                 category_id:  '' ,
                 periodic_position:  '' ,
                 periodic_weekday:  '' ,
-                created_by:  '' ,
-                updated_by:  '' ,
                 title:  '' ,
                 subtitle:  '' ,
                 description:  '' ,
@@ -19,9 +18,7 @@ Vue.component('event-periodic-form', {
                 event_time:  '' ,
                 price:  '' ,
                 is_published:  false ,
-                
             }
         }
     }
-
 });

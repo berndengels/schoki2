@@ -2,6 +2,7 @@ import AppForm from '../app-components/Form/AppForm';
 
 Vue.component('address-form', {
     mixins: [AppForm],
+    props: ['address_categories'],
     data: function() {
         return {
             form: {
@@ -9,9 +10,7 @@ Vue.component('address-form', {
                 email:  '' ,
                 token:  '' ,
                 info_on_changes:  false ,
-                
             }
         }
     }
-
 });

@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="col-sm-auto form-group ">
                                         <select class="form-control" v-model="pagination.state.per_page">
-                                            
+
                                             <option value="10">10</option>
                                             <option value="25">25</option>
                                             <option value="100">100</option>
@@ -53,7 +53,6 @@
                                         <th is='sortable' :column="'id'">{{ trans('admin.address.columns.id') }}</th>
                                         <th is='sortable' :column="'address_category_id'">{{ trans('admin.address.columns.address_category_id') }}</th>
                                         <th is='sortable' :column="'email'">{{ trans('admin.address.columns.email') }}</th>
-                                        <th is='sortable' :column="'token'">{{ trans('admin.address.columns.token') }}</th>
                                         <th is='sortable' :column="'info_on_changes'">{{ trans('admin.address.columns.info_on_changes') }}</th>
 
                                         <th></th>
@@ -78,12 +77,18 @@
                                             </label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
-                                        <td>@{{ item.address_category_id }}</td>
-                                        <td>@{{ item.email }}</td>
-                                        <td>@{{ item.token }}</td>
-                                        <td>@{{ item.info_on_changes }}</td>
-                                        
+                                        <td>@{{ item.id }}</td>
+                                        <td>@{{ item.address_category.name }}</td>
+                                        <td v-tooltip="'Token: ' + item.token">@{{ item.email }}</td>
+                                        <td>
+                                            <label class="switch switch-3d switch-success">
+                                                <input type="checkbox" class="switch-input"
+                                                       v-model="collection[index].info_on_changes"
+                                                       @change="toggleSwitch(item.resource_url, 'info_on_changes', collection[index])">
+                                                <span class="switch-slider"></span>
+                                            </label>
+                                        </td>
+
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">

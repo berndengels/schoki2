@@ -79,8 +79,6 @@ class EventPeriodic extends Model
         'is_published',
         'created_by',
         'updated_by',
-        'created_at',
-        'updated_at',
     ];
     public $timestamps = true;
     protected $appends = ['resource_url','images'];

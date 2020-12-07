@@ -197,18 +197,17 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
         });
 });
 
-
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
         Route::prefix('address-categories')->name('address-categories/')->group(static function() {
-            Route::get('/',	'AddressCategoryController@index')->name('index');
-            Route::get('/create',	'AddressCategoryController@create')->name('create');
-            Route::post('/',	'AddressCategoryController@store')->name('store');
-            Route::get('/{addressCategory}/edit',	'AddressCategoryController@edit')->name('edit');
-            Route::post('/bulk-destroy',	'AddressCategoryController@bulkDestroy')->name('bulk-destroy');
-            Route::post('/{addressCategory}',	'AddressCategoryController@update')->name('update');
-            Route::delete('/{addressCategory}',	'AddressCategoryController@destroy')->name('destroy');
+            Route::get('/',                                             'AddressCategoryController@index')->name('index');
+            Route::get('/create',                                       'AddressCategoryController@create')->name('create');
+            Route::post('/',                                            'AddressCategoryController@store')->name('store');
+            Route::get('/{addressCategory}/edit',                       'AddressCategoryController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'AddressCategoryController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{addressCategory}',                           'AddressCategoryController@update')->name('update');
+            Route::delete('/{addressCategory}',                         'AddressCategoryController@destroy')->name('destroy');
         });
     });
 });
@@ -250,13 +249,14 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
         Route::prefix('messages')->name('messages/')->group(static function() {
             Route::get('/',	'MessageController@index')->name('index');
-            Route::get('/create',	'MessageController@create')->name('create');
-            Route::post('/',	'MessageController@store')->name('store');
-            Route::get('/{message}/edit',	'MessageController@edit')->name('edit');
+            Route::get('/{message}/show',	'MessageController@show')->name('show');
             Route::post('/bulk-destroy',	'MessageController@bulkDestroy')->name('bulk-destroy');
-            Route::post('/{message}',	'MessageController@update')->name('update');
             Route::delete('/{message}',	'MessageController@destroy')->name('destroy');
             Route::get('/export',	'MessageController@export')->name('export');
+//            Route::get('/create',	'MessageController@create')->name('create');
+//            Route::post('/',	'MessageController@store')->name('store');
+//            Route::get('/{message}/edit',	'MessageController@edit')->name('edit');
+//            Route::post('/{message}',	'MessageController@update')->name('update');
         });
     });
 });

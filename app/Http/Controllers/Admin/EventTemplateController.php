@@ -9,12 +9,15 @@ use App\Http\Requests\Admin\EventTemplate\DestroyEventTemplate;
 use App\Http\Requests\Admin\EventTemplate\IndexEventTemplate;
 use App\Http\Requests\Admin\EventTemplate\StoreEventTemplate;
 use App\Http\Requests\Admin\EventTemplate\UpdateEventTemplate;
+use App\Models\Category;
 use App\Models\EventTemplate;
+use App\Models\Theme;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -40,10 +43,13 @@ class EventTemplateController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'theme_id', 'category_id', 'created_by', 'updated_by', 'title', 'subtitle'],
+            ['id', 'theme_id', 'category_id', 'title', 'created_by', 'updated_by'],
 
             // set columns to searchIn
-            ['id', 'title', 'subtitle', 'description', 'links']
+            ['id', 'title', 'description'],
+            function (Builder $query) use ($request) {
+                $query->with(['category','theme','createdBy','updatedBy']);
+            }
         );
 
         if ($request->ajax()) {
@@ -68,7 +74,10 @@ class EventTemplateController extends Controller
     {
         $this->authorize('event-template.create');
 
-        return view('admin.event-template.create');
+        return view('admin.event-template.create', [
+            'categories'    => Category::all(['id', 'name']),
+            'themes'        => Theme::all(['id', 'name']),
+        ]);
     }
 
     /**
@@ -117,9 +126,10 @@ class EventTemplateController extends Controller
     {
         $this->authorize('event-template.edit', $eventTemplate);
 
-
         return view('admin.event-template.edit', [
             'eventTemplate' => $eventTemplate,
+            'categories'    => Category::all(['id', 'name']),
+            'themes'        => Theme::all(['id', 'name']),
         ]);
     }
 

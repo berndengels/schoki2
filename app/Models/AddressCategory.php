@@ -23,6 +23,11 @@ use Illuminate\Database\Eloquent\Model;
 class AddressCategory extends Model
 {
     protected $table = 'address_category';
+    protected $fillable = ['tag_id', 'name'];
     public $timestamps = false;
 
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

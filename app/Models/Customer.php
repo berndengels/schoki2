@@ -4,9 +4,11 @@ namespace App\Models;
 use Brackets\AdminAuth\Activation\Traits\CanActivate;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Support\Carbon;
+use Laravel\Cashier\Subscription;
 
 /**
  * App\Models\Customer
@@ -43,6 +45,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Customer whereTrialEndsAt($value)
  * @method static Builder|Customer whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read Collection|Subscription[] $subscriptions
+ * @property-read int|null $subscriptions_count
  */
 class Customer extends User
 {

@@ -1,6 +1,6 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
-@section('title', trans('admin.address-category.actions.edit', ['name' => $addressCategory->id]))
+@section('title', trans('admin.address-category.actions.edit', ['name' => $addressCategory->name]))
 
 @section('body')
 
@@ -17,7 +17,7 @@
 
 
                     <div class="card-header">
-                        <i class="fa fa-pencil"></i> {{ trans('admin.address-category.actions.edit', ['name' => $addressCategory->id]) }}
+                        <i class="fa fa-pencil"></i> {{ trans('admin.address-category.actions.edit', ['name' => $addressCategory->name]) }}
                     </div>
 
                     <div class="card-body">

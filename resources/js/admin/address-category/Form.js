@@ -5,6 +5,8 @@ Vue.component('address-category-form', {
     data: function() {
         return {
             form: {
+                tag_id:  '' ,
+                name:  '' ,
                 
             }
         }

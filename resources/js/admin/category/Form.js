@@ -8,7 +8,6 @@ Vue.component('category-form', {
                 name:  '' ,
                 slug:  '' ,
                 icon:  '' ,
-                
             }
         }
     }

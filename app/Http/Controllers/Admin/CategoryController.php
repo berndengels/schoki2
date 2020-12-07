@@ -25,7 +25,6 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -38,10 +37,8 @@ class CategoryController extends Controller
         $data = AdminListing::create(Category::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'name', 'icon'],
-
             // set columns to searchIn
             ['id', 'name', 'icon']
         );
