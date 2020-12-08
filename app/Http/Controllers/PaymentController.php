@@ -16,13 +16,14 @@ class PaymentController extends Controller
     {
         $user = auth('web')->user();
         $customer = $user->createOrGetStripeCustomer();
-        $payments = [];
-        return view('public.payment.index', compact('payments','customer'));
+        $paymentMethods = $user->paymentMethods();
+        $intent     = $user->createSetupIntent();
+        return view('public.payment.index', compact('paymentMethods','customer', 'intent'));
     }
 
     public function billingPortal(Request $request)
     {
-        return $request->user()->redirectToBillingPortal(route('payment.create'));
+        return $request->user()->redirectToBillingPortal(route('public.payment.create'));
     }
 
     /**

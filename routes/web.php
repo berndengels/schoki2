@@ -413,11 +413,13 @@ Route::prefix('scard')
         Route::post('destroy/{rawId}',[ScardController::class, 'destroy'])->name('public.scard.destroy');
 });
 Route::prefix('order')
+    ->middleware('auth')
     ->group(function() {
         Route::get('/',[OrderController::class, 'create'])->name('public.order.create');
         Route::get('/store',[OrderController::class, 'store'])->name('public.order.store');
 });
 Route::prefix('payment')
+    ->middleware('auth')
     ->group(function() {
         Route::get('/',[PaymentController::class, 'index'])->name('public.payment.index');
         Route::get('/billingPortal',[PaymentController::class, 'billingPortal'])->name('public.payment.billingPortal');

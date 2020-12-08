@@ -31,12 +31,12 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('public.scard.index') }}">
+                        <i class="text-primary d-inline-block fas fa-shopping-cart"></i>
+                    </a>
+                </li>
                 @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('public.scard.index') }}">
-                            <i class="text-primary d-inline-block fas fa-shopping-cart"></i>
-                        </a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>

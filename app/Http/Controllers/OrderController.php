@@ -16,10 +16,10 @@ use Gloudemans\Shoppingcart\Cart;
 class OrderController extends Controller
 {
     public function __contsruct() {
-        $this->middleware('auth');
     }
 
     public function create(Cart $cart) {
+        $this->middleware('auth');
         /**
          * @var User $user
          */
