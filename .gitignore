@@ -28,3 +28,4 @@ yarn-error.log
 /public/vendor/
 public_html
 /composer.lock
+/public/webfonts/

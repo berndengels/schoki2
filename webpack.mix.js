@@ -25,6 +25,7 @@ mix.autoload({
     .copy('node_modules/jstree/dist/jstree.min.js', 'public/vendor/jstree/js')
     .copy('node_modules/jstree/dist/themes', 'public/vendor/jstree/css')
     .copy('node_modules/leaflet/dist', 'public/vendor/leaflet')
+    .copyDirectory('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
 //    .postCss('resources/css/app.css', 'public/css', [])
 ;
 

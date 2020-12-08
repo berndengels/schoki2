@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.public')
 
 @section('content')
     <div class="container">
@@ -11,16 +11,16 @@
                     <tr>
                         <td>
                             @if($item->thumb)
-                            <img src="{{ asset($item->thumb)}}" height="60"/>
+                            <img src="{{ asset($item->thumb)}}" height="50"/>
                             @else
                             <br>
                             @endif
                         </td>
-                        <td><a href="{{ route('product.show', ['product' => $item]) }}">{{ $item->name }}</a></td>
+                        <td><a href="{{ route('public.product.show', ['product' => $item]) }}">{{ $item->name }}</a></td>
                         <td>{{ $item->price }}</td>
                         <td>
                             <form class="d-inline"
-                                  action="{{ route('scard.add', ['product' => $item]) }}"
+                                  action="{{ route('public.scard.add', ['product' => $item]) }}"
                                   method="post"
                             >
                                 @csrf

@@ -45,13 +45,12 @@ class ProductController extends Controller
             });
             $product->images = $images;
         }
-/*
+
         $cartItem = $cart->search(function($cartItem, $rowId) use ($product) {
             return $cartItem->id === $product->getBuyableIdentifier();
         })->first();
-*/
 //        dd($cartItem->qty);
-        return view('public.product.show', compact('product'));
+        return view('public.product.show', compact('product','cartItem'));
     }
 
 

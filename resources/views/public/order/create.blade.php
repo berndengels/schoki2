@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.public')
 
 @section('content')
     <div class="container">
@@ -33,7 +33,7 @@
                         <h3>Der Warenkorb ist leer!</h3>
                     @endif
                     <div>
-                        <a role="button" class="btn btn-block btn-primary" href="{{ route('payment.billingPortal') }}">@lang('Choose kind of payment')</a>
+                        <a role="button" class="btn btn-block btn-primary" href="{{ route('public.payment.billingPortal') }}">@lang('Choose kind of payment')</a>
                     </div>
                 </div>
             </div>

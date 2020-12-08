@@ -401,28 +401,28 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
 
 Route::prefix('shop')
     ->group(function() {
-        Route::get('/',	        [ProductController::class, 'index'])->name('product.index');
-        Route::get('/{product}',[ProductController::class, 'show'])->name('product.show');
+        Route::get('/',	        [ProductController::class, 'index'])->name('public.product.index');
+        Route::get('/{product}',[ProductController::class, 'show'])->name('public.product.show');
 });
 Route::prefix('scard')
     ->group(function() {
-        Route::get('/',	[ScardController::class, 'index'])->name('scard.index');
-        Route::post('add/{product}',[ScardController::class, 'add'])->name('scard.add');
-        Route::post('increment/{rawId}',[ScardController::class, 'increment'])->name('scard.increment');
-        Route::post('decrement/{rawId}',[ScardController::class, 'decrement'])->name('scard.decrement');
-        Route::post('destroy/{rawId}',[ScardController::class, 'destroy'])->name('scard.destroy');
+        Route::get('/',	[ScardController::class, 'index'])->name('public.scard.index');
+        Route::post('add/{product}',[ScardController::class, 'add'])->name('public.scard.add');
+        Route::post('increment/{rawId}',[ScardController::class, 'increment'])->name('public.scard.increment');
+        Route::post('decrement/{rawId}',[ScardController::class, 'decrement'])->name('public.scard.decrement');
+        Route::post('destroy/{rawId}',[ScardController::class, 'destroy'])->name('public.scard.destroy');
 });
 Route::prefix('order')
     ->group(function() {
-        Route::get('/',[OrderController::class, 'create'])->name('order.create');
-        Route::get('/store',[OrderController::class, 'store'])->name('order.store');
+        Route::get('/',[OrderController::class, 'create'])->name('public.order.create');
+        Route::get('/store',[OrderController::class, 'store'])->name('public.order.store');
 });
 Route::prefix('payment')
     ->group(function() {
-        Route::get('/',[PaymentController::class, 'index'])->name('payment.index');
-        Route::get('/billingPortal',[PaymentController::class, 'billingPortal'])->name('payment.billingPortal');
-        Route::get('/create',[PaymentController::class, 'create'])->name('payment.create');
-        Route::post('/store/{payment}',[PaymentController::class, 'store'])->name('payment.store');
+        Route::get('/',[PaymentController::class, 'index'])->name('public.payment.index');
+        Route::get('/billingPortal',[PaymentController::class, 'billingPortal'])->name('public.payment.billingPortal');
+        Route::get('/create',[PaymentController::class, 'create'])->name('public.payment.create');
+        Route::post('/store/{payment}',[PaymentController::class, 'store'])->name('public.payment.store');
 });
 
 Route::get("/static/{slug}", [StaticPageController::class, 'get'])->name("public.static");

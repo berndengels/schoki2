@@ -45,7 +45,7 @@
 
            {{-- Do not delete me :) I'm used for auto-generation menu items --}}
 
-            <li class="nav-title">{{ trans('brackets/admin-ui::admin.sidebar.settings') }}</li>
+            <li class="nav-title">{{ trans('Settings') }}</li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/admin-users') }}"><i class="nav-icon icon-user"></i> {{ __('Manage access') }}</a></li>
             @can('role')
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/roles') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.role.title') }}</a></li>

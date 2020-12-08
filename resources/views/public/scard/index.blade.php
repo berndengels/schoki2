@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.public')
 
 @section('content')
     <div class="container">
@@ -25,16 +25,16 @@
                                 <td>{{ $item->price }}</td>
                                 <td>{{ $item->qty }}</td>
                                 <td>Total {{ $item->price * $item->qty }} €</td>
-                                <td><form class="d-inline m-0 p-0" action="{{ route( 'scard.increment', ['rawId' => $index]) }}" method="post">
+                                <td><form class="d-inline m-0 p-0" action="{{ route( 'public.scard.increment', ['rawId' => $index]) }}" method="post">
                                         @csrf
                                         <button type="submit" class="btn btn-link m-0 p-0 small" role="link"><i class="fas fa-plus"></i></button>
                                     </form></td>
-                                <td><form class="d-inline m-0 p-0" action="{{ route( 'scard.decrement', ['rawId' => $index]) }}" method="post">
+                                <td><form class="d-inline m-0 p-0" action="{{ route( 'public.scard.decrement', ['rawId' => $index]) }}" method="post">
                                         @csrf
                                         <button type="submit" class="btn btn-link m-0 p-0 small" role="link"><i class="fas fa-minus"></i></button>
                                     </form></td>
                                 <td>
-                                    <form class="d-inline m-0 p-0" action="{{ route( 'scard.destroy', ['rawId' => $index]) }}" method="post">
+                                    <form class="d-inline m-0 p-0" action="{{ route( 'public.scard.destroy', ['rawId' => $index]) }}" method="post">
                                         @csrf
                                         <button type="submit" class="btn btn-link m-0 p-0 small" role="link"><i class="fas fa-trash"></i></button>
                                     </form>
@@ -45,7 +45,7 @@
                                     <h4 class="mt-3">Preise Total: {{ $cart->priceTotal() }} €</h4></td></tr>
                         </table>
                         <div>
-                            <a role="button" class="btn btn-block btn-primary" href="{{ route('order.create') }}">@lang('Order now')</a>
+                            <a role="button" class="btn btn-block btn-primary" href="{{ route('public.order.create') }}">@lang('Order now')</a>
                         </div>
                     @else
                        <h3>Keine Daten vorhanden!</h3>

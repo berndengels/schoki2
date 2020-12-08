@@ -8,11 +8,18 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~include-media/dist/_include-media';
 
+//@import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
 html, body {
     height: 100vh;
     font-family: $font-family-sans-serif;
     font-weight: 200;
     margin: 0;
+    color: $sFontColor;
     background-color: $body-bg-red;
 }
 
@@ -89,6 +96,13 @@ html, body {
             form {
                 a.btn-link {
                     color: $sYellow;
+                }
+            }
+            .table {
+                tr {
+                    th,td {
+                        color: $sFontColor;
+                    }
                 }
             }
         }
