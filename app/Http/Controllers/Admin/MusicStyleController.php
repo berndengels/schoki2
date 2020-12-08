@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\MusicStyleExport;
+use App\Helper\MyDate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MusicStyle\BulkDestroyMusicStyle;
 use App\Http\Requests\Admin\MusicStyle\DestroyMusicStyle;
@@ -15,6 +16,7 @@ use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -38,12 +40,17 @@ class MusicStyleController extends Controller
         $data = AdminListing::create(MusicStyle::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'name'],
-
             // set columns to searchIn
-            ['id', 'name', 'slug']
+            ['id', 'name', 'slug'],
+            function (Builder $query) use ($request) {
+                $query
+                    ->with('adminUsers')
+                    ->orderBy('name')
+                ;
+            }
+
         );
 
         if ($request->ajax()) {

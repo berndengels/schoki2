@@ -98,7 +98,7 @@ class AdminUsersController extends Controller
             'activation' => Config::get('admin-auth.activation_enabled'),
 //            'roles'         => Role::where('guard_name', $this->guard)->get(),
             'roles'         => Role::all(),
-            'musicStyles'   => MusicStyle::all(),
+            'musicStyles'   => MusicStyle::orderBy('name')->get(),
         ]);
     }
 
@@ -156,7 +156,7 @@ class AdminUsersController extends Controller
             'adminUser'     => $adminUser,
             'activation'    => Config::get('admin-auth.activation_enabled'),
             'roles'         => Role::all(),
-            'musicStyles'   => MusicStyle::all(),
+            'musicStyles'   => MusicStyle::orderBy('name')->get(),
             'userMusicStyles'   => $adminUser->musicStyles,
         ]);
     }

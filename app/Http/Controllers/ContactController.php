@@ -28,12 +28,11 @@ class ContactController extends BaseController
 
     public function sendBands( Request $request )
     {
-        $this->validate(request(), [
-            'g-recaptcha-response' => 'required|captcha',
-        ],
-		[
-			'captcha.required' => 'Bitte das Captcha bedienen.'
-		]);
+        $this->validate(
+            $request,
+            ['g-recaptcha-response' => 'required|captcha'],
+		    ['captcha.required' => 'Bitte das Captcha bedienen.']
+        );
 		$data			= $request->only(['music_style_id','email', 'name', 'message']);
 		$message		= Message::create($data);
 		$musicStyleId	= $data['music_style_id'];
@@ -45,11 +44,6 @@ class ContactController extends BaseController
 		} else {
 			$users = ['engels@goldenacker.de'];
 		}
-/*
-		$users = User::whereHas('musicStyles', function ($query) use ($musicStyleId) {
-			$query->where('music_style.id', $musicStyleId);
-		})->pluck('email');
-*/
 		$notifyBooker = new NotifyBooker($message);
 
 		try {

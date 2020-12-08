@@ -66,4 +66,8 @@ class AdminUser extends BaseModel
     {
         return $this->belongsToMany(MusicStyle::class, 'admin_users_music_style', 'admin_user_id', 'music_style_id');
     }
+    public function __toString()
+    {
+        return $this->full_name;
+    }
 }

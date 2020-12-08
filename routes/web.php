@@ -424,23 +424,8 @@ Route::prefix('payment')
         Route::get('/create',[PaymentController::class, 'create'])->name('payment.create');
         Route::post('/store/{payment}',[PaymentController::class, 'store'])->name('payment.store');
 });
-$staticPages = collect([]);
-$pathStaticPages = collect(config('view.paths'))->map(function($path) use (&$staticPages) {
-    $path = $path . '/public/static';
-    if(is_dir($path)) {
-        foreach(scandir($path) as $item) {
-            if(false !== strrpos($item, '.blade.php')) {
-                $staticPages = $staticPages->merge(basename($item,'.blade.php'));
-            }
-        }
-    }
-});
-if($staticPages->count() > 0)  {
-    $staticPages->each(function($slug){
-        Route::get("/static/$slug", [StaticPageController::class, 'get'])->name("public.static.$slug");
-    });
-}
 
+Route::get("/static/{slug}", [StaticPageController::class, 'get'])->name("public.static");
 Route::get('/feed', [EventController::class,'feed'])->name('public.feed');
 Route::get('/ical', [EventController::class,'ical'])->name('public.ical');
 Route::get('/remove/address/show/{token}', [ContactController::class,'removeAddressShow'])->name('public.removeAddressShow');
@@ -455,12 +440,12 @@ Route::get('/theme/{slug}', [EventController::class,'getActualMergedEventsByThem
 Route::get('/page/{slug}', [PageController::class, 'get'])->name('public.page');
 
 Route::prefix('contact')->group(function () {
-    Route::get('/formBands', [ContactController::class, 'formBands'])->name('public.bandsForm');
-    Route::post('/sendBands', [ContactController::class, 'sendBands'])->name('action.sendBands');
+    Route::get('/formBands', [ContactController::class, 'formBands'])->name('public.formBands');
+    Route::post('/sendBands', [ContactController::class, 'sendBands'])->name('public.sendBands');
 //    Route::get('/formNewsletter', 'ContactController@formNewsletter')->name('public.newsletterForm');
-//	Route::post('/sendNewsletter', 'ContactController@sendNewsletter')->name('action.sendNewsletter');
+//	  Route::post('/sendNewsletter', 'ContactController@sendNewsletter')->name('action.sendNewsletter');
     Route::get('/formNewsletter', [ContactController::class, 'formNewsletterSubscribe'])->name('public.formNewsletterSubscribe');
-    Route::post('/sendNewsletter', [ContactController::class, 'sendNewsletterSubscribe'])->name('action.sendNewsletterSubscribe');
+    Route::post('/sendNewsletter', [ContactController::class, 'sendNewsletterSubscribe'])->name('public.sendNewsletterSubscribe');
 });
 /*
 Route::get('/logout', function() {

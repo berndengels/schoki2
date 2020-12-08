@@ -54,7 +54,7 @@ class MusicStyle extends Model
 
     public function adminUsers()
     {
-        return $this->belongsToMany(AdminUser::class);
+        return $this->belongsToMany(AdminUser::class,'admin_users_music_style');
     }
 
     /**
