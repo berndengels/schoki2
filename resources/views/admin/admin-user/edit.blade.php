@@ -7,8 +7,8 @@
                 :action="'{{ $adminUser->resource_url }}'"
                 :data="{{ $adminUser->toJson() }}"
                 :activation="!!'{{ $activation }}'"
-                :user-music-styles="{{ $adminUser->musicStyles->toJson() }}"
-                inline-template>
+                inline-template
+            >
                 <form class="form-horizontal form-edit" method="post" @submit.prevent="onSubmit" :action="action">
                     <div class="card-header">
                         <i class="fa fa-pencil"></i> {{ trans('admin.admin-user.actions.edit', ['name' => $adminUser->first_name]) }}

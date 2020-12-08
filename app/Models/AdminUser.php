@@ -1,14 +1,14 @@
 <?php
 namespace App\Models;
 
-use Brackets\AdminAuth\Models\AdminUser as BaseModel;
 use Eloquent;
+use Illuminate\Support\Carbon;
+use Brackets\AdminAuth\Models\AdminUser as BaseModel;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
-use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 
 /**
@@ -66,6 +66,7 @@ class AdminUser extends BaseModel
     {
         return $this->belongsToMany(MusicStyle::class, 'admin_users_music_style', 'admin_user_id', 'music_style_id');
     }
+
     public function __toString()
     {
         return $this->full_name;

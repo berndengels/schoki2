@@ -102,7 +102,7 @@
         <multiselect
             id="music_styles"
             name="music_styles"
-            v-model="music_styles"
+            v-model="form.music_styles"
             placeholder="{{ trans('brackets/admin-ui::admin.forms.select_options') }}"
             label="name"
             track-by="id"

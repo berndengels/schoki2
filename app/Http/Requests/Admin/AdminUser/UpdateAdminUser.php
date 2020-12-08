@@ -35,7 +35,7 @@ class UpdateAdminUser extends FormRequest
             'forbidden' => ['sometimes', 'boolean'],
             'language' => ['sometimes', 'string'],
             'roles' => ['sometimes', 'array'],
-            'musicStyles' => ['sometimes', 'array'],
+            'music_styles' => ['sometimes', 'array'],
         ];
 
         if (Config::get('admin-auth.activation_enabled')) {

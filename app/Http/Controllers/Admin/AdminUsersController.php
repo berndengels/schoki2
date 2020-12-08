@@ -150,8 +150,7 @@ class AdminUsersController extends Controller
     public function edit(AdminUser $adminUser)
     {
         $this->authorize('admin-user.edit', $adminUser);
-
-        $adminUser->load(['roles','musicStyles']);
+        $adminUser->load(['roles']);
         return view('admin.admin-user.edit', [
             'adminUser'     => $adminUser,
             'activation'    => Config::get('admin-auth.activation_enabled'),
@@ -180,8 +179,8 @@ class AdminUsersController extends Controller
         if ($request->input('roles')) {
             $adminUser->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
         }
-        if ($request->input('musicStyles')) {
-            $adminUser->musicStyles()->sync(collect($request->input('musicStyles', []))->map->id->toArray());
+        if ($request->input('music_styles')) {
+            $adminUser->musicStyles()->sync(collect($request->input('music_styles', []))->map->id->toArray());
         }
 
         if ($request->ajax()) {

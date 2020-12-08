@@ -16,7 +16,7 @@ Auth::routes();
 
 Route::permanentRedirect('/intern', '/admin/events');
 //Route::permanentRedirect('/admin', '/admin/events');
-Route::permanentRedirect('/events', '');
+Route::permanentRedirect('/events', '/');
 
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
