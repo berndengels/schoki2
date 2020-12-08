@@ -14,7 +14,6 @@ use App\Models\Category;
 use App\Models\Event;
 use App\Models\Theme;
 use Brackets\AdminListing\Facades\AdminListing;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
