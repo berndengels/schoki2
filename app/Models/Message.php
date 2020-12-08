@@ -37,12 +37,19 @@ class Message extends Model
         'name',
         'message',
     ];
-    protected $timestamp = 'created_at';
+    public $timestamps = false;
     protected $dates = [
         'created_at',
     ];
     protected $appends = ['resource_url'];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->created_at = $model->freshTimestamp();
+        });
+   }
     public function musicStyle()
     {
         return $this->belongsTo(MusicStyle::class);

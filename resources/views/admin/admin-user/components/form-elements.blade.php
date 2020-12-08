@@ -96,13 +96,13 @@
 </div>
 @endcan
 
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('musicStyles'), 'has-success': fields.musicStyles && fields.musicStyles.valid }">
-    <label for="musicStyles" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">{{ trans('Music Styles') }}</label>
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('music_styles'), 'has-success': fields.music_styles && fields.music_styles.valid }">
+    <label for="music_styles" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-3'">{{ trans('Music Styles') }}</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-7'">
         <multiselect
-            id="musicStyles"
-            name="musicStyles"
-            v-model="form.music_styles"
+            id="music_styles"
+            name="music_styles"
+            v-model="music_styles"
             placeholder="{{ trans('brackets/admin-ui::admin.forms.select_options') }}"
             label="name"
             track-by="id"
@@ -110,6 +110,6 @@
             :multiple="true"
             open-direction="bottom">
         </multiselect>
-        <div v-if="errors.has('musicStyles')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('musicStyles') }}</div>
+        <div v-if="errors.has('music_styles')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('music_styles') }}</div>
     </div>
 </div>

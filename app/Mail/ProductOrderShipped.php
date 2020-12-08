@@ -33,6 +33,6 @@ class ProductOrderShipped extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.orders.shipped');
+        return $this->view('mail.orders.shipped');
     }
 }

@@ -49,6 +49,7 @@ class MessageController extends Controller
                 if($request->has('musicStyle')){
                     $query->where('music_style_id', $request->get('musicStyle'));
                 }
+                $query->orderBy('created_at', 'desc');
             }
         );
 

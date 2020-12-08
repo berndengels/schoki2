@@ -5,6 +5,7 @@ Vue.component('admin-user-form', {
     props: ['userMusicStyles'],
     data: function() {
         return {
+            music_styles: this.userMusicStyles ?? [],
             form: {
                 first_name:  '',
                 last_name:  '',
@@ -14,8 +15,11 @@ Vue.component('admin-user-form', {
                 forbidden:  false,
                 language:  '',
                 roles: [],
-                music_styles: this.userMusicStyles ?? [],
+                music_styles: [],
             }
         }
+    },
+    created() {
+        console.info(this.userMusicStyles)
     }
 });
