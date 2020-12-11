@@ -38,15 +38,17 @@
 
             <a class="nav-link dropdown-toggle" href="#shopSubmenu" data-toggle="collapse" aria-expanded="false">Shop</a>
             <ul class="collapse list-unstyled" id="shopSubmenu">
-                <li class="nav-item"><a class="nav-link" href="{{ url('admin/customers') }}"><i class="nav-icon icon-ghost"></i> {{ __('Customers') }}</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/products') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.product.title') }}</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('admin/orders') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.order.title') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/customers') }}"><i class="nav-icon icon-ghost"></i> {{ __('Customers') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/shippings') }}"><i class="nav-icon icon-umbrella"></i> {{ trans('Addresses') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/countries') }}"><i class="nav-icon icon-graduation"></i> {{ trans('admin.country.title') }}</a></li>
             </ul>
 
            {{-- Do not delete me :) I'm used for auto-generation menu items --}}
 
             <li class="nav-title">{{ trans('Settings') }}</li>
-            <li class="nav-item"><a class="nav-link" href="{{ url('admin/admin-users') }}"><i class="nav-icon icon-user"></i> {{ __('Manage access') }}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/admin-users') }}"><i class="nav-icon icon-customer"></i> {{ __('Manage access') }}</a></li>
             @can('role')
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/roles') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.role.title') }}</a></li>
             @endcan

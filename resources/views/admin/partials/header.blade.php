@@ -18,7 +18,7 @@
                     @elseif(Auth::guard(config('admin-auth.defaults.guard'))->check() && Auth::guard(config('admin-auth.defaults.guard'))->user()->first_name && Auth::guard(config('admin-auth.defaults.guard'))->user()->last_name)
                         <span class="avatar-initials">{{ mb_substr(Auth::guard(config('admin-auth.defaults.guard'))->user()->first_name, 0, 1) }}{{ mb_substr(Auth::guard(config('admin-auth.defaults.guard'))->user()->last_name, 0, 1) }}</span>
                     @else
-                        <span class="avatar-initials"><i class="fa fa-user"></i></span>
+                        <span class="avatar-initials"><i class="fa fa-customer"></i></span>
                     @endif
 
                     @if(!is_null(config('admin-auth.defaults.guard')))

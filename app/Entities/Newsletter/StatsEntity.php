@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   19.06.19 20:13
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 
 namespace App\Entities\Newsletter;

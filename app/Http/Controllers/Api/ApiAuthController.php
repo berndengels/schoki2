@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,7 +10,7 @@ class ApiAuthController extends Controller
 {
     public function register(Request $request)
     {
-        $user = User::create([
+        $user = Customer::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),

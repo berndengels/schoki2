@@ -13,6 +13,6 @@ class Textarea extends Field
      */
     public function render()
     {
-        return view('components..form.input.textarea');
+        return view('components.form.input.textarea');
     }
 }

@@ -348,3 +348,31 @@ $factory->define(App\Models\AddressCategory::class, static function (Faker\Gener
 
     ];
 });
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Shipping::class, static function (Faker\Generator $faker) {
+    return [
+        'user_id' => $faker->randomNumber(5),
+        'postcode' => $faker->sentence,
+        'city' => $faker->sentence,
+        'street' => $faker->sentence,
+        'is_default' => $faker->boolean(),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+        
+        
+    ];
+});
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Country::class, static function (Faker\Generator $faker) {
+    return [
+        'code' => $faker->sentence,
+        'en' => $faker->sentence,
+        'de' => $faker->sentence,
+        'es' => $faker->sentence,
+        'fr' => $faker->sentence,
+        'it' => $faker->sentence,
+        'ru' => $faker->sentence,
+        
+        
+    ];
+});

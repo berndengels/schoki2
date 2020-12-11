@@ -2,23 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\PaymentForm;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Laravel\Cashier\Billable;
+use Stripe\Checkout\Session;
+use Stripe\Customer;
+use Gloudemans\Shoppingcart\Cart;
+use Stripe\HttpClient\ClientInterface;
+use Stripe\Service\SourceService;
+use Stripe\Source;
 
 class PaymentController extends Controller
 {
+    use FormBuilderTrait;
+    /**
+     * @var Customer;
+     */
+    protected $customer;
+    public function __construct() {
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
+    public function index( FormBuilder $formBuilder, Cart $cart )
     {
+        /**
+         * @var Billable $user
+         */
         $user = auth('web')->user();
-        $customer = $user->createOrGetStripeCustomer();
-        $paymentMethods = $user->paymentMethods();
-        $intent     = $user->createSetupIntent();
-        return view('public.payment.index', compact('paymentMethods','customer', 'intent'));
+        $this->customer = $user->createOrGetStripeCustomer();
+        $configPayments = collect(config('my.paymentMethods'));
+        $paymentOptions = $configPayments->map(function ($method, $key){
+            return $method[$key] = $method['label'];
+        })->toArray();
+
+        $form   = $formBuilder->create(PaymentForm::class, [], [
+            'user' => $user,
+            'paymentOptions' => $paymentOptions,
+        ]);
+        return view('public.form.payment', compact('form', 'configPayments'));
     }
 
     public function billingPortal(Request $request)
@@ -33,8 +61,10 @@ class PaymentController extends Controller
      */
     public function create(Request $request)
     {
-        dd($request->input());
-        $payment = null;
+        $this->customer = $request->user();
+        dd($this->customer->paymentMethods());
+        // get stripeSource: src_1HwHNSBFmNHaPuJ064dItqEt
+
         return view('public.payment.index', compact('payment'));
     }
 
@@ -46,7 +76,6 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**

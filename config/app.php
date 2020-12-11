@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'de',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'de',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -245,6 +245,7 @@ return [
         'Menu'          => Lavary\Menu\Facade::class,
 		'Curl'			=> Ixudra\Curl\Facades\Curl::class,
 		'Newsletter' 	=> Spatie\Newsletter\NewsletterFacade::class,
+        'PayPal'        => Srmklive\PayPal\Facades\PayPal::class,
     ],
 
 ];

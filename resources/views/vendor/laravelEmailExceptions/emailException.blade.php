@@ -50,7 +50,7 @@
                             @endif
                             @if($user)
                             <tr>
-                                <td><strong>User:</strong></td>
+                                <td><strong>Customer:</strong></td>
                                 <td><strong>{{ $user->name ?? ($user->username ?? null) }} <a href="mailto:{{ $user->email }}" target="_blank">{{ $user->email }}</a></strong></td>
                             </tr>
                             @endif

@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   03.04.19 15:19
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 
 namespace App\Repositories;

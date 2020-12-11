@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   04.05.19 15:37
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 
 namespace App\Libs;

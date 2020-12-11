@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|AdminUsersMusicStyle whereAdminUserId($value)
  * @method static Builder|AdminUsersMusicStyle whereMusicStyleId($value)
  * @mixin Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\AdminUser[] $adminUsers
+ * @property-read int|null $admin_users_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Message[] $messages
+ * @property-read int|null $messages_count
  */
 class AdminUsersMusicStyle extends Model
 {

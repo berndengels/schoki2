@@ -70,7 +70,7 @@ class MusicStyle extends Model
         $count = $this->users->count();
         if($count > 0) {
             return back()
-                ->with('error','Es existieren noch User ('.$count.') mit dieser Kategorie! Bitte vorher löschen.');
+                ->with('error','Es existieren noch Customer ('.$count.') mit dieser Kategorie! Bitte vorher löschen.');
         }
         $count = $this->messages->count();
         if($count > 0) {

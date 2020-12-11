@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   16.04.19 23:28
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 
 namespace App\Forms\Filter;

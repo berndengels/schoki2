@@ -7,7 +7,7 @@
             id="{{ $name }}"
             name="{{ $name }}"
             value="{{ $value ?? '' }}"
-            class="@error('title') is-invalid @enderror  {{ $class ?? 'form-control col-sm-12 col-md-6 px-1' }}"
+            class="@error($name) is-invalid @enderror  {{ $class ?? 'form-control col-sm-12 col-md-auto px-1' }}"
         />
         {{ $slot }}
 

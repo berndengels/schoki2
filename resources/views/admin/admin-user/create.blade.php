@@ -1,18 +1,18 @@
 @extends('admin.layout.default')
-@section('title', trans('admin.admin-user.actions.create'))
+@section('title', trans('admin.admin-customer.actions.create'))
 @section('body')
     <div class="container-xl">
         <div class="card">
-            <admin-user-form
+            <admin-customer-form
                 :action="'{{ url('admin/admin-users') }}'"
                 :activation="!!'{{ $activation }}'"
                 inline-template>
                 <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="action">
                     <div class="card-header">
-                        <i class="fa fa-plus"></i> {{ trans('admin.admin-user.actions.create') }}
+                        <i class="fa fa-plus"></i> {{ trans('admin.admin-customer.actions.create') }}
                     </div>
                     <div class="card-body">
-                        @include('admin.admin-user.components.form-elements')
+                        @include('admin.admin-customer.components.form-elements')
                     </div>
                     <div class="card-footer">
 	                    <button type="submit" class="btn btn-primary" :disabled="submiting">
@@ -21,7 +21,7 @@
 	                    </button>
                     </div>
                 </form>
-            </admin-user-form>
+            </admin-customer-form>
         </div>
     </div>
 @endsection

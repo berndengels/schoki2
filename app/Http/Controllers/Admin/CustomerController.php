@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
+use App\Models\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Customer\BulkDestroyCustomer;
 use App\Http\Requests\Admin\Customer\DestroyCustomer;
 use App\Http\Requests\Admin\Customer\IndexCustomer;
 use App\Http\Requests\Admin\Customer\StoreCustomer;
 use App\Http\Requests\Admin\Customer\UpdateCustomer;
-use App\Models\Customer;
 use Brackets\AdminListing\Facades\AdminListing;
-use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -39,12 +40,13 @@ class CustomerController extends Controller
         $data = AdminListing::create(Customer::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'name', 'email', 'email_verified_at', 'stripe_id', 'card_brand', 'card_last_four', 'trial_ends_at'],
-
             // set columns to searchIn
-            ['id', 'name', 'email', 'stripe_id', 'card_brand', 'card_last_four']
+            ['id', 'name', 'email', 'stripe_id', 'card_brand', 'card_last_four'],
+            function (Builder $query) {
+                $query->with('shippings','roles','permissions');
+            }
         );
 
         if ($request->ajax()) {
@@ -55,7 +57,6 @@ class CustomerController extends Controller
             }
             return ['data' => $data];
         }
-
         return view('admin.customer.index', ['data' => $data]);
     }
 
@@ -117,9 +118,10 @@ class CustomerController extends Controller
     public function edit(Customer $customer)
     {
         $this->authorize('customer.write', $customer);
-
         return view('admin.customer.edit', [
-            'customer' => $customer,
+            'customer'  => $customer,
+            'roles'     => $customer->roles,
+            'addresses' => $customer->addresses,
         ]);
     }
 
@@ -137,6 +139,9 @@ class CustomerController extends Controller
 
         // Update changed values Customer
         $customer->update($sanitized);
+        if ($request->input('addresses')) {
+            $customer->addresses()->sync($request->input('addresses')->map->id->toArray());
+        }
 
         if ($request->ajax()) {
             return [

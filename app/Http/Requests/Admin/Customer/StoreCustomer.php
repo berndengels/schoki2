@@ -30,10 +30,10 @@ class StoreCustomer extends FormRequest
             'email' => ['required', 'email', Rule::unique('users', 'email'), 'string'],
             'email_verified_at' => ['nullable', 'date'],
             'password' => ['required', 'confirmed', 'min:7', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
-            'stripe_id' => ['nullable', 'string'],
-            'card_brand' => ['nullable', 'string'],
-            'card_last_four' => ['nullable', 'string'],
-            'trial_ends_at' => ['nullable', 'date'],
+            'stripe_id' => '',
+            'card_brand' => '',
+            'card_last_four' => '',
+            'trial_ends_at' => '',
         ];
     }
 

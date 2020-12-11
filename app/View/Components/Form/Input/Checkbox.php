@@ -12,6 +12,6 @@ class Checkbox extends Field
      */
     public function render()
     {
-        return view('components..form.input.checkbox');
+        return view('components.form.input.checkbox');
     }
 }

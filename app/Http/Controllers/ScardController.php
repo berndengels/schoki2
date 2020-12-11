@@ -1,10 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Scard;
-use Gloudemans\Shoppingcart\CartItem;
-use Illuminate\Http\Request;
+use App\Models\Product;
 use Illuminate\Http\Response;
 use App\Http\Requests\ScardRequest;
 use Gloudemans\Shoppingcart\Cart;

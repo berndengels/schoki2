@@ -7,7 +7,7 @@ use App\Http\Requests\Api\Generators\BandContactForm;
 use App\Http\Requests\BandContactRequest;
 use App\Mail\NotifyBooker;
 use App\Models\Message;
-use App\Models\User;
+use App\Models\Customer;
 use Carbon\Carbon;
 use Exception;
 use Mail;
@@ -28,7 +28,7 @@ class SpaContactController extends Controller
         $musicStyleId	= $data['music_style_id'];
 
         if('prod' === env('APP_ENV')) {
-            $users = User::whereHas('musicStyles', function ($query) use ($musicStyleId) {
+            $users = Customer::whereHas('musicStyles', function ($query) use ($musicStyleId) {
                 $query->where('music_style.id', $musicStyleId);
             })->pluck('email');
         } else {

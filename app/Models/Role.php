@@ -2,9 +2,9 @@
 namespace App\Models;
 
 use Eloquent;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Role as BaseModel;
 
 /**
@@ -37,14 +37,12 @@ class Role extends BaseModel
         'name',
         'guard_name',
     ];
-
-
     protected $dates = [
         'created_at',
         'updated_at',
     ];
-
     protected $appends = ['resource_url'];
+
 
     /* ************************ ACCESSOR ************************* */
 

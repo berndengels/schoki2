@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'admin-user' => [
+    'admin-customer' => [
         'title' => 'Users',
 
         'actions' => [
             'index' => 'Users',
-            'create' => 'New User',
+            'create' => 'New Customer',
             'edit' => 'Edit :name',
             'edit_profile' => 'Edit Profile',
             'edit_password' => 'Edit Password',
@@ -326,7 +326,7 @@ return [
 
         'actions' => [
             'index' => 'Users',
-            'create' => 'New User',
+            'create' => 'New Customer',
             'edit' => 'Edit :name',
         ],
 
@@ -608,7 +608,7 @@ return [
             'name' => 'Name',
             'slug' => 'Slug',
             'icon' => 'Icon',
-            
+
         ],
     ],
 
@@ -637,7 +637,49 @@ return [
             'price' => 'Price',
             'is_published' => 'Is published',
             'is_periodic' => 'Is periodic',
-            
+
+        ],
+    ],
+
+    'shipping' => [
+        'title' => 'Shipping',
+
+        'actions' => [
+            'index' => 'Shipping',
+            'create' => 'New Shipping',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'customer_id' => 'Customer',
+            'postcode' => 'Postcode',
+            'city' => 'City',
+            'street' => 'Street',
+            'is_default' => 'Is default',
+
+        ],
+    ],
+
+    'country' => [
+        'title' => 'Countries',
+
+        'actions' => [
+            'index' => 'Countries',
+            'create' => 'New Country',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'code' => 'Code',
+            'en' => 'En',
+            'de' => 'De',
+            'es' => 'Es',
+            'fr' => 'Fr',
+            'it' => 'It',
+            'ru' => 'Ru',
+
         ],
     ],
 

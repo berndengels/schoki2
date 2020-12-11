@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Shipping;
+use App\Policies\ShippingPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Shipping::class => ShippingPolicy::class,
     ];
 
     /**
@@ -30,5 +32,6 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             }
         });
+
     }
 }

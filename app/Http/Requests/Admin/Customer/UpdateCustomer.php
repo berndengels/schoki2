@@ -30,10 +30,10 @@ class UpdateCustomer extends FormRequest
             'email' => ['sometimes', 'email', Rule::unique('users', 'email')->ignore($this->customer->getKey(), $this->customer->getKeyName()), 'string'],
             'email_verified_at' => ['nullable', 'date'],
             'password' => ['sometimes', 'confirmed', 'min:7', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
-            'stripe_id' => ['nullable', 'string'],
-            'card_brand' => ['nullable', 'string'],
-            'card_last_four' => ['nullable', 'string'],
-            'trial_ends_at' => ['nullable', 'date'],
+            'stripe_id' => '',
+            'card_brand' => '',
+            'card_last_four' => '',
+            'trial_ends_at' => '',
         ];
     }
 

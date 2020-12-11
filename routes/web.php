@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Theme;
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScardController;
 use App\Http\Controllers\ProductController;
@@ -11,6 +9,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StaticPageController;
+use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ShippingController;
 
 Auth::routes();
 
@@ -374,6 +375,36 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
 });
 
 /* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+        Route::prefix('shippings')->name('shippings/')->group(static function() {
+            Route::get('/',                                             'ShippingController@index')->name('index');
+            Route::get('/create',                                       'ShippingController@create')->name('create');
+            Route::post('/',                                            'ShippingController@store')->name('store');
+            Route::get('/{shipping}/edit',                              'ShippingController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'ShippingController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{shipping}',                                  'ShippingController@update')->name('update');
+            Route::delete('/{shipping}',                                'ShippingController@destroy')->name('destroy');
+        });
+    });
+});
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+        Route::prefix('countries')->name('countries/')->group(static function() {
+            Route::get('/',                                             'CountryController@index')->name('index');
+            Route::get('/create',                                       'CountryController@create')->name('create');
+            Route::post('/',                                            'CountryController@store')->name('store');
+            Route::get('/{country}/edit',                               'CountryController@edit')->name('edit');
+            Route::post('/bulk-destroy',                                'CountryController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{country}',                                   'CountryController@update')->name('update');
+            Route::delete('/{country}',                                 'CountryController@destroy')->name('destroy');
+        });
+    });
+});
+
+/* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
     ->group(static function () {
     Route::prefix('admin')
@@ -406,26 +437,43 @@ Route::prefix('shop')
 });
 Route::prefix('scard')
     ->group(function() {
-        Route::get('/',	[ScardController::class, 'index'])->name('public.scard.index');
-        Route::post('add/{product}',[ScardController::class, 'add'])->name('public.scard.add');
-        Route::post('increment/{rawId}',[ScardController::class, 'increment'])->name('public.scard.increment');
-        Route::post('decrement/{rawId}',[ScardController::class, 'decrement'])->name('public.scard.decrement');
-        Route::post('destroy/{rawId}',[ScardController::class, 'destroy'])->name('public.scard.destroy');
+        Route::get('/',	[ScardController::class, 'index'])->name('scard.index');
+        Route::post('add/{product}',[ScardController::class, 'add'])->name('scard.add');
+        Route::post('increment/{rawId}',[ScardController::class, 'increment'])->name('scard.increment');
+        Route::post('decrement/{rawId}',[ScardController::class, 'decrement'])->name('scard.decrement');
+        Route::post('destroy/{rawId}',[ScardController::class, 'destroy'])->name('scard.destroy');
 });
 Route::prefix('order')
     ->middleware('auth')
     ->group(function() {
-        Route::get('/',[OrderController::class, 'create'])->name('public.order.create');
-        Route::get('/store',[OrderController::class, 'store'])->name('public.order.store');
+        Route::get('/',[OrderController::class, 'create'])->name('order.create');
+        Route::get('/store',[OrderController::class, 'store'])->name('order.store');
 });
 Route::prefix('payment')
     ->middleware('auth')
     ->group(function() {
-        Route::get('/',[PaymentController::class, 'index'])->name('public.payment.index');
-        Route::get('/billingPortal',[PaymentController::class, 'billingPortal'])->name('public.payment.billingPortal');
-        Route::get('/create',[PaymentController::class, 'create'])->name('public.payment.create');
-        Route::post('/store/{payment}',[PaymentController::class, 'store'])->name('public.payment.store');
+        Route::get('/',[PaymentController::class, 'index'])->name('payment.index');
+        Route::get('/billingPortal',[PaymentController::class, 'billingPortal'])->name('payment.billingPortal');
+        Route::post('/create',[PaymentController::class, 'create'])->name('payment.create');
+        Route::post('/store',[PaymentController::class, 'store'])->name('payment.store');
 });
+
+Route::prefix('customer')
+    ->middleware('auth')
+    ->group(function() {
+        Route::get('/',[CustomerController::class, 'index'])->name('customer.show');
+        Route::post('/update/{customer}',[CustomerController::class, 'update'])->name('customer.update');
+    });
+Route::prefix('shipping')
+    ->middleware('auth')
+    ->group(function() {
+        Route::get('/',[ShippingController::class, 'index'])->name('shipping.index');
+        Route::get('/edit/{shipping}',[ShippingController::class, 'edit'])->name('shipping.edit');
+        Route::get('/create',[ShippingController::class, 'create'])->name('shipping.create');
+        Route::post('/store',[ShippingController::class, 'store'])->name('shipping.store');
+        Route::post('/update/{shipping}',[ShippingController::class, 'update'])->name('shipping.update');
+        Route::get('/destroy/{shipping}',[ShippingController::class, 'destroy'])->name('shipping.destroy');
+    });
 
 Route::get("/static/{slug}", [StaticPageController::class, 'get'])->name("public.static");
 Route::get('/feed', [EventController::class,'feed'])->name('public.feed');
@@ -449,6 +497,10 @@ Route::prefix('contact')->group(function () {
     Route::get('/formNewsletter', [ContactController::class, 'formNewsletterSubscribe'])->name('public.formNewsletterSubscribe');
     Route::post('/sendNewsletter', [ContactController::class, 'sendNewsletterSubscribe'])->name('public.sendNewsletterSubscribe');
 });
+Route::prefix('stripe')->group(static function (){
+    Route::post('/webhook', [WebhookController::class, 'handleWebhook'])->name('handleWebhook');
+});
+
 /*
 Route::get('/logout', function() {
     Auth::logout();

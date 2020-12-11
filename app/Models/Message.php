@@ -27,6 +27,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Message whereMusicStyleId($value)
  * @method static Builder|Message whereName($value)
  * @mixin Eloquent
+ * @property-read \App\Models\MusicStyle|null $musicStyle
  */
 class Message extends Model
 {

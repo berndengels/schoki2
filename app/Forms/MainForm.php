@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   04.04.19 23:41
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 namespace App\Forms;
 

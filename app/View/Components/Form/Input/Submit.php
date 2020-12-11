@@ -12,6 +12,6 @@ class Submit extends Field
      */
     public function render()
     {
-        return view('components..form.input.submit');
+        return view('components.form.input.submit');
     }
 }

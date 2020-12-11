@@ -25,4 +25,18 @@ return [
         'saturday'      => 'Samstag',
         'sunday'        => 'Sonntag',
     ],
+    'paymentMethods' => [
+        'card'  => [
+            'label' => 'Visa, Eurocard',
+            'type'  => 'card',
+            'supportedCountries'  => [],
+            'placeholderCountry'  => 'DE',
+        ],
+        'iban'  => [
+            'label' => 'SEPA Lastschrift',
+            'type'  => 'sepa_debit',
+            'supportedCountries'  => ['SEPA'],
+            'placeholderCountry'  => 'DE',
+        ],
+    ],
 ];

@@ -7,15 +7,10 @@ Vue.component('customer-form', {
             form: {
                 name:  '' ,
                 email:  '' ,
-                email_verified_at:  '' ,
                 password:  '' ,
-                stripe_id:  '' ,
-                card_brand:  '' ,
-                card_last_four:  '' ,
-                trial_ends_at:  '' ,
-                
+                shippings: [],
+                roles: [],
             }
         }
     }
-
 });

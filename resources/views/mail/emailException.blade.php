@@ -71,13 +71,13 @@
                                 </tr>
                             @endif
                             @endif
-                            @if(auth()->user())
+                            @if(auth()->customer())
                             <tr>
                                 <td>
-                                    <strong>User:</strong>
+                                    <strong>Customer:</strong>
                                 </td>
                                 <td>
-                                    <b>{{ auth()->user()->username }} <a href="mailto:{{ auth()->user()->email }}" target="_blank">{{ auth()->user()->email }}</a></b>
+                                    <b>{{ auth()->customer()->username }} <a href="mailto:{{ auth()->customer()->email }}" target="_blank">{{ auth()->customer()->email }}</a></b>
                                 </td>
                             </tr>
                             @endif

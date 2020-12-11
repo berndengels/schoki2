@@ -7,7 +7,7 @@
                 id="{{ $option }}"
                 name="{{ $name }}"
                 value="{{ $option }}"
-                class="form-control form-check-input @error('title') is-invalid @enderror"
+                class="form-control form-check-input @error($name) is-invalid @enderror"
                 @if($option === $value) checked @endif
             />
             <label for="{{ $name.$index }}" class="col-form-label form-check-label mr-4">{{ $label ?? ucwords($option) }}</label>

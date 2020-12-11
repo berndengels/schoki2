@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /Users/Shared/data/www/htdocs/schoki2/app/Models</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../_css/nv.d3.min.css" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">/Users/Shared/data/www/htdocs/schoki2/app</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Models</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Address.php.html#33">App\Models\Address</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AddressCategory.php.html#23">App\Models\AddressCategory</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#55">App\Models\User</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Role.php.html#34">App\Models\Role</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#57">App\Models\Product</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Permission.php.html#37">App\Models\Permission</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Page.php.html#41">App\Models\Page</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OrderItem.php.html#33">App\Models\OrderItem</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Order.php.html#47">App\Models\Order</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsletterStatus.php.html#22">App\Models\NewsletterStatus</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Newsletter.php.html#31">App\Models\Newsletter</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="News.php.html#39">App\Models\News</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MusicStyle.php.html#31">App\Models\MusicStyle</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Message.php.html#31">App\Models\Message</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Media.php.html#61">App\Models\Media</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Image.php.html#18">App\Models\Image</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Ext/BaseModel.php.html#23">App\Models\Ext\BaseModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventTemplate.php.html#49">App\Models\EventTemplate</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Customer.php.html#51">App\Models\Customer</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminUsersMusicStyle.php.html#20">App\Models\AdminUsersMusicStyle</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminUser.php.html#63">App\Models\AdminUser</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Ext/HasUser.php.html#18">App\Models\Ext\HasUser</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#80">App\Models\Event</a></td><td class="text-right">15%</td></tr>
+       <tr><td><a href="Category.php.html#36">App\Models\Category</a></td><td class="text-right">24%</td></tr>
+       <tr><td><a href="Theme.php.html#35">App\Models\Theme</a></td><td class="text-right">28%</td></tr>
+       <tr><td><a href="Menu.php.html#51">App\Models\Menu</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Ext/HasAdminUser.php.html#18">App\Models\Ext\HasAdminUser</a></td><td class="text-right">45%</td></tr>
+       <tr><td><a href="EventPeriodic.php.html#62">App\Models\EventPeriodic</a></td><td class="text-right">50%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Event.php.html#80">App\Models\Event</a></td><td class="text-right">534</td></tr>
+       <tr><td><a href="Product.php.html#57">App\Models\Product</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="MusicStyle.php.html#31">App\Models\MusicStyle</a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="Category.php.html#36">App\Models\Category</a></td><td class="text-right">44</td></tr>
+       <tr><td><a href="Theme.php.html#35">App\Models\Theme</a></td><td class="text-right">38</td></tr>
+       <tr><td><a href="Ext/HasUser.php.html#18">App\Models\Ext\HasUser</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Page.php.html#41">App\Models\Page</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="User.php.html#55">App\Models\User</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Ext/HasAdminUser.php.html#18">App\Models\Ext\HasAdminUser</a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Address.php.html#46"><abbr title="App\Models\Address::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Order.php.html#63"><abbr title="App\Models\Order::getDeliveredAttribute">getDeliveredAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Page.php.html#66"><abbr title="App\Models\Page::boot">boot</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Page.php.html#61"><abbr title="App\Models\Page::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OrderItem.php.html#60"><abbr title="App\Models\OrderItem::order">order</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OrderItem.php.html#52"><abbr title="App\Models\OrderItem::product">product</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OrderItem.php.html#44"><abbr title="App\Models\OrderItem::getPriceTotalAttribute">getPriceTotalAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Order.php.html#74"><abbr title="App\Models\Order::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Order.php.html#68"><abbr title="App\Models\Order::orderItems">orderItems</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsletterStatus.php.html#41"><abbr title="App\Models\NewsletterStatus::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Permission.php.html#55"><abbr title="App\Models\Permission::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Newsletter.php.html#53"><abbr title="App\Models\Newsletter::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="News.php.html#64"><abbr title="App\Models\News::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MusicStyle.php.html#68"><abbr title="App\Models\MusicStyle::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MusicStyle.php.html#63"><abbr title="App\Models\MusicStyle::messages">messages</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MusicStyle.php.html#55"><abbr title="App\Models\MusicStyle::adminUsers">adminUsers</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MusicStyle.php.html#50"><abbr title="App\Models\MusicStyle::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MusicStyle.php.html#38"><abbr title="App\Models\MusicStyle::boot">boot</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Page.php.html#80"><abbr title="App\Models\Page::getBodyAttribute">getBodyAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#84"><abbr title="App\Models\Product::getBuyableIdentifier">getBuyableIdentifier</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Address.php.html#51"><abbr title="App\Models\Address::addressCategory">addressCategory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Theme.php.html#81"><abbr title="App\Models\Theme::eventTemplates">eventTemplates</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Ext/HasUser.php.html#46"><abbr title="App\Models\Ext\HasUser::createdBy">createdBy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Ext/HasUser.php.html#20"><abbr title="App\Models\Ext\HasUser::bootHasUser">bootHasUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#94"><abbr title="App\Models\User::getInstanceGlobalDiscount">getInstanceGlobalDiscount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#84"><abbr title="App\Models\User::getInstanceIdentifier">getInstanceIdentifier</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#74"><abbr title="App\Models\User::getDiscountRateAttribute">getDiscountRateAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Theme.php.html#94"><abbr title="App\Models\Theme::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Theme.php.html#89"><abbr title="App\Models\Theme::eventPeriodics">eventPeriodics</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Theme.php.html#73"><abbr title="App\Models\Theme::events">events</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#88"><abbr title="App\Models\Product::getBuyableDescription">getBuyableDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Theme.php.html#52"><abbr title="App\Models\Theme::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Role.php.html#51"><abbr title="App\Models\Role::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#122"><abbr title="App\Models\Product::registerMediaCollections">registerMediaCollections</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#113"><abbr title="App\Models\Product::registerMediaConversions">registerMediaConversions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#106"><abbr title="App\Models\Product::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#96"><abbr title="App\Models\Product::getCartItem">getCartItem</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#92"><abbr title="App\Models\Product::getBuyablePrice">getBuyablePrice</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Message.php.html#53"><abbr title="App\Models\Message::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Message.php.html#46"><abbr title="App\Models\Message::musicStyle">musicStyle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Menu.php.html#111"><abbr title="App\Models\Menu::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Category.php.html#106"><abbr title="App\Models\Category::eventPeriodics">eventPeriodics</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#185"><abbr title="App\Models\Event::scopeByCategorySlug">scopeByCategorySlug</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#134"><abbr title="App\Models\Event::getThumbnailsAttribute">getThumbnailsAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#122"><abbr title="App\Models\Event::getMediaNameAttribute">getMediaNameAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#117"><abbr title="App\Models\Event::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#107"><abbr title="App\Models\Event::setEventDateAttribute">setEventDateAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Customer.php.html#76"><abbr title="App\Models\Customer::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Category.php.html#98"><abbr title="App\Models\Category::eventTemplates">eventTemplates</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#214"><abbr title="App\Models\Event::scopeMergedByCategorySlug">scopeMergedByCategorySlug</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Category.php.html#90"><abbr title="App\Models\Category::events">events</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Category.php.html#67"><abbr title="App\Models\Category::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Category.php.html#52"><abbr title="App\Models\Category::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminUsersMusicStyle.php.html#29"><abbr title="App\Models\AdminUsersMusicStyle::messages">messages</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminUsersMusicStyle.php.html#25"><abbr title="App\Models\AdminUsersMusicStyle::adminUsers">adminUsers</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminUser.php.html#65"><abbr title="App\Models\AdminUser::musicStyles">musicStyles</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AddressCategory.php.html#29"><abbr title="App\Models\AddressCategory::addresses">addresses</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Menu.php.html#104"><abbr title="App\Models\Menu::setParentAttribute">setParentAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#199"><abbr title="App\Models\Event::scopeByThemeSlug">scopeByThemeSlug</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#229"><abbr title="App\Models\Event::scopeMergedByDate">scopeMergedByDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#245"><abbr title="App\Models\Event::scopeMergedByDateAndCategory">scopeMergedByDateAndCategory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Menu.php.html#94"><abbr title="App\Models\Menu::getDepthName">getDepthName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Menu.php.html#74"><abbr title="App\Models\Menu::parent">parent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Media.php.html#67"><abbr title="App\Models\Media::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Image.php.html#36"><abbr title="App\Models\Image::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Ext/BaseModel.php.html#27"><abbr title="App\Models\Ext\BaseModel::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventTemplate.php.html#97"><abbr title="App\Models\EventTemplate::theme">theme</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventTemplate.php.html#89"><abbr title="App\Models\EventTemplate::category">category</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventTemplate.php.html#82"><abbr title="App\Models\EventTemplate::getImagesAttribute">getImagesAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Ext/HasUser.php.html#54"><abbr title="App\Models\Ext\HasUser::updatedBy">updatedBy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventTemplate.php.html#78"><abbr title="App\Models\EventTemplate::setImagesAttribute">setImagesAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventTemplate.php.html#73"><abbr title="App\Models\EventTemplate::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventPeriodic.php.html#93"><abbr title="App\Models\EventPeriodic::setImagesAttribute">setImagesAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventPeriodic.php.html#88"><abbr title="App\Models\EventPeriodic::getResourceUrlAttribute">getResourceUrlAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#371"><abbr title="App\Models\Event::registerMediaCollections">registerMediaCollections</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#362"><abbr title="App\Models\Event::registerMediaConversions">registerMediaConversions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#295"><abbr title="App\Models\Event::scopeMergedByThemeSlug">scopeMergedByThemeSlug</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Event.php.html#270"><abbr title="App\Models\Event::scopeMergedByDateAndTheme">scopeMergedByDateAndTheme</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Ext/HasAdminUser.php.html#20"><abbr title="App\Models\Ext\HasAdminUser::bootHasAdminUser">bootHasAdminUser</abbr></a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="Event.php.html#127"><abbr title="App\Models\Event::getImagesAttribute">getImagesAttribute</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Theme.php.html#57"><abbr title="App\Models\Theme::boot">boot</abbr></a></td><td class="text-right">72%</td></tr>
+       <tr><td><a href="Category.php.html#57"><abbr title="App\Models\Category::boot">boot</abbr></a></td><td class="text-right">75%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Category.php.html#67"><abbr title="App\Models\Category::delete">delete</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Event.php.html#245"><abbr title="App\Models\Event::scopeMergedByDateAndCategory">scopeMergedByDateAndCategory</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Event.php.html#270"><abbr title="App\Models\Event::scopeMergedByDateAndTheme">scopeMergedByDateAndTheme</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Theme.php.html#94"><abbr title="App\Models\Theme::delete">delete</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Event.php.html#229"><abbr title="App\Models\Event::scopeMergedByDate">scopeMergedByDate</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="MusicStyle.php.html#68"><abbr title="App\Models\MusicStyle::delete">delete</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Ext/HasUser.php.html#20"><abbr title="App\Models\Ext\HasUser::bootHasUser">bootHasUser</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Event.php.html#134"><abbr title="App\Models\Event::getThumbnailsAttribute">getThumbnailsAttribute</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Page.php.html#80"><abbr title="App\Models\Page::getBodyAttribute">getBodyAttribute</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Product.php.html#96"><abbr title="App\Models\Product::getCartItem">getCartItem</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="User.php.html#94"><abbr title="App\Models\User::getInstanceGlobalDiscount">getInstanceGlobalDiscount</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Ext/HasAdminUser.php.html#20"><abbr title="App\Models\Ext\HasAdminUser::bootHasAdminUser">bootHasAdminUser</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Event.php.html#127"><abbr title="App\Models\Event::getImagesAttribute">getImagesAttribute</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.5</a> using <a href="https://secure.php.net/" target="_top">PHP 7.4.12</a> with <a href="https://xdebug.org/">Xdebug 2.9.8</a> and <a href="https://phpunit.de/">PHPUnit 9.5.0</a> at Tue Dec 8 1:20:23 CET 2020.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../_js/jquery.min.js" type="text/javascript"></script>
+  <script src="../_js/d3.min.js" type="text/javascript"></script>
+  <script src="../_js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([22,0,1,2,0,2,1,0,0,0,0,2], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([78,0,0,0,1,0,0,1,2,0,0,14], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,2,"<a href=\"Address.php.html#33\">App\\Models\\Address<\/a>"],[0,1,"<a href=\"AddressCategory.php.html#23\">App\\Models\\AddressCategory<\/a>"],[0,1,"<a href=\"AdminUser.php.html#63\">App\\Models\\AdminUser<\/a>"],[0,2,"<a href=\"AdminUsersMusicStyle.php.html#20\">App\\Models\\AdminUsersMusicStyle<\/a>"],[24,9,"<a href=\"Category.php.html#36\">App\\Models\\Category<\/a>"],[0,1,"<a href=\"Customer.php.html#51\">App\\Models\\Customer<\/a>"],[15.59633027522936,29,"<a href=\"Event.php.html#80\">App\\Models\\Event<\/a>"],[50,5,"<a href=\"EventPeriodic.php.html#62\">App\\Models\\EventPeriodic<\/a>"],[0,5,"<a href=\"EventTemplate.php.html#49\">App\\Models\\EventTemplate<\/a>"],[0,1,"<a href=\"Ext\/BaseModel.php.html#23\">App\\Models\\Ext\\BaseModel<\/a>"],[0,1,"<a href=\"Image.php.html#18\">App\\Models\\Image<\/a>"],[0,1,"<a href=\"Media.php.html#61\">App\\Models\\Media<\/a>"],[44.44444444444444,8,"<a href=\"Menu.php.html#51\">App\\Models\\Menu<\/a>"],[100,0,"<a href=\"MenuItemType.php.html#22\">App\\Models\\MenuItemType<\/a>"],[0,2,"<a href=\"Message.php.html#31\">App\\Models\\Message<\/a>"],[0,7,"<a href=\"MusicStyle.php.html#31\">App\\Models\\MusicStyle<\/a>"],[0,1,"<a href=\"News.php.html#39\">App\\Models\\News<\/a>"],[0,1,"<a href=\"Newsletter.php.html#31\">App\\Models\\Newsletter<\/a>"],[0,1,"<a href=\"NewsletterStatus.php.html#22\">App\\Models\\NewsletterStatus<\/a>"],[0,3,"<a href=\"Order.php.html#47\">App\\Models\\Order<\/a>"],[0,3,"<a href=\"OrderItem.php.html#33\">App\\Models\\OrderItem<\/a>"],[0,4,"<a href=\"Page.php.html#41\">App\\Models\\Page<\/a>"],[0,1,"<a href=\"Permission.php.html#37\">App\\Models\\Permission<\/a>"],[0,8,"<a href=\"Product.php.html#57\">App\\Models\\Product<\/a>"],[0,1,"<a href=\"Role.php.html#34\">App\\Models\\Role<\/a>"],[100,0,"<a href=\"Shoppingcart.php.html#29\">App\\Models\\Shoppingcart<\/a>"],[28.57142857142857,9,"<a href=\"Theme.php.html#35\">App\\Models\\Theme<\/a>"],[0,4,"<a href=\"User.php.html#55\">App\\Models\\User<\/a>"],[45.45454545454545,4,"<a href=\"Ext\/HasAdminUser.php.html#18\">App\\Models\\Ext\\HasAdminUser<\/a>"],[0,5,"<a href=\"Ext\/HasUser.php.html#18\">App\\Models\\Ext\\HasUser<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,1,"<a href=\"Address.php.html#46\">App\\Models\\Address::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Address.php.html#51\">App\\Models\\Address::addressCategory<\/a>"],[0,1,"<a href=\"AddressCategory.php.html#29\">App\\Models\\AddressCategory::addresses<\/a>"],[0,1,"<a href=\"AdminUser.php.html#65\">App\\Models\\AdminUser::musicStyles<\/a>"],[0,1,"<a href=\"AdminUsersMusicStyle.php.html#25\">App\\Models\\AdminUsersMusicStyle::adminUsers<\/a>"],[0,1,"<a href=\"AdminUsersMusicStyle.php.html#29\">App\\Models\\AdminUsersMusicStyle::messages<\/a>"],[0,1,"<a href=\"Category.php.html#52\">App\\Models\\Category::getResourceUrlAttribute<\/a>"],[75,1,"<a href=\"Category.php.html#57\">App\\Models\\Category::boot<\/a>"],[0,4,"<a href=\"Category.php.html#67\">App\\Models\\Category::delete<\/a>"],[0,1,"<a href=\"Category.php.html#90\">App\\Models\\Category::events<\/a>"],[0,1,"<a href=\"Category.php.html#98\">App\\Models\\Category::eventTemplates<\/a>"],[0,1,"<a href=\"Category.php.html#106\">App\\Models\\Category::eventPeriodics<\/a>"],[0,1,"<a href=\"Customer.php.html#76\">App\\Models\\Customer::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Event.php.html#107\">App\\Models\\Event::setEventDateAttribute<\/a>"],[100,1,"<a href=\"Event.php.html#111\">App\\Models\\Event::getEventDateAttribute<\/a>"],[0,1,"<a href=\"Event.php.html#117\">App\\Models\\Event::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Event.php.html#122\">App\\Models\\Event::getMediaNameAttribute<\/a>"],[66.66666666666666,2,"<a href=\"Event.php.html#127\">App\\Models\\Event::getImagesAttribute<\/a>"],[0,2,"<a href=\"Event.php.html#134\">App\\Models\\Event::getThumbnailsAttribute<\/a>"],[100,1,"<a href=\"Event.php.html#146\">App\\Models\\Event::category<\/a>"],[100,1,"<a href=\"Event.php.html#154\">App\\Models\\Event::theme<\/a>"],[100,1,"<a href=\"Event.php.html#159\">App\\Models\\Event::scopeAllActual<\/a>"],[100,1,"<a href=\"Event.php.html#171\">App\\Models\\Event::scopeAllActualMerged<\/a>"],[0,1,"<a href=\"Event.php.html#185\">App\\Models\\Event::scopeByCategorySlug<\/a>"],[0,1,"<a href=\"Event.php.html#199\">App\\Models\\Event::scopeByThemeSlug<\/a>"],[0,1,"<a href=\"Event.php.html#214\">App\\Models\\Event::scopeMergedByCategorySlug<\/a>"],[0,3,"<a href=\"Event.php.html#229\">App\\Models\\Event::scopeMergedByDate<\/a>"],[0,4,"<a href=\"Event.php.html#245\">App\\Models\\Event::scopeMergedByDateAndCategory<\/a>"],[0,4,"<a href=\"Event.php.html#270\">App\\Models\\Event::scopeMergedByDateAndTheme<\/a>"],[0,1,"<a href=\"Event.php.html#295\">App\\Models\\Event::scopeMergedByThemeSlug<\/a>"],[0,1,"<a href=\"Event.php.html#362\">App\\Models\\Event::registerMediaConversions<\/a>"],[0,1,"<a href=\"Event.php.html#371\">App\\Models\\Event::registerMediaCollections<\/a>"],[0,1,"<a href=\"EventPeriodic.php.html#88\">App\\Models\\EventPeriodic::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"EventPeriodic.php.html#93\">App\\Models\\EventPeriodic::setImagesAttribute<\/a>"],[100,1,"<a href=\"EventPeriodic.php.html#97\">App\\Models\\EventPeriodic::getImagesAttribute<\/a>"],[100,1,"<a href=\"EventPeriodic.php.html#104\">App\\Models\\EventPeriodic::category<\/a>"],[100,1,"<a href=\"EventPeriodic.php.html#112\">App\\Models\\EventPeriodic::theme<\/a>"],[0,1,"<a href=\"EventTemplate.php.html#73\">App\\Models\\EventTemplate::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"EventTemplate.php.html#78\">App\\Models\\EventTemplate::setImagesAttribute<\/a>"],[0,1,"<a href=\"EventTemplate.php.html#82\">App\\Models\\EventTemplate::getImagesAttribute<\/a>"],[0,1,"<a href=\"EventTemplate.php.html#89\">App\\Models\\EventTemplate::category<\/a>"],[0,1,"<a href=\"EventTemplate.php.html#97\">App\\Models\\EventTemplate::theme<\/a>"],[0,1,"<a href=\"Ext\/BaseModel.php.html#27\">App\\Models\\Ext\\BaseModel::__construct<\/a>"],[0,1,"<a href=\"Image.php.html#36\">App\\Models\\Image::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Media.php.html#67\">App\\Models\\Media::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Menu.php.html#74\">App\\Models\\Menu::parent<\/a>"],[100,1,"<a href=\"Menu.php.html#79\">App\\Models\\Menu::menuItemType<\/a>"],[100,1,"<a href=\"Menu.php.html#84\">App\\Models\\Menu::getLftName<\/a>"],[100,1,"<a href=\"Menu.php.html#89\">App\\Models\\Menu::getRgtName<\/a>"],[0,1,"<a href=\"Menu.php.html#94\">App\\Models\\Menu::getDepthName<\/a>"],[100,1,"<a href=\"Menu.php.html#99\">App\\Models\\Menu::getParentIdName<\/a>"],[0,1,"<a href=\"Menu.php.html#104\">App\\Models\\Menu::setParentAttribute<\/a>"],[0,1,"<a href=\"Menu.php.html#111\">App\\Models\\Menu::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Message.php.html#46\">App\\Models\\Message::musicStyle<\/a>"],[0,1,"<a href=\"Message.php.html#53\">App\\Models\\Message::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"MusicStyle.php.html#38\">App\\Models\\MusicStyle::boot<\/a>"],[0,1,"<a href=\"MusicStyle.php.html#50\">App\\Models\\MusicStyle::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"MusicStyle.php.html#55\">App\\Models\\MusicStyle::adminUsers<\/a>"],[0,1,"<a href=\"MusicStyle.php.html#63\">App\\Models\\MusicStyle::messages<\/a>"],[0,3,"<a href=\"MusicStyle.php.html#68\">App\\Models\\MusicStyle::delete<\/a>"],[0,1,"<a href=\"News.php.html#64\">App\\Models\\News::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Newsletter.php.html#53\">App\\Models\\Newsletter::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"NewsletterStatus.php.html#41\">App\\Models\\NewsletterStatus::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Order.php.html#63\">App\\Models\\Order::getDeliveredAttribute<\/a>"],[0,1,"<a href=\"Order.php.html#68\">App\\Models\\Order::orderItems<\/a>"],[0,1,"<a href=\"Order.php.html#74\">App\\Models\\Order::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"OrderItem.php.html#44\">App\\Models\\OrderItem::getPriceTotalAttribute<\/a>"],[0,1,"<a href=\"OrderItem.php.html#52\">App\\Models\\OrderItem::product<\/a>"],[0,1,"<a href=\"OrderItem.php.html#60\">App\\Models\\OrderItem::order<\/a>"],[0,1,"<a href=\"Page.php.html#61\">App\\Models\\Page::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Page.php.html#66\">App\\Models\\Page::boot<\/a>"],[0,2,"<a href=\"Page.php.html#80\">App\\Models\\Page::getBodyAttribute<\/a>"],[0,1,"<a href=\"Permission.php.html#55\">App\\Models\\Permission::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Product.php.html#84\">App\\Models\\Product::getBuyableIdentifier<\/a>"],[0,1,"<a href=\"Product.php.html#88\">App\\Models\\Product::getBuyableDescription<\/a>"],[0,1,"<a href=\"Product.php.html#92\">App\\Models\\Product::getBuyablePrice<\/a>"],[0,2,"<a href=\"Product.php.html#96\">App\\Models\\Product::getCartItem<\/a>"],[0,1,"<a href=\"Product.php.html#106\">App\\Models\\Product::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Product.php.html#113\">App\\Models\\Product::registerMediaConversions<\/a>"],[0,1,"<a href=\"Product.php.html#122\">App\\Models\\Product::registerMediaCollections<\/a>"],[0,1,"<a href=\"Role.php.html#51\">App\\Models\\Role::getResourceUrlAttribute<\/a>"],[0,1,"<a href=\"Theme.php.html#52\">App\\Models\\Theme::getResourceUrlAttribute<\/a>"],[72.72727272727273,1,"<a href=\"Theme.php.html#57\">App\\Models\\Theme::boot<\/a>"],[0,1,"<a href=\"Theme.php.html#73\">App\\Models\\Theme::events<\/a>"],[0,1,"<a href=\"Theme.php.html#81\">App\\Models\\Theme::eventTemplates<\/a>"],[0,1,"<a href=\"Theme.php.html#89\">App\\Models\\Theme::eventPeriodics<\/a>"],[0,4,"<a href=\"Theme.php.html#94\">App\\Models\\Theme::delete<\/a>"],[0,1,"<a href=\"User.php.html#74\">App\\Models\\User::getDiscountRateAttribute<\/a>"],[0,1,"<a href=\"User.php.html#84\">App\\Models\\User::getInstanceIdentifier<\/a>"],[0,2,"<a href=\"User.php.html#94\">App\\Models\\User::getInstanceGlobalDiscount<\/a>"],[33.33333333333333,2,"<a href=\"Ext\/HasAdminUser.php.html#20\">App\\Models\\Ext\\HasAdminUser::bootHasAdminUser<\/a>"],[100,1,"<a href=\"Ext\/HasAdminUser.php.html#39\">App\\Models\\Ext\\HasAdminUser::createdBy<\/a>"],[100,1,"<a href=\"Ext\/HasAdminUser.php.html#47\">App\\Models\\Ext\\HasAdminUser::updatedBy<\/a>"],[0,3,"<a href=\"Ext\/HasUser.php.html#20\">App\\Models\\Ext\\HasUser::bootHasUser<\/a>"],[0,1,"<a href=\"Ext\/HasUser.php.html#46\">App\\Models\\Ext\\HasUser::createdBy<\/a>"],[0,1,"<a href=\"Ext\/HasUser.php.html#54\">App\\Models\\Ext\\HasUser::updatedBy<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

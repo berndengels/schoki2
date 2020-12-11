@@ -32,7 +32,7 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('public.scard.index') }}">
+                    <a class="nav-link" href="{{ route('scard.index') }}">
                         <i class="text-primary d-inline-block fas fa-shopping-cart"></i>
                     </a>
                 </li>
@@ -46,6 +46,7 @@
                         </li>
                     @endif
                 @else
+
                     <li class="nav-item spacer d-none d-md-inline-block">&nbsp</li>
 
                     <li class="nav-item dropdown">
@@ -54,6 +55,8 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('shipping.index') }}">{{ __('Adressen') }}</a><br>
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

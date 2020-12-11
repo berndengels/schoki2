@@ -1,10 +1,10 @@
 <?php
 /**
- * UserController.php
+ * MenuController.php
  *
  * @author    Bernd Engels
  * @created   28.02.19 17:17
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 namespace App\Http\Controllers\Admin;
 

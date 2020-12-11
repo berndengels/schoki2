@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   10.04.19 04:27
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 
 namespace App\Http\View\Composer;

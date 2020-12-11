@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   15.06.19 21:19
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 
 

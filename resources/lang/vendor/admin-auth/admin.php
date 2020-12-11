@@ -44,6 +44,6 @@ return [
         'sent' => 'We have sent you a password reset link!',
         'invalid_password' => 'Password must be at least six characters long and match the confirmation.',
         'invalid_token' => 'The password reset token is invalid.',
-        'invalid_user' => "We can't find a user with this e-mail address.",
+        'invalid_user' => "We can't find a customer with this e-mail address.",
     ]
 ];

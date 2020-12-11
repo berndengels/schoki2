@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Ext\HasUser;
 use Eloquent;
+use App\Models\Ext\HasCustomer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -22,11 +22,11 @@ use Illuminate\Support\Carbon;
  * @property int $delivered
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read User $createdBy
+ * @property-read Customer $createdBy
  * @property-read mixed $resource_url
  * @property-read Collection|OrderItem[] $orderItems
  * @property-read int|null $order_items_count
- * @property-read User|null $updatedBy
+ * @property-read Customer|null $updatedBy
  * @method static Builder|Order newModelQuery()
  * @method static Builder|Order newQuery()
  * @method static Builder|Order query()
@@ -43,10 +43,14 @@ use Illuminate\Support\Carbon;
  * @mixin Eloquent
  * @property Carbon|null $delivered_at
  * @method static Builder|Order whereDeliveredAt($value)
+ * @property string|null $delivered_on
+ * @property string|null $paid_on
+ * @method static Builder|Order whereDeliveredOn($value)
+ * @method static Builder|Order wherePaidOn($value)
  */
 class Order extends Model
 {
-    use HasUser;
+    use HasCustomer;
 
     protected $table = 'order';
     protected $with = ['created_by','updated_by'];

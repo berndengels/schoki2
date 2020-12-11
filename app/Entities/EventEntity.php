@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   11.04.19 18:49
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 
 namespace App\Entities;

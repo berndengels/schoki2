@@ -5,17 +5,27 @@
             id="{{ $name }}"
             name="{{ $name }}"
             value="{{ $value ?? ''}}"
-            class="form-control @error('title') is-invalid @enderror col-sm-12 col-md-6"
+            class="form-control @error($name) is-invalid @enderror col-sm-12 col-md-auto"
         >
             <option value="">Bitte wählen</option>
             <!-- baue options per blade function -->
-            @foreach($options as $index => $option)
-                @if($value == $index)
-                    <option value="{{ $index }}" selected="selected">{{ $option }}</option>
-                @else
-                    <option value="{{ $index }}">{{ $option }}</option>
-                @endif
-            @endforeach
+            @if($optionsKey && $optionsLabel)
+                @foreach($options as $option)
+                    @if($value == $option->$optionsKey)
+                        <option value="{{ $option->$optionsKey }}" selected="selected">{{ $option->$optionsLabel }}</option>
+                    @else
+                        <option value="{{ $option->$optionsKey }}">{{ $option->$optionsLabel }}</option>
+                    @endif
+                @endforeach
+            @else
+                @foreach($options as $index => $option)
+                    @if($value == $index)
+                        <option value="{{ $index }}" selected="selected">{{ $option }}</option>
+                    @else
+                        <option value="{{ $index }}">{{ $option }}</option>
+                    @endif
+                @endforeach
+            @endif
         </select>
         {{ $slot }}
 

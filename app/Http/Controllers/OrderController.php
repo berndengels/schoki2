@@ -6,7 +6,7 @@ use App\Events\ProductOrdered;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Order;
 use App\Models\Shoppingcart;
-use App\Models\User;
+use App\Models\Customer;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function create(Cart $cart) {
         $this->middleware('auth');
         /**
-         * @var User $user
+         * @var Customer $user
          */
         $user = auth('web')->user();
         $customer = $user->createOrGetStripeCustomer();
@@ -38,7 +38,7 @@ class OrderController extends Controller
     public function store(Cart $cart)
     {
         /**
-         * @var User $user
+         * @var Customer $user
          */
         $user = auth('web')->user();
 

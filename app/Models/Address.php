@@ -29,6 +29,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Address whereToken($value)
  * @method static Builder|Address whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \App\Models\AddressCategory $addressCategory
  */
 class Address extends Model
 {

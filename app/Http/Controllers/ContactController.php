@@ -6,7 +6,7 @@ use App\Forms\NewsletterSubscribeForm;
 use App\Mail\NotifyBooker;
 use App\Models\Address;
 use App\Models\Message;
-use App\Models\User;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Forms\NewsletterForm;
 use App\Forms\BandsForm;
@@ -38,7 +38,7 @@ class ContactController extends BaseController
 		$musicStyleId	= $data['music_style_id'];
 
 		if('prod' === env('APP_ENV')) {
-			$users = User::whereHas('musicStyles', function ($query) use ($musicStyleId) {
+			$users = Customer::whereHas('musicStyles', function ($query) use ($musicStyleId) {
 				$query->where('music_style.id', $musicStyleId);
 			})->pluck('email');
 		} else {

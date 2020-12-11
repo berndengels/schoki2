@@ -13,7 +13,7 @@ return [
     */
 
     'defaults' => [
-        'activations' => 'users',
+        'activations' => 'customers',
     ],
 
     /*
@@ -31,8 +31,8 @@ return [
     |
     */
     'activations' => [
-        'users' => [
-            'provider' => 'users',
+        'customers' => [
+            'provider' => 'customers',
             'table' => 'activations',
             'expire' => 60 * 24,
         ],

@@ -12,6 +12,6 @@ class Time extends Field
      */
     public function render()
     {
-        return view('components..form.input.time');
+        return view('components.form.input.time');
     }
 }

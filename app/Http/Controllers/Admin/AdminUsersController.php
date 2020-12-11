@@ -9,7 +9,6 @@ use App\Http\Requests\Admin\AdminUser\IndexAdminUser;
 use App\Http\Requests\Admin\AdminUser\StoreAdminUser;
 use App\Http\Requests\Admin\AdminUser\UpdateAdminUser;
 use App\Models\MusicStyle;
-use App\Models\Permission;
 use App\Models\AdminUser;
 use App\Models\Role;
 use Brackets\AdminAuth\Activation\Facades\Activation;

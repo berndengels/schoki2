@@ -80,8 +80,8 @@
                                             </label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
-                                        <td>@{{ item.name }}</td>
+                                        <td>@{{ item.id }}</td>
+                                        <td v-tooltip="(item.roles.map(o => o.name)).join('<br>')">@{{ item.name }}</td>
                                         <td>@{{ item.email }}</td>
                                         <td>@{{ item.email_verified_at | datetime }}</td>
                                         <td>@{{ item.stripe_id }}</td>

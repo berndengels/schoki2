@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'admin-user' => [
+    'admin-customer' => [
         'title' => 'Users',
 
         'actions' => [
             'index' => 'Users',
-            'create' => 'New User',
+            'create' => 'New Customer',
             'edit' => 'Edit :name',
             'edit_profile' => 'Edit Profile',
             'edit_password' => 'Edit Password',
@@ -326,7 +326,7 @@ return [
 
         'actions' => [
             'index' => 'Users',
-            'create' => 'New User',
+            'create' => 'New Customer',
             'edit' => 'Edit :name',
         ],
 
@@ -608,7 +608,7 @@ return [
             'name' => 'Name',
             'slug' => 'Slug',
             'icon' => 'Icon',
-            
+
         ],
     ],
 
@@ -637,7 +637,7 @@ return [
             'price' => 'Price',
             'is_published' => 'Is published',
             'is_periodic' => 'Is periodic',
-            
+
         ],
     ],
 

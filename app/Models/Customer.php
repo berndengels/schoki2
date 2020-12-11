@@ -1,14 +1,19 @@
 <?php
 namespace App\Models;
 
-use Brackets\AdminAuth\Activation\Traits\CanActivate;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Notifications\DatabaseNotificationCollection;
+use Laravel\Cashier\Billable;
 use Illuminate\Support\Carbon;
 use Laravel\Cashier\Subscription;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 
 /**
  * App\Models\Customer
@@ -47,34 +52,77 @@ use Laravel\Cashier\Subscription;
  * @mixin Eloquent
  * @property-read Collection|Subscription[] $subscriptions
  * @property-read int|null $subscriptions_count
+ * @property-read mixed $shipping_list
+ * @property-read Collection|\App\Models\Permission[] $permissions
+ * @property-read int|null $permissions_count
+ * @property-read Collection|\App\Models\Role[] $roles
+ * @property-read int|null $roles_count
+ * @property-read Collection|\App\Models\Shipping[] $shippings
+ * @property-read int|null $shippings_count
+ * @method static Builder|Customer permission($permissions)
+ * @method static Builder|Customer role($roles, $guard = null)
  */
-class Customer extends User
+class Customer extends Authenticatable
 {
-    protected $table = 'users';
+    use HasFactory, Notifiable, Billable, HasRoles, HasPermissions;
+
+    protected $table = 'customers';
+    protected $appends = ['resource_url', 'discountRate', 'shippingList'];
     protected $fillable = [
         'name',
         'email',
-        'email_verified_at',
         'password',
-        'stripe_id',
-        'card_brand',
-        'card_last_four',
-        'trial_ends_at',
     ];
-
-    protected $dates = [
-        'email_verified_at',
-        'created_at',
-        'updated_at',
-        'trial_ends_at',
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+    protected $guard_name = 'web';
 
-    protected $appends = ['resource_url'];
+    public function getDiscountRateAttribute()
+    {
+        return 0;
+    }
 
+    /**
+     * Get the unique identifier to load the Cart from
+     *
+     * @return int|string
+     */
+    public function getInstanceIdentifier($options = null)
+    {
+        return $this->email;
+    }
+
+    /**
+     * Get the unique identifier to load the Cart from
+     *
+     * @return int|string
+     */
+    public function getInstanceGlobalDiscount($options = null)
+    {
+        return $this->discountRate ?: 0;
+    }
+
+    public function getShippingListAttribute() {
+        if($this->shippings && $this->shippings->count() > 0) {
+            return implode('<br>', $this->shippings);
+        }
+        return null;
+    }
+
+    public function shippings()
+    {
+        return $this->hasMany(Shipping::class, 'customer_id', 'id');
+    }
     /* ************************ ACCESSOR ************************* */
 
     public function getResourceUrlAttribute()
     {
         return url('/admin/customers/'.$this->getKey());
     }
+
 }

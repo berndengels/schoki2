@@ -32,6 +32,7 @@ use Illuminate\Support\Str;
  * @method static Builder|Category whereName($value)
  * @method static Builder|Category whereSlug($value)
  * @mixin Eloquent
+ * @property-read array $translations
  */
 class Category extends Model
 {

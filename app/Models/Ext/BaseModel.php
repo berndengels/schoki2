@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   13.03.19 14:54
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 namespace App\Models\Ext;
 

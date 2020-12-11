@@ -4,7 +4,7 @@
  *
  * @author    Bernd Engels
  * @created   10.04.19 04:04
- * @copyright Webwerk Berlin GmbH
+ * @copyright Bernd Engels
  */
 
 namespace App\Providers;

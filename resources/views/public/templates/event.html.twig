@@ -140,7 +140,7 @@ $(document).ready(function(){
 	myOverlayStartShow();
 	{% endif %}
 
-	{% if(enable_piwik_stat == 1 and null == app.user) %}
+	{% if(enable_piwik_stat == 1 and null == app.customer) %}
 	myPiwik();
 	window.setInterval(function(){
 		myPiwik()

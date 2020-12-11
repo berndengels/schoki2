@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|AddressCategory whereName($value)
  * @method static Builder|AddressCategory whereTagId($value)
  * @mixin Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Address[] $addresses
+ * @property-read int|null $addresses_count
  */
 class AddressCategory extends Model
 {

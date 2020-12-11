@@ -13,6 +13,6 @@ class Select extends Field
      */
     public function render()
     {
-        return view('components..form.input.select');
+        return view('components.form.input.select');
     }
 }

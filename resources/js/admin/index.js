@@ -20,3 +20,5 @@ import './newsletter';
 import './product';
 import './order';
 import './address-category';
+import './shipping';
+import './country';

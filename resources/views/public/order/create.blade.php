@@ -33,7 +33,7 @@
                         <h3>Der Warenkorb ist leer!</h3>
                     @endif
                     <div>
-                        <a role="button" class="btn btn-block btn-primary" href="{{ route('public.payment.index') }}">@lang('Choose kind of payment')</a>
+                        <a role="button" class="btn btn-block btn-primary" href="{{ route('public.order.store') }}">@lang('Choose kind of payment')</a>
                     </div>
                 </div>
             </div>
