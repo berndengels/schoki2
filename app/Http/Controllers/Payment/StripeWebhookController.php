@@ -12,6 +12,12 @@ class StripeWebhookController extends CashierController
      * @param  array  $payload
      * @return Response
      */
+    public function handleWebhook($payload = null)
+    {
+        // Handle the incoming event...
+        dd($payload);
+    }
+
     public function handleAsyncPaymentSucceeded($payload = null)
     {
         // Handle the incoming event...
