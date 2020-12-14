@@ -1,6 +1,7 @@
 <?php
 namespace App\Jobs\StripeWebhooks;
 
+use App\Mail\Logger;
 use App\Models\Customer;
 use App\Repositories\ShopRepository;
 use Gloudemans\Shoppingcart\Cart;
@@ -9,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Spatie\WebhookClient\Models\WebhookCall;
 
 
@@ -28,7 +30,7 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
 
     public function handle(Cart $cart)
     {
-        Log::info(__METHOD__. ': i am outside');
+        Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': i am outside'));
         // do your work here
         // you can access the payload of the webhook call with `$this->webhookCall->payload`
         $payload = $this->webhookCall->payload;
@@ -50,7 +52,7 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
                      $customer = Customer::whereStripeId($customerID)->first();
                      $order = ShopRepository::createOrder($customer, $cart, $amountReceived, true);
 //                     $cart->destroy();
-                     Log::info(__METHOD__ . ' Order created.' , ['name' => $customerName]);
+                     Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': Order created for: '.$customerName.', orderID: '.$order->id));
                  }
             }
         }

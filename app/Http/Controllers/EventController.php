@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Mail\Logger;
 use Carbon\Carbon;
 use App\Models\Event;
 use App\Helper\MyDate;
+use Illuminate\Support\Facades\Mail;
 use Laravelium\Feed\Feed;
 use Illuminate\Support\Str;
 use App\Entities\EventEntity;
@@ -43,7 +45,7 @@ class EventController extends BaseController
             }
             $this->actualEvents = Cache::get($this->cacheEventKey, collect([]));
         }
-	}
+    }
 
 	public function show($date)
 	{
