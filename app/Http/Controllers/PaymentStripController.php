@@ -111,7 +111,7 @@ class PaymentStripeController extends Controller
     public function success(Cart $cart)
     {
 //        $data = $this->stripClient->checkout->sessions->retrieve($id);
-        return view('public.payment.success', compact('session','cart'));
+        return view('public.payment.success', compact('cart'));
     }
 
     public function config()
