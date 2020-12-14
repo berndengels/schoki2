@@ -1,6 +1,7 @@
 <?php
 namespace App\Jobs\StripeWebhooks;
 
+use App\Events\PaymentSucceeded;
 use App\Mail\Logger;
 use App\Models\Customer;
 use App\Repositories\ShopRepository;
@@ -41,19 +42,14 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
             $customerID = $object['customer'];
             if('succeeded' === $object['status']) {
                 $chargesData = $object['charges']['data'][0];
-                 if('succeeded' === $chargesData['status'] && true === (bool) $chargesData['paid']) {
-                     $customerName  = $chargesData['billing_details']['name'];
-                     $customerEmail = $chargesData['billing_details']['email'];
-                     /**
-                      * @todo handle successful payment
-                      * @todo set order, order_items by cartItems
-                      * @todo set order: created_by (customer), created_at, price_total, paid_on
-                      */
-                     $customer = Customer::whereStripeId($customerID)->first();
-                     $order = ShopRepository::createOrder($customer, $cart, $amountReceived, true);
-//                     $cart->destroy();
-                     Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': Order created for: '.$customerName.', orderID: '.$order->id));
-                 }
+                $paid = (bool) $chargesData['paid'];
+//                $success = 'succeeded' === $chargesData['status'] ? true : false;
+                $customerName  = $chargesData['billing_details']['name'];
+                $customer      = Customer::whereStripeId($customerID)->first();
+                $cartCount     = $cart ? $cart->count() : null;
+
+                Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': Order created for: '.$customerName.', Cart count: '.$cartCount));
+                event(new PaymentSucceeded($customer, $cart, $amountReceived, $created, $paid));
             }
         }
     }

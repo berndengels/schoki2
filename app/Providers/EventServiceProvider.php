@@ -1,9 +1,10 @@
 <?php
-
 namespace App\Providers;
 
 use App\Events\ProductOrdered;
+use App\Events\PaymentSucceeded;
 use App\Listeners\OrderNotification;
+use App\Listeners\PaymentNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ProductOrdered::class => [
             OrderNotification::class,
+        ],
+        PaymentSucceeded::class => [
+            PaymentNotification::class,
         ],
     ];
 

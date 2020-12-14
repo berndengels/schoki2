@@ -1,13 +1,11 @@
 <?php
-
 namespace App\Exceptions;
 
+use Throwable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
-use Illuminate\Session\TokenMismatchException;
 //use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Bengels\LaravelEmailExceptions\Exceptions\EmailHandler as ExceptionHandler;
 
