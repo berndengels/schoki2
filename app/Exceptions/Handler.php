@@ -60,15 +60,6 @@ class Handler extends ExceptionHandler
                 'error' => 'Resource not found'
             ], 404);
         }
-        if ($e instanceof TokenMismatchException) {
-            return redirect()
-                ->back()
-                ->withInput($request->except('password'))
-                ->with([
-                    'status' => 'Oops! Your Validation Token has expired. Please try again',
-                    'alert' => 'danger'])
-                ;
-        }
         return parent::render($request, $e);
     }
 }
