@@ -8,8 +8,8 @@ use App\Models\Order;
 use App\Models\Customer;
 use App\Events\ProductOrdered;
 use App\Models\Shoppingcart;
-use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\CartItem;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Resources\Payment\Stripe\PriceResource;
 use App\Http\Resources\Payment\PayPal\CartItemResource as PayPalCartItemResource;
 use App\Http\Resources\Payment\Stripe\CartItemResource as StripeCartItemResource;
@@ -100,6 +100,9 @@ class ShopRepository
                     $order->createdBy()->associate($customer);
                 }
                 $order->orderItems()->createMany($orderItemData);
+
+                Cart::destroy();
+                Shoppingcart::whereIdentifier($customer->getInstanceIdentifier())->delete();
 
                 event(new ProductOrdered($order));
 
