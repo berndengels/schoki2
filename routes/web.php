@@ -464,10 +464,10 @@ Route::prefix('webhook')
         Route::prefix('paypal')->group(static function() {
         });
         Route::prefix('stripe')->group(static function() {
-            Route::post('paymentSuccess', [StripeWebhookController::class, 'paymentSuccess'])->name('stripe.paymentSuccess');
-            Route::post('paymentFailed', [StripeWebhookController::class, 'paymentFailed'])->name('stripe.paymentFailed');
-            Route::post('completed', [StripeWebhookController::class, 'paymentCompleted'])->name('stripe.paymentCompleted');
-            Route::post('all', [StripeWebhookController::class, 'all'])->name('stripe.all');
+            Route::post('asyncPaymentSucceeded', [StripeWebhookController::class, 'handleAsyncPaymentSucceeded'])->name('stripe.paymentSuccess');
+            Route::post('asyncPaymentFailed', [StripeWebhookController::class, 'asyncPaymentFailed'])->name('stripe.paymentFailed');
+            Route::post('handleCompleted', [StripeWebhookController::class, 'handleCompleted'])->name('stripe.paymentCompleted');
+            Route::post('handleAll', [StripeWebhookController::class, 'handleAll'])->name('stripe.all');
         });
     });
 

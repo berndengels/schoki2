@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers\Payment;
 
-use Laravel\Cashier\Http\Controllers\WebhookController as CashierController;
 use Symfony\Component\HttpFoundation\Response;
+use Laravel\Cashier\Http\Controllers\WebhookController as CashierController;
 
 class StripeWebhookController extends CashierController
 {
@@ -12,25 +12,25 @@ class StripeWebhookController extends CashierController
      * @param  array  $payload
      * @return Response
      */
-    public function paymentSuccess($payload)
+    public function handleAsyncPaymentSucceeded($payload = null)
     {
         // Handle the incoming event...
         dd($payload);
     }
 
-    public function paymentFailed($payload)
+    public function handleAsyncPaymentFailed($payload = null)
     {
         // Handle the incoming event...
         dd($payload);
     }
 
-    public function paymentCompleted($payload)
+    public function handleCompleted($payload = null)
     {
         // Handle the incoming event...
         dd($payload);
     }
 
-    public function all($payload)
+    public function handleAll($payload = null)
     {
         // Handle the incoming event...
         dd($payload);
