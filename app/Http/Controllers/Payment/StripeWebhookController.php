@@ -15,7 +15,7 @@ class StripeWebhookController extends CashierController
     public function handleWebhook($payload = null)
     {
         // Handle the incoming event...
-        dd($payload);
+        return view('public.payment.webhook', compact('payload'));
     }
 
     public function handleAsyncPaymentSucceeded($payload = null)
