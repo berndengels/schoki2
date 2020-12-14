@@ -32,8 +32,8 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('scard.index') }}">
-                        <i class="text-primary d-inline-block fas fa-shopping-cart"></i>
+                    <a class="nav-link btnPay" href="{{ route('scard.index') }}">
+                        <i class="text-primary d-inline-block payIcon fas fa-shopping-cart"></i>
                     </a>
                 </li>
                 @guest

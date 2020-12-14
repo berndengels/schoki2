@@ -1,9 +1,7 @@
 <?php
 
-use App\Jobs\StripeWebhooks\HandleSessionCheckoutAsynPaymentFailed;
-use App\Jobs\StripeWebhooks\HandleSessionCheckoutAsynPaymentSucceeded;
-use App\Jobs\StripeWebhooks\HandleSessionCheckoutCompleted;
 use Spatie\StripeWebhooks\ProcessStripeWebhookJob;
+use App\Jobs\StripeWebhooks\HandlePaymentIntentSucceeded;
 
 return [
 
@@ -21,9 +19,7 @@ return [
      * https://stripe.com/docs/api#event_types.
      */
     'jobs' => [
-//        'checkout_session_async_payment_succeeded' => HandleSessionCheckoutAsynPaymentSucceeded::class,
-//        'checkout_session_async_payment_failed' => HandleSessionCheckoutAsynPaymentFailed::class,
-        'checkout_session_completed' => HandleSessionCheckoutCompleted::class,
+        'payment_intent_succeeded' => HandlePaymentIntentSucceeded::class,
     ],
 
     /*
