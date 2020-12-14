@@ -4,9 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="card col-md-12">
-                <div class="card-header row">Hallo</div>
+                <div class="card-header row">@lang('Der Einkauf wurde abgebrochen')</div>
                 <div class="card-body row mt-3 p-0 justify-content-center">
-                    {{ dd($exception) }}
+                    <p>Schade, vielleicht nächste mal.</p>
                 </div>
             </div>
         </div>
