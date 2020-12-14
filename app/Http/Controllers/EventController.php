@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Logger;
+use App\Repositories\ShopRepository;
 use Carbon\Carbon;
 use App\Models\Event;
 use App\Helper\MyDate;

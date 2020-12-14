@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Helper\MyMoney;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Order;
@@ -53,30 +54,51 @@ class ShopRepository
         return self::getStripePriceItems($cart, $request)->values()->toArray();
     }
 
-    public static function createOrder(Customer $customer, Cart $cart, int $amountReceived, int $created, bool $paid = false) {
+    public static function createOrder(
+        Customer $customer,
+        int $amountReceived,
+        int $created,
+        bool $paid,
+        string $paymentId,
+        string $paymentType
+    ) {
 
         try {
-            $shoppincart = Shoppingcart::whereIdentifier($customer->getInstanceIdentifier())->first();
-            if($cart->count()) {
-                if(!$shoppincart) {
-                    $cart->store($customer->getInstanceIdentifier());
-                }
-                $orderItemData = [];
+            /**
+             * @var Shoppingcart $shoppincart
+             */
+            $shoppingCart   = Shoppingcart::whereIdentifier($customer->getInstanceIdentifier())->first();
+            $content        = $shoppingCart ? unserialize($shoppingCart->content) : null;
 
-                foreach ($cart->content() as $item) {
+            if($content && $content->count() > 0) {
+                $orderItemData = [];
+                $total = 0;
+                foreach ($content as $item) {
+                    $priceTotal = MyMoney::getBrutto($item->price) * $item->qty;
                     $orderItemData[] = [
                         'product_id'    => $item->id,
                         'quantity'      => $item->qty,
-                        'price_total'   => $item->total,
-                        'paid_on'       => $paid ? Carbon::createFromTimestamp($created) : null,
+                        'price_total'   => $priceTotal,
                         'amount_received'   => $amountReceived / 100,
                     ];
+                    $total += $priceTotal;
                 }
+
                 $params = [
-                    'price_total'   => (float) $cart->total(),
+                    'paid_on'           => $paid ? Carbon::createFromTimestamp($created) : null,
+                    'price_total'       => (float) $total,
+                    'amount_received'   => $amountReceived,
+                    'payment_id'        => $paymentId,
+                    'payment_type'      => $paymentType,
                 ];
-                $order = Order::create($params);
-                $order->createdBy()->associate($customer);
+                $foundOrder = Order::wherePaymentId($paymentId)->first();
+                if($foundOrder) {
+                    $order = $foundOrder->update($params);
+                    $order->updatedBy()->associate($customer);
+                } else {
+                    $order = Order::create($params);
+                    $order->createdBy()->associate($customer);
+                }
                 $order->orderItems()->createMany($orderItemData);
 
                 event(new ProductOrdered($order));

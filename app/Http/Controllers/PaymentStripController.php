@@ -1,26 +1,18 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Helper\MyLang;
-use App\Http\Resources\Payment\Stripe\PriceResource;
 use Exception;
+use App\Helper\MyLang;
+use App\Models\Shoppingcart;
 use Gloudemans\Shoppingcart\CartItem;
-use Stripe\Charge;
 use Stripe\Checkout\Session;
 use Stripe\Price;
-use Stripe\Stripe;
 use Stripe\StripeClient;
 use App\Models\Customer;
-use App\Models\Shipping;
-use Stripe\PaymentMethod;
-use Laravel\Cashier\Billable;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Cart;
 use Stripe\Customer as StripeCustomer;
 use App\Repositories\ShopRepository;
-use Stripe\Checkout\Session as CheckoutSession;
-use App\Http\Resources\Payment\Stripe\ShippingResource;
-use Stripe\Exception\ApiErrorException;
 use App\Http\Resources\Payment\Stripe\CustomerResource;
 
 class PaymentStripeController extends Controller
@@ -37,6 +29,15 @@ class PaymentStripeController extends Controller
 
     public function create(Request $request, Cart $cart)
     {
+        /**
+         * @var Customer $customer
+         */
+        $customer    = $request->user('web');
+        $shoppincart = Shoppingcart::whereIdentifier($customer->getInstanceIdentifier())->first();
+        if(!$shoppincart) {
+            $cart->store($customer->getInstanceIdentifier());
+        }
+
         return view('public.payment.create', compact('cart'));
     }
 

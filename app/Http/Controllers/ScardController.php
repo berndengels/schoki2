@@ -2,10 +2,13 @@
 namespace App\Http\Controllers;
 
 use App\Helper\MyMoney;
+use App\Models\Customer;
 use App\Models\Scard;
 use App\Models\Product;
+use App\Models\Shoppingcart;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use App\Http\Requests\ScardRequest;
 use Gloudemans\Shoppingcart\Cart;
 
@@ -30,23 +33,44 @@ class ScardController extends Controller
         return view('public.scard.index', compact('cart','content'));
     }
 
-    public function add(Product $product, Cart $cart)
+    public function add(Request $request, Product $product, Cart $cart)
     {
-//        $cartItem = new CartItem($cart->id);
-//        $product->price = $product->price_netto;
+        /**
+         * @var CartItem $item
+         * @var Customer $customer
+         */
+        $customer = $request->user('web');
         $cart->add($product, 1);
+        if(Shoppingcart::whereIdentifier($customer->getInstanceIdentifier())->first()) {
+            $cart->restore($customer->getInstanceIdentifier());
+        } else {
+            $cart->store($customer->getInstanceIdentifier());
+        }
+
         return redirect()->back();
     }
 
-    public function increment(Cart $cart, $rawId)
+    public function increment(Request $request, Cart $cart, $rawId)
     {
+        /**
+         * @var CartItem $item
+         * @var Customer $customer
+         */
+        $customer = $request->user('web');
         $cart->update($rawId, $cart->get($rawId)->qty + 1);
+        $cart->restore($customer->getInstanceIdentifier());
         return redirect()->back();
     }
 
-    public function decrement(Cart $cart, $rawId)
+    public function decrement(Request $request, Cart $cart, $rawId)
     {
+        /**
+         * @var CartItem $item
+         * @var Customer $customer
+         */
+        $customer = $request->user('web');
         $cart->update($rawId, $cart->get($rawId)->qty - 1);
+        $cart->restore($customer->getInstanceIdentifier());
         return redirect()->back();
     }
 
@@ -56,9 +80,14 @@ class ScardController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy(Cart $cart)
+    public function destroy(Request $request, Cart $cart)
     {
+        /**
+         * @var Customer $customer
+         */
+        $customer = $request->user('web');
         $cart->destroy();
-        return redirect()->back();
+        Shoppingcart::whereIdentifier($customer->getInstanceIdentifier())->delete();
+        return redirect()->route('public.events');
     }
 }

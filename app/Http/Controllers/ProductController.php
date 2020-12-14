@@ -16,7 +16,6 @@ class ProductController extends Controller
      */
     public function index(Cart $cart)
     {
-//        dd($cart->content());
         $data = Product::all()->map(function (Product $product) use ($cart) {
             $product->thumb = null;
             $product->added = $cart->count();
@@ -49,7 +48,6 @@ class ProductController extends Controller
         $cartItem = $cart->search(function($cartItem, $rowId) use ($product) {
             return $cartItem->id === $product->getBuyableIdentifier();
         })->first();
-//        dd($cartItem->qty);
         return view('public.product.show', compact('product','cartItem'));
     }
 }
