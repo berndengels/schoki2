@@ -17,7 +17,7 @@
                             @csrf
                             <button id="submit" role="button"
                                     class="btn btn-primary btnPay align-middle"><i class="fab fa-cc-stripe mr-1"></i>
-                                Summe {{ $cart->priceTotal() }} € jetzt bezahlen
+                                Summe {{ $cart->total() }} € jetzt bezahlen
                             </button>
                         </form>
                         <div id="error-message"></div>
