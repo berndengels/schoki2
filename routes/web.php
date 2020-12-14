@@ -413,16 +413,6 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
         ->namespace('App\Http\Controllers\Admin')
         ->group(static function() {
         Route::prefix('menu')->group(static function() {
-
-/*
-            Route::get('/',	'MenuController@index')->name('index');
-            Route::get('/create',	'MenuController@create')->name('create');
-            Route::post('/',	'MenuController@store')->name('store');
-            Route::get('/{menu}/edit',	'MenuController@edit')->name('edit');
-            Route::post('/bulk-destroy',	'MenuController@bulkDestroy')->name('bulk-destroy');
-            Route::post('/{menu}',	'MenuController@update')->name('update');
-            Route::delete('/{menu}',	'MenuController@destroy')->name('destroy');
-*/
             Route::get('/', 'MenuController@show')->name('admin.menuShow');
             Route::get('edit', 'MenuController@edit')->name('admin.menuNew');
             Route::post('operation/{operation}', 'MenuController@operation')->name('admin.menuOperation');
@@ -474,10 +464,10 @@ Route::prefix('webhook')
         Route::prefix('paypal')->group(static function() {
         });
         Route::prefix('stripe')->group(static function() {
-            Route::get('paymentSuccess', [StripeWebhookController::class, 'paymentSuccess'])->name('stripe.paymentSuccess');
-            Route::get('paymentFailed', [StripeWebhookController::class, 'paymentFailed'])->name('stripe.paymentFailed');
-            Route::get('completed', [StripeWebhookController::class, 'paymentCompleted'])->name('stripe.paymentCompleted');
-            Route::get('all', [StripeWebhookController::class, 'all'])->name('stripe.all');
+            Route::post('paymentSuccess', [StripeWebhookController::class, 'paymentSuccess'])->name('stripe.paymentSuccess');
+            Route::post('paymentFailed', [StripeWebhookController::class, 'paymentFailed'])->name('stripe.paymentFailed');
+            Route::post('completed', [StripeWebhookController::class, 'paymentCompleted'])->name('stripe.paymentCompleted');
+            Route::post('all', [StripeWebhookController::class, 'all'])->name('stripe.all');
         });
     });
 
