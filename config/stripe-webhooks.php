@@ -23,7 +23,7 @@ return [
     'jobs' => [
 //        'checkout_session_async_payment_succeeded' => HandleSessionCheckoutAsynPaymentSucceeded::class,
 //        'checkout_session_async_payment_failed' => HandleSessionCheckoutAsynPaymentFailed::class,
-//        'checkout_session_completed' => HandleSessionCheckoutCompleted::class,
+        'checkout_session_completed' => HandleSessionCheckoutCompleted::class,
     ],
 
     /*

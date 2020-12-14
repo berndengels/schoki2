@@ -26,5 +26,6 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
     {
         // do your work here
         // you can access the payload of the webhook call with `$this->webhookCall->payload`
+        $payload = $this->webhookCall->payload;
     }
 }

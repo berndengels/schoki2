@@ -102,12 +102,13 @@ class PaymentStripeController extends Controller
         }
     }
 
-    public function cancel(ApiErrorException $exception)
+    public function cancel(Cart $cart)
     {
+        // @todo: maybe destroy cart here
         return view('public.payment.cancel', compact('exception'));
     }
 
-    public function success(CheckoutSession $session, Cart $cart)
+    public function success(Cart $cart)
     {
 //        $data = $this->stripClient->checkout->sessions->retrieve($id);
         return view('public.payment.success', compact('session','cart'));

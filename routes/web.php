@@ -440,7 +440,6 @@ Route::prefix('order')
     ->group(function() {
         Route::get('',[OrderController::class, 'index'])->name('order.index');
         Route::get('/show',[OrderController::class, 'show'])->name('order.show');
-        Route::get('/store',[OrderController::class, 'store'])->name('order.store');
 });
 Route::prefix('payment')
     ->middleware('auth')
