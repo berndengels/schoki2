@@ -8,7 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Log;
+use Illuminate\Support\Facades\Log;
 use Spatie\WebhookClient\Models\WebhookCall;
 
 
@@ -28,6 +28,7 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
 
     public function handle(Cart $cart)
     {
+        Log::info(__METHOD__. ': i am outside');
         // do your work here
         // you can access the payload of the webhook call with `$this->webhookCall->payload`
         $payload = $this->webhookCall->payload;
@@ -48,11 +49,10 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
                       */
                      $customer = Customer::whereStripeId($customerID)->first();
                      $order = ShopRepository::createOrder($customer, $cart, $amountReceived, true);
-                     Log::info(__FUNCTION__ . ' Order created');
 //                     $cart->destroy();
+                     Log::info(__METHOD__ . ' Order created.' , ['name' => $customerName]);
                  }
             }
-
         }
     }
 }
