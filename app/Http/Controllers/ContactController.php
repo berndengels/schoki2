@@ -23,9 +23,6 @@ class ContactController extends BaseController
     use FormBuilderTrait, DispatchesJobs, ValidatesRequests;
 
     public function formBands( FormBuilder $formBuilder ) {
-
-        ShopRepository::createOrder(auth('web')->user(), 1, 1, true);
-
         $form   = $formBuilder->create(BandsForm::class);
 		return view('public.form.bands', compact('form'));
     }
