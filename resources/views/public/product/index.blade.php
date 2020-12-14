@@ -16,11 +16,11 @@
                             <br>
                             @endif
                         </td>
-                        <td><a href="{{ route('public.product.show', ['product' => $item]) }}">{{ $item->name }}</a></td>
+                        <td><a href="{{ route('product.show', ['product' => $item]) }}">{{ $item->name }}</a></td>
                         <td>{{ $item->price }}</td>
                         <td>
                             <form class="d-inline"
-                                  action="{{ route('public.scard.add', ['product' => $item]) }}"
+                                  action="{{ route('scard.add', ['product' => $item]) }}"
                                   method="post"
                             >
                                 @csrf

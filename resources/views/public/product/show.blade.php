@@ -7,7 +7,7 @@
                 <div class="row card-header">
                     <h3>{{ $product->name }}</h3>
                     <form class="position-absolute d-block" style="right:3.0rem"
-                          action="{{ route('public.scard.add', ['product' => $product]) }}"
+                          action="{{ route('scard.add', ['product' => $product]) }}"
                           method="post"
                     >
                         @csrf

@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Helper\MyMoney;
 use App\Models\Scard;
 use App\Models\Product;
+use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Response;
 use App\Http\Requests\ScardRequest;
 use Gloudemans\Shoppingcart\Cart;
@@ -21,12 +23,17 @@ class ScardController extends Controller
      */
     public function index(Cart $cart)
     {
-//        $cart->destroy();
-        return view('public.scard.index', compact('cart'));
+        $content = null;
+        if($cart->content()->count()) {
+            $content = $cart->content();
+        }
+        return view('public.scard.index', compact('cart','content'));
     }
 
     public function add(Product $product, Cart $cart)
     {
+//        $cartItem = new CartItem($cart->id);
+//        $product->price = $product->price_netto;
         $cart->add($product, 1);
         return redirect()->back();
     }
@@ -49,9 +56,9 @@ class ScardController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy(Cart $cart, $rawId)
+    public function destroy(Cart $cart)
     {
-        $cart->remove($rawId);
+        $cart->destroy();
         return redirect()->back();
     }
 }

@@ -52,6 +52,4 @@ class ProductController extends Controller
 //        dd($cartItem->qty);
         return view('public.product.show', compact('product','cartItem'));
     }
-
-
 }

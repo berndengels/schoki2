@@ -1,5 +1,5 @@
 
-window.loadPaymentForm = function(form, payment, options) {
+window.loadPaymentForm = function(form, payment, options, data) {
     var style = {
         base: {
             color: '#32325d',
@@ -55,58 +55,92 @@ window.loadPaymentForm = function(form, payment, options) {
         }
     });
     // Handle form submission.
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 //        showLoading();
+        var myPaymentMethode = 'card';
 
-        var sourceData = {
-            type: options.type,
-            currency: 'eur',
-            owner: {
-                name: document.querySelector('input[name="name"]').value,
-                email: document.querySelector('input[name="email"]').value,
-            },
-            mandate: {
-                // Automatically send a mandate notification email to your customer
-                // once the source is charged.
-                notification_method: 'email',
-            }
-        };
-        // Call `stripe.createSource` with the iban Element and additional options.
-        stripe.createSource(obj, sourceData)
-            .then(result => {
-                console.info('result');
-                console.info(result);
-                if (result.error) {
-                    // Inform the customer that there was an error.
-                    errorMessage.textContent = result.error.message;
-                    errorMessage.classList.add('visible');
-                    console.info(result.error.message);
-        //                stopLoading();
-                } else {
-                    // Send the Source to your server to create a charge.
-                    errorMessage.classList.remove('visible');
-                    console.info(form);
-                    stripeSourceHandler(form, result.source);
+        switch (payment) {
+            case 'iban':
+                myPaymentMethode = 'sepa_debit';
+                break;
+        }
+        const { paymentMethod, error } = await stripe.createPaymentMethod(
+            myPaymentMethode, obj, {
+                billing_details: {
+                    name: form.elements.name.value,
+                    email: form.elements.email.value,
+                    address: data.address.address,
                 }
-            })
-            .then(res => {
-                console.info('res');
-                console.info(res);
-            })
-            .catch(err => {
-                console.info('err');
-                console.info(err);
-            });
+            }
+        );
+        if (error) {
+            console.error('createPaymentMethod error');
+            console.error(error);
+            errorMessage.textContent = error;
+            errorMessage.classList.add('visible');
+
+        } else {
+            // The card has been verified successfully...
+            errorMessage.classList.remove('visible');
+            console.info('paymentMethod');
+            console.info(paymentMethod);
+            var sourceData = {
+                type: options.type,
+                currency: 'eur',
+                owner: {
+                    name: document.querySelector('input[name="name"]').value,
+                    email: document.querySelector('input[name="email"]').value,
+                },
+                mandate: {
+                    // Automatically send a mandate notification email to your customer
+                    // once the source is charged.
+                    notification_method: 'email',
+                }
+            };
+            // Call `stripe.createSource` with the iban Element and additional options.
+            stripe.createSource(obj, sourceData)
+                .then(result => {
+                    console.info('createSource result');
+                    console.info(result);
+                    if (result.error) {
+                        // Inform the customer that there was an error.
+                        errorMessage.textContent = result.error.message;
+                        errorMessage.classList.add('visible');
+                        console.info(result.error.message);
+                        //                stopLoading();
+                    } else {
+                        // Send the Source to your server to create a charge.
+                        errorMessage.classList.remove('visible');
+                        stripeSourceHandler(form, result.source, paymentMethod);
+                    }
+                })
+                .then(res => {
+                    if(res) {
+                        console.info('res');
+                        console.info(res);
+                    }
+                })
+                .catch(err => {
+                    console.info('err');
+                    console.info(err);
+                });
+        }
     });
 }
-function stripeSourceHandler(form, source) {
+function stripeSourceHandler(form, source, paymentMethod) {
     // Insert the Source ID into the form so it gets submitted to the server.
     var hiddenInput = document.createElement('input');
     hiddenInput.setAttribute('type', 'hidden');
     hiddenInput.setAttribute('name', 'stripeSource');
     hiddenInput.setAttribute('value', source.id);
     form.appendChild(hiddenInput);
+
+    hiddenInput = document.createElement('input');
+    hiddenInput.setAttribute('type', 'hidden');
+    hiddenInput.setAttribute('name', 'paymentMethod');
+    hiddenInput.setAttribute('value', paymentMethod);
+    form.appendChild(hiddenInput);
     // Submit the form.
-    form.submit();
+//    form.submit();
 }

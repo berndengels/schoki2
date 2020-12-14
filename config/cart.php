@@ -23,7 +23,7 @@ return [
     | Taxable interface and use the HasTax trait.
     |
     */
-    'tax' => 19,
+    'tax' => env('PAYMENT_TAX_RATE', 19),
 
     /*
     |--------------------------------------------------------------------------
@@ -61,7 +61,7 @@ return [
     */
     'format' => [
         'decimals' => 2,
-        'decimal_point' => ',',
-        'thousand_separator' => '.',
+        'decimal_point' => '.',
+        'thousand_separator' => '',
     ],
 ];

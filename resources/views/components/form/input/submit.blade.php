@@ -6,7 +6,7 @@
             name="{{ $name }}"
             value="{{ $value ?? 'Submit' }}"
             role="button"
-            class="btn btn-primary col-md-auto px-5"
+            class="{{ $class ?? 'btn btn-primary col-md-auto px-5' }}"
         />
         {{ $slot }}
     </div>

@@ -7,7 +7,7 @@
                 <div class="card-header row">Hallo {{ $order->createdBy->name }}!</div>
                 <div class="card-body row p-0 justify-content-center">
                     <div>Du hast folgende Artikel bestellt: </div>
-                    <table class="table">
+                    <table class="table ">
                         @foreach($order->orderItems as $item)
                             <tr>
                                 <td>Artikel</td>
@@ -28,7 +28,9 @@
                         @endforeach
                     </table>
                     <h3>Gesamtpreis: {{ $order->price_total }} €</h3>
-                    <p>Vielen dank für Deinen Einkauf.</p>
+                    <div>
+                        <p>Vielen dank für Deinen Einkauf.</p>
+                    </div>
                 </div>
             </div>
         </div>

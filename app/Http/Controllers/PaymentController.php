@@ -61,11 +61,17 @@ class PaymentController extends Controller
      */
     public function create(Request $request)
     {
-        $this->customer = $request->user();
-        dd($this->customer->paymentMethods());
-        // get stripeSource: src_1HwHNSBFmNHaPuJ064dItqEt
+        /**
+         * @var Billable $user
+         */
+        $user = auth('web')->user();
+        $this->customer = $user->createOrGetStripeCustomer();
+        $configPayments = collect(config('my.paymentMethods'));
+        $paymentOptions = $configPayments->map(function ($method, $key){
+            return $method[$key] = $method['label'];
+        })->toArray();
 
-        return view('public.payment.index', compact('payment'));
+        return view('public.form.payment', compact( 'paymentOptions','configPayments'));
     }
 
     /**

@@ -5,7 +5,7 @@
     "/css/app.css": "/css/app.css",
     "/css/red.css": "/css/red.css",
     "/css/dark.css": "/css/dark.css",
-    "/js/stripe.js": "/js/stripe.js",
+    "/js/payment-stripe.js": "/js/payment-stripe.js",
     "/vendor/calendar/css/zabuto_calendar.min.css": "/vendor/calendar/css/zabuto_calendar.min.css",
     "/vendor/calendar/js/zabuto_calendar.min.js": "/vendor/calendar/js/zabuto_calendar.min.js",
     "/vendor/jstree/js/jstree.min.js": "/vendor/jstree/js/jstree.min.js"

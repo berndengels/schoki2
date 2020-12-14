@@ -1,6 +1,7 @@
 <?php
 namespace App\Providers;
 
+use App\Helper\MyMoney;
 use App\View\Components\Form\Input\Checkbox;
 use App\View\Components\Form\Input\Date;
 use App\View\Components\Form\Input\Email;
@@ -46,6 +47,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        Blade::directive('brutto', function ($expression) {
+            return "<?php echo \App\Helper\MyMoney::getBrutto($expression); ?>";
+        });
+        Blade::directive('netto', function ($expression) {
+            return "<?php echo \App\Helper\MyMoney::getNetto($expression); ?>";
+        });
         Blade::component('inp.text', Text::class);
         Blade::component('inp.email', Email::class);
         Blade::component('inp.date', Date::class);

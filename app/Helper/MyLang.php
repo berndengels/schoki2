@@ -7,9 +7,18 @@ class MyLang
 {
     public static function getPrimary()
     {
+        /**
+         * @var Agent
+         */
         $agent = new Agent();
         $languages = collect($agent->languages());
         list($lang,) = explode('-', $languages->first());
         return $lang;
+    }
+
+    public static function getLocale()
+    {
+        $lang = self::getPrimary();
+        return $lang . '_' . strtoupper($lang);
     }
 }

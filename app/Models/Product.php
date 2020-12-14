@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Models\Ext\HasAdminUser;
+use App\Models\Ext\PriceTrait;
 use Brackets\Media\HasMedia\AutoProcessMediaTrait;
 use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
 use Brackets\Media\HasMedia\HasMediaThumbsTrait;
@@ -53,16 +54,18 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @method static Builder|Product whereUpdatedAt($value)
  * @method static Builder|Product whereUpdatedBy($value)
  * @mixin Eloquent
+ * @property string|null $price_netto
+ * @method static Builder|Product wherePriceNetto($value)
  */
 class Product extends Model implements Buyable, HasMedia
 {
     use CanBeBought;
     use HasAdminUser;
-
     use ProcessMediaTrait;
     use AutoProcessMediaTrait;
     use HasMediaCollectionsTrait;
     use HasMediaThumbsTrait;
+    use PriceTrait;
 
     protected $table = 'product';
     protected $appends = ['resource_url'];
@@ -90,7 +93,7 @@ class Product extends Model implements Buyable, HasMedia
     }
 
     public function getBuyablePrice($options = null){
-        return $this->price;
+        return $this->price_netto;
     }
 
     public function getCartItem(Cart $cart = null)

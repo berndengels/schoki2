@@ -1,125 +1,120 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Forms\PaymentForm;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Kris\LaravelFormBuilder\FormBuilder;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Laravel\Cashier\Billable;
+use App\Helper\MyLang;
+use App\Http\Resources\Payment\Stripe\PriceResource;
+use Exception;
+use Gloudemans\Shoppingcart\CartItem;
+use Stripe\Charge;
 use Stripe\Checkout\Session;
-use Stripe\Customer;
+use Stripe\Price;
+use Stripe\Stripe;
+use Stripe\StripeClient;
+use App\Models\Customer;
+use App\Models\Shipping;
+use Stripe\PaymentMethod;
+use Laravel\Cashier\Billable;
+use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Cart;
-use Stripe\HttpClient\ClientInterface;
-use Stripe\Service\SourceService;
-use Stripe\Source;
+use Stripe\Customer as StripeCustomer;
+use App\Repositories\ShopRepository;
+use Stripe\Checkout\Session as CheckoutSession;
+use App\Http\Resources\Payment\Stripe\ShippingResource;
+use Stripe\Exception\ApiErrorException;
+use App\Http\Resources\Payment\Stripe\CustomerResource;
 
 class PaymentStripeController extends Controller
 {
-    use FormBuilderTrait;
     /**
-     * @var Customer;
+     * @var StripeClient $stripClient
      */
-    protected $customer;
-    public function __construct() {
+    protected $stripeClient;
+
+    public function __construct()
+    {
+        $this->stripeClient = new StripeClient(env('STRIPE_SECRET'));
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index( FormBuilder $formBuilder, Cart $cart )
+    public function create(Request $request, Cart $cart)
     {
-        /**
-         * @var Billable $user
-         */
-        $user = auth('web')->user();
-        $this->customer = $user->createOrGetStripeCustomer();
-        $configPayments = collect(config('my.paymentMethods'));
-        $paymentOptions = $configPayments->map(function ($method, $key){
-            return $method[$key] = $method['label'];
-        })->toArray();
-
-        $form   = $formBuilder->create(PaymentForm::class, [], [
-            'user' => $user,
-            'paymentOptions' => $paymentOptions,
-        ]);
-        return view('public.form.payment', compact('form', 'configPayments'));
+        return view('public.payment.create', compact('cart'));
     }
 
-    public function billingPortal(Request $request)
+    public function process(Request $request, Cart $cart)
     {
-        return $request->user()->redirectToBillingPortal(route('public.payment.create'));
+        try {
+            /**
+             * @var Customer $customer
+             * @var StripeCustomer $stripeCustomer
+             */
+            $customer       = $request->user('web');
+            $stripeCustomer = $customer->createOrGetStripeCustomer();
+
+            $paymentMethods = config('my.payment.types');
+
+            $customerData   = new CustomerResource($customer);
+            $stripeCustomer->updateAttributes($customerData->toArray($request));
+
+            $prices = ShopRepository::getStripePriceItems($cart, $request);
+
+            $stripePrices = $prices->map(function($price, $cartItemId) {
+                return [
+                    'price' => $this->stripeClient->prices->create($price),
+                    'cartItemId' => $cartItemId,
+                ];
+            });
+
+            $orderItems = $stripePrices->map(function($item) use ($cart) {
+                /**
+                 * @var Price $price
+                 * @var CartItem $cartItem
+                 */
+                $price = $item['price'];
+                $cartItem = $cart->get($item['cartItemId']);
+                return [
+                    'price' => $price->id,
+                    'quantity'  => $cartItem->qty,
+                ];
+            })->values()->toArray();
+
+            /**
+             * @var Session $stripeSession
+             */
+            $stripeSession = $this->stripeClient->checkout->sessions->create([
+                'payment_method_types' => $paymentMethods,
+                'customer'          => $stripeCustomer,
+                'mode'              => 'payment',
+                'locale'            => MyLang::getPrimary(),
+                'line_items'        => $orderItems,
+                'success_url'       => route('payment.stripe.success'),
+                'cancel_url'        => route('payment.stripe.success'),
+            ]);
+
+            return response()->json(['sessionId' => $stripeSession->id]);
+        }
+        catch(Exception $e) {
+            $title      = __METHOD__;
+            $code       = $e->getCode();
+            $message    = $e->getMessage();
+            $trace      = $e->getTraceAsString();
+
+            return view('errors.trace', compact('title','code', 'message', 'trace'));
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create(Request $request)
+    public function cancel(ApiErrorException $exception)
     {
-        $this->customer = $request->user();
-        dd($this->customer->paymentMethods());
-        // get stripeSource: src_1HwHNSBFmNHaPuJ064dItqEt
-
-        return view('public.payment.index', compact('payment'));
+        return view('public.payment.cancel', compact('exception'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
+    public function success(CheckoutSession $session, Cart $cart)
     {
+//        $data = $this->stripClient->checkout->sessions->retrieve($id);
+        return view('public.payment.success', compact('session','cart'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
+    public function config()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json(['publicKey' => env('STRIPE_KEY')]);
     }
 }

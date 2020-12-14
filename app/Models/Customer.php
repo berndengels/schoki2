@@ -53,11 +53,11 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
  * @property-read Collection|Subscription[] $subscriptions
  * @property-read int|null $subscriptions_count
  * @property-read mixed $shipping_list
- * @property-read Collection|\App\Models\Permission[] $permissions
+ * @property-read Collection|Permission[] $permissions
  * @property-read int|null $permissions_count
- * @property-read Collection|\App\Models\Role[] $roles
+ * @property-read Collection|Role[] $roles
  * @property-read int|null $roles_count
- * @property-read Collection|\App\Models\Shipping[] $shippings
+ * @property-read Collection|Shipping[] $shippings
  * @property-read int|null $shippings_count
  * @method static Builder|Customer permission($permissions)
  * @method static Builder|Customer role($roles, $guard = null)
@@ -67,7 +67,7 @@ class Customer extends Authenticatable
     use HasFactory, Notifiable, Billable, HasRoles, HasPermissions;
 
     protected $table = 'customers';
-    protected $appends = ['resource_url', 'discountRate', 'shippingList'];
+    protected $appends = ['resource_url', 'discountRate', 'shippingList', 'shipping'];
     protected $fillable = [
         'name',
         'email',
@@ -92,7 +92,7 @@ class Customer extends Authenticatable
      *
      * @return int|string
      */
-    public function getInstanceIdentifier($options = null)
+    public function getInstanceIdentifier()
     {
         return $this->email;
     }
@@ -105,6 +105,21 @@ class Customer extends Authenticatable
     public function getInstanceGlobalDiscount($options = null)
     {
         return $this->discountRate ?: 0;
+    }
+
+    public function getShippingAttribute()
+    {
+        $shipping = $this->shippings()->whereIsDefault(true)->first();
+        $data = [
+            'name'  => $this->name,
+            'address'   => [
+                'line1'         => $shipping->street,
+                'city'          => $shipping->city,
+                'country'       => $shipping->country->code,
+                'postal_code'   => $shipping->postcode,
+            ]
+        ];
+        return json_decode(json_encode($data));
     }
 
     public function getShippingListAttribute() {

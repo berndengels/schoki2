@@ -13,11 +13,10 @@
                 <div class="card-header row">
                     <h3 class="my-0 py-0  w-100">Create New Order</h3>
                 </div>
-                <div class="card-body mt-3 p-0 justify-content-center">
+                <div class="card-body row mt-3 p-0 justify-content-center">
                     <form id="payment-form" class="w-75 align-middle" method="post"
                           action="{{ route('payment.stripe.process') }}">
                         @csrf
-                        <x-inp.select name="paymentMethods" :options="$paymentOptions" label="Zahlungs Art"/>
                         <x-inp.text name="name" :value="$name"/>
                         <x-inp.email name="email" :value="$email"/>
 
@@ -37,24 +36,3 @@
     </div>
 @endsection
 
-@section('inline-scripts')
-    <script>
-        $('#btnSubmit').hide();
-        const form = document.getElementById('payment-form');
-        const configPayments = {!! $configPayments->toJson() !!};
-        const data = {
-            address: {!! $address->toJson() !!}
-        };
-        $('#paymentMethods').change(function (e) {
-            let val = $(this).val();
-            $('#lblStripeElement').attr({'for': val + "-element"}).text(val.toUpperCase());
-            $('#stripeElement').attr({'id': val + "-element"});
-            $('#btnSubmit').show();
-            loadPaymentForm(form, val, configPayments[val], data);
-        });
-    </script>
-@endsection
-
-@section('sidebar-right')
-    @parent
-@endsection

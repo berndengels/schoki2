@@ -9,9 +9,11 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StaticPageController;
-use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\PaymentPayPalController;
+use App\Http\Controllers\PaymentStripeController;
+use App\Http\Controllers\Payment\StripeWebhookController;
 
 Auth::routes();
 
@@ -432,8 +434,8 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
 
 Route::prefix('shop')
     ->group(function() {
-        Route::get('/',	        [ProductController::class, 'index'])->name('public.product.index');
-        Route::get('/{product}',[ProductController::class, 'show'])->name('public.product.show');
+        Route::get('/',	        [ProductController::class, 'index'])->name('product.index');
+        Route::get('/{product}',[ProductController::class, 'show'])->name('product.show');
 });
 Route::prefix('scard')
     ->group(function() {
@@ -441,22 +443,43 @@ Route::prefix('scard')
         Route::post('add/{product}',[ScardController::class, 'add'])->name('scard.add');
         Route::post('increment/{rawId}',[ScardController::class, 'increment'])->name('scard.increment');
         Route::post('decrement/{rawId}',[ScardController::class, 'decrement'])->name('scard.decrement');
-        Route::post('destroy/{rawId}',[ScardController::class, 'destroy'])->name('scard.destroy');
+        Route::get('destroy',[ScardController::class, 'destroy'])->name('scard.destroy');
 });
 Route::prefix('order')
     ->middleware('auth')
     ->group(function() {
-        Route::get('/',[OrderController::class, 'create'])->name('order.create');
+        Route::get('',[OrderController::class, 'index'])->name('order.index');
+        Route::get('/show',[OrderController::class, 'show'])->name('order.show');
         Route::get('/store',[OrderController::class, 'store'])->name('order.store');
 });
 Route::prefix('payment')
     ->middleware('auth')
     ->group(function() {
-        Route::get('/',[PaymentController::class, 'index'])->name('payment.index');
-        Route::get('/billingPortal',[PaymentController::class, 'billingPortal'])->name('payment.billingPortal');
-        Route::post('/create',[PaymentController::class, 'create'])->name('payment.create');
-        Route::post('/store',[PaymentController::class, 'store'])->name('payment.store');
-});
+        Route::prefix('paypal')->group(static function() {
+            Route::post('process', [PaymentPayPalController::class , 'process'])->name('payment.paypal.process');
+            Route::get('success', [PaymentPayPalController::class , 'success'])->name('payment.paypal.success');
+            Route::get('cancel', [PaymentPayPalController::class , 'cancel'])->name('payment.paypal.cancel');
+        });
+        Route::prefix('stripe')->group(static function() {
+            Route::post('create', [PaymentStripeController::class , 'create'])->name('payment.stripe.create');
+            Route::get('process', [PaymentStripeController::class , 'process'])->name('payment.stripe.process');
+            Route::get('config', [PaymentStripeController::class , 'config'])->name('payment.stripe.config');
+            Route::get('success', [PaymentStripeController::class , 'success'])->name('payment.stripe.success');
+            Route::get('cancel', [PaymentStripeController::class , 'cancel'])->name('payment.stripe.cancel');
+        });
+    });
+
+Route::prefix('webhook')
+    ->group(function() {
+        Route::prefix('paypal')->group(static function() {
+        });
+        Route::prefix('stripe')->group(static function() {
+            Route::get('paymentSuccess', [StripeWebhookController::class, 'paymentSuccess'])->name('stripe.paymentSuccess');
+            Route::get('paymentFailed', [StripeWebhookController::class, 'paymentFailed'])->name('stripe.paymentFailed');
+            Route::get('completed', [StripeWebhookController::class, 'paymentCompleted'])->name('stripe.paymentCompleted');
+            Route::get('all', [StripeWebhookController::class, 'all'])->name('stripe.all');
+        });
+    });
 
 Route::prefix('customer')
     ->middleware('auth')
@@ -496,9 +519,6 @@ Route::prefix('contact')->group(function () {
 //	  Route::post('/sendNewsletter', 'ContactController@sendNewsletter')->name('action.sendNewsletter');
     Route::get('/formNewsletter', [ContactController::class, 'formNewsletterSubscribe'])->name('public.formNewsletterSubscribe');
     Route::post('/sendNewsletter', [ContactController::class, 'sendNewsletterSubscribe'])->name('public.sendNewsletterSubscribe');
-});
-Route::prefix('stripe')->group(static function (){
-    Route::post('/webhook', [WebhookController::class, 'handleWebhook'])->name('handleWebhook');
 });
 
 /*

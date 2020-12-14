@@ -25,18 +25,8 @@ return [
         'saturday'      => 'Samstag',
         'sunday'        => 'Sonntag',
     ],
-    'paymentMethods' => [
-        'card'  => [
-            'label' => 'Visa, Eurocard',
-            'type'  => 'card',
-            'supportedCountries'  => [],
-            'placeholderCountry'  => 'DE',
-        ],
-        'iban'  => [
-            'label' => 'SEPA Lastschrift',
-            'type'  => 'sepa_debit',
-            'supportedCountries'  => ['SEPA'],
-            'placeholderCountry'  => 'DE',
-        ],
+    'payment'   => [
+        'tax'       => env('PAYMENT_TAX_RATE', 19),
+        'types' => ['sepa_debit','sofort','card'],
     ],
 ];

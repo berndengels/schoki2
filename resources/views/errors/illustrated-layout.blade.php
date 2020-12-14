@@ -13,7 +13,7 @@
         <!-- Styles -->
         <style>
             html {
-                line-height: 1.15;
+                line-height: 1.00;
                     -ms-text-size-adjust: 100%;
                 -webkit-text-size-adjust: 100%;
             }
@@ -48,7 +48,7 @@
 
             code {
                 font-family: monospace, monospace;
-                font-size: 1em;
+                font-size: 0.8rem;
             }
 
             dfn {
@@ -63,7 +63,7 @@
             input {
                 font-family: sans-serif;
                 font-size: 100%;
-                line-height: 1.15;
+                line-height: 1.00;
                 margin: 0;
             }
 
@@ -314,7 +314,7 @@
             }
 
             .leading-normal {
-                line-height: 1.5;
+                line-height: 1.0;
             }
 
             .m-8 {
@@ -380,11 +380,11 @@
             }
 
             .text-2xl {
-                font-size: 1.5rem;
+                font-size: 1.0rem;
             }
 
             .text-5xl {
-                font-size: 3rem;
+                font-size: 1.0rem;
             }
 
             .uppercase {
@@ -437,11 +437,11 @@
                 }
 
                 .md\:text-3xl {
-                    font-size: 1.875rem;
+                    font-size: 1.0rem;
                 }
 
                 .md\:text-15xl {
-                    font-size: 9rem;
+                    font-size: 1.0rem;
                 }
 
                 .md\:w-1\/2 {
@@ -469,6 +469,10 @@
                     <p class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal">
                         @yield('message')
                     </p>
+
+                    <div class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal">
+                        @yield('trace')
+                    </div>
 
                     <a href="{{ app('router')->has('home') ? route('home') : url('/') }}">
                         <button class="bg-transparent text-grey-darkest font-bold uppercase tracking-wide py-3 px-6 border-2 border-grey-light hover:border-grey rounded-lg">
