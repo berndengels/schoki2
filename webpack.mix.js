@@ -15,7 +15,6 @@ mix.autoload({
         'jquery': ['jQuery', '$']
     })
     .js('resources/js/app.js', 'public/js')
-//    .js('resources/js/stripe.js', 'public/js')
     .js('resources/js/payment-stripe.js', 'public/js')
     .js(['resources/js/admin/admin.js'], 'public/js')
     .sass('resources/sass/admin/admin.scss', 'public/css')
