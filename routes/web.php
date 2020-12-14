@@ -459,20 +459,22 @@ Route::prefix('payment')
         });
     });
 
+/*
 Route::prefix('payment')
     ->group(function() {
         Route::prefix('paypal')->group(static function() {
         });
         Route::prefix('stripe')->group(static function() {
             Route::post('webhook', [StripeWebhookController::class, 'handleWebhook'])->name('stripe.webhook');
-/*
             Route::post('asyncPaymentSucceeded', [StripeWebhookController::class, 'handleAsyncPaymentSucceeded'])->name('stripe.paymentSuccess');
             Route::post('asyncPaymentFailed', [StripeWebhookController::class, 'asyncPaymentFailed'])->name('stripe.paymentFailed');
             Route::post('completed', [StripeWebhookController::class, 'handleCompleted'])->name('stripe.paymentCompleted');
             Route::post('all', [StripeWebhookController::class, 'handleAll'])->name('stripe.all');
-*/
         });
     });
+*/
+
+Route::stripeWebhooks('/payment/stripe/webhook');
 
 Route::prefix('customer')
     ->middleware('auth')

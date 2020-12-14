@@ -34,6 +34,7 @@
         "phpstan/phpstan": "^0.12.62",
         "spatie/laravel-db-snapshots": "^1.7",
         "spatie/laravel-newsletter": "^4.9",
+        "spatie/laravel-stripe-webhooks": "^2.4",
         "srmklive/paypal": "^1.0"
     },
     "require-dev": {
