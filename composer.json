@@ -16,6 +16,7 @@
         "bumbummen99/shoppingcart": "^3.0",
         "eluceo/ical": "^0.16.1",
         "fideloper/proxy": "^4.4",
+        "friendsofphp/php-cs-fixer": "^2.17",
         "fruitcake/laravel-cors": "^2.0",
         "garygreen/pretty-routes": "^1.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -30,6 +31,7 @@
         "laravelium/feed": "^8.0",
         "lavary/laravel-menu": "^1.7",
         "misterphilip/maintenance-mode": "^2.0",
+        "phpstan/phpstan": "^0.12.62",
         "spatie/laravel-db-snapshots": "^1.7",
         "spatie/laravel-newsletter": "^4.9",
         "srmklive/paypal": "^1.0"
