@@ -32,8 +32,6 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
     public function handle(Cart $cart)
     {
         Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': i am outside'));
-        // do your work here
-        // you can access the payload of the webhook call with `$this->webhookCall->payload`
         $payload = $this->webhookCall->payload;
         if('payment_intent.succeeded' === $payload['type']) {
             $created = $payload['created'];
@@ -43,13 +41,15 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
             if('succeeded' === $object['status']) {
                 $chargesData = $object['charges']['data'][0];
                 $paid = (bool) $chargesData['paid'];
-//                $success = 'succeeded' === $chargesData['status'] ? true : false;
                 $customerName  = $chargesData['billing_details']['name'];
-                $customer      = Customer::whereStripeId($customerID)->first();
                 $cartCount     = $cart ? $cart->count() : null;
-
-                Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': Order created for: '.$customerName.', Cart count: '.$cartCount));
-                event(new PaymentSucceeded($customer, $cart, $amountReceived, $created, $paid));
+                $customer      = Customer::whereStripeId($customerID)->first();
+                if($customer) {
+                    Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': Order created for: '.$customerName.', Cart count: '.$cartCount));
+                    event(new PaymentSucceeded($customer, $cart, $amountReceived, $created, $paid));
+                } else {
+                    Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': can not find customer by stripeID: '.$customerID.', Cart count: '.$cartCount));
+                }
             }
         }
     }
