@@ -36,8 +36,9 @@ class PaymentSucceeded
     public function __construct( array $orderParams, int $orderId, Customer $customer )
     {
         $this->customer     = $customer;
-        $this->orderParams  = $orderParams;
         $this->orderId      = $orderId;
+        $this->orderParams  = $orderParams;
+
         ShopRepository::updateOrder($orderParams, $orderId);
     }
 

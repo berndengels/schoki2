@@ -59,15 +59,19 @@ use Illuminate\Support\Carbon;
  */
 class Order extends Model
 {
-    use HasCustomer,HasFactory;
+    use HasCustomer, HasFactory;
 
     protected $table = 'order';
-    protected $with = ['created_by','updated_by'];
+//    protected $with = ['createdBy','updatedBy'];
     protected $fillable = [
         'price_total',
         'delivered_at',
         'created_by',
         'updated_by',
+        'paid_on',
+        'amount_received',
+        'payment_id',
+        'payment_provider',
     ];
     public $timestamps = true;
     protected $dates = ['created_at','updated_at','delivered_at'];

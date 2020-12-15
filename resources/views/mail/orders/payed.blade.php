@@ -8,11 +8,11 @@
         </tr>
         <tr>
             <td>Summe Total: </td>
-            <td>{{ $orderParams['amountReceived'] }}</td>
+            <td>{{ $orderParams['amount_received'] }}</td>
         </tr>
         <tr>
-            <td>bezahlt: </td>
-            <td>{{ $orderParams['paid'] ? 'Ja' : 'Nein'}}</td>
+            <td>bezahlt am: </td>
+            <td>{{ $orderParams['paid_on'] ?? null }}</td>
         </tr>
         <tr>
             <td>Order ID: </td>

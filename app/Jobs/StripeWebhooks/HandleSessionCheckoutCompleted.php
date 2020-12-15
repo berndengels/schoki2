@@ -48,7 +48,7 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
                 'paid_on'           => $paid ? Carbon::createFromTimestamp($created) : null,
                 'amount_received'   => $amountTotal,
                 'payment_id'        => $paymentId,
-                'payment_type'      => 'stripe',
+                'payment_provider'  => 'stripe',
             ];
 
             event(new PaymentSucceeded($orderParams, $orderId, $customer));

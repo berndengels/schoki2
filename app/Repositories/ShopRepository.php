@@ -53,10 +53,7 @@ class ShopRepository
         return self::getStripePriceItems($cart, $request)->values()->toArray();
     }
 
-    public static function createOrderByCart(
-        Customer $customer,
-        Cart $cart
-    ) {
+    public static function createOrderByCart( Customer $customer, Cart $cart ) {
         try {
             $content = $cart->content();
 
@@ -92,12 +89,16 @@ class ShopRepository
         }
     }
 
-    public static function updateOrder( array $orderParams, int $orderId)
+    public static function updateOrder( array $params, int $orderId)
     {
-        $order = Order::find($orderId);
-        if($order) {
-            return $order->update($orderParams);
+        try {
+            $order = Order::whereId($orderId)->first();
+            if($order) {
+                return $order->update($params);
+            }
+            return null;
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
         }
-        return null;
     }
 }
