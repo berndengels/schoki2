@@ -6,25 +6,16 @@ use Stripe\Price;
 use Stripe\StripeClient;
 use App\Models\Customer;
 use App\Helper\MyLang;
-use App\Models\Shoppingcart;
-use Gloudemans\Shoppingcart\CartItem;
 use Stripe\Checkout\Session;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Cart;
+use Gloudemans\Shoppingcart\CartItem;
 use Stripe\Customer as StripeCustomer;
 use App\Repositories\ShopRepository;
 use App\Http\Resources\Payment\Stripe\CustomerResource;
 
 class PaymentStripeController extends Controller
 {
-    /**
-     * @var string
-     */
-    protected $sessionName = 'scart';
-    /**
-     * @var string
-     */
-    protected $sid;
     /**
      * @var StripeClient $stripClient
      */
@@ -35,11 +26,8 @@ class PaymentStripeController extends Controller
         $this->stripeClient = new StripeClient(env('STRIPE_SECRET'));
     }
 
-    public function create(Request $request, Cart $cart)
+    public function create(Cart $cart)
     {
-        $sid = $_SESSION[$this->sessionName];
-        $cart = $cart->instance($sid);
-
         return view('public.payment.create', compact('cart'));
     }
 
@@ -50,8 +38,6 @@ class PaymentStripeController extends Controller
              * @var Customer $customer
              * @var StripeCustomer $stripeCustomer
              */
-            $sid            = $_SESSION[$this->sessionName];
-            $cart           = $cart->instance($sid);
             $customer       = $request->user('web');
             $stripeCustomer = $customer->createOrGetStripeCustomer();
 
@@ -64,8 +50,8 @@ class PaymentStripeController extends Controller
 
             $stripePrices = $prices->map(function($price, $cartItemId) {
                 return [
-                    'price' => $this->stripeClient->prices->create($price),
-                    'cartItemId' => $cartItemId,
+                    'price'         => $this->stripeClient->prices->create($price),
+                    'cartItemId'    => $cartItemId,
                 ];
             });
 
@@ -77,7 +63,7 @@ class PaymentStripeController extends Controller
                 $price = $item['price'];
                 $cartItem = $cart->get($item['cartItemId']);
                 return [
-                    'price' => $price->id,
+                    'price'     => $price->id,
                     'quantity'  => $cartItem->qty,
                 ];
             })->values()->toArray();
@@ -87,7 +73,6 @@ class PaymentStripeController extends Controller
             $metadata = [
                 'order_id'      => $order ? $order->id : null,
                 'customer_id'   => $customer->id,
-                'cart_instance' => $sid,
             ];
             /**
              * @var Session $stripeSession

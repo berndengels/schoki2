@@ -10,14 +10,14 @@ class PaymentNotification
     /**
      * Handle the event.
      *
-     * @param  PaymentSucceeded  $event
+     * @param  PaymentSucceeded $event
      * @return void
      */
     public function handle(PaymentSucceeded $event)
     {
         // @TODO: email notification for admin user, who handles payment stuff
         Mail::to(env('LOGGER_EMAIL'))
-            ->send(new OrderPayed($event))
+            ->send(new OrderPayed($event->customer, $event->orderParams))
         ;
     }
 }

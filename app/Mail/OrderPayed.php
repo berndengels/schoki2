@@ -2,6 +2,7 @@
 namespace App\Mail;
 
 use App\Events\PaymentSucceeded;
+use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -11,17 +12,23 @@ class OrderPayed extends Mailable
 {
     use Queueable, SerializesModels;
     /**
-     * @var PaymentSucceeded
+     * @var Customer
      */
-    public $paymnetSuccesss;
+    public $customer;
+    /**
+     * @var array
+     */
+    public $orderParams;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(PaymentSucceeded $paymentSuccesss)
+    public function __construct(Customer $customer, array $orderParams)
     {
-        $this->paymnetSuccesss = $paymentSuccesss;
+        $this->customer     = $customer;
+        $this->orderParams  = $orderParams;
+
         $this->to(env('LOGGER_EMAIL'));
         $this->from(env('LOGGER_EMAIL'));
         $this->subject('payment success');

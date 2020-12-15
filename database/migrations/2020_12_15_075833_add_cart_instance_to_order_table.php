@@ -14,7 +14,7 @@ class AddCartInstanceToOrderTable extends Migration
     public function up()
     {
         Schema::table('order', function (Blueprint $table) {
-            $table->string('cart_instance', 50)->unique();
+            $table->string('cart_instance', 50)->nullable()->unique();
         });
     }
 

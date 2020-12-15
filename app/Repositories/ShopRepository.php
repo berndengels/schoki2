@@ -16,8 +16,6 @@ use App\Http\Resources\Payment\Stripe\CartItemResource as StripeCartItemResource
 
 class ShopRepository
 {
-    protected $sessionName = 'scart';
-
     public static function getCartItems(Cart $cart, $provider, Request $request)
     {
         if(!$cart->content() || $cart->content()->count() < 1) {
@@ -55,62 +53,12 @@ class ShopRepository
         return self::getStripePriceItems($cart, $request)->values()->toArray();
     }
 
-    public static function createOrder(
-        Customer $customer,
-        array $orderParams
-    ) {
-        try {
-            /**
-             * @var Shoppingcart $shoppincart
-             */
-            $sid            = $_SESSION[self::$sessionName];
-            $shoppingCart   = Shoppingcart::whereIdentifier($sid)->first();
-            $content        = $shoppingCart ? unserialize($shoppingCart->content) : null;
-
-            if($content && $content->count() > 0) {
-                $orderItemData = [];
-                $total = 0;
-                foreach ($content as $item) {
-                    $priceTotal = MyMoney::getBrutto($item->price) * $item->qty;
-                    $orderItemData[] = [
-                        'product_id'    => $item->id,
-                        'quantity'      => $item->qty,
-                        'price_total'   => $priceTotal,
-                    ];
-                    $total += $priceTotal;
-                }
-
-                $params = array_merge(['price_total' => (float) $total], $orderParams);
-
-                $foundOrder = Order::wherePaymentId($orderParams['payment_id'])->first();
-                if($foundOrder) {
-                    $order = $foundOrder->update($params);
-                    $order->updatedBy()->associate($customer);
-                } else {
-                    $order = Order::create($params);
-                    $order->createdBy()->associate($customer);
-                }
-                $order->orderItems()->createMany($orderItemData);
-
-                Cart::destroy();
-                $shoppingCart->delete();
-
-                event(new ProductOrdered($order));
-
-                return $order;
-            }
-        } catch(Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-    }
-
     public static function createOrderByCart(
         Customer $customer,
         Cart $cart
     ) {
         try {
-            $cartInstance   = $cart->currentInstance();
-            $content        = $cart->content();
+            $content = $cart->content();
 
             if($content && $content->count() > 0) {
                 $orderItemData = [];
@@ -126,21 +74,14 @@ class ShopRepository
                 }
 
                 $params = [
-                    'price_total'   => (float) $total,
-                    'cart_instance' => $cartInstance,
+                    'price_total'   => (float) $total
                 ];
 
-                $foundOrder = Order::whereCartInstance($cartInstance)->first();
-                if($foundOrder) {
-                    $order = $foundOrder->update($params);
-                    $order->updatedBy()->associate($customer);
-                } else {
-                    $order = Order::create($params);
-                    $order->createdBy()->associate($customer);
-                }
+                $order = Order::create($params);
+                $order->createdBy()->associate($customer);
                 $order->orderItems()->createMany($orderItemData);
 
-                $cartInstance->destroy();
+                $cart->destroy();
 
                 event(new ProductOrdered($order));
 

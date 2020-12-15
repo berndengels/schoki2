@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Eloquent;
+use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
 use Laravel\Cashier\Billable;
 use Illuminate\Support\Carbon;
 use Laravel\Cashier\Subscription;
@@ -63,7 +64,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
  * @method static Builder|Customer role($roles, $guard = null)
  * @property-read mixed $shipping
  */
-class Customer extends Authenticatable
+class Customer extends Authenticatable implements InstanceIdentifier
 {
     use HasFactory, Notifiable, Billable, HasRoles, HasPermissions;
 
@@ -82,6 +83,16 @@ class Customer extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $guard_name = 'web';
+
+    public function getInstanceIdentifier($options = null)
+    {
+        return $this->email;
+    }
+
+    public function getInstanceGlobalDiscount($options = null)
+    {
+        return 0;
+    }
 
     public function getDiscountRateAttribute()
     {

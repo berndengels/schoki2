@@ -3,12 +3,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Scard;
 use App\Models\Product;
-use App\Models\Shoppingcart;
 use Illuminate\Http\Response;
 use App\Http\Requests\ScardRequest;
 use Gloudemans\Shoppingcart\Cart;
 use Illuminate\Http\Request\Session;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * Class ScardController
@@ -17,23 +15,6 @@ use Illuminate\Support\Facades\Hash;
  */
 class ScardController extends Controller
 {
-    /**
-     * @var string
-     */
-    protected $sessionName = 'scart';
-    /**
-     * @var string
-     */
-    protected $sid;
-
-    public function __construct()
-    {
-        if(!isset($_SESSION[$this->sessionName])) {
-            $_SESSION[$this->sessionName] = Hash::make(session_id());
-        }
-        $this->sid = $_SESSION[$this->sessionName];
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -50,28 +31,19 @@ class ScardController extends Controller
 
     public function add(Product $product, Cart $cart)
     {
-        $cart->instance($this->sid)->add($product, 1);
-
-        if(Shoppingcart::whereIdentifier($this->sid)) {
-            $cart->instance($this->sid)->restore($this->sid);
-        } else {
-            $cart->instance($this->sid)->store($this->sid);
-        }
-
+        $cart->add($product, 1);
         return redirect()->back();
     }
 
     public function increment(Cart $cart, $rawId)
     {
-        $cart->instance($this->sid)->update($rawId, $cart->get($rawId)->qty + 1);
-        $cart->instance($this->sid)->restore($this->sid);
+        $cart->update($rawId, $cart->get($rawId)->qty + 1);
         return redirect()->back();
     }
 
     public function decrement(Cart $cart, $rawId)
     {
-        $cart->instance($this->sid)->update($rawId, $cart->get($rawId)->qty - 1);
-        $cart->instance($this->sid)->restore($this->sid);
+        $cart->update($rawId, $cart->get($rawId)->qty - 1);
         return redirect()->back();
     }
 
@@ -83,8 +55,7 @@ class ScardController extends Controller
      */
     public function delete(Cart $cart, $rawId)
     {
-        $cart->instance($this->sid)->remove($rawId);
-        $cart->instance($this->sid)->restore($this->sid);
+        $cart->remove($rawId);
         return redirect()->back();
     }
 
@@ -96,8 +67,7 @@ class ScardController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        $cart->instance($this->sid)->destroy();
-        Shoppingcart::whereIdentifier($this->sid)->delete();
+        $cart->destroy();
         return redirect()->route('public.events');
     }
 }

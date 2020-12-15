@@ -26,7 +26,7 @@
                                     <td>Total {{ $item->total }} €</td>
                                 </tr>
                             @endforeach
-                            <tr><td class="text-center align-middle text-primary font-weight-bold p-0" colspan="8">
+                            <tr><td class="text-center align-middle text-light font-weight-bold p-0" colspan="8">
                                     <h4 class="mt-3">Preise Total: {{ $cart->total() }} €</h4></td></tr>
                         </table>
                         @if($shippings)

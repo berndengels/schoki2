@@ -8,11 +8,11 @@
         </tr>
         <tr>
             <td>Summe Total: </td>
-            <td>{{ $amountReceived }}</td>
+            <td>{{ $orderParams['amountReceived'] }}</td>
         </tr>
         <tr>
             <td>bezahlt: </td>
-            <td>{{ $paid ? 'Ja' : 'Nein'}}</td>
+            <td>{{ $orderParams['paid'] ? 'Ja' : 'Nein'}}</td>
         </tr>
     </table>
 </div>

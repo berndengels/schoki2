@@ -1,13 +1,13 @@
 <?php
 namespace App\Models;
 
+use Eloquent;
 use App\Models\Ext\HasAdminUser;
 use App\Models\Ext\PriceTrait;
 use Brackets\Media\HasMedia\AutoProcessMediaTrait;
 use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
 use Brackets\Media\HasMedia\HasMediaThumbsTrait;
 use Brackets\Media\HasMedia\ProcessMediaTrait;
-use Eloquent;
 use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Database\Eloquent\Builder;
