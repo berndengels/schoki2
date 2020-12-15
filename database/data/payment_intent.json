@@ -119,7 +119,7 @@
                 "total_count": 1,
                 "url": "\/v1\/charges?payment_intent=pi_1HyBPtBFmNHaPuJ0W3xtiSVn"
             },
-            "client_secret": "pi_1HyBPtBFmNHaPuJ0W3xtiSVn_secret_WJFkps0pI0xH7nK9jDkiJhgh5",
+            "client_secret": "",
             "confirmation_method": "automatic",
             "created": 1607930661,
             "currency": "eur",

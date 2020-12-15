@@ -83,6 +83,9 @@ class PaymentStripeController extends Controller
                 ];
             })->values()->toArray();
 
+            $metadata = [
+                'order_id'  => null,
+            ];
             /**
              * @var Session $stripeSession
              */
@@ -92,6 +95,7 @@ class PaymentStripeController extends Controller
                 'mode'              => 'payment',
                 'locale'            => MyLang::getPrimary(),
                 'line_items'        => $orderItems,
+                'metadata'          => $metadata,
                 'success_url'       => route('payment.stripe.success'),
                 'cancel_url'        => route('payment.stripe.success'),
             ]);
