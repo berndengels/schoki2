@@ -16,6 +16,8 @@ use App\Http\Resources\Payment\Stripe\CartItemResource as StripeCartItemResource
 
 class ShopRepository
 {
+    protected $sessionName = 'scart';
+
     public static function getCartItems(Cart $cart, $provider, Request $request)
     {
         if(!$cart->content() || $cart->content()->count() < 1) {
@@ -62,7 +64,7 @@ class ShopRepository
             /**
              * @var Shoppingcart $shoppincart
              */
-            $session        = request()->session()->get('scart');
+            $session        = $_SESSION[self::$sessionName];
             $shoppingCart   = Shoppingcart::whereIdentifier($session)->first();
             $content        = $shoppingCart ? unserialize($shoppingCart->content) : null;
 

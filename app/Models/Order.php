@@ -6,6 +6,7 @@ use Eloquent;
 use App\Models\Ext\HasCustomer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -50,7 +51,7 @@ use Illuminate\Support\Carbon;
  */
 class Order extends Model
 {
-    use HasCustomer;
+    use HasCustomer,HasFactory;
 
     protected $table = 'order';
     protected $with = ['created_by','updated_by'];

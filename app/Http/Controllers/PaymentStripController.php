@@ -37,7 +37,7 @@ class PaymentStripeController extends Controller
 
     public function create(Request $request, Cart $cart)
     {
-        $sid = $request->session()->get($this->sessionName);
+        $sid = $_SESSION[$this->sessionName];
         $shoppincart = Shoppingcart::whereIdentifier($sid)->first();
         if(!$shoppincart) {
             $cart->store($sid);

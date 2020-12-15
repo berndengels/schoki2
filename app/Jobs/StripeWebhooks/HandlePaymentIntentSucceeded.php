@@ -32,11 +32,13 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
         Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': i am outside'));
         $payload = $this->webhookCall->payload;
         $paymentId = $payload['id'];
+
         if('payment_intent.succeeded' === $payload['type']) {
             $created = $payload['created'];
             $object = $payload['data']['object'];
             $amountReceived = ($object['amount_received'] > 0) ? $object['amount_received'] / 100 : null;
             $customerID = $object['customer'];
+
             if('succeeded' === $object['status']) {
                 $chargesData   = $object['charges']['data'][0];
                 $paid          = (bool) $chargesData['paid'];
@@ -49,6 +51,7 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
                     'payment_id'        => $paymentId,
                     'payment_type'      => 'stripe',
                 ];
+
                 if($customer) {
                     Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': Order created for: '.$customerName));
                     event(new PaymentSucceeded($customer, $orderParams));

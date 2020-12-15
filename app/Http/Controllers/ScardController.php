@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use App\Http\Requests\ScardRequest;
 use Gloudemans\Shoppingcart\Cart;
 use Illuminate\Http\Request\Session;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class ScardController
@@ -27,10 +28,10 @@ class ScardController extends Controller
 
     public function __construct()
     {
-        if(!session()->exists($this->sessionName)) {
-            session()->put($this->sessionName, session()->getId());
+        if(!isset($_SESSION[$this->sessionName])) {
+            $_SESSION[$this->sessionName] = Hash::make(session_id());
         }
-        $this->sid = session()->get($this->sessionName);
+        $this->sid = $_SESSION[$this->sessionName];
     }
 
     /**
@@ -51,7 +52,7 @@ class ScardController extends Controller
     {
         $cart->add($product, 1);
 
-        if(Shoppingcart::whereIdentifier($this->sid)->first()) {
+        if(Shoppingcart::whereIdentifier($this->sid)) {
             $cart->restore($this->sid);
         } else {
             $cart->store($this->sid);
