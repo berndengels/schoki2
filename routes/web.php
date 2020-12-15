@@ -433,6 +433,7 @@ Route::prefix('scard')
         Route::post('add/{product}',[ScardController::class, 'add'])->name('scard.add');
         Route::post('increment/{rawId}',[ScardController::class, 'increment'])->name('scard.increment');
         Route::post('decrement/{rawId}',[ScardController::class, 'decrement'])->name('scard.decrement');
+        Route::delete('delete/{rawId}',[ScardController::class, 'delete'])->name('scard.delete');
         Route::get('destroy',[ScardController::class, 'destroy'])->name('scard.destroy');
 });
 Route::prefix('order')

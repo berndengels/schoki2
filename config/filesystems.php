@@ -59,13 +59,13 @@ return [
         'media' => [
             'driver' => 'local',
             'root' => storage_path('app/media'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
+            'url' => env('APP_URL').'/storage/',
+            'visibility' => 'media',
         ],
         'media_private' => [
             'driver' => 'local',
             'root' => storage_path('app/private/media'),
-            'url' => env('APP_URL').'/storage/private',
+            'url' => env('APP_URL').'/storage/media_private',
         ],
         'images' => [
             'driver' => 'local',

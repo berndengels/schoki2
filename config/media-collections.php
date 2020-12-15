@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'public_disk' => 'media',
+    'public_disk' => 'public',
     'private_disk' => 'media_private',
 
     /*

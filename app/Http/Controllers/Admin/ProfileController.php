@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminUser;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +14,9 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    /**
+     * @var AdminUser
+     */
     public $adminUser;
 
     /**
@@ -68,15 +71,13 @@ class ProfileController extends Controller
     public function updateProfile(Request $request)
     {
         $this->setUser($request);
-        $adminUser = $this->adminUser;
 
         // Validate the request
         $this->validate($request, [
-            'first_name' => ['nullable', 'string'],
-            'last_name' => ['nullable', 'string'],
-            'email' => ['sometimes', 'email', Rule::unique('admin_users', 'email')->ignore($this->adminUser->getKey(), $this->adminUser->getKeyName()), 'string'],
-            'language' => ['sometimes', 'string'],
-            
+            'first_name'    => ['nullable', 'string'],
+            'last_name'     => ['nullable', 'string'],
+            'email'         => ['sometimes', 'email', Rule::unique('admin_users', 'email')->ignore($this->adminUser->getKey(), $this->adminUser->getKeyName()), 'string'],
+            'language'      => ['sometimes', 'string'],
         ]);
 
         // Sanitize input
@@ -85,7 +86,6 @@ class ProfileController extends Controller
             'last_name',
             'email',
             'language',
-            
         ]);
 
         // Update changed values AdminUser
@@ -129,13 +129,11 @@ class ProfileController extends Controller
         // Validate the request
         $this->validate($request, [
             'password' => ['sometimes', 'confirmed', 'min:7', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
-            
         ]);
 
         // Sanitize input
         $sanitized = $request->only([
             'password',
-            
         ]);
 
         //Modify input, set hashed password

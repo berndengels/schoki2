@@ -103,16 +103,16 @@ class PaymentStripeController extends Controller
         }
     }
 
-    public function cancel(Cart $cart)
+    public function cancel(Customer $customer, Cart $cart)
     {
         // @todo: maybe destroy cart here
         return view('public.payment.cancel', compact('exception'));
     }
 
-    public function success(Cart $cart)
+    public function success(Customer $customer, Cart $cart)
     {
-//        $data = $this->stripClient->checkout->sessions->retrieve($id);
-        return view('public.payment.success', compact('cart'));
+        $content = $cart->content() ?? null;
+        return view('public.payment.success', compact('customer','content'));
     }
 
     public function config()

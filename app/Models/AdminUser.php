@@ -71,4 +71,18 @@ class AdminUser extends BaseModel
     {
         return $this->full_name;
     }
+
+    /************* Media ********************/
+
+    /**
+     * Register media collections
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->accepts('image/*')
+            ->maxNumberOfFiles(1) // Set the file count limit
+        ;
+    }
+
 }

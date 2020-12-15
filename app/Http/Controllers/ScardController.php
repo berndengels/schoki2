@@ -24,6 +24,10 @@ class ScardController extends Controller
      * @var string
      */
     protected $sessionName = 'scart';
+    /**
+     * @var string
+     */
+    protected $sid;
 
     public function __construct()
     {
@@ -35,6 +39,7 @@ class ScardController extends Controller
             session($this->sessionName, session()->getId());
             session()->put($this->sessionName, session()->getId());
         }
+        $this->sid = session()->get($this->sessionName);
     }
 
     /**
@@ -51,53 +56,56 @@ class ScardController extends Controller
         return view('public.scard.index', compact('cart','content'));
     }
 
-    public function add(Request $request, Product $product, Cart $cart)
+    public function add(Product $product, Cart $cart)
     {
         $cart->add($product, 1);
-        $sid = session()->get($this->sessionName);
 
-        if(Shoppingcart::whereIdentifier($sid)->first()) {
-            $cart->restore($sid);
+        if(Shoppingcart::whereIdentifier($this->sid)->first()) {
+            $cart->restore($this->sid);
         } else {
-            $cart->store($sid);
+            $cart->store($this->sid);
         }
 
         return redirect()->back();
     }
 
-    public function increment(Request $request, Cart $cart, $rawId)
+    public function increment(Cart $cart, $rawId)
     {
-        /**
-         * @var CartItem $item
-         */
-        $sid = session()->get($this->sessionName);
         $cart->update($rawId, $cart->get($rawId)->qty + 1);
-        $cart->restore($sid);
+        $cart->restore($this->sid);
         return redirect()->back();
     }
 
-    public function decrement(Request $request, Cart $cart, $rawId)
+    public function decrement(Cart $cart, $rawId)
     {
-        /**
-         * @var CartItem $item
-         */
-        $sid = session()->get($this->sessionName);
         $cart->update($rawId, $cart->get($rawId)->qty - 1);
-        $cart->restore($sid);
+        $cart->restore($this->sid);
         return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Cart  $cart
      * @return Response
      */
-    public function destroy(Request $request, Cart $cart)
+    public function delete(Cart $cart, $rawId)
     {
-        $sid = session()->get($this->sessionName);
+        $cart->remove($rawId);
+        $cart->restore($this->sid);
+        return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Cart  $cart
+     * @return Response
+     */
+    public function destroy(Cart $cart)
+    {
         $cart->destroy();
-        Shoppingcart::whereIdentifier($sid)->delete();
+        Shoppingcart::whereIdentifier($this->sid)->delete();
         return redirect()->route('public.events');
     }
 }

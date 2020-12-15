@@ -44,6 +44,20 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function redirectTo()
+    {
+        if(request()->input('redirectTo')) {
+            $this->redirectTo = route(request()->input('redirectTo'));
+        }
+        return $this->redirectTo;
+    }
+
+    public function showRegistrationForm()
+    {
+        $redirectTo = request()->input('redirectTo') ?? null;
+        return view('auth.register', compact('redirectTo'));
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -79,23 +93,4 @@ class RegisterController extends Controller
         ;
         return $customer;
     }
-/*
-    public function register(Request $request)
-    {
-        $validated = $this->validator($request->all())->validate();
-        dd($validated);
-        event(new Registered($user = $this->create($request->all())));
-
-        $this->guard()->login($user);
-
-        if ($response = $this->registered($request, $user)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 201)
-            : redirect($this->redirectPath());
-    }
-*/
-
 }
