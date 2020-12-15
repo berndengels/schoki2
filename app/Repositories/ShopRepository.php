@@ -92,8 +92,12 @@ class ShopRepository
         }
     }
 
-    public static function updateOrder(Customer $customer, array $orderParams)
+    public static function updateOrder( array $orderParams, int $orderId)
     {
-
+        $order = Order::find($orderId);
+        if($order) {
+            return $order->update($orderParams);
+        }
+        return null;
     }
 }

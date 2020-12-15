@@ -1,7 +1,7 @@
 <?php
 
 use Spatie\StripeWebhooks\ProcessStripeWebhookJob;
-use App\Jobs\StripeWebhooks\HandlePaymentIntentSucceeded;
+use App\Jobs\StripeWebhooks\HandleSessionCheckoutCompleted;
 
 return [
 
@@ -19,7 +19,7 @@ return [
      * https://stripe.com/docs/api#event_types.
      */
     'jobs' => [
-        'payment_intent_succeeded' => HandlePaymentIntentSucceeded::class,
+        'checkout_session_completed' => HandleSessionCheckoutCompleted::class,
     ],
 
     /*

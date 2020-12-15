@@ -31,11 +31,13 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
+                @if( \Gloudemans\Shoppingcart\Facades\Cart::count() )
                 <li class="nav-item">
                     <a class="nav-link btnPay" href="{{ route('scard.index') }}">
                         <i class="text-primary d-inline-block payIcon fas fa-shopping-cart"></i>
                     </a>
                 </li>
+                @endif
                 @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

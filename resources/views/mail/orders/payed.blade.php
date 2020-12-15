@@ -14,5 +14,9 @@
             <td>bezahlt: </td>
             <td>{{ $orderParams['paid'] ? 'Ja' : 'Nein'}}</td>
         </tr>
+        <tr>
+            <td>Order ID: </td>
+            <td>{{ $orderId }}</td>
+        </tr>
     </table>
 </div>

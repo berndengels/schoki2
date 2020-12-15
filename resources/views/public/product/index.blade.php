@@ -6,12 +6,16 @@
             <div class="card">
                 <div class="card-header row">@lang('Order Products')</div>
                 <div class="card-body row p-0 justify-content-center">
-                <table class="table">
+                <table class="table product-list">
                     @foreach($data as $item)
                     <tr>
                         <td>
                             @if($item->thumb)
-                            <img src="{{ asset($item->thumb)}}" height="50"/>
+                            <img
+                                 src="{{ asset($item->thumb)}}"
+                                 alt="{{ $item->name }}"
+                                 title="{{ $item->name }}"
+                            />
                             @else
                             <br>
                             @endif

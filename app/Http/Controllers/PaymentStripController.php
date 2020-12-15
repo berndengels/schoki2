@@ -71,8 +71,8 @@ class PaymentStripeController extends Controller
             $order = ShopRepository::createOrderByCart($customer, $cart);
 
             $metadata = [
-                'order_id'      => $order ? $order->id : null,
-                'customer_id'   => $customer->id,
+                'order_id'      => $order ? (int) $order->id : null,
+                'customer_id'   => (int) $customer->id,
             ];
             /**
              * @var Session $stripeSession

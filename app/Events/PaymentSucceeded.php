@@ -23,20 +23,22 @@ class PaymentSucceeded
      * @var array
      */
     public $orderParams;
+    /**
+     * @var int
+     */
+    public $orderId;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(
-        Customer $customer,
-        array $orderParams
-    )
+    public function __construct( array $orderParams, int $orderId, Customer $customer )
     {
         $this->customer     = $customer;
         $this->orderParams  = $orderParams;
-        ShopRepository::updateOrder($customer, $orderParams);
+        $this->orderId      = $orderId;
+        ShopRepository::updateOrder($orderParams, $orderId);
     }
 
     /**
@@ -46,6 +48,6 @@ class PaymentSucceeded
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-payment-succeeded');
+        return new PrivateChannel('channel-payment-success');
     }
 }

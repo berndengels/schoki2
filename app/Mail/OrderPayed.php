@@ -20,14 +20,19 @@ class OrderPayed extends Mailable
      */
     public $orderParams;
     /**
+     * @var int
+     */
+    public $orderId;
+    /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Customer $customer, array $orderParams)
+    public function __construct(Customer $customer, array $orderParams, int $orderId)
     {
         $this->customer     = $customer;
         $this->orderParams  = $orderParams;
+        $this->orderId      = $orderId;
 
         $this->to(env('LOGGER_EMAIL'));
         $this->from(env('LOGGER_EMAIL'));
