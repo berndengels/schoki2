@@ -38,10 +38,7 @@ class PaymentStripeController extends Controller
     public function create(Request $request, Cart $cart)
     {
         $sid = $_SESSION[$this->sessionName];
-        $shoppincart = Shoppingcart::whereIdentifier($sid)->first();
-        if(!$shoppincart) {
-            $cart->store($sid);
-        }
+        $cart = $cart->instance($sid);
 
         return view('public.payment.create', compact('cart'));
     }
@@ -53,6 +50,8 @@ class PaymentStripeController extends Controller
              * @var Customer $customer
              * @var StripeCustomer $stripeCustomer
              */
+            $sid            = $_SESSION[$this->sessionName];
+            $cart           = $cart->instance($sid);
             $customer       = $request->user('web');
             $stripeCustomer = $customer->createOrGetStripeCustomer();
 
@@ -83,8 +82,12 @@ class PaymentStripeController extends Controller
                 ];
             })->values()->toArray();
 
+            $order = ShopRepository::createOrderByCart($customer, $cart);
+
             $metadata = [
-                'order_id'  => null,
+                'order_id'      => $order ? $order->id : null,
+                'customer_id'   => $customer->id,
+                'cart_instance' => $sid,
             ];
             /**
              * @var Session $stripeSession
@@ -99,7 +102,6 @@ class PaymentStripeController extends Controller
                 'success_url'       => route('payment.stripe.success'),
                 'cancel_url'        => route('payment.stripe.success'),
             ]);
-
             return response()->json(['sessionId' => $stripeSession->id]);
         }
         catch(Exception $e) {

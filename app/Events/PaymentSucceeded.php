@@ -36,7 +36,7 @@ class PaymentSucceeded
     {
         $this->customer     = $customer;
         $this->orderParams  = $orderParams;
-        $order = ShopRepository::createOrder($customer, $orderParams);
+        $order = ShopRepository::updateOrder($customer, $orderParams);
     }
 
     /**

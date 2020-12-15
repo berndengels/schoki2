@@ -50,12 +50,12 @@ class ScardController extends Controller
 
     public function add(Product $product, Cart $cart)
     {
-        $cart->add($product, 1);
+        $cart->instance($this->sid)->add($product, 1);
 
         if(Shoppingcart::whereIdentifier($this->sid)) {
-            $cart->restore($this->sid);
+            $cart->instance($this->sid)->restore($this->sid);
         } else {
-            $cart->store($this->sid);
+            $cart->instance($this->sid)->store($this->sid);
         }
 
         return redirect()->back();
@@ -63,15 +63,15 @@ class ScardController extends Controller
 
     public function increment(Cart $cart, $rawId)
     {
-        $cart->update($rawId, $cart->get($rawId)->qty + 1);
-        $cart->restore($this->sid);
+        $cart->instance($this->sid)->update($rawId, $cart->get($rawId)->qty + 1);
+        $cart->instance($this->sid)->restore($this->sid);
         return redirect()->back();
     }
 
     public function decrement(Cart $cart, $rawId)
     {
-        $cart->update($rawId, $cart->get($rawId)->qty - 1);
-        $cart->restore($this->sid);
+        $cart->instance($this->sid)->update($rawId, $cart->get($rawId)->qty - 1);
+        $cart->instance($this->sid)->restore($this->sid);
         return redirect()->back();
     }
 
@@ -83,8 +83,8 @@ class ScardController extends Controller
      */
     public function delete(Cart $cart, $rawId)
     {
-        $cart->remove($rawId);
-        $cart->restore($this->sid);
+        $cart->instance($this->sid)->remove($rawId);
+        $cart->instance($this->sid)->restore($this->sid);
         return redirect()->back();
     }
 
@@ -96,7 +96,7 @@ class ScardController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        $cart->destroy();
+        $cart->instance($this->sid)->destroy();
         Shoppingcart::whereIdentifier($this->sid)->delete();
         return redirect()->route('public.events');
     }

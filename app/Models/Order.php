@@ -48,6 +48,14 @@ use Illuminate\Support\Carbon;
  * @property string|null $paid_on
  * @method static Builder|Order whereDeliveredOn($value)
  * @method static Builder|Order wherePaidOn($value)
+ * @property string|null $amount_received
+ * @property string $payment_id
+ * @property string $payment_provider
+ * @property string $cart_instance
+ * @method static Builder|Order whereAmountReceived($value)
+ * @method static Builder|Order whereCartInstance($value)
+ * @method static Builder|Order wherePaymentId($value)
+ * @method static Builder|Order wherePaymentProvider($value)
  */
 class Order extends Model
 {

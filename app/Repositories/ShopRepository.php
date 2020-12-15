@@ -59,13 +59,12 @@ class ShopRepository
         Customer $customer,
         array $orderParams
     ) {
-
         try {
             /**
              * @var Shoppingcart $shoppincart
              */
-            $session        = $_SESSION[self::$sessionName];
-            $shoppingCart   = Shoppingcart::whereIdentifier($session)->first();
+            $sid            = $_SESSION[self::$sessionName];
+            $shoppingCart   = Shoppingcart::whereIdentifier($sid)->first();
             $content        = $shoppingCart ? unserialize($shoppingCart->content) : null;
 
             if($content && $content->count() > 0) {
@@ -103,5 +102,57 @@ class ShopRepository
         } catch(Exception $e) {
             throw new Exception($e->getMessage());
         }
+    }
+
+    public static function createOrderByCart(
+        Customer $customer,
+        Cart $cart
+    ) {
+        try {
+            $cartInstance   = $cart->currentInstance();
+            $content        = $cart->content();
+
+            if($content && $content->count() > 0) {
+                $orderItemData = [];
+                $total = 0;
+                foreach ($content as $item) {
+                    $priceTotal = MyMoney::getBrutto($item->price) * $item->qty;
+                    $orderItemData[] = [
+                        'product_id'    => $item->id,
+                        'quantity'      => $item->qty,
+                        'price_total'   => $priceTotal,
+                    ];
+                    $total += $priceTotal;
+                }
+
+                $params = [
+                    'price_total'   => (float) $total,
+                    'cart_instance' => $cartInstance,
+                ];
+
+                $foundOrder = Order::whereCartInstance($cartInstance)->first();
+                if($foundOrder) {
+                    $order = $foundOrder->update($params);
+                    $order->updatedBy()->associate($customer);
+                } else {
+                    $order = Order::create($params);
+                    $order->createdBy()->associate($customer);
+                }
+                $order->orderItems()->createMany($orderItemData);
+
+                $cartInstance->destroy();
+
+                event(new ProductOrdered($order));
+
+                return $order;
+            }
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public static function updateOrder(Customer $customer, array $orderParams)
+    {
+
     }
 }

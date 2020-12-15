@@ -61,6 +61,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
  * @property-read int|null $shippings_count
  * @method static Builder|Customer permission($permissions)
  * @method static Builder|Customer role($roles, $guard = null)
+ * @property-read mixed $shipping
  */
 class Customer extends Authenticatable
 {
