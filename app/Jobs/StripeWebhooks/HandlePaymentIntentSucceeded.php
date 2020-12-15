@@ -4,14 +4,12 @@ namespace App\Jobs\StripeWebhooks;
 use App\Events\PaymentSucceeded;
 use App\Mail\Logger;
 use App\Models\Customer;
-use App\Repositories\ShopRepository;
-use Gloudemans\Shoppingcart\Cart;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Spatie\WebhookClient\Models\WebhookCall;
 
 
@@ -44,9 +42,16 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
                 $paid          = (bool) $chargesData['paid'];
                 $customerName  = $chargesData['billing_details']['name'];
                 $customer      = Customer::whereStripeId($customerID)->first();
+
+                $orderParams = [
+                    'paid_on'           => $paid ? Carbon::createFromTimestamp($created) : null,
+                    'amount_received'   => $amountReceived,
+                    'payment_id'        => $paymentId,
+                    'payment_type'      => 'stripe',
+                ];
                 if($customer) {
                     Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': Order created for: '.$customerName));
-                    event(new PaymentSucceeded($customer, $amountReceived, $created, $paid, $paymentId, 'stripe'));
+                    event(new PaymentSucceeded($customer, $orderParams));
                 } else {
                     Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': can not find customer by stripeID: '.$customerID));
                 }

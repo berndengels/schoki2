@@ -20,25 +20,9 @@ class PaymentSucceeded
      */
     public $customer;
     /**
-     * @var int
+     * @var array
      */
-    public $amountReceived;
-    /**
-     * @var bool
-     */
-    public $paid;
-    /**
-     * @var int
-     */
-    public $created;
-    /**
-     * @var string
-     */
-    public $paymentId;
-    /**
-     * @var string
-     */
-    public $paymentType;
+    public $orderParams;
 
     /**
      * Create a new event instance.
@@ -47,20 +31,12 @@ class PaymentSucceeded
      */
     public function __construct(
         Customer $customer,
-        int $amountReceived,
-        int $created,
-        bool $paid,
-        string $paymentId,
-        string $paymentType
+        array $orderParams
     )
     {
-        $this->paid             = $paid;
-        $this->created          = $created;
-        $this->customer         = $customer;
-        $this->paymentId        = $paymentId;
-        $this->paymentType      = $paymentType;
-        $this->amountReceived   = $amountReceived;
-        $order = ShopRepository::createOrder($customer, $amountReceived, $created, $paid, $paymentId, $paymentType);
+        $this->customer     = $customer;
+        $this->orderParams  = $orderParams;
+        $order = ShopRepository::createOrder($customer, $orderParams);
     }
 
     /**

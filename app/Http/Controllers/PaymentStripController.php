@@ -111,13 +111,12 @@ class PaymentStripeController extends Controller
     public function cancel(Customer $customer, Cart $cart)
     {
         // @todo: maybe destroy cart here
-        return view('public.payment.cancel', compact('exception'));
+        return view('public.payment.cancel', compact('customer','cart'));
     }
 
     public function success(Customer $customer, Cart $cart)
     {
-        $content = $cart->content() ?? null;
-        return view('public.payment.success', compact('customer','content'));
+        return view('public.payment.success', compact('customer','cart'));
     }
 
     public function config()

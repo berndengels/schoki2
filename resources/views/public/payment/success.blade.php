@@ -4,9 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="card col-md-12">
-                <div class="card-header row"><h3>@lang('Der Einkauf war erfolgreich')</h3></div>
+                <div class="card-header row"><h3>@lang('Dein Einkauf war erfolgreich')</h3></div>
                 <div class="card-body row mt-3 p-0 justify-content-center">
-                    @if($content)
+                    @if($cart && $cart->content() && $cart->content()->count())
                         <table class="table table-striped">
                             <tr>
                                 <th>ID</th>
@@ -15,7 +15,7 @@
                                 <th>Anzahl</th>
                                 <th>Preis Total</th>
                             </tr>
-                            @foreach ($content as $index => $item)
+                            @foreach ($cart->content() as $index => $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>

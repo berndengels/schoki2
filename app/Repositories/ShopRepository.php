@@ -1,10 +1,9 @@
 <?php
 namespace App\Repositories;
 
-use App\Helper\MyMoney;
 use Exception;
-use Carbon\Carbon;
 use App\Models\Order;
+use App\Helper\MyMoney;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Events\ProductOrdered;
@@ -56,18 +55,15 @@ class ShopRepository
 
     public static function createOrder(
         Customer $customer,
-        int $amountReceived,
-        int $created,
-        bool $paid,
-        string $paymentId,
-        string $paymentType
+        array $orderParams
     ) {
 
         try {
             /**
              * @var Shoppingcart $shoppincart
              */
-            $shoppingCart   = Shoppingcart::whereIdentifier($customer->getInstanceIdentifier())->first();
+            $session        = request()->session()->get('scart');
+            $shoppingCart   = Shoppingcart::whereIdentifier($session)->first();
             $content        = $shoppingCart ? unserialize($shoppingCart->content) : null;
 
             if($content && $content->count() > 0) {
@@ -79,19 +75,13 @@ class ShopRepository
                         'product_id'    => $item->id,
                         'quantity'      => $item->qty,
                         'price_total'   => $priceTotal,
-                        'amount_received'   => $amountReceived / 100,
                     ];
                     $total += $priceTotal;
                 }
 
-                $params = [
-                    'paid_on'           => $paid ? Carbon::createFromTimestamp($created) : null,
-                    'price_total'       => (float) $total,
-                    'amount_received'   => $amountReceived,
-                    'payment_id'        => $paymentId,
-                    'payment_type'      => $paymentType,
-                ];
-                $foundOrder = Order::wherePaymentId($paymentId)->first();
+                $params = array_merge(['price_total' => (float) $total], $orderParams);
+
+                $foundOrder = Order::wherePaymentId($orderParams['payment_id'])->first();
                 if($foundOrder) {
                     $order = $foundOrder->update($params);
                     $order->updatedBy()->associate($customer);
@@ -102,7 +92,7 @@ class ShopRepository
                 $order->orderItems()->createMany($orderItemData);
 
                 Cart::destroy();
-                Shoppingcart::whereIdentifier($customer->getInstanceIdentifier())->delete();
+                $shoppingCart->delete();
 
                 event(new ProductOrdered($order));
 
