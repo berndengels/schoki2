@@ -46,6 +46,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if(!session()->isStarted()) {
+            session()->start();
+        }
+
         Schema::defaultStringLength(191);
         Blade::directive('brutto', function ($expression) {
             return "<?php echo \App\Helper\MyMoney::getBrutto($expression); ?>";

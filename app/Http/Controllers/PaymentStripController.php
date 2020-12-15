@@ -18,6 +18,14 @@ use App\Http\Resources\Payment\Stripe\CustomerResource;
 class PaymentStripeController extends Controller
 {
     /**
+     * @var string
+     */
+    protected $sessionName = 'scart';
+    /**
+     * @var string
+     */
+    protected $sid;
+    /**
      * @var StripeClient $stripClient
      */
     protected $stripeClient;
@@ -29,13 +37,10 @@ class PaymentStripeController extends Controller
 
     public function create(Request $request, Cart $cart)
     {
-        /**
-         * @var Customer $customer
-         */
-        $customer    = $request->user('web');
-        $shoppincart = Shoppingcart::whereIdentifier($customer->getInstanceIdentifier())->first();
+        $sid = $request->session()->get($this->sessionName);
+        $shoppincart = Shoppingcart::whereIdentifier($sid)->first();
         if(!$shoppincart) {
-            $cart->store($customer->getInstanceIdentifier());
+            $cart->store($sid);
         }
 
         return view('public.payment.create', compact('cart'));

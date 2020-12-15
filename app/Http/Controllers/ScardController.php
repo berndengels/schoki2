@@ -31,12 +31,7 @@ class ScardController extends Controller
 
     public function __construct()
     {
-        if(!session()->isStarted()) {
-            session()->start();
-        }
-
         if(!session()->exists($this->sessionName)) {
-            session($this->sessionName, session()->getId());
             session()->put($this->sessionName, session()->getId());
         }
         $this->sid = session()->get($this->sessionName);
