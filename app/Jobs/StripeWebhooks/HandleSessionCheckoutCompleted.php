@@ -1,15 +1,14 @@
 <?php
 namespace App\Jobs\StripeWebhooks;
 
-use App\Events\PaymentSucceeded;
-use App\Mail\Logger;
-use App\Models\Customer;
 use Carbon\Carbon;
+use App\Models\Customer;
 use Illuminate\Bus\Queueable;
+use App\Events\PaymentSucceeded;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Spatie\WebhookClient\Models\WebhookCall;
 
 
@@ -26,6 +25,7 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
     {
         $this->webhookCall = $webhookCall;
     }
+    public static $count = 0;
 
     public function handle()
     {
@@ -50,7 +50,8 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
                 'payment_id'        => $paymentId,
                 'payment_provider'  => 'stripe',
             ];
-
+//            Log::info($payload['type'], ['count' => static::$count++]);
+            // @todo: queue stuff
             event(new PaymentSucceeded($orderParams, $orderId, $customer));
         }
     }
