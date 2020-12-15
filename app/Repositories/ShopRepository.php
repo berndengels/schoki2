@@ -6,14 +6,14 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Customer;
+use Illuminate\Http\Request;
 use App\Events\ProductOrdered;
 use App\Models\Shoppingcart;
+use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\CartItem;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Resources\Payment\Stripe\PriceResource;
 use App\Http\Resources\Payment\PayPal\CartItemResource as PayPalCartItemResource;
 use App\Http\Resources\Payment\Stripe\CartItemResource as StripeCartItemResource;
-use Illuminate\Http\Request;
 
 class ShopRepository
 {

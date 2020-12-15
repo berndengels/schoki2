@@ -2,13 +2,13 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Stripe\Price;
+use Stripe\StripeClient;
+use App\Models\Customer;
 use App\Helper\MyLang;
 use App\Models\Shoppingcart;
 use Gloudemans\Shoppingcart\CartItem;
 use Stripe\Checkout\Session;
-use Stripe\Price;
-use Stripe\StripeClient;
-use App\Models\Customer;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Cart;
 use Stripe\Customer as StripeCustomer;
