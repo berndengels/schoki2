@@ -87,26 +87,6 @@ class Customer extends Authenticatable
         return 0;
     }
 
-    /**
-     * Get the unique identifier to load the Cart from
-     *
-     * @return int|string
-     */
-    public function getInstanceIdentifier()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Get the unique identifier to load the Cart from
-     *
-     * @return int|string
-     */
-    public function getInstanceGlobalDiscount($options = null)
-    {
-        return $this->discountRate ?: 0;
-    }
-
     public function getShippingAttribute()
     {
         $shipping = $this->shippings()->whereIsDefault(true)->first();
