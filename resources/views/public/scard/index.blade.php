@@ -8,7 +8,7 @@
                     <h3 class="col">@lang('shopping cart')</h3>
                     @if($content)
                     <a role="button" class="btn btn-danger d-inline-block col-sm-auto col-md-3 float-right"
-                       href="{{ route('scard.destroy') }}"
+                       href="{{ route('public.scard.destroy') }}"
                     ><i class="fas fa-trash-alt"></i>
                         Warenkorb leeren</a>
                    @endif
@@ -31,16 +31,16 @@
                                 <td>@brutto($item->price) €</td>
                                 <td>{{ $item->qty }}</td>
                                 <td>Total {{ $item->total }} €</td>
-                                <td><form class="d-inline m-0 p-0" action="{{ route( 'scard.increment', ['rawId' => $index]) }}" method="post">
+                                <td><form class="d-inline m-0 p-0" action="{{ route( 'public.scard.increment', ['rawId' => $index]) }}" method="post">
                                         @csrf
                                         <button type="submit" class="btn btn-link m-0 p-0 small" role="link"><i class="fas fa-plus"></i></button>
                                     </form></td>
-                                <td><form class="d-inline m-0 p-0" action="{{ route( 'scard.decrement', ['rawId' => $index]) }}" method="post">
+                                <td><form class="d-inline m-0 p-0" action="{{ route( 'public.scard.decrement', ['rawId' => $index]) }}" method="post">
                                         @csrf
                                         <button type="submit" class="btn btn-link m-0 p-0 small" role="link"><i class="fas fa-minus"></i></button>
                                     </form></td>
                                 <td>
-                                    <form class="d-inline m-0 p-0" action="{{ route( 'scard.delete', ['rawId' => $index]) }}" method="post">
+                                    <form class="d-inline m-0 p-0" action="{{ route( 'public.scard.delete', ['rawId' => $index]) }}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-link m-0 p-0 small" role="link"><i class="fas fa-trash"></i></button>
@@ -56,18 +56,18 @@
                                 <h5>Um die Artikel zu bestellen, mußt Du Dich einloggen oder Registrieren</h5>
                                 <div class="row justify-content-center">
                                     <a role="button" class="btn btn-primary btnPay align-middle"
-                                        href="{{ route('login', ['redirectTo' => 'scard.index']) }}" ><i class="fas fa-user-alt mr-1"></i>
+                                        href="{{ route('login', ['redirectTo' => 'public.scard.index']) }}" ><i class="fas fa-user-alt mr-1"></i>
                                         @lang('Login')
                                     </a>
                                     &nbsp;
                                     <a role="button"class="btn btn-primary ml-2 btnPay align-middle"
-                                            href="{{ route('register', ['redirectTo' => 'scard.index']) }}"><i class="fas fa-cash-register mr-1"></i>
+                                            href="{{ route('register', ['redirectTo' => 'public.scard.index']) }}"><i class="fas fa-cash-register mr-1"></i>
                                         @lang('Register')
                                     </a>
                                 </div>
                                 @else
                                 <a role="button" class="btn btn-block btn-primary"
-                                   href="{{ route('order.index') }}">@lang('Order now')</a>
+                                   href="{{ route('public.order.index') }}">@lang('Order now')</a>
                             @endauth
                         </div>
                     @else

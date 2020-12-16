@@ -1,17 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Helper\MyLang;
-use App\Http\Resources\CartItemResource;
-use App\Http\Resources\ShippingResource;
+use Exception;
 use App\Models\Customer;
 use App\Models\Shipping;
-use App\Repositories\ShopRepository;
-use Exception;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Cart;
-use Gloudemans\Shoppingcart\CartItem;
+use App\Repositories\ShopRepository;
 use Srmklive\PayPal\Services\ExpressCheckout;
+use App\Http\Resources\Payment\PayPal\ShippingResource;
 
 class PaymentPayPalController extends Controller
 {
@@ -27,11 +24,11 @@ class PaymentPayPalController extends Controller
 
         $shippingAddress = new ShippingResource(Shipping::find($request->input('shipping')));
         $product = [];
-        $product['items'] = ShopRepository::getCartItemsArray($cart);
+        $product['items'] = ShopRepository::getCartItemsArray($cart, 'paypal', $request);
         $product['invoice_id']  = $invoiceId;
         $product['invoice_description'] = "Shokoladen Order #{$product['invoice_id']}";
-        $product['return_url']  = route('payment.paypal.success');
-        $product['cancel_url']  = route('payment.paypal.cancel');
+        $product['return_url']  = route('public.payment.paypal.success');
+        $product['cancel_url']  = route('public.payment.paypal.cancel');
         $product['total']       = $cart->priceTotal();
         $product['shipping']    = $shippingAddress;
 

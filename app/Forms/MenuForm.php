@@ -17,7 +17,8 @@ class MenuForm extends Form
 
     public function buildForm()
     {
-		$publicRoutes = MyRoutes::getPublicRoutes()->toArray();
+		$publicRoutes = array_flip(MyRoutes::getPublicRoutes()->toArray());
+        ksort($publicRoutes);
 
         $this
             ->add('id', Field::HIDDEN)

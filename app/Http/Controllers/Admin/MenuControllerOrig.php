@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
+use App\Models\Menu;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Menu\BulkDestroyMenu;
 use App\Http\Requests\Admin\Menu\DestroyMenu;
 use App\Http\Requests\Admin\Menu\IndexMenu;
 use App\Http\Requests\Admin\Menu\StoreMenu;
 use App\Http\Requests\Admin\Menu\UpdateMenu;
-use App\Models\Menu;
 use Brackets\AdminListing\Facades\AdminListing;
-use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
@@ -36,10 +36,8 @@ class MenuControllerOrig extends Controller
         $data = AdminListing::create(Menu::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'parent_id', 'menu_item_type_id', 'name', 'url', 'lft', 'rgt', 'lvl', 'api_enabled', 'is_published'],
-
             // set columns to searchIn
             ['id', 'name', 'url'],
             function (Builder $query) use ($request) {
@@ -49,7 +47,6 @@ class MenuControllerOrig extends Controller
                 }
                 $query->orderBy('lft');
             }
-
         );
 
         if ($request->ajax()) {

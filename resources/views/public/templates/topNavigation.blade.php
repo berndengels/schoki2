@@ -33,7 +33,7 @@
                 <!-- Authentication Links -->
                 @if( \Gloudemans\Shoppingcart\Facades\Cart::count() )
                 <li class="nav-item">
-                    <a class="nav-link btnPay" href="{{ route('scard.index') }}">
+                    <a class="nav-link btnPay" href="{{ route('public.scard.index') }}">
                         <i class="text-primary d-inline-block payIcon fas fa-shopping-cart"></i>
                     </a>
                 </li>

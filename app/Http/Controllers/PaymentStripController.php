@@ -84,8 +84,8 @@ class PaymentStripeController extends Controller
                 'locale'            => MyLang::getPrimary(),
                 'line_items'        => $orderItems,
                 'metadata'          => $metadata,
-                'success_url'       => route('payment.stripe.success'),
-                'cancel_url'        => route('payment.stripe.success'),
+                'success_url'       => route('public.payment.stripe.success'),
+                'cancel_url'        => route('public.payment.stripe.success'),
             ]);
             return response()->json(['sessionId' => $stripeSession->id]);
         }

@@ -22,6 +22,7 @@ use App\Http\Controllers\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Illuminate\Database\Eloquent\Collection;
+use function PHPUnit\Framework\throwException;
 
 class MenuController extends Controller
 {
@@ -59,12 +60,12 @@ class MenuController extends Controller
 		try {
 			$form  = $formBuilder->create(MenuForm::class);
 			$options    = [
-				'form'      => $form,
-				'title'     => $this->title,
+				'form'  => $form,
+				'title' => $this->title,
 			];
 			return view('admin.menus', $options);
 		} catch(Exception $e) {
-			die($e->getMessage());
+			throw new Exception($e);
 		}
     }
 
