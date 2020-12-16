@@ -18,7 +18,7 @@ class OrderPayed extends Mailable
     /**
      * @var array
      */
-    public $orderParams;
+    public $params;
     /**
      * @var int
      */
@@ -28,15 +28,16 @@ class OrderPayed extends Mailable
      *
      * @return void
      */
-    public function __construct(Customer $customer, array $orderParams, int $orderId)
+    public function __construct(Customer $customer, array $params, int $orderId)
     {
-        $this->customer     = $customer;
-        $this->orderParams  = $orderParams;
-        $this->orderId      = $orderId;
+        $this->customer = $customer;
+        $this->params   = $params;
+        $this->orderId  = $orderId;
 
+        $provider = $this->params['payment_provider'];
         $this->to(env('LOGGER_EMAIL'));
         $this->from(env('LOGGER_EMAIL'));
-        $this->subject('payment success');
+        $this->subject("Schoki Payment Success via $provider");
     }
 
     /**

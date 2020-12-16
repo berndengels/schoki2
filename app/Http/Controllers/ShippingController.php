@@ -10,6 +10,7 @@ use App\Models\Shipping;
 use App\Forms\ShippingForm;
 use App\Http\Requests\Admin\Shipping\StoreShipping;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
@@ -20,7 +21,7 @@ class ShippingController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -32,8 +33,8 @@ class ShippingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Shipping  $shipping
-     * @return \Illuminate\Http\Response
+     * @param Shipping $shipping
+     * @return Response
      */
     public function show(Shipping $shipping)
     {
@@ -43,25 +44,8 @@ class ShippingController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-/*
-    public function create(FormBuilder $formBuilder)
-    {
-        $user       = auth('web')->user();
-        $language   = MyLang::getPrimary();
-        $country    = Country::whereCode(strtoupper($language))->first();
-
-        $form   = $formBuilder->create(ShippingForm::class, [], [
-            'user'      => $user,
-            'shipping'  => null,
-            'language'  => $language,
-            'country'   => $country,
-        ]);
-
-        return view('public.form.shipping', compact('form'));
-    }
-*/
     public function create()
     {
         $language   = MyLang::getPrimary();
@@ -71,19 +55,23 @@ class ShippingController extends Controller
         return view('public.shipping.create', compact('data','country', 'language', 'countries'));
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  StoreShipping  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreShipping $request )
     {
+        $customer   = $request->user('web');
         $validated = $request->getSanitized();
         $shipping = Shipping::create($validated);
         if($shipping->is_default) {
             Shipping::whereKeyNot($shipping->id)->update(['is_default' => false]);
+        } else {
+            if(Shipping::whereCustomerId($customer->id)->count()) {
+                $shipping->update(['is_default' => true]);
+            }
         }
         return redirect()->route('shipping.index');
     }
@@ -91,8 +79,8 @@ class ShippingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Shipping  $shipping
-     * @return \Illuminate\Http\Response
+     * @param Shipping $shipping
+     * @return Response
      */
     public function edit(FormBuilder $formBuilder, Shipping $shipping)
     {
@@ -108,15 +96,21 @@ class ShippingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  UpdateShipping  $request
-     * @param  \App\Models\Shipping  $shipping
-     * @return \Illuminate\Http\Response
+     * @param Shipping $shipping
+     * @return Response
      */
     public function update(UpdateShipping $request, Shipping $shipping)
     {
-        $validated = $request->getSanitized();
+        $customer   = $request->user('web');
+        $validated  = $request->getSanitized();
         $shipping->update($validated);
         if($shipping->is_default) {
             Shipping::whereKeyNot($shipping->id)->update(['is_default' => false]);
+            dd('is default');
+        } else {
+            if(1 === Shipping::whereCustomerId($customer->id)->count()) {
+                $shipping->update(['is_default' => true]);
+            }
         }
         return redirect()->route('shipping.index');
     }
@@ -124,8 +118,8 @@ class ShippingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Shipping  $shipping
-     * @return \Illuminate\Http\Response
+     * @param Shipping $shipping
+     * @return Response
      */
     public function destroy(Shipping $shipping)
     {

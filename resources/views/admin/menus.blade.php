@@ -6,6 +6,7 @@
 @endsection
 
 @section('body')
+<!--
     <div id="treeContainer" class="col-12 mh-100 sidenav" role="main">
         <form id="menuControl" class="m-0 mb-2">
             <button id="create" type="button" class="btn btn-primary btn-sm text-center" title="Neuer Menupunkt"><i class="ion-md-create mr-sm-2"></i><span class="d-none d-sm-inline">New</span></button>
@@ -14,10 +15,41 @@
             <button id="refresh" type="button" class="btn btn-primary btn-sm text-center" title="Erneut laden"><i class="ion-md-sync mr-sm-2"></i><span class="d-none d-sm-inline">Refresh</span></button>
         </form>
 
-        <div id="tree" class="col-auto mh-100"></div>
-        <div id="data" class="col-auto ml-1 mh-100 xs-clearfix sidenav">
+        <div id="tree" class="col-3 mh-100"></div>
+        <div id="data" class="col-9 ml-1 mh-100 xs-clearfix sidenav">
             <h5 class="info mt-2 mt-sm-0 ml-sm-2"></h5>
             {!! form($form) !!}
+        </div>
+    </div>
+//-->
+    <div class="row menu-admin-container">
+        <div class="col">
+            <div class="card menu-admin">
+                <div class="card-header mt-0">
+                    <h3 class="mt-0">Menu</h3>
+                </div>
+                <div class="card-body mt-0">
+                    <div class="card-block mt-0">
+                        <div class="row">
+                            <div class="col-12 col-lg-4 mh-100">
+                                <form id="menuControl" class="p-0 m-0 mb-2">
+                                    <button id="create" type="button" class="btn btn-primary btn-sm text-center" title="Neuer Menupunkt"><i class="ion-md-create mr-sm-2"></i><span class="d-none d-sm-inline">New</span></button>
+                                    <button id="checkTree" type="button" class="btn btn-primary btn-sm text-center" title="Struktur Überprüfen"><i class="ion-md-checkmark mr-sm-2"></i><span class="d-none d-sm-inline">Check</span></button>
+                                    <button id="fixTree" type="button" class="btn btn-primary btn-sm text-center" title="Struktur Reparieren"><i class="ion-md-hammer mr-sm-2"></i><span class="d-none d-sm-inline">Repair</span></button>
+                                    <button id="refresh" type="button" class="btn btn-primary btn-sm text-center" title="Erneut laden"><i class="ion-md-sync mr-sm-2"></i><span class="d-none d-sm-inline">Refresh</span></button>
+                                </form>
+                                <div id="tree" class="mh-100"></div>
+                            </div>
+                            <div class="col-12 col-lg-8 mh-100">
+                                <div id="data" class="ml-1 sidenav">
+                                    <h5 class="info mt-2 mt-sm-0 ml-sm-2"></h5>
+                                    {!! form($form) !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -40,6 +72,7 @@
                         'url': operationRoute + '/get_node',
                         'method': 'post',
                         'data': function (node) {
+                            console.info(node);
                             return { 'id': node.id };
                         }
                     },
@@ -48,10 +81,8 @@
                         'responsive': true
                     }
                 },
-                'force_text' : true,
-//                'plugins' : ['state','dnd','contextmenu','wholerow'],
-                'plugins' : ['state','dnd','wholerow'],
-//                "contextmenu": { 'items': customMenu }
+                'force_text': true,
+                'plugins': ['state','dnd','wholerow'],
             })
             .on('create_node.jstree', function (e, data) {
                 $.post( operationRoute + '/create_node', {

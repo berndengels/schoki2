@@ -7,27 +7,15 @@
 // Your own, project specific styles
 @import "styles/index";
 
-#treeContainer {
-    display: block;
-    float: left;
-    clear: both;
-    width: 100%;
-    min-width: 100%;
-
-    #tree {
-        display: block;
-        float:left;
-        overflow:auto;
-        padding:10px;
-        border: 1px solid #7adddd;
-    }
-    #data {
-        display: block;
-        float: left;
-        clear: none;
-        form {
-            //float: left;
-            //clear: both;
+.menu-admin-container {
+    margin-top: -20px;
+    .menu-admin {
+        #tree {
+            padding:10px;
+            border: 1px solid #7adddd;
+        }
+        #data {
+            clear: none;
         }
     }
 }

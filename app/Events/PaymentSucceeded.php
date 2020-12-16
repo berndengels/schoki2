@@ -22,7 +22,7 @@ class PaymentSucceeded
     /**
      * @var array
      */
-    public $orderParams;
+    public $params;
     /**
      * @var int
      */
@@ -33,13 +33,13 @@ class PaymentSucceeded
      *
      * @return void
      */
-    public function __construct( array $orderParams, int $orderId, Customer $customer )
+    public function __construct( array $params, int $orderId, Customer $customer )
     {
-        $this->customer     = $customer;
-        $this->orderId      = $orderId;
-        $this->orderParams  = $orderParams;
+        $this->customer = $customer;
+        $this->orderId  = $orderId;
+        $this->params   = $params;
 
-        ShopRepository::updateOrder($orderParams, $orderId);
+        ShopRepository::updateOrder($params, $orderId);
     }
 
     /**

@@ -100,7 +100,7 @@ class MenuController extends Controller
 		switch($operation) {
 			case 'get_node':
 				if ( null === $id ) {
-					$data = Menu::defaultOrder()->where('parent_id', null)->with('descendants')->get();
+					$data = Menu::defaultOrder()->whereNull('parent_id')->with('descendants')->get();
 //                    $data = Menu::defaultOrder()->where('parent_id', null)->get();
 				} else {
 					$data = Menu::defaultOrder()->descendantsOf($id)->toTree();

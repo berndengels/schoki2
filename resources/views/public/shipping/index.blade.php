@@ -20,6 +20,7 @@
                         <td>{{ $item->country_id }}</td>
                         <td>{{ $item->postcode }} {{ $item->city }}</td>
                         <td>{{ $item->street }}</td>
+                        <td>{{ $item->is_default ? 'default' : null }}</td>
                         <td><a href="{{ route('shipping.edit', ['shipping' => $item]) }}"
                                role="button" class="btn-sm btn-primary"
                             ><i class="fas fa-edit"></i> Edit

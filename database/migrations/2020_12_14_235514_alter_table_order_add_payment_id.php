@@ -14,7 +14,7 @@ class AlterTableOrderAddPaymentId extends Migration
     public function up()
     {
         Schema::table('order', function (Blueprint $table) {
-            $table->string('payment_id', 100)->nullable()->unique();
+            $table->string('payment_id', 100)->nullable();
             $table->string('payment_provider', 10)->nullable();
         });
     }

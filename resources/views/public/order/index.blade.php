@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body mt-3 p-0 justify-content-center">
                     @if($content)
-                        <table class="table table-striped">
+                        <table class="table table-striped table-sm table-borderless">
                             <tr>
                                 <th>ID</th>
                                 <th>Movie</th>
@@ -42,14 +42,23 @@
                                          :value="$shippingDefault"
                                     />
 
-                                    <button role="button" name="submit" class="btn btn-primary btnPay align-middle"
-                                        formaction="{{ route('payment.stripe.create') }}" ><i class="fab fa-cc-stripe mr-1"></i>
-                                        @lang('Checkout Payment')
+                                    <button role="button" name="submit"
+                                        class="btn btn-primary btnPay align-middle"
+                                        data-toggle="tooltip" data-placement="top" data-html="true"
+                                        title="Bezahlung per:<br>
+                                            EC-Karte (SEPA-Lastschrift)<br>Sofort, Visa, MasterCard"
+                                        formaction="{{ route('payment.stripe.create') }}">
+                                            <i class="fab fa-cc-stripe mr-1"></i>
+                                            @lang('Checkout Payment')
                                     </button>
                                     &nbsp;
-                                    <button role="button" name="submit" class="btn btn-primary ml-2 btnPay align-middle"
-                                        formaction="{{ route('payment.paypal.process') }}"><i class="fab fa-cc-paypal mr-1"></i>
-                                        @lang('Checkout PayPal')
+                                    <button role="button" name="submit"
+                                        class="btn btn-primary ml-2 btnPay align-middle"
+                                        data-toggle="tooltip" data-placement="top" data-html="true"
+                                            title="Bezahlung per<br>PayPal"
+                                        formaction="{{ route('payment.paypal.process') }}">
+                                            <i class="fab fa-cc-paypal mr-1"></i>
+                                            @lang('Checkout PayPal')
                                     </button>
                                 </div>
                             </div>
@@ -63,4 +72,10 @@
         </div>
     </div>
 @endsection
-
+@section('inline-scripts')
+    <script>
+	    $(function () {
+		    $('[data-toggle="tooltip"]').tooltip()
+	    })
+    </script>
+@endsection

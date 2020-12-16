@@ -2,11 +2,11 @@
 namespace App\Models;
 
 use Eloquent;
-use Kalnoy\Nestedset\Collection;
 use Kalnoy\Nestedset\NodeTrait;
+use Kalnoy\Nestedset\QueryBuilder;
+use Kalnoy\Nestedset\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Kalnoy\Nestedset\QueryBuilder;
 
 /**
  * App\Models\Menu

@@ -101,6 +101,7 @@ html, body {
                 }
             }
             .table {
+                border-colorY: yellow;
                 tr {
                     th,td {
                         color: $sFontColor;
@@ -622,6 +623,13 @@ pre {
                 max-height: 80px;
                 border-radius: 40px;
             }
+        }
+    }
+}
+button {
+    #loading {
+        .spinner-border {
+            vertical-align: middle;
         }
     }
 }

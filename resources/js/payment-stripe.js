@@ -1,4 +1,5 @@
 // Create a Checkout Session with the selected quantity
+
 var createCheckoutSession = function (stripe) {
     return fetch("/payment/stripe/process", {
             method: "GET",
@@ -18,7 +19,7 @@ var handleResult = function (result) {
     }
 };
 
-/* Get your Stripe publishable key to initialize Stripe.js */
+// Get your Stripe publishable key to initialize Stripe.js
 fetch("/payment/stripe/config")
     .then(function (result) {
         return result.json();
@@ -34,6 +35,8 @@ fetch("/payment/stripe/config")
                     console.info('data');
                     console.info(data);
                     stripe.redirectToCheckout({sessionId: data.sessionId}).then(handleResult);
-                }).catch(err => console.error(err));
+                })
+                .catch(err => console.error(err));
         });
     });
+

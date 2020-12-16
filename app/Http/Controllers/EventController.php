@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Logger;
+use App\Models\Menu;
 use App\Repositories\ShopRepository;
 use Carbon\Carbon;
 use App\Models\Event;
@@ -46,6 +47,7 @@ class EventController extends BaseController
             }
             $this->actualEvents = Cache::get($this->cacheEventKey, collect([]));
         }
+        $data = Menu::defaultOrder()->whereNull('parent_id')->with('descendants')->get();
     }
 
 	public function show($date)

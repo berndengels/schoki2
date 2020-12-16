@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /**
      * The endpoint to access the routes.
      */
@@ -10,20 +9,17 @@ return [
     /**
      * The middleware(s) to apply before attempting to access routes page.
      */
-    'middlewares' => ['web'],
-
+    'middlewares' => ['auth'],
     /**
      * Indicates whether to enable pretty routes only when debug is enabled (APP_DEBUG).
      */
     'debug_only' => true,
-
     /**
      * The methods to hide.
      */
     'hide_methods' => [
         'HEAD',
     ],
-
     /**
      * The routes to hide with regular expression
      */
@@ -32,5 +28,4 @@ return [
         '#^_ignition#',
         '#^routes$#'
     ],
-
 ];

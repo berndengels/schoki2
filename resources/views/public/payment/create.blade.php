@@ -13,11 +13,19 @@
                 </div>
                 <div class="card-body row mt-3 p-0 justify-content-center">
                     <div class="col-auto">
-                        <form method="post">
+                        <form id="frmSubmit" method="post" disabled="true">
                             @csrf
                             <button id="submit" role="button"
-                                    class="btn btn-primary btnPay align-middle"><i class="fab fa-cc-stripe mr-1"></i>
-                                Summe {{ $cart->total() }} € jetzt bezahlen
+                                class="btn btn-primary btnPay align-middle"
+                                type="button"
+                            >
+                                <span id="start">
+                                    <i class="fab fa-cc-stripe mr-1"></i>Summe {{ $cart->total() }} € jetzt bezahlen
+                                </span>
+                                <span id="loading" class="align-content-center px-5" style="display:none">
+                                    <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                                    <span>Bitte warten ...</span>
+                                </span>
                             </button>
                         </form>
                         <div id="error-message"></div>
@@ -26,5 +34,16 @@
             </div>
         </div>
     </div>
+@endsection
+@section('inline-scripts')
+<script>
+$('#submit').click(function(e) {
+    e.preventDefault();
+    $('#start').hide();
+    $('#loading').show();
+    $(this).attr({disable:true});
+    return true;
+});
+</script>
 @endsection
 
