@@ -20,7 +20,7 @@ class CreateOrderTable extends Migration
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')
                 ->references('id')
-                ->on('users')
+                ->on('customers')
                 ->onUpdate('cascade')
 //                ->onDelete('cascade')
             ;
@@ -28,7 +28,7 @@ class CreateOrderTable extends Migration
             $table->unsignedInteger('updated_by')->nullable();
             $table->foreign('updated_by')
                 ->references('id')
-                ->on('users')
+                ->on('customers')
                 ->onUpdate('cascade')
 //                ->onDelete('cascade')
             ;
