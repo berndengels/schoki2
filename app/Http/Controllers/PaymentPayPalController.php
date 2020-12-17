@@ -47,13 +47,12 @@ class PaymentPayPalController extends Controller
         }
     }
 
-    public function cancel(Request $request, Cart $cart)
+    public function cancel(Request $request)
     {
-        echo __METHOD__.'<br>';
-        dd($request->input());
+        return view('public.payment.cancel', compact('request'));
     }
 
-    public function success(Request $request, Cart $cart)
+    public function success(Request $request)
     {
          /**
           * @todo: Order, Invoice, Dispatch Event paymentSuccess
@@ -64,11 +63,11 @@ class PaymentPayPalController extends Controller
             $response = $paypal->getExpressCheckoutDetails($request->token);
 
             if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
-                return view('public.payment.success', compact('customer'));
+                return view('public.payment.success', compact('response'));
             }
-            return view('public.payment.success', compact('customer'));
+//            return view('public.payment.success', compact('customer'));
         } catch (Exception $e) {
-            die($e->getMessage());
+            throw new Exception($e);
         }
     }
 }
