@@ -2,7 +2,6 @@
 namespace App\Models;
 
 use Eloquent;
-use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
 use Laravel\Cashier\Billable;
 use Illuminate\Support\Carbon;
 use Laravel\Cashier\Subscription;
@@ -15,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotificationCollection;
+use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
 
 /**
  * App\Models\Customer
@@ -66,7 +66,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
  */
 class Customer extends Authenticatable implements InstanceIdentifier
 {
-    use HasFactory, Notifiable, Billable, HasRoles, HasPermissions;
+    use HasFactory, Notifiable, Billable, HasRoles, HasPermissions, HasRoles;
 
     protected $table = 'customers';
     protected $appends = ['resource_url', 'discountRate', 'shippingList', 'shipping'];
@@ -102,15 +102,19 @@ class Customer extends Authenticatable implements InstanceIdentifier
     public function getShippingAttribute()
     {
         $shipping = $this->shippings()->whereIsDefault(true)->first();
-        $data = [
-            'name'  => $this->name,
-            'address'   => [
-                'line1'         => $shipping->street,
-                'city'          => $shipping->city,
-                'country'       => $shipping->country->code,
-                'postal_code'   => $shipping->postcode,
-            ]
-        ];
+        if($shipping) {
+            $data = [
+                'name'  => $this->name,
+                'address'   => [
+                    'line1'         => $shipping->street,
+                    'city'          => $shipping->city,
+                    'country'       => $shipping->country->code,
+                    'postal_code'   => $shipping->postcode,
+                ]
+            ];
+        } else {
+            $data = [];
+        }
         return json_decode(json_encode($data));
     }
 
@@ -132,4 +136,8 @@ class Customer extends Authenticatable implements InstanceIdentifier
         return url('/admin/customers/'.$this->getKey());
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

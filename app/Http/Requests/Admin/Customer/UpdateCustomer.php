@@ -27,9 +27,11 @@ class UpdateCustomer extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string'],
-            'email' => ['sometimes', 'email', Rule::unique('users', 'email')->ignore($this->customer->getKey(), $this->customer->getKeyName()), 'string'],
+            'email' => ['sometimes', 'email', Rule::unique('customers', 'email')->ignore($this->customer->getKey(), $this->customer->getKeyName()), 'string'],
             'email_verified_at' => ['nullable', 'date'],
             'password' => ['sometimes', 'confirmed', 'min:7', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
+            'password_confirmation' => 'sometimes|required_with:password|same:password',
+            'roles' => ['sometimes', 'array'],
             'stripe_id' => '',
             'card_brand' => '',
             'card_last_four' => '',

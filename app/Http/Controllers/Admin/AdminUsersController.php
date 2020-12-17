@@ -175,9 +175,9 @@ class AdminUsersController extends Controller
         $adminUser->update($sanitized);
 
         // But we do have a roles, so we need to attach the roles to the adminUser
-        if ($request->input('roles')) {
+//        if ($request->input('roles')) {
             $adminUser->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
-        }
+//        }
         if ($request->input('music_styles')) {
             $adminUser->musicStyles()->sync(collect($request->input('music_styles', []))->map->id->toArray());
         }

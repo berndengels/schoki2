@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Role;
 use Exception;
 use App\Models\Customer;
 use App\Http\Controllers\Controller;
@@ -23,6 +24,13 @@ use Illuminate\View\View;
 
 class CustomerController extends Controller
 {
+    /**
+     * Guard used for admin user
+     *
+     * @var string
+     */
+    protected $guard = 'web';
+
     public function __construct()
     {
 //        $this->middleware('customer');
@@ -70,7 +78,9 @@ class CustomerController extends Controller
     {
         $this->authorize('customer.write');
 
-        return view('admin.customer.create');
+        return view('admin.customer.create', [
+            'roles' => Role::where('guard_name', $this->guard)->get(),
+        ]);
     }
 
     /**
@@ -86,6 +96,10 @@ class CustomerController extends Controller
 
         // Store the Customer
         $customer = Customer::create($sanitized);
+
+        if ($request->input('roles')) {
+            $customer->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
+        }
 
         if ($request->ajax()) {
             return ['redirect' => url('admin/customers'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
@@ -118,10 +132,12 @@ class CustomerController extends Controller
     public function edit(Customer $customer)
     {
         $this->authorize('customer.write', $customer);
+        $customer->load(['roles']);
+
         return view('admin.customer.edit', [
+            'roles'     => Role::where('guard_name', $this->guard)->get(),
             'customer'  => $customer,
-            'roles'     => $customer->roles,
-            'addresses' => $customer->addresses,
+            'shippings' => $customer->shippings,
         ]);
     }
 
@@ -139,8 +155,12 @@ class CustomerController extends Controller
 
         // Update changed values Customer
         $customer->update($sanitized);
-        if ($request->input('addresses')) {
-            $customer->addresses()->sync($request->input('addresses')->map->id->toArray());
+
+        if ($request->input('roles')) {
+            $customer->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
+        }
+        if ($request->input('shippings')) {
+            $customer->shippings()->sync($request->input('shippings')->map->id->toArray());
         }
 
         if ($request->ajax()) {

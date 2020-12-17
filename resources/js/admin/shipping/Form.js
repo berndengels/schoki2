@@ -5,14 +5,12 @@ Vue.component('shipping-form', {
     data: function() {
         return {
             form: {
-                customer_id:  '' ,
-                postcode:  '' ,
-                city:  '' ,
-                street:  '' ,
-                is_default:  false ,
-
+                customer_id:  '',
+                postcode:  '',
+                city:  '',
+                street:  '',
+                is_default:  false,
             }
         }
     }
-
 });

@@ -114,7 +114,6 @@ class ShippingController extends Controller
     {
         $this->authorize('admin.shipping.edit', $shipping);
 
-
         return view('admin.shipping.edit', [
             'shipping' => $shipping,
         ]);

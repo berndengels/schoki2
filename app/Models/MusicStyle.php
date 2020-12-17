@@ -67,7 +67,7 @@ class MusicStyle extends Model
 
     public function delete()
     {
-        $count = $this->users->count();
+        $count = $this->adminUsers->count();
         if($count > 0) {
             return back()
                 ->with('error','Es existieren noch Customer ('.$count.') mit dieser Kategorie! Bitte vorher löschen.');

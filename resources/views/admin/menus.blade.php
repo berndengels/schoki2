@@ -2,6 +2,7 @@
 
 @section('title', 'Menu')
 @section('header')
+    @parent
     <link type="text/css" rel="stylesheet" href="{{ asset('vendor/jstree/css/default/style.min.css') }}" />
 @endsection
 

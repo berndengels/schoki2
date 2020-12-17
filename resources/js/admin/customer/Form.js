@@ -5,9 +5,9 @@ Vue.component('customer-form', {
     data: function() {
         return {
             form: {
-                name:  '' ,
-                email:  '' ,
-                password:  '' ,
+                name:  '',
+                email:  '',
+                password:  '',
                 shippings: [],
                 roles: [],
             }

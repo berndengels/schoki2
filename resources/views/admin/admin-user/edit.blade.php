@@ -1,9 +1,9 @@
 @extends('admin.layout.default')
-@section('title', trans('admin.admin-customer.actions.edit', ['name' => $adminUser->first_name]))
+@section('title', trans('admin.admin-user.actions.edit', ['name' => $adminUser->first_name]))
 @section('body')
     <div class="container-xl">
         <div class="card">
-            <admin-customer-form
+            <admin-user-form
                 :action="'{{ $adminUser->resource_url }}'"
                 :data="{{ $adminUser->toJson() }}"
                 :activation="!!'{{ $activation }}'"
@@ -11,10 +11,10 @@
             >
                 <form class="form-horizontal form-edit" method="post" @submit.prevent="onSubmit" :action="action">
                     <div class="card-header">
-                        <i class="fa fa-pencil"></i> {{ trans('admin.admin-customer.actions.edit', ['name' => $adminUser->first_name]) }}
+                        <i class="fa fa-pencil"></i> {{ trans('admin.admin-user.actions.edit', ['name' => $adminUser->first_name]) }}
                     </div>
                     <div class="card-body">
-                        @include('admin.admin-customer.components.form-elements')
+                        @include('admin.admin-user.components.form-elements')
                     </div>
                     <div class="card-footer">
 	                    <button type="submit" class="btn btn-primary" :disabled="submiting">
@@ -23,7 +23,7 @@
 	                    </button>
                     </div>
                 </form>
-        </admin-customer-form>
+        </admin-user-form>
     </div>
 </div>
 @endsection
