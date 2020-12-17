@@ -26,7 +26,7 @@ class CreateShippingTable extends Migration
             $table->unsignedInteger('country_id');
             $table->foreign('country_id')
                 ->references('id')
-                ->on('country')
+                ->on('countries')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
