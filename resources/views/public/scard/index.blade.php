@@ -25,13 +25,10 @@
                                 <th colspan="3">&nbsp</th>
                             </tr>
                         @foreach ($content as $index => $item)
-                            @php
-                            use App\Helper\MyMoney;$price = MyMoney::getBrutto($item->price)
-                            @endphp
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $price }} €</td>
+                                <td>@brutto($item->price) €</td>
                                 <td>{{ $item->qty }}</td>
                                 <td>Total {{ $item->total }} €</td>
                                 <td><form class="d-inline m-0 p-0" action="{{ route( 'public.scard.increment', ['rawId' => $index]) }}" method="post">
