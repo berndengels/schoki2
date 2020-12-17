@@ -15,7 +15,7 @@ class MyMoney implements Calculator
     public static function getNetto($brutto, $decimal = 2)
     {
         $divisor = self::getDivisor();
-        return round($brutto / $divisor, $decimal);
+        return $brutto / $divisor;
     }
 
     public static function getBrutto($netto, $decimal = 2)
