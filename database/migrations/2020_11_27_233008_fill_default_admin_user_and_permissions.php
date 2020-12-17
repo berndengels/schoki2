@@ -193,10 +193,11 @@ class FillDefaultAdminUserAndPermissions extends Migration
 
                 if ($userItem === null) {
                     $userId = DB::table($this->userTable)->insertGetId($user);
-
-                    AdminUser::find($userId)->addMedia(storage_path() . '/images/avatar.png')
-                        ->preservingOriginal()
-                        ->toMediaCollection('avatar', 'media');
+                    try {
+                        AdminUser::find($userId)->addMedia(storage_path() . '/images/avatar.png')
+                            ->preservingOriginal()
+                            ->toMediaCollection('avatar', 'media');
+                    } catch(Exception $e) {}
 
                     foreach ($roles as $role) {
                         $roleItem = DB::table('roles')->where([
@@ -253,7 +254,9 @@ class FillDefaultAdminUserAndPermissions extends Migration
                 $userItem = DB::table($this->userTable)->where('email', $user['email'])->first();
                 if ($userItem !== null) {
                     if(AdminUser::find($userItem->id)->media) {
-                        AdminUser::find($userItem->id)->media()->delete();
+                        try {
+                            AdminUser::find($userItem->id)->media()->delete();
+                        } catch(Exception $e) {}
                     }
                     DB::table($this->userTable)->where('id', $userItem->id)->delete();
                     DB::table('model_has_permissions')->where([
