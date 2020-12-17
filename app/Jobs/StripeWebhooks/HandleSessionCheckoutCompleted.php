@@ -42,7 +42,7 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
             $customerID     = $object['customer'];
             $customer       = Customer::whereStripeId($customerID)->first();
             $paid           = $object['payment_status'];
-            $orderId        = (int) $metadata['order_id'];
+            $orderId        = isset($metadata['order_id']) ? (int) $metadata['order_id'] : null;
 
             $params = [
                 'paid_on'           => $paid ? Carbon::createFromTimestamp($created) : null,
@@ -50,9 +50,10 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
                 'payment_id'        => $paymentId,
                 'payment_provider'  => 'stripe',
             ];
-//            Log::info($payload['type'], ['count' => static::$count++]);
             // @todo: queue stuff
-            event(new PaymentSucceeded($params, $orderId, $customer));
+            if($orderId) {
+                event(new PaymentSucceeded($params, $orderId, $customer));
+            }
         }
     }
 }

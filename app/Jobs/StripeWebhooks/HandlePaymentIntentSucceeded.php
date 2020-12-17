@@ -29,7 +29,6 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
 
     public function handle()
     {
-        Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': i am outside'));
         $payload = $this->webhookCall->payload;
         $paymentId = $payload['id'];
 
@@ -53,10 +52,7 @@ class HandlePaymentIntentSucceeded implements ShouldQueue
                 ];
 
                 if($customer) {
-                    Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': Order created for: '.$customerName));
-                    event(new PaymentSucceeded($customer, $orderParams));
-                } else {
-                    Mail::to(env('LOGGER_EMAIL'))->send(new Logger(__METHOD__. ': can not find customer by stripeID: '.$customerID));
+//                    event(new PaymentSucceeded($customer, $orderParams));
                 }
             }
         }
