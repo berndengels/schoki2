@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
             MessageImportSeeder::class,
             PageImportSeeder::class,
             PermissionsAndRolesSeeder::class,
-*/
             CountriesSeeder::class,
+*/
         ]);
     }
 }

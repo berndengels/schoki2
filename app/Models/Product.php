@@ -129,8 +129,6 @@ class Product extends Model implements Buyable, HasMedia
             ->accepts('image/jpeg','image/jpg')
             ->maxNumberOfFiles(3) // Set the file count limit
             ->maxFilesize(5*1024*1024) // Set the file size limit
-//            ->canView('media.view') // Set the ability (Gate) which is required to view the medium (in most cases you would want to call private())
-//            ->canUpload('upload') // Set the ability (Gate) which is required to upload & attach new files to the model
         ;
     }
 /*

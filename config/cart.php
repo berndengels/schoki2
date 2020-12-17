@@ -1,6 +1,7 @@
 <?php
 
-use Gloudemans\Shoppingcart\Calculation\DefaultCalculator;
+//use Gloudemans\Shoppingcart\Calculation\DefaultCalculator;
+use App\Helper\MyMoney;
 
 return [
     /*
@@ -12,7 +13,7 @@ return [
     | If true the item price is managed as a gross price, so taxes will be calculated by separation/exclusion
     |
     */
-    'calculator' => DefaultCalculator::class,
+    'calculator' => MyMoney::class,
 
     /*
     |--------------------------------------------------------------------------

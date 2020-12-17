@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="card w-75">
                 <div class="card-header row">
-                    <h3 class="col">@lang('shopping cart')</h3>
+                    <h3 class="col">@lang('Warenkorb')</h3>
                     @if($content)
                     <a role="button" class="btn btn-danger d-inline-block col-sm-auto col-md-3 float-right"
                        href="{{ route('public.scard.destroy') }}"
@@ -25,10 +25,13 @@
                                 <th colspan="3">&nbsp</th>
                             </tr>
                         @foreach ($content as $index => $item)
+                            @php
+                            use App\Helper\MyMoney;$price = MyMoney::getBrutto($item->price)
+                            @endphp
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>@brutto($item->price) €</td>
+                                <td>{{ $price }} €</td>
                                 <td>{{ $item->qty }}</td>
                                 <td>Total {{ $item->total }} €</td>
                                 <td><form class="d-inline m-0 p-0" action="{{ route( 'public.scard.increment', ['rawId' => $index]) }}" method="post">

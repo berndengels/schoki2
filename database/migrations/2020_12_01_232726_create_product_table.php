@@ -18,7 +18,7 @@ class CreateProductTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->unsignedDecimal('price');
-            $table->unsignedDecimal('price_netto');
+            $table->unsignedDouble('price_netto');
             $table->boolean('is_published')->default(false);
             $table->boolean('is_available')->default(false);
 
