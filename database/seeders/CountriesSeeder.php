@@ -18,7 +18,8 @@ class CountriesSeeder extends Seeder
         try {
             $file = '20201210_countries.sql';
             $sql = file_get_contents(database_path() . '/dumps/' . $file);
-            DB::table('countries')->truncate();
+            DB::table('countries')->delete();
+            DB::statement("ALTER TABLE countries AUTO_INCREMENT=1;");
             DB::unprepared($sql);
             $output = "<info>Success: countries imported</info>";
 
