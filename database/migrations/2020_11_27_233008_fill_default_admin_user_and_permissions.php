@@ -252,7 +252,9 @@ class FillDefaultAdminUserAndPermissions extends Migration
             foreach ($this->users as $user) {
                 $userItem = DB::table($this->userTable)->where('email', $user['email'])->first();
                 if ($userItem !== null) {
-                    AdminUser::find($userItem->id)->media()->delete();
+                    if(AdminUser::find($userItem->id)->media) {
+                        AdminUser::find($userItem->id)->media()->delete();
+                    }
                     DB::table($this->userTable)->where('id', $userItem->id)->delete();
                     DB::table('model_has_permissions')->where([
                         'model_id' => $userItem->id,
