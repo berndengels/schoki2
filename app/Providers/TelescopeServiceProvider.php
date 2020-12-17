@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use App\Models\AdminUser;
@@ -63,7 +62,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewTelescope', function (AdminUser $user) {
+        Gate::define('viewTelescope', function ($user) {
             return in_array($user->email, [
                 'engels@goldenacker.de',
             ]);
