@@ -152,15 +152,13 @@ class CustomerController extends Controller
     {
         // Sanitize input
         $sanitized = $request->getSanitized();
-
         // Update changed values Customer
         $customer->update($sanitized);
 
-        if ($request->input('roles')) {
-            $customer->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
-        }
-        if ($request->input('shippings')) {
-            $customer->shippings()->sync($request->input('shippings')->map->id->toArray());
+        $roles = $request->input('roles', []);
+
+        if ($roles) {
+            $customer->roles()->sync(collect($roles)->map->id->toArray());
         }
 
         if ($request->ajax()) {

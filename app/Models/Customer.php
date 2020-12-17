@@ -113,14 +113,14 @@ class Customer extends Authenticatable implements InstanceIdentifier
                 ]
             ];
         } else {
-            $data = [];
+            $data = [null];
         }
         return json_decode(json_encode($data));
     }
 
     public function getShippingListAttribute() {
-        if($this->shippings && $this->shippings->count() > 0) {
-            return implode('<br>', $this->shippings);
+        if($this->shippings()->whereCustomerId($this->id)->count()) {
+            return implode('<br>', $this->shippings->pluck('name')->toArray());
         }
         return null;
     }

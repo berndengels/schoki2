@@ -8,7 +8,7 @@ Vue.component('customer-form', {
                 name:  '',
                 email:  '',
                 password:  '',
-                shippings: [],
+                shippings: '',
                 roles: [],
             }
         }

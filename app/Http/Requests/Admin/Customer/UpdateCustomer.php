@@ -32,6 +32,7 @@ class UpdateCustomer extends FormRequest
             'password' => ['sometimes', 'confirmed', 'min:7', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
             'password_confirmation' => 'sometimes|required_with:password|same:password',
             'roles' => ['sometimes', 'array'],
+            'shippings' => '',
             'stripe_id' => '',
             'card_brand' => '',
             'card_last_four' => '',
@@ -47,10 +48,7 @@ class UpdateCustomer extends FormRequest
     public function getSanitized(): array
     {
         $sanitized = $this->validated();
-
-
         //Add your code for manipulation with request data here
-
         return $sanitized;
     }
 }

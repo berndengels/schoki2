@@ -31,25 +31,6 @@
     </div>
 </div>
 
-@if($shippings && $shippings->count() > 0)
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('shippings'), 'has-success': fields.shippings && fields.shippings.valid }">
-    <label for="shippings" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Shippings') }}</label>
-    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-        <select
-            id="shippings"
-            name="shippings"
-            v-model="form.shippings"
-            placeholder="{{ trans('Shippings') }}"
-        >
-            @foreach($shippings as $item)
-                <option value="{{ $item->id }}">{{ $item }}</option>
-            @endforeach
-        </select>
-        <div v-if="errors.has('shippings')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('shippings') }}</div>
-    </div>
-</div>
-@endif
-
 @can('role')
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('roles'), 'has-success': fields.roles && fields.roles.valid }">
     <label for="roles" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Roles') }}</label>
