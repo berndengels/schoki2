@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-/*
             MusicStyleImportSeeder::class,
             AdminUserImportSeeder::class,
             AdminUserMusicStyleImportSeeder::class,
@@ -31,7 +30,6 @@ class DatabaseSeeder extends Seeder
             PageImportSeeder::class,
             PermissionsAndRolesSeeder::class,
             CountriesSeeder::class,
-*/
         ]);
     }
 }
