@@ -64,9 +64,9 @@ class PaymentPayPalController extends Controller
             $response = $paypal->getExpressCheckoutDetails($request->token);
 
             if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
-                dd('Payment was successfull. The payment success page goes here!');
+                return view('public.payment.success', compact('customer'));
             }
-            dd('Error occured!');
+            return view('public.payment.success', compact('customer'));
         } catch (Exception $e) {
             die($e->getMessage());
         }

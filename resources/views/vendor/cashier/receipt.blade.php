@@ -1,3 +1,13 @@
+<?php
+/**
+ * @var Invoice $invoice
+ * @var InvoiceItem $item
+ */
+
+use Laravel\Cashier\Invoice;
+use Stripe\InvoiceItem;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +69,7 @@
         </tr>
         <tr valign="top">
             <td style="font-size: 28px; color: #ccc;">
-                Receipt
+                @lang('Rechnung')
             </td>
 
             <!-- Organization Name / Date -->
@@ -105,7 +115,7 @@
                 <!-- Extra / VAT Information -->
                 @if (isset($vat))
                     <p>
-                        {{ $vat }}
+                        @lang('MWSt'): {{ $vat }}
                     </p>
                 @endif
 
@@ -114,21 +124,20 @@
                 <!-- Invoice Table -->
                 <table width="100%" class="table" border="0">
                     <tr>
-                        <th align="left">Description</th>
-                        <th align="right">Date</th>
-
+                        <th align="left">@lang('Artikel')</th>
+                        <th align="left">@lang('Anzahl')</th>
                         @if ($invoice->hasTax())
                             <th align="right">Tax</th>
                         @endif
-
-                        <th align="right">Amount</th>
+                        <th align="right">Total</th>
                     </tr>
 
                     <!-- Display The Invoice Items -->
                     @foreach ($invoice->invoiceItems() as $item)
                         <tr class="row">
-                            <td colspan="2">{{ $item->description }}</td>
-
+                            <td>{{ $item->description }}</td>
+                            <td>{{ $item->quantity }} @lang('Stück')
+                                a {{ $item->price->unit_amount/100 }} €</td>
                             @if ($invoice->hasTax())
                                 <td>
                                     @if ($inclusiveTaxPercentage = $item->inclusiveTaxPercentage())
@@ -144,7 +153,6 @@
                                     @endif
                                 </td>
                             @endif
-
                             <td>{{ $item->total() }}</td>
                         </tr>
                     @endforeach
@@ -153,7 +161,7 @@
                     @foreach ($invoice->subscriptions() as $subscription)
                         <tr class="row">
                             <td>Subscription ({{ $subscription->quantity }})</td>
-                            <td>
+                            <td colspan="2">
                                 {{ $subscription->startDateAsCarbon()->formatLocalized('%B %e, %Y') }} -
                                 {{ $subscription->endDateAsCarbon()->formatLocalized('%B %e, %Y') }}
                             </td>
@@ -181,8 +189,8 @@
                     <!-- Display The Subtotal -->
                     @if ($invoice->hasDiscount() || $invoice->hasTax() || $invoice->hasStartingBalance())
                         <tr>
-                            <td colspan="{{ $invoice->hasTax() ? 3 : 2 }}" style="text-align: right;">Subtotal</td>
-                            <td>{{ $invoice->subtotal() }}</td>
+                            <td colspan="{{ $invoice->hasTax() ? 3 : 2 }}" style="text-align: right;">@lang('Netto')</td>
+                            <td>@netto((int)$invoice->total/100) €</td>
                         </tr>
                     @endif
 
@@ -238,7 +246,7 @@
                     <!-- Display The Final Total -->
                     <tr>
                         <td colspan="{{ $invoice->hasTax() ? 3 : 2 }}" style="text-align: right;">
-                            <strong>Total</strong>
+                            <strong>@lang('Brutto')</strong>
                         </td>
                         <td>
                             <strong>{{ $invoice->total() }}</strong>

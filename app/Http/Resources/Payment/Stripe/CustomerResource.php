@@ -2,7 +2,6 @@
 namespace App\Http\Resources\Payment\Stripe;
 
 use App\Helper\MyLang;
-use App\Helper\MyMoney;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Request;
@@ -32,6 +31,7 @@ class CustomerResource extends JsonResource
             'currency'  => 'eur',
             'shipping'  => $shipping,
             'address'   => $shipping['address'],
+            'preferred_locales' => MyLang::getLocale(),
         ];
     }
 }

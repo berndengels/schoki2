@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
+use Stripe\Invoice;
 use Stripe\Price;
 use Stripe\StripeClient;
 use App\Models\Customer;
@@ -39,29 +41,61 @@ class PaymentStripeController extends Controller
              * @var StripeCustomer $stripeCustomer
              */
             $customer       = $request->user('web');
-            $stripeCustomer = $customer->createOrGetStripeCustomer();
-
+            $customerData   = (new CustomerResource($customer))->toArray($request);
+            $stripeCustomer = $customer->createOrGetStripeCustomer($customerData);
+            $stripeCustomerID = $stripeCustomer->id;
             $paymentMethods = config('my.payment.types');
-
-            $customerData   = new CustomerResource($customer);
-            $stripeCustomer->updateAttributes($customerData->toArray($request));
-
-            $prices = ShopRepository::getStripePriceItems($cart, $request);
-
-            $stripePrices = $prices->map(function($price, $cartItemId) {
+            $prices         = ShopRepository::getStripePriceItems($cart, $request);
+            $params         = [
+                'display_name'  => 'VAT',
+                'description'   => 'VAT Germany',
+                'jurisdiction'  => 'DE',
+                'percentage'    => env('PAYMENT_TAX_RATE'),
+                'inclusive'     => true,
+            ];
+            $taxRate = $this->stripeClient->taxRates->create($params);
+/*
+            $params = [
+                'type'  => 'eu_vat',
+                'value' => $taxRate->id,
+            ];
+            $customerTaxRate = $this->stripeClient->customers->createTaxId($taxRate->id, $params);
+*/
+            $stripePrices = $prices->map(function($price, $cartItemId) use ($stripeCustomerID, $cart) {
+                $cartItem       = $cart->get($cartItemId);
+                $stripePrice    = $this->stripeClient->prices->create($price);
+                $params = [
+                    'customer'      => $stripeCustomerID,
+                    'price'         => $stripePrice->id,
+                    'description'   => $cartItem->name,
+                    'quantity'      => $cartItem->qty,
+                ];
+                $this->stripeClient->invoiceItems->create($params);
                 return [
-                    'price'         => $this->stripeClient->prices->create($price),
+                    'price'         => $stripePrice,
                     'cartItemId'    => $cartItemId,
                 ];
             });
+
+            $params = [
+                'customer'      => $stripeCustomerID,
+                'auto_advance'  => true,
+                'description'   => 'Rechnung für Schokoladen Bestellung vom '. Carbon::today()->format('d.m.Y H:i'),
+                'default_tax_rates' => [$taxRate],
+            ];
+            /**
+             * @var \Laravel\Cashier\Invoice
+             */
+            $invoice = $this->stripeClient->invoices->create($params);
+            $invoice->finalizeInvoice();
 
             $orderItems = $stripePrices->map(function($item) use ($cart) {
                 /**
                  * @var Price $price
                  * @var CartItem $cartItem
                  */
-                $price = $item['price'];
-                $cartItem = $cart->get($item['cartItemId']);
+                $price      = $item['price'];
+                $cartItem   = $cart->get($item['cartItemId']);
                 return [
                     'price'     => $price->id,
                     'quantity'  => $cartItem->qty,
@@ -79,35 +113,49 @@ class PaymentStripeController extends Controller
              */
             $stripeSession = $this->stripeClient->checkout->sessions->create([
                 'payment_method_types' => $paymentMethods,
-                'customer'          => $stripeCustomer,
+                'customer'          => $stripeCustomerID,
                 'mode'              => 'payment',
                 'locale'            => MyLang::getPrimary(),
                 'line_items'        => $orderItems,
                 'metadata'          => $metadata,
-                'success_url'       => route('public.payment.stripe.success'),
-                'cancel_url'        => route('public.payment.stripe.success'),
+                'success_url'       => route('payment.stripe.success'),
+                'cancel_url'        => route('payment.stripe.success'),
             ]);
+
             return response()->json(['sessionId' => $stripeSession->id]);
         }
         catch(Exception $e) {
-            $title      = __METHOD__;
-            $code       = $e->getCode();
-            $message    = $e->getMessage();
-            $trace      = $e->getTraceAsString();
-
-            return view('errors.trace', compact('title','code', 'message', 'trace'));
+            throw new Exception($e);
         }
     }
 
-    public function cancel(Customer $customer, Cart $cart)
+    public function cancel(Customer $customer)
     {
         // @todo: maybe destroy cart here
-        return view('public.payment.cancel', compact('customer','cart'));
+        return view('public.payment.cancel', compact('customer'));
     }
 
-    public function success(Customer $customer)
+    public function success(Request $request)
     {
-        return view('public.payment.success', compact('customer'));
+        /**
+         * @var Customer $customer
+         */
+        $customer = $request->user();
+        $invoices = $customer->invoicesIncludingPending();
+        return view('public.payment.success', compact('customer','invoices'));
+    }
+
+    public function invoice(Request $request, string $invoiceId)
+    {
+        $filename = Carbon::now()->format('YmdHi').'-schokladen-rechnung';
+        /** @var Customer $customer */
+        $customer = $request->user();
+        return $customer->downloadInvoice($invoiceId, [
+            'vendor'    => 'Schokoladen Berlin-Mitte',
+            'product'   => 'Ihre aktuelle Bestellung',
+            'id'        => $invoiceId,
+            'vat'       => env('PAYMENT_TAX_RATE'),
+        ], $filename);
     }
 
     public function config()

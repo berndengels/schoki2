@@ -46,13 +46,14 @@ class ShippingController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $language   = MyLang::getPrimary();
         $countries  = Country::all()->sortBy($language);
         $country    = $countries->where('code', strtoupper($language))->first();
         $data       = null;
-        return view('public.shipping.create', compact('data','country', 'language', 'countries'));
+        $redirectTo = $request->has('redirectTo') ? $request->input('redirectTo') : null;
+        return view('public.shipping.create', compact('data','country', 'language', 'countries' , 'redirectTo'));
     }
 
     /**
@@ -66,6 +67,8 @@ class ShippingController extends Controller
         $customer   = $request->user('web');
         $validated = $request->getSanitized();
         $shipping = Shipping::create($validated);
+        $redirectTo = $request->input('redirectTo',null);
+
         if($shipping->is_default) {
             Shipping::whereKeyNot($shipping->id)->update(['is_default' => false]);
         } else {
@@ -73,7 +76,12 @@ class ShippingController extends Controller
                 $shipping->update(['is_default' => true]);
             }
         }
-        return redirect()->route('shipping.index');
+
+        if($redirectTo) {
+            return redirect()->route($redirectTo);
+        } else {
+            return redirect()->route('shipping.index');
+        }
     }
 
     /**

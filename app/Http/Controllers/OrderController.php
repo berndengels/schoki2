@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\OrderRequest;
 use Gloudemans\Shoppingcart\Cart;
+use Laravel\Cashier\Cashier;
 
 class OrderController extends Controller
 {
@@ -27,7 +28,7 @@ class OrderController extends Controller
         $customer = auth('web')->user();
         $shippings = $customer->shippings;
         if(!$shippings->count() > 0) {
-            return redirect()->route('shipping.create')
+            return redirect()->route('shipping.create', ['redirectTo' => 'public.order.index'])
                 ->with(['ordering' => true, 'customer' => $customer]);
         }
         $shippingDefault = $shippings->where('is_default', true)->first();

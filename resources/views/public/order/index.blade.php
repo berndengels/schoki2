@@ -47,7 +47,7 @@
                                         data-toggle="tooltip" data-placement="top" data-html="true"
                                         title="Bezahlung per:<br>
                                             EC-Karte (SEPA-Lastschrift)<br>Sofort, Visa, MasterCard"
-                                        formaction="{{ route('public.payment.stripe.create') }}">
+                                        formaction="{{ route('payment.stripe.create') }}">
                                             <i class="fab fa-cc-stripe mr-1"></i>
                                             @lang('Checkout Payment')
                                     </button>
@@ -56,7 +56,7 @@
                                         class="btn btn-primary ml-2 btnPay align-middle"
                                         data-toggle="tooltip" data-placement="top" data-html="true"
                                             title="Bezahlung per<br>PayPal"
-                                        formaction="{{ route('public.payment.paypal.process') }}">
+                                        formaction="{{ route('payment.paypal.process') }}">
                                             <i class="fab fa-cc-paypal mr-1"></i>
                                             @lang('Checkout PayPal')
                                     </button>

@@ -9,11 +9,11 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <form
-                              action="{{ route('shipping.store') }}"
-                              method="post"
-                        >
+                        <form action="{{ route('shipping.store') }}" method="post">
                             @csrf
+                            @if($redirectTo)
+                                <input type="hidden" name="redirectTo" value="{{ $redirectTo }}"/>
+                            @endif
                             <x-inp.select name="country_id" label="Land"
                               :options="$countries"
                               :value="$country->id"
