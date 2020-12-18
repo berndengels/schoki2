@@ -51,12 +51,17 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Schema::defaultStringLength(191);
+
         Blade::directive('brutto', function ($expression) {
             return "<?php echo \App\Helper\MyMoney::getBrutto($expression); ?>";
         });
         Blade::directive('netto', function ($expression) {
             return "<?php echo \App\Helper\MyMoney::getNetto($expression); ?>";
         });
+        Blade::directive('nettoRounded', function ($expression) {
+            return "<?php echo \App\Helper\MyMoney::getNettoRounded($expression); ?>";
+        });
+
         Blade::component('inp.text', Text::class);
         Blade::component('inp.email', Email::class);
         Blade::component('inp.date', Date::class);

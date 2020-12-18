@@ -45,7 +45,8 @@ class PaymentStripeController extends Controller
             $stripeCustomer = $customer->createOrGetStripeCustomer($customerData);
             $stripeCustomerID = $stripeCustomer->id;
             $paymentMethods = config('my.payment.types');
-            $prices         = ShopRepository::getStripePriceItems($cart, $request);
+
+            // create taxRate
             $params         = [
                 'display_name'  => 'VAT',
                 'description'   => 'VAT Germany',
@@ -54,13 +55,9 @@ class PaymentStripeController extends Controller
                 'inclusive'     => true,
             ];
             $taxRate = $this->stripeClient->taxRates->create($params);
-/*
-            $params = [
-                'type'  => 'eu_vat',
-                'value' => $taxRate->id,
-            ];
-            $customerTaxRate = $this->stripeClient->customers->createTaxId($taxRate->id, $params);
-*/
+
+            // create prices by cartItems
+            $prices       = ShopRepository::getStripePriceItems($cart, $request);
             $stripePrices = $prices->map(function($price, $cartItemId) use ($stripeCustomerID, $cart) {
                 $cartItem       = $cart->get($cartItemId);
                 $stripePrice    = $this->stripeClient->prices->create($price);
@@ -70,6 +67,7 @@ class PaymentStripeController extends Controller
                     'description'   => $cartItem->name,
                     'quantity'      => $cartItem->qty,
                 ];
+                // create invoice Items
                 $this->stripeClient->invoiceItems->create($params);
                 return [
                     'price'         => $stripePrice,
@@ -77,6 +75,7 @@ class PaymentStripeController extends Controller
                 ];
             });
 
+            // create invoice
             $params = [
                 'customer'      => $stripeCustomerID,
                 'auto_advance'  => true,
@@ -89,6 +88,7 @@ class PaymentStripeController extends Controller
             $invoice = $this->stripeClient->invoices->create($params);
             $invoice->finalizeInvoice();
 
+            // create order, must be updated by webhook event 'checkout.session.completed'
             $orderItems = $stripePrices->map(function($item) use ($cart) {
                 /**
                  * @var Price $price
@@ -101,14 +101,16 @@ class PaymentStripeController extends Controller
                     'quantity'  => $cartItem->qty,
                 ];
             })->values()->toArray();
-
             $order = ShopRepository::createOrderByCart($customer, $cart);
 
+            // set metadata for using in webhook response
             $metadata = [
                 'order_id'      => $order ? (int) $order->id : null,
                 'customer_id'   => (int) $customer->id,
             ];
             /**
+             * create a checkout session and listen on related webhook event
+             * on App\Jobs\\StripeWebhooks\HandleSessionCheckoutCompleted
              * @var Session $stripeSession
              */
             $stripeSession = $this->stripeClient->checkout->sessions->create([

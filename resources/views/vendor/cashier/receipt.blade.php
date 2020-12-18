@@ -190,7 +190,7 @@ use Stripe\InvoiceItem;
                     @if ($invoice->hasDiscount() || $invoice->hasTax() || $invoice->hasStartingBalance())
                         <tr>
                             <td colspan="{{ $invoice->hasTax() ? 3 : 2 }}" style="text-align: right;">@lang('Netto')</td>
-                            <td>@netto((int)$invoice->total/100) €</td>
+                            <td>@nettoRounded((int)$invoice->total/100) €</td>
                         </tr>
                     @endif
 

@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Resources\Payment\Stripe;
 
-use App\Helper\MyLang;
 use App\Helper\MyMoney;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,17 +19,10 @@ class CartItemResource extends JsonResource
         /**
          * @var CartItem $this
          */
-        $language = MyLang::getPrimary();
         return [
-//            'id'                => $this->id,
-//            'object'            => $this->name,
             'description'       => $this->name,
             'price'             => MyMoney::getBrutto($this->price),
             'quantity'          => $this->qty,
-//            'taxes'             => $this->taxRate,
-//            'currency'          => 'EUR',
-//            'amount_subtotal'   => (int) ($this->subtotal(null) * 100),
-//            'amount_total'      => (int) ($this->total(null) * 100),
         ];
     }
 }

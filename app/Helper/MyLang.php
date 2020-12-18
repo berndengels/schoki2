@@ -21,4 +21,10 @@ class MyLang
         $lang = self::getPrimary();
         return $lang . '_' . strtoupper($lang);
     }
+
+    public static function getLocaleRfc5646()
+    {
+        $lang = self::getPrimary();
+        return $lang . '-' . strtoupper($lang);
+    }
 }

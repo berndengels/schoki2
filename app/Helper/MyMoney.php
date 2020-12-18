@@ -12,10 +12,16 @@ class MyMoney implements Calculator
         return (100 + $tax)/100;
     }
 
-    public static function getNetto($brutto, $decimal = 2)
+    public static function getNetto($brutto)
     {
         $divisor = self::getDivisor();
         return $brutto / $divisor;
+    }
+
+    public static function getNettoRounded($val, $decimal = 2)
+    {
+        $tmp = round(self::getNetto($val), 3);
+        return round($tmp, $decimal);
     }
 
     public static function getBrutto($netto, $decimal = 2)

@@ -28,10 +28,10 @@ class CustomerResource extends JsonResource
         return [
             'name'      => $this->name,
             'email'     => $this->email,
-            'currency'  => 'eur',
+//            'currency'  => 'eur',
             'shipping'  => $shipping,
             'address'   => $shipping['address'],
-            'preferred_locales' => MyLang::getLocale(),
+            'preferred_locales' => [MyLang::getLocaleRfc5646()],
         ];
     }
 }
