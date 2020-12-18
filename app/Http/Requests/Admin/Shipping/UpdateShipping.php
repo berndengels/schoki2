@@ -16,7 +16,7 @@ class UpdateShipping extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->check();
+        return auth()->check();
     }
 
     public function validationData()
