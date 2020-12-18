@@ -31,6 +31,7 @@
         "laravelium/feed": "^8.0",
         "lavary/laravel-menu": "^1.7",
         "misterphilip/maintenance-mode": "^2.0",
+        "paypal/rest-api-sdk-php": "*",
         "phpstan/phpstan": "^0.12.62",
         "spatie/laravel-db-snapshots": "^1.7",
         "spatie/laravel-newsletter": "^4.9",
@@ -71,20 +72,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
-        ],
-        "post-update-cmd": [
-            "@php artisan telescope:publish --ansi"
-        ]
-    }
+    "prefer-stable": true
 }

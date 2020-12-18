@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Pro SQL dump
-# Version 4529
+# Version 4541
 #
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.5.8-MariaDB)
 # Datenbank: schokoladen2
-# Erstellt am: 2020-12-10 16:44:40 +0000
+# Erstellt am: 2020-12-18 09:22:45 +0000
 # ************************************************************
 
 
@@ -23,32 +23,10 @@
 # Export von Tabelle model_has_permissions
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `model_has_permissions`;
-
-CREATE TABLE `model_has_permissions` (
-  `permission_id` bigint(20) unsigned NOT NULL,
-  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
-  KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`),
-  CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 
 # Export von Tabelle model_has_roles
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `model_has_roles`;
-
-CREATE TABLE `model_has_roles` (
-  `role_id` bigint(20) unsigned NOT NULL,
-  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`role_id`,`model_id`,`model_type`),
-  KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`),
-  CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `model_has_roles` WRITE;
 /*!40000 ALTER TABLE `model_has_roles` DISABLE KEYS */;
@@ -72,6 +50,8 @@ VALUES
 	(2,'App\\Models\\AdminUser',105),
 	(2,'App\\Models\\AdminUser',106),
 	(3,'App\\Models\\AdminUser',1),
+	(3,'App\\Models\\Customer',1),
+	(3,'App\\Models\\Customer',3),
 	(3,'App\\Models\\AdminUser',12),
 	(3,'App\\Models\\AdminUser',20),
 	(3,'App\\Models\\AdminUser',47),
@@ -89,17 +69,6 @@ UNLOCK TABLES;
 
 # Export von Tabelle permissions
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `permissions`;
-
-CREATE TABLE `permissions` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `permissions` WRITE;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
@@ -250,20 +219,21 @@ VALUES
 	(142,'order.delete','admin','2020-12-02 00:41:46','2020-12-02 00:41:46'),
 	(143,'order.bulk-delete','admin','2020-12-02 00:41:46','2020-12-02 00:41:46'),
 	(144,'viewTelescope','admin','2020-12-06 23:01:16','2020-12-06 23:01:16'),
-	(145,'shipping','admin','2020-12-10 15:18:49','2020-12-10 15:18:49'),
-	(146,'shipping.index','admin','2020-12-10 15:18:49','2020-12-10 15:18:49'),
-	(147,'shipping.create','admin','2020-12-10 15:18:49','2020-12-10 15:18:49'),
-	(148,'shipping.show','admin','2020-12-10 15:18:49','2020-12-10 15:18:49'),
-	(149,'shipping.edit','admin','2020-12-10 15:18:49','2020-12-10 15:18:49'),
-	(150,'shipping.delete','admin','2020-12-10 15:18:49','2020-12-10 15:18:49'),
-	(151,'shipping.bulk-delete','admin','2020-12-10 15:18:49','2020-12-10 15:18:49'),
 	(152,'country','admin','2020-12-10 17:40:38','2020-12-10 17:40:38'),
 	(153,'country.index','admin','2020-12-10 17:40:38','2020-12-10 17:40:38'),
 	(154,'country.create','admin','2020-12-10 17:40:38','2020-12-10 17:40:38'),
 	(155,'country.show','admin','2020-12-10 17:40:38','2020-12-10 17:40:38'),
 	(156,'country.edit','admin','2020-12-10 17:40:38','2020-12-10 17:40:38'),
 	(157,'country.delete','admin','2020-12-10 17:40:38','2020-12-10 17:40:38'),
-	(158,'country.bulk-delete','admin','2020-12-10 17:40:38','2020-12-10 17:40:38');
+	(158,'country.bulk-delete','admin','2020-12-10 17:40:38','2020-12-10 17:40:38'),
+	(159,'shipping','web','2020-12-11 02:41:06','2020-12-11 02:41:06'),
+	(160,'shipping.index','web','2020-12-11 02:41:06','2020-12-11 02:41:06'),
+	(161,'shipping.create','web','2020-12-11 02:41:06','2020-12-11 02:41:06'),
+	(162,'shipping.show','web','2020-12-11 02:41:06','2020-12-11 02:41:06'),
+	(163,'shipping.edit','web','2020-12-11 02:41:06','2020-12-11 02:41:06'),
+	(164,'shipping.delete','web','2020-12-11 02:41:06','2020-12-11 02:41:06'),
+	(165,'shipping.bulk-delete','web','2020-12-11 02:41:06','2020-12-11 02:41:06'),
+	(166,'country.index','web','2020-12-17 22:56:44','2020-12-17 22:56:44');
 
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -271,17 +241,6 @@ UNLOCK TABLES;
 
 # Export von Tabelle role_has_permissions
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `role_has_permissions`;
-
-CREATE TABLE `role_has_permissions` (
-  `permission_id` bigint(20) unsigned NOT NULL,
-  `role_id` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`permission_id`,`role_id`),
-  KEY `role_has_permissions_role_id_foreign` (`role_id`),
-  CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `role_has_permissions` WRITE;
 /*!40000 ALTER TABLE `role_has_permissions` DISABLE KEYS */;
@@ -426,20 +385,35 @@ VALUES
 	(135,2),
 	(136,2),
 	(137,2),
+	(137,3),
 	(138,2),
+	(138,3),
 	(139,2),
+	(139,3),
 	(140,2),
 	(141,2),
+	(141,3),
 	(142,2),
+	(142,3),
 	(143,2),
 	(144,1),
 	(152,1),
+	(152,3),
 	(153,1),
+	(153,3),
 	(154,1),
 	(155,1),
+	(155,3),
 	(156,1),
 	(157,1),
-	(158,1);
+	(158,1),
+	(159,3),
+	(160,3),
+	(161,3),
+	(162,3),
+	(163,3),
+	(164,3),
+	(165,3);
 
 /*!40000 ALTER TABLE `role_has_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -447,17 +421,6 @@ UNLOCK TABLES;
 
 # Export von Tabelle roles
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `roles`;
-
-CREATE TABLE `roles` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;

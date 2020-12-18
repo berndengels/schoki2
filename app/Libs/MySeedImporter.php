@@ -1,5 +1,5 @@
 <?php
-namespace Database\Seeders\Inc;
+namespace App\Libs;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Importer
  * @package Database\Seeders\Inc
  */
-class Importer extends Seeder
+class MySeedImporter extends Seeder
 {
 
     /**

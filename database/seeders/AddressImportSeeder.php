@@ -2,7 +2,7 @@
 namespace Database\Seeders;
 
 use App\Models\Address;
-use Database\Seeders\Inc\Importer;
+use App\Libs\MySeedImporter as Importer;
 
 class AddressImportSeeder extends Importer
 {

@@ -1,5 +1,5 @@
 <?php
-//namespace Database\Migrations\Inc;
+namespace App\Libs;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;

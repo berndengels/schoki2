@@ -37,24 +37,3 @@ if($('[name="csrf-token"]').is(":visible")) {
 $(document).ajaxError(function( event, xhr, settings, thrownError ) {
     console.error(xhr);
 });
-window.paymentFormStyle = {
-    base: {
-        color: '#32325d',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-        fontSmoothing: 'antialiased',
-        fontSize: '16px',
-        '::placeholder': {
-            color: '#aab7c4'
-        },
-        ':-webkit-autofill': {
-            color: '#32325d',
-        },
-    },
-    invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a',
-        ':-webkit-autofill': {
-            color: '#fa755a',
-        },
-    }
-};

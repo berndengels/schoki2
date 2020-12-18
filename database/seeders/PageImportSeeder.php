@@ -2,7 +2,7 @@
 namespace Database\Seeders;
 
 use App\Models\Page;
-use Database\Seeders\Inc\Importer;
+use App\Libs\MySeedImporter as Importer;
 
 class PageImportSeeder extends Importer
 {

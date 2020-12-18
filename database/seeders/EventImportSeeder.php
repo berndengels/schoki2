@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Event;
-use Database\Seeders\Inc\Importer;
+use App\Libs\MySeedImporter as Importer;
 use Illuminate\Support\Facades\Log;
 
 class EventImportSeeder extends Importer

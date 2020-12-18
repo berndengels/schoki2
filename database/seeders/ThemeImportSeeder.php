@@ -2,7 +2,7 @@
 namespace Database\Seeders;
 
 use App\Models\Theme;
-use Database\Seeders\Inc\Importer;
+use App\Libs\MySeedImporter as Importer;
 
 class ThemeImportSeeder extends Importer
 {

@@ -2,7 +2,7 @@
 namespace Database\Seeders;
 
 use App\Models\EventTemplate;
-use Database\Seeders\Inc\Importer;
+use App\Libs\MySeedImporter as Importer;
 
 class EventTemplateImportSeeder extends Importer
 {

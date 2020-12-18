@@ -1,6 +1,6 @@
 <?php
-require_once base_path(). '/database/migrations/inc/MyMigration.php';
 
+use App\Libs\MyMigration;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 

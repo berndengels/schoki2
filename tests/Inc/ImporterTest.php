@@ -1,5 +1,5 @@
 <?php
-namespace Tests\inc;
+namespace Tests\Inc;
 
 use Database\Seeders\Inc\Importer;
 use PHPUnit\Framework\TestCase;

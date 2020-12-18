@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exemption;
+namespace App\Exemptions;
 
 use MisterPhilip\MaintenanceMode\Exemptions\MaintenanceModeExemption;
 

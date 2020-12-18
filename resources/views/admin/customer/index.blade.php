@@ -54,10 +54,6 @@
                                         <th is='sortable' :column="'email'">{{ trans('admin.customer.columns.email') }}</th>
                                         <th is='sortable' :column="'email_verified_at'">{{ trans('admin.customer.columns.email_verified_at') }}</th>
                                         <th is='sortable' :column="'stripe_id'">{{ trans('admin.customer.columns.stripe_id') }}</th>
-                                        <th is='sortable' :column="'card_brand'">{{ trans('admin.customer.columns.card_brand') }}</th>
-                                        <th is='sortable' :column="'card_last_four'">{{ trans('admin.customer.columns.card_last_four') }}</th>
-                                        <th is='sortable' :column="'trial_ends_at'">{{ trans('admin.customer.columns.trial_ends_at') }}</th>
-
                                         <th></th>
                                     </tr>
                                     <tr v-show="(clickedBulkItemsCount > 0) || isClickedAll">
@@ -85,10 +81,6 @@
                                         <td>@{{ item.email }}</td>
                                         <td>@{{ item.email_verified_at | datetime }}</td>
                                         <td>@{{ item.stripe_id }}</td>
-                                        <td>@{{ item.card_brand }}</td>
-                                        <td>@{{ item.card_last_four }}</td>
-                                        <td>@{{ item.trial_ends_at | datetime }}</td>
-
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">

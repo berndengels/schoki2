@@ -16,7 +16,7 @@ class PermissionsAndRolesSeeder extends Seeder
     public function run()
     {
         try {
-            $file = '20201210_permissions_and_roles.sql';
+            $file = '20201218_permissions_and_roles.sql';
             $sql = file_get_contents(database_path() . '/dumps/' . $file);
             DB::unprepared($sql);
             $output = "<info>Success: permissions and roles imported</info>";

@@ -2,7 +2,7 @@
 namespace Database\Seeders;
 
 use App\Models\Message;
-use Database\Seeders\Inc\Importer;
+use App\Libs\MySeedImporter as Importer;
 
 class MessageImportSeeder extends Importer
 {

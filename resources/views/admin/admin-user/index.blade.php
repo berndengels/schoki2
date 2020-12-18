@@ -43,14 +43,14 @@
                         <table class="table table-hover table-listing">
                             <thead>
                                 <tr>
-                                    <th is='sortable' :column="'id'">{{ trans('admin.admin-user.columns.id') }}</th>
-                                    <th is='sortable' :column="'first_name'">{{ trans('admin.admin-user.columns.first_name') }}</th>
-                                    <th is='sortable' :column="'last_name'">{{ trans('admin.admin-user.columns.last_name') }}</th>
-                                    <th is='sortable' :column="'email'">{{ trans('admin.admin-user.columns.email') }}</th>
-                                    <th is='sortable' :column="'activated'" v-if="activation">{{ trans('admin.admin-user.columns.activated') }}</th>
-                                    <th is='sortable' :column="'forbidden'">{{ trans('admin.admin-user.columns.forbidden') }}</th>
-                                    <th is='sortable' :column="'language'">{{ trans('admin.admin-user.columns.language') }}</th>
-                                    <th is='sortable' :column="'last_login_at'">{{ trans('admin.admin-user.columns.last_login_at') }}</th>
+                                    <th is='sortable' :column="'id'">ID</th>
+                                    <th is='sortable' :column="'first_name'">Vorname</th>
+                                    <th is='sortable' :column="'last_name'">Nachname</th>
+                                    <th is='sortable' :column="'email'">Email</th>
+                                    <th is='sortable' :column="'activated'" v-if="activation">Aktiviert</th>
+                                    <th is='sortable' :column="'forbidden'">Verboten</th>
+                                    <th is='sortable' :column="'language'">Sprache</th>
+                                    <th is='sortable' :column="'last_login_at'">Letztes Login</th>
                                     <th></th>
                                 </tr>
                             </thead>

@@ -2,7 +2,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use Database\Seeders\Inc\Importer;
+use App\Libs\MySeedImporter as Importer;
 
 class CategoryImportSeeder extends Importer
 {

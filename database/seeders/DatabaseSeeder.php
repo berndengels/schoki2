@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             PageImportSeeder::class,
             PermissionsAndRolesSeeder::class,
             CountriesSeeder::class,
+            MenuSeeder::class,
 */
         ]);
     }

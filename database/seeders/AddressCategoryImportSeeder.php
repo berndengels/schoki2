@@ -2,7 +2,7 @@
 namespace Database\Seeders;
 
 use App\Models\AddressCategory;
-use Database\Seeders\Inc\Importer;
+use App\Libs\MySeedImporter as Importer;
 
 class AddressCategoryImportSeeder extends Importer
 {
