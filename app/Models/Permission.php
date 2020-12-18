@@ -39,18 +39,19 @@ class Permission extends BaseModel
     protected $fillable = [
         'name',
         'guard_name',
-
     ];
-
     protected $dates = [
         'created_at',
         'updated_at',
-
     ];
-
-    protected $appends = ['resource_url'];
+    protected $appends = ['resource_url','listName'];
 
     /* ************************ ACCESSOR ************************* */
+
+    public function getListNameAttribute()
+    {
+        return "$this->name ($this->guard_name)";
+    }
 
     public function getResourceUrlAttribute()
     {

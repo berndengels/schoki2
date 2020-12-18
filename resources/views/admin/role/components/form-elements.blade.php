@@ -35,7 +35,7 @@
             class="form-control"
             v-model="form.permissions"
             placeholder="{{ trans('brackets/admin-ui::admin.forms.select_options') }}"
-            label="name"
+            label="listName"
             track-by="id"
             :options="allPermissions"
             :multiple="true"

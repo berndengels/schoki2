@@ -35,10 +35,8 @@ class RoleController extends Controller
         $data = AdminListing::create(Role::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'name', 'guard_name'],
-
             // set columns to searchIn
             ['id', 'name', 'guard_name']
         );
@@ -69,7 +67,7 @@ class RoleController extends Controller
             ->get();
         $this->authorize('role.create');
         return view('admin.role.create', [
-            'allPermissions'    => Permission::all(['id','name']),
+            'allPermissions'    => Permission::all(),
             'myPermissions'     => $defaultPermissions,
         ]);
     }
@@ -125,7 +123,7 @@ class RoleController extends Controller
         $hasPermissions = $role->getAllPermissions();
         return view('admin.role.edit', [
             'role'              => $role,
-            'allPermissions'    => Permission::all(['id','name']),
+            'allPermissions'    => Permission::all(),
             'myPermissions'     => $role->getAllPermissions(),
         ]);
     }
