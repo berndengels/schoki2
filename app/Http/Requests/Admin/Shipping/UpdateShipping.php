@@ -16,7 +16,7 @@ class UpdateShipping extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user('web')->checkPermissionTo('shipping.create','web');
+        return $this->user()->check();
     }
 
     public function validationData()
