@@ -27,8 +27,8 @@ class PaymentPayPalController extends Controller
         $product['items'] = ShopRepository::getCartItemsArray($cart, 'paypal', $request);
         $product['invoice_id']  = $invoiceId;
         $product['invoice_description'] = "Shokoladen Order #{$product['invoice_id']}";
-        $product['return_url']  = route('public.payment.paypal.success');
-        $product['cancel_url']  = route('public.payment.paypal.cancel');
+        $product['return_url']  = route('payment.paypal.success');
+        $product['cancel_url']  = route('payment.paypal.cancel');
         $product['total']       = $cart->priceTotal();
         $product['shipping']    = $shippingAddress;
 

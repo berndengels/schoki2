@@ -95,7 +95,6 @@ class AdminUsersController extends Controller
 
         return view('admin.admin-user.create', [
             'activation' => Config::get('admin-auth.activation_enabled'),
-//            'roles'         => Role::where('guard_name', $this->guard)->get(),
             'roles'         => Role::all(),
             'musicStyles'   => MusicStyle::orderBy('name')->get(),
         ]);

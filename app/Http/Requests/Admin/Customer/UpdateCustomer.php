@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UpdateCustomer extends FormRequest
@@ -47,8 +48,10 @@ class UpdateCustomer extends FormRequest
      */
     public function getSanitized(): array
     {
-        $sanitized = $this->validated();
-        //Add your code for manipulation with request data here
-        return $sanitized;
+        $data = $this->only(collect($this->rules())->keys()->all());
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+        return $data;
     }
 }
