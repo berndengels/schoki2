@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Exception;
-use Stripe\Invoice;
+use Carbon\Carbon;
+use Laravel\Cashier\Invoice;
 use Stripe\Price;
 use Stripe\StripeClient;
 use App\Models\Customer;
@@ -83,7 +83,7 @@ class PaymentStripeController extends Controller
                 'default_tax_rates' => [$taxRate],
             ];
             /**
-             * @var \Laravel\Cashier\Invoice
+             * @var Invoice
              */
             $invoice = $this->stripeClient->invoices->create($params);
             $invoice->finalizeInvoice();

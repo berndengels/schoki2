@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
@@ -13,7 +12,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\PaymentPayPalController;
 use App\Http\Controllers\PaymentStripeController;
-use App\Http\Controllers\Payment\StripeWebhookController;
 
 Auth::routes();
 
