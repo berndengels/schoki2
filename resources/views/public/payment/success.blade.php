@@ -22,12 +22,6 @@
                         <h3>Rechnungen</h3>
                         @if($invoices)
                             <table class="table table-sm table-borderless">
-                                <?php
-                                /**
-                                 * @var Invoice $invoice
-                                 */
-                                use Stripe\Invoice;
-                                ?>
                                 @foreach($invoices as $invoice)
                                     <tr>
                                         <td>{{ @date_format($invoice->ceated, 'd.m.Y') }}</td>
