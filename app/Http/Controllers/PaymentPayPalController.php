@@ -72,6 +72,6 @@ class PaymentPayPalController extends Controller
     }
 
     public function webhook(Request $request) {
-        dd($request);
+        Log::info(json_encode($request->input()));
     }
 }
