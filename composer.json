@@ -36,6 +36,8 @@
         "spatie/laravel-db-snapshots": "^1.7",
         "spatie/laravel-newsletter": "^4.9",
         "spatie/laravel-stripe-webhooks": "^2.4",
+        "spatie/laravel-webhook-client": "^2.7",
+        "spatie/tax-calculator": "^0.1.1",
         "srmklive/paypal": "^1.0",
         "swiftmailer/swiftmailer": "^6.2"
     },

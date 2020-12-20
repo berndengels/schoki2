@@ -12,6 +12,7 @@ return [
         'secret'      => env('PAYPAL_SANDBOX_API_SECRET', ''),
         'certificate' => env('PAYPAL_SANDBOX_API_CERTIFICATE', ''),
         'app_id'      => 'APP-80W284485P519543T', // Used for testing Adaptive Payments API in sandbox mode
+        'webhook_id'  => '6A0042816T1983623', // all events: URL/payment/paypal/webhook
     ],
     'live' => [
         'username'    => env('PAYPAL_LIVE_API_USERNAME', ''),
@@ -19,6 +20,7 @@ return [
         'secret'      => env('PAYPAL_LIVE_API_SECRET', ''),
         'certificate' => env('PAYPAL_LIVE_API_CERTIFICATE', ''),
         'app_id'      => '', // Used for Adaptive Payments API
+        'webhook_id'  => '', // all events
     ],
 
     'payment_action' => 'Sale', // Can only be 'Sale', 'Authorization' or 'Order'

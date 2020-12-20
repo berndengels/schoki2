@@ -70,4 +70,8 @@ class PaymentPayPalController extends Controller
             throw new Exception($e);
         }
     }
+
+    public function webhook(Request $request) {
+        dd($request);
+    }
 }
