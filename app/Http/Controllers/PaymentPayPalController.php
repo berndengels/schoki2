@@ -34,7 +34,7 @@ class PaymentPayPalController extends Controller
         $product['shipping']    = $shippingAddress;
 
         try {
-            $paypal = new ExpressCheckout;
+            $paypal = new ExpressCheckout();
             $result = $paypal->setExpressCheckout($product, true);
             if(isset($result['paypal_link'])) {
                 session('orderCheckout', [
@@ -44,7 +44,7 @@ class PaymentPayPalController extends Controller
                 return redirect($result['paypal_link']);
             }
         } catch(Exception $e) {
-            die($e->getMessage());
+            throw new $e;
         }
     }
 
@@ -68,7 +68,7 @@ class PaymentPayPalController extends Controller
             }
 //            return view('public.payment.success', compact('customer'));
         } catch (Exception $e) {
-            throw new Exception($e);
+            throw $e;
         }
     }
 
