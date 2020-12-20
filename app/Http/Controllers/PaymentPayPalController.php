@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\WebhookPaypal;
 use Exception;
+use App\Helper\MyCart;
+use App\Models\WebhookPaypal;
 use App\Models\Customer;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
@@ -10,6 +11,8 @@ use Gloudemans\Shoppingcart\Cart;
 use App\Repositories\ShopRepository;
 use Srmklive\PayPal\Services\ExpressCheckout;
 use App\Http\Resources\Payment\PayPal\ShippingResource;
+use Spatie\TaxCalculator\TaxCalculation;
+use Spatie\TaxCalculator\Results\CalculationWithRate;
 
 class PaymentPayPalController extends Controller
 {
@@ -23,24 +26,29 @@ class PaymentPayPalController extends Controller
         $invoiceId = date('YmdHis') .'-'. $customer->email;
         $customer->setAppends(['invoiceId' => $invoiceId] );
 
-        $shippingAddress = new ShippingResource(Shipping::find($request->input('shipping')));
+        $order = ShopRepository::createOrderByCart($customer, $cart);
         $product = [];
-        $product['items'] = ShopRepository::getCartItemsArray($cart, 'paypal', $request);
+
+        $items      = ShopRepository::getCartItems($cart, 'paypal', $request);
+        $tax        = TaxCalculation::fromCollection($items)->taxPrice();
+        $subtotal   = TaxCalculation::fromCollection($items)->basePrice();
+        $total      = TaxCalculation::fromCollection($items)->taxedPrice();
+
         $product['invoice_id']  = $invoiceId;
-        $product['invoice_description'] = "Shokoladen Order #{$product['invoice_id']}";
-        $product['return_url']  = route('payment.paypal.success');
+        $product['items']       = json_decode($items->values()->toJson(), true);
+        $product['invoice_description'] = "Shokoladen Order #{$invoiceId}";
+        $product['return_url']  = route('payment.paypal.success', ['orderId' => $order->id]);
         $product['cancel_url']  = route('payment.paypal.cancel');
-        $product['total']       = $cart->priceTotal();
-        $product['shipping']    = $shippingAddress;
+        $product['subtotal']    = $subtotal;
+        $product['total']       = $total;
+        $product['tax']         = $tax;
+//        $product['shipping']    = $shippingAddress;
+        $product['shipping']    = 0;
 
         try {
             $paypal = new ExpressCheckout();
-            $result = $paypal->setExpressCheckout($product, true);
+            $result = $paypal->setExpressCheckout($product);
             if(isset($result['paypal_link'])) {
-                session('orderCheckout', [
-                    'provider'  => 'paypal',
-                    'order'     => $product
-                ]);
                 return redirect($result['paypal_link']);
             }
         } catch(Exception $e) {
@@ -53,8 +61,14 @@ class PaymentPayPalController extends Controller
         return view('public.payment.cancel', compact('request'));
     }
 
-    public function success(Request $request)
+    public function success(Request $request, $orderId = null)
     {
+        /**
+         * @var Customer $customer
+         */
+        $customer = $request->user('web');
+        dd($orderId);
+
          /**
           * @todo: Order, Invoice, Dispatch Event paymentSuccess
           * @todo: get session('orderCheckout') for order storing in destroy after that

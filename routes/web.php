@@ -445,7 +445,7 @@ Route::prefix('payment')
     ->group(function() {
         Route::prefix('paypal')->group(static function() {
             Route::post('process', [PaymentPayPalController::class , 'process'])->name('payment.paypal.process');
-            Route::get('success', [PaymentPayPalController::class , 'success'])->name('payment.paypal.success');
+            Route::get('success/{orderId?}', [PaymentPayPalController::class , 'success'])->name('payment.paypal.success');
             Route::get('cancel', [PaymentPayPalController::class , 'cancel'])->name('payment.paypal.cancel');
         });
         Route::prefix('stripe')->group(static function() {

@@ -9,9 +9,6 @@
 namespace App\Models\Ext;
 
 use App\Helper\MyMoney;
-use App\Models\Customer;
-use App\Models\Product;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Trait HasCustomer

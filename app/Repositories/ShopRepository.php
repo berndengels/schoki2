@@ -16,17 +16,17 @@ use App\Http\Resources\Payment\Stripe\CartItemResource as StripeCartItemResource
 
 class ShopRepository
 {
-    public static function getCartItems(Cart $cart, $provider, Request $request)
+    public static function getCartItems(Cart $cart, $provider)
     {
         if(!$cart->content() || $cart->content()->count() < 1) {
             return collect([]);
         }
-        return $cart->content()->map(function (CartItem $item) use ($provider, $request) {
+        return $cart->content()->map(function (CartItem $item) use ($provider) {
             switch($provider) {
                 case 'paypal':
-                    return (new PayPalCartItemResource($item))->toArray($request);
+                    return (new PayPalCartItemResource($item));
                 case 'stripe':
-                    return (new StripeCartItemResource($item))->toArray($request);
+                    return (new StripeCartItemResource($item));
                 default:
                     throw new Exception("No valid payment provider: $provider");
             }

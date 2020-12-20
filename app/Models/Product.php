@@ -21,6 +21,7 @@ use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Gloudemans\Shoppingcart\CanBeBought;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\TaxCalculator\Traits\HasTaxWithRate;
 
 /**
  * App\Models\Product
@@ -66,6 +67,7 @@ class Product extends Model implements Buyable, HasMedia
     use HasMediaCollectionsTrait;
     use HasMediaThumbsTrait;
     use PriceTrait;
+    use HasTaxWithRate;
 
     protected $table = 'product';
     protected $appends = ['resource_url'];
@@ -102,6 +104,14 @@ class Product extends Model implements Buyable, HasMedia
             return $cartItem->id === $this->getBuyableIdentifier();
         });
         return $cartItem->count() ? $cartItem->first() : null;
+    }
+
+    public function taxPrice(): float
+    {
+    }
+
+    public function taxedPrice(): float
+    {
     }
 
     /* ************************ ACCESSOR ************************* */
