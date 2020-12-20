@@ -24,41 +24,31 @@ class PaymentPayPalController extends Controller
          */
         $customer = auth('web')->user();
         $invoiceId = date('YmdHis') .'-'. $customer->email;
-        $customer->setAppends(['invoiceId' => $invoiceId] );
+        $customer->setAppends(['invoiceId' => $invoiceId]);
 
-        $order = ShopRepository::createOrderByCart($customer, $cart);
-        $product = [];
-
-        $items      = ShopRepository::getCartItems($cart, 'paypal', $request);
-        $tax        = TaxCalculation::fromCollection($items)->taxPrice();
-        $subtotal   = TaxCalculation::fromCollection($items)->basePrice();
-        $total      = TaxCalculation::fromCollection($items)->taxedPrice();
-
-        $product['invoice_id']  = $invoiceId;
-        $product['items']       = json_decode($items->values()->toJson(), true);
-        $product['invoice_description'] = "Shokoladen Order #{$invoiceId}";
-        $product['return_url']  = route('payment.paypal.success', ['orderId' => $order->id]);
-        $product['cancel_url']  = route('payment.paypal.cancel');
-        $product['subtotal']    = $subtotal;
-        $product['total']       = $total;
-        $product['tax']         = $tax;
-//        $product['shipping']    = $shippingAddress;
-        $product['shipping']    = 0;
+        $order  = ShopRepository::createOrderByCart($customer, $cart);
+        $items  = ShopRepository::getCartItems($cart, 'paypal', $request);
+        $params = [
+            'invoice_id'    => $invoiceId,
+            'items'         => json_decode($items->values()->toJson(), true),
+            'invoice_description'   => "Shokoladen Order #{$invoiceId}",
+            'subtotal'      => TaxCalculation::fromCollection($items)->basePrice(),
+            'total'         => TaxCalculation::fromCollection($items)->taxedPrice(),
+            'tax'           => TaxCalculation::fromCollection($items)->taxPrice(),
+            'shipping'      => 0,
+            'return_url'    => route('payment.paypal.success', ['orderId' => $order->id]),
+            'cancel_url'    => route('payment.paypal.cancel'),
+        ];
 
         try {
             $paypal = new ExpressCheckout();
-            $result = $paypal->setExpressCheckout($product);
+            $result = $paypal->setExpressCheckout($params);
             if(isset($result['paypal_link'])) {
                 return redirect($result['paypal_link']);
             }
         } catch(Exception $e) {
             throw new $e;
         }
-    }
-
-    public function cancel(Request $request)
-    {
-        return view('public.payment.cancel', compact('request'));
     }
 
     public function success(Request $request, $orderId = null)
@@ -88,9 +78,13 @@ class PaymentPayPalController extends Controller
 
     public function webhook(Request $request) {
         $data = [
-            'name'  => 'paypal',
-            'payload'  => json_encode($request->input()),
+            'name'      => 'paypal',
+            'payload'   => json_encode($request->input()),
         ];
         WebhookPaypal::create($data);
+    }
+    public function cancel(Request $request)
+    {
+        return view('public.payment.cancel', compact('request'));
     }
 }
