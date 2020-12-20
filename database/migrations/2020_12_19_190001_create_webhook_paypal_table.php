@@ -17,7 +17,7 @@ class CreateWebhookPaypalTable extends MyMigration
             $table->increments('id');
             $table->string('name',100);
             $this->jsonSupported ? $table->json('payload') : $table->text('payload');
-            $this->jsonSupported ? $table->json('exception') : $table->text('exception');
+            $this->jsonSupported ? $table->json('exception')->nullable() : $table->text('exception')->nullable();
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\WebhookPaypal;
 use Exception;
 use App\Models\Customer;
 use App\Models\Shipping;
@@ -72,6 +73,10 @@ class PaymentPayPalController extends Controller
     }
 
     public function webhook(Request $request) {
-        Log::info(json_encode($request->input()));
+        $data = [
+            'name'  => 'paypal',
+            'payload'  => json_encode($request->input()),
+        ];
+        WebhookPaypal::create($data);
     }
 }
