@@ -31,7 +31,6 @@
         "laravelium/feed": "^8.0",
         "lavary/laravel-menu": "^1.7",
         "misterphilip/maintenance-mode": "^2.0",
-        "paypal/rest-api-sdk-php": "*",
         "phpstan/phpstan": "^0.12.62",
         "spatie/laravel-db-snapshots": "^1.7",
         "spatie/laravel-newsletter": "^4.9",
