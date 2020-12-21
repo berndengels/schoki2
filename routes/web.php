@@ -458,7 +458,8 @@ Route::prefix('payment')
         });
     });
 Route::stripeWebhooks('/payment/stripe/webhook');
-Route::post('/payment/paypal/webhook', [PaymentPayPalController::class , 'webhook'])->name('payment.paypal.webhook');
+//Route::post('/payment/paypal/webhook', [PaymentPayPalController::class , 'webhook'])->name('payment.paypal.webhook');
+Route::webhooks('/payment/paypal/webhook');
 
 /*
 Route::prefix('payment')

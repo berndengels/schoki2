@@ -1,6 +1,9 @@
 <?php
 
-use Spatie\WebhookClient\Models\WebhookCall;
+use App\Models\PayPalWebhookCall;
+use App\Libs\PayPal\PayPalWebhookProfile;
+use App\Validators\PayPalSignatureValidator;
+use App\Jobs\PayPalWebhooks\HandleCheckoutOrderSuccess;
 use Spatie\WebhookClient\SignatureValidator\DefaultSignatureValidator;
 use Spatie\WebhookClient\WebhookProfile\ProcessEverythingWebhookProfile;
 use Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo;
@@ -30,12 +33,12 @@ return [
              *
              * It should implement \Spatie\WebhookClient\SignatureValidator\SignatureValidator
              */
-            'signature_validator' => DefaultSignatureValidator::class,
+            'signature_validator' => PayPalSignatureValidator::class,
 
             /*
              * This class determines if the webhook call should be stored and processed.
              */
-            'webhook_profile' => ProcessEverythingWebhookProfile::class,
+            'webhook_profile' => PayPalWebhookProfile::class,
 
             /*
              * This class determines the response on a valid webhook call.
@@ -46,14 +49,13 @@ return [
              * The classname of the model to be used to store call. The class should be equal
              * or extend Spatie\WebhookClient\Models\WebhookCall.
              */
-            'webhook_model' => WebhookCall::class,
+            'webhook_model' => PayPalWebhookCall::class,
 
             /*
              * The class name of the job that will process the webhook request.
-             *
              * This should be set to a class that extends \Spatie\WebhookClient\ProcessWebhookJob.
              */
-            'process_webhook_job' => '',
+            'process_webhook_job' => HandleCheckoutOrderSuccess::class,
         ],
     ],
 ];

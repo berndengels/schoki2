@@ -119,13 +119,6 @@ class PaymentPayPalController extends Controller
          return view('public.payment.paypal.success', compact('customer', 'order'));
     }
 
-    public function webhook(Request $request) {
-        $data = [
-            'name'      => 'paypal',
-            'payload'   => json_encode($request->input()),
-        ];
-        WebhookPaypal::create($data);
-    }
     public function cancel(Request $request)
     {
         return view('public.payment.paypal.cancel', compact('request'));
