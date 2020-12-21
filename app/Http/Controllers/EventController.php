@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Libs\PayPal\PayPal;
 use Carbon\Carbon;
 use App\Models\Event;
 use App\Helper\MyDate;

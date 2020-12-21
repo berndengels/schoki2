@@ -38,8 +38,13 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
             $object         = $payload['data']['object'];
             $metadata       = $object['metadata'];
             $amountTotal    = ((int) $object['amount_total'] > 0) ? (int) $object['amount_total'] / 100 : null;
-            $customerID     = $object['customer'];
-            $customer       = Customer::whereStripeId($customerID)->first();
+            $customer       = null;
+
+            if(isset($object['customer'])) {
+                $customerID     = $object['customer'];
+                $customer       = Customer::whereStripeId($customerID)->first();
+            }
+
             $paid           = $object['payment_status'];
             $orderId        = isset($metadata['order_id']) ? (int) $metadata['order_id'] : null;
 
@@ -50,7 +55,7 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
                 'payment_provider'  => 'stripe',
             ];
             // @todo: queue stuff
-            if($orderId) {
+            if($orderId && $customer) {
                 event(new PaymentSucceeded($params, $orderId, $customer));
             }
         }

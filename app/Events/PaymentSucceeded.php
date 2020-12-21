@@ -33,13 +33,15 @@ class PaymentSucceeded
      *
      * @return void
      */
-    public function __construct( array $params, int $orderId, Customer $customer )
+    public function __construct( array $params = null, int $orderId = null, Customer $customer = null )
     {
-        $this->customer = $customer;
-        $this->orderId  = $orderId;
-        $this->params   = $params;
+        if($params && $orderId > 0 && $customer) {
+            $this->customer = $customer;
+            $this->orderId  = $orderId;
+            $this->params   = $params;
 
-        ShopRepository::updateOrder($params, $orderId);
+            ShopRepository::updateOrder($params, $orderId);
+        }
     }
 
     /**
