@@ -78,7 +78,7 @@ class PaymentPayPalController extends Controller
             ]
         ];
 
-//        try {
+        try {
             $paypal = new PayPal();
             $result = $paypal->checkout($params);
 
@@ -95,9 +95,9 @@ class PaymentPayPalController extends Controller
                 $cart->destroy();
                 return redirect($approveLink)->with(['orderId' => $order->id]);
             }
-//        } catch(Exception $e) {
-//            throw new Exception($e->getMessage());
-//        }
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function success(Request $request, $orderId = null)
