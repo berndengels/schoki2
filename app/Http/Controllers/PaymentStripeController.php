@@ -30,7 +30,7 @@ class PaymentStripeController extends Controller
 
     public function create(Cart $cart)
     {
-        return view('public.payment.create', compact('cart'));
+        return view('public.payment.stripe.create', compact('cart'));
     }
 
     public function process(Request $request, Cart $cart)
@@ -134,7 +134,7 @@ class PaymentStripeController extends Controller
     public function cancel(Customer $customer)
     {
         // @todo: maybe destroy cart here
-        return view('public.payment.cancel', compact('customer'));
+        return view('public.payment.stripe.cancel', compact('customer'));
     }
 
     public function success(Request $request)
@@ -144,7 +144,7 @@ class PaymentStripeController extends Controller
          */
         $customer = $request->user();
         $invoices = $customer->invoicesIncludingPending();
-        return view('public.payment.success', compact('customer','invoices'));
+        return view('public.payment.stripe.success', compact('customer','invoices'));
     }
 
     public function invoice(Request $request, string $invoiceId)

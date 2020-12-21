@@ -101,7 +101,8 @@ class Customer extends Authenticatable implements InstanceIdentifier
 
     public function getShippingAttribute()
     {
-        $shipping = $this->shippings()->whereIsDefault(true)->first();
+        return $this->shippings()->whereIsDefault(true)->first();
+/*
         if($shipping) {
             $data = [
                 'name'  => $this->name,
@@ -115,7 +116,8 @@ class Customer extends Authenticatable implements InstanceIdentifier
         } else {
             $data = [null];
         }
-        return json_decode(json_encode($data));
+*/
+//        return json_decode(json_encode($data));
     }
 
     public function getShippingListAttribute() {

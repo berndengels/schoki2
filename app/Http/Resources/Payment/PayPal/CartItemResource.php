@@ -9,15 +9,6 @@ use Spatie\TaxCalculator\HasTax;
 
 class CartItemResource extends JsonResource implements HasTax
 {
-    private $taxRate;
-    private $netto;
-
-    public function __construct($resource)
-    {
-        parent::__construct($resource);
-
-    }
-
     /**
      * Transform the resource collection into an array.
      *
@@ -30,12 +21,15 @@ class CartItemResource extends JsonResource implements HasTax
          * @var CartItem $this
          */
         return [
-//            'rowId'     => $this->rowId,
-            'sku'       => $this->id,
-            'name'      => $this->name,
-            'price'     => MyMoney::getNettoRounded($this->price),
-//            'tax'       => $this->taxRate,
-            'quantity'  => $this->qty,
+            "sku"       => $this->id,
+            "name"      => "$this->name",
+//            "price"     => MyMoney::getNettoRounded($this->price),
+            "quantity"  => $this->qty,
+            "category"  => "PHYSICAL_GOODS",
+            "unit_amount" => [
+                "currency_code" => config("paypal.currency"),
+                "value"         => MyMoney::getNettoRounded($this->price),
+            ],
         ];
     }
 

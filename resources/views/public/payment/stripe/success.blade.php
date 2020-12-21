@@ -11,11 +11,11 @@
                         <span>Wir senden Deine von Dir bestellen Artikel sofort per Post an folgende Adresse</span>
                     </div>
                     <div>
-                        <h5>{{ $customer->shipping->name }}</h5>
+                        <h5>{{ $customer->name }}</h5>
                         <p>
-                            {{ $customer->shipping->address->line1 }},&nbsp;
-                            {{ $customer->shipping->address->postal_code }} {{ $customer->shipping->address->city }},&nbsp;
-                            {{ $customer->shipping->address->country }}
+                            {{ $customer->shipping->street }},&nbsp;
+                            {{ $customer->shipping->postcode }} {{ $customer->shipping->city }},&nbsp;
+                            {{ $customer->shipping->country }}
                         </p>
                     </div>
                     <div>
@@ -24,7 +24,7 @@
                             <table class="table table-sm table-borderless">
                                 @foreach($invoices as $invoice)
                                     <tr>
-                                        <td>{{ @date_format($invoice->ceated, 'd.m.Y') }}</td>
+                                        <td>{{ @date_format($invoice->created, 'd.m.Y') }}</td>
                                         <td>{{ $invoice->description }}</td>
                                         <td>{{ $invoice->total() }}</td>
                                         <td><a href="{{ route('payment.stripe.invoice', ['invoiceId' => $invoice->id]) }}">Download</a></td>

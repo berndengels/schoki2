@@ -19,14 +19,13 @@ class ShippingResource extends JsonResource
         /**
          * @var Shipping $this
          */
-        $language = MyLang::getPrimary();
         return [
-            'name'      => $this->customer->name,
-            'email'     => $this->customer->email,
-            'postcode'  => $this->postcode,
-            'city'      => $this->city,
-            'street'    => $this->street,
-            'country'   => $this->country->$language,
+//            'name'      => $this->customer->name,
+//            'email'     => $this->customer->email,
+            'postal_code'       => $this->postcode,
+            'admin_area_2'      => $this->city,
+            'address_line_1'    => $this->street,
+            'country_code'      => $this->country->code,
         ];
     }
 }

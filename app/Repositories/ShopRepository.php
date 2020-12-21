@@ -16,12 +16,12 @@ use App\Http\Resources\Payment\Stripe\CartItemResource as StripeCartItemResource
 
 class ShopRepository
 {
-    public static function getCartItems(Cart $cart, $provider)
+    public static function getCartItems(Cart $cart, $provider, Request $request)
     {
         if(!$cart->content() || $cart->content()->count() < 1) {
             return collect([]);
         }
-        return $cart->content()->map(function (CartItem $item) use ($provider) {
+        return $cart->content()->map(function (CartItem $item) use ($provider, $request) {
             switch($provider) {
                 case 'paypal':
                     return (new PayPalCartItemResource($item));
@@ -77,8 +77,6 @@ class ShopRepository
                 $order = Order::create($params);
                 $order->createdBy()->associate($customer);
                 $order->orderItems()->createMany($orderItemData);
-
-                $cart->destroy();
 
                 event(new ProductOrdered($order));
 

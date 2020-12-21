@@ -15,6 +15,7 @@ return [
         'webhook_id'  => '6A0042816T1983623', // all events: URL/payment/paypal/webhook
         'client_id'   => env('PAYPAL_SANDBOX_CLIENT_ID'),
         'client_secret'  => env('PAYPAL_SANDBOX_CLIENT_SECRET'),
+        'api_url'   => 'https://api.sandbox.paypal.com',
     ],
     'live' => [
         'username'    => env('PAYPAL_LIVE_API_USERNAME', ''),
@@ -25,6 +26,7 @@ return [
         'webhook_id'  => '', // all events
         'client_id'   => env('PAYPAL_LIVE_CLIENT_ID'),
         'client_secret'  => env('PAYPAL_LIVE_CLIENT_SECRET'),
+        'api_url'   => 'https://api.paypal.com',
     ],
 
     'payment_action' => 'Sale', // Can only be 'Sale', 'Authorization' or 'Order'
