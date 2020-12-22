@@ -56,9 +56,6 @@
             @can('permission')
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/permissions') }}"><i class="nav-icon icon-book-open"></i> {{ trans('admin.permission.title') }}</a></li>
             @endcan
-            @can('viewTelescope')
-            <li class="nav-item"><a class="nav-link" href="{{ route('telescope') }}"><i class="nav-icon icon-book-open"></i> {{ trans('Telescope') }}</a></li>
-            @endcan
             @can('translation.index')
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/translations') }}"><i class="nav-icon icon-location-pin"></i> {{ __('Translations') }}</a></li>
             @endcan

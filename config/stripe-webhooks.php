@@ -1,6 +1,7 @@
 <?php
 
-use Spatie\StripeWebhooks\ProcessStripeWebhookJob;
+use App\Webhook\MyProcessStripeWebhookJob;
+//use Spatie\StripeWebhooks\ProcessStripeWebhookJob;
 use App\Jobs\StripeWebhooks\HandleSessionCheckoutCompleted;
 
 return [
@@ -26,5 +27,5 @@ return [
      * The classname of the model to be used. The class should equal or extend
      * Spatie\StripeWebhooks\ProcessStripeWebhookJob.
      */
-    'model' => ProcessStripeWebhookJob::class,
+    'model' => MyProcessStripeWebhookJob::class,
 ];

@@ -3,14 +3,29 @@ namespace App\Jobs\PayPalWebhooks;
 
 use App\Events\PaymentSucceeded;
 use App\Models\Customer;
+use App\Models\Webhook;
 use Carbon\Carbon;
 use Exception;
 use Spatie\WebhookClient\ProcessWebhookJob as SpatieProcessWebhookJob;
 use function PHPUnit\Framework\throwException;
 
-class HandleCheckoutOrderSuccess extends SpatieProcessWebhookJob
+class HandleCheckoutOrder extends SpatieProcessWebhookJob
 {
     protected $provider = 'paypal';
+    protected $events = [
+        'CHECKOUT.ORDER.COMPLETED',
+        'CHECKOUT.ORDER.APPROVED',
+    ];
+
+    /**
+     * @var Webhook
+     */
+    public $webhook;
+
+    public function __construct(Webhook $webhook)
+    {
+        $this->webhook = $webhook;
+    }
 
     /**
      * Execute the job.
@@ -19,24 +34,24 @@ class HandleCheckoutOrderSuccess extends SpatieProcessWebhookJob
     public function handle()
     {
         try {
-            $data           = json_decode($this->webhookCall, true);
-            $payload        = $data['payload'];
+//            $data           = json_decode($this->webhook, true);
+//            $payload        = $data['payload'];
+            $payload        = $this->webhook->payload;
             $paymentId      = $payload['id'];
             $created        = $payload['create_time'];
             $eventType      = $payload['event_type'];
 
-            if ('CHECKOUT.ORDER.COMPLETED' === $eventType) {
-
+            if (in_array($eventType, $this->events)) {
                 $resource       = $payload['resource'];
+                $payer          = isset($resource['payer']) ? $resource['payer'] : null;
                 $purchaseUnits  = $resource['purchase_units'][0];
-                $payee          = $purchaseUnits['payee'];
-                $payeeEmail     = $payee['email_address'];
                 $orderId        = isset($payload['reference_id']) ? $payload['reference_id'] : null;
                 $amountTotal    = $purchaseUnits['amount']['value'];
                 $customer       = null;
 
-                if($payeeEmail) {
-                    $customer = Customer::whereEmail($payeeEmail)->first();
+                if($payer) {
+                    $email = $payer['email_address'];
+                    $customer = Customer::whereEmail($email)->first();
                 }
 
                 $params = [

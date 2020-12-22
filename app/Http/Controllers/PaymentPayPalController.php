@@ -5,7 +5,7 @@ use App\Models\Order;
 use Exception;
 use App\Helper\MyCart;
 use App\Libs\PayPal\PayPal;
-use App\Models\WebhookPaypal;
+use App\Models\Webhook;
 use App\Models\Customer;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
@@ -109,7 +109,6 @@ class PaymentPayPalController extends Controller
         $order = null;
         if($orderId) {
             $order = Order::find($orderId);
-            $order->update(['paid_on' => now()->format('Y-m-d H:i:s')]);
         }
 
          /**

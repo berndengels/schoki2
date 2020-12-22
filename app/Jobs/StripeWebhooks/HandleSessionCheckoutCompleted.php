@@ -2,13 +2,14 @@
 namespace App\Jobs\StripeWebhooks;
 
 use Carbon\Carbon;
+use App\Models\Webhook;
 use App\Models\Customer;
 use Illuminate\Bus\Queueable;
 use App\Events\PaymentSucceeded;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Spatie\WebhookClient\Models\WebhookCall;
+//use Spatie\WebhookClient\Models\WebhookCall;
 
 
 class HandleSessionCheckoutCompleted implements ShouldQueue
@@ -16,26 +17,31 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
     use InteractsWithQueue, Queueable, SerializesModels;
 
     protected $provider = 'stripe';
-    /**
-     * @var WebhookCall
-     */
-    public $webhookCall;
+    protected $events = [
+        'checkout.session.completed',
+    ];
 
-    public function __construct(WebhookCall $webhookCall)
+    /**
+     * @var Webhook
+     */
+    public $webhook;
+
+    public function __construct(Webhook $webhook)
     {
-        $this->webhookCall = $webhookCall;
+        $this->webhook = $webhook;
     }
-    public static $count = 0;
 
     public function handle()
     {
         // do your work here
         // you can access the payload of the webhook call with `$this->webhookCall->payload`
-        $payload    = $this->webhookCall->payload;
-        $paymentId  = $payload['id'];
-        $created    = $payload['created'];
+        $payload        = $this->webhook->payload;
+        $paymentId      = $payload['id'];
+        $created        = $payload['created'];
+        $eventType      = $payload['type'];
+        $eventTypeShort = strtolower(substr($eventType, strrpos($eventType,'.') + 1));
 
-        if ('checkout.session.completed' === $payload['type']) {
+        if (in_array($eventType, $this->events)) {
             $object         = $payload['data']['object'];
             $metadata       = $object['metadata'];
             $amountTotal    = ((int) $object['amount_total'] > 0) ? (int) $object['amount_total'] / 100 : null;

@@ -1,9 +1,10 @@
 <?php
 
+use App\Models\Webhook;
 use App\Handler\PayPalSignature;
 use App\Libs\PayPal\PayPalWebhookProfile;
 use Spatie\WebhookClient\Models\WebhookCall;
-use App\Jobs\PayPalWebhooks\HandleCheckoutOrderSuccess;
+use App\Jobs\PayPalWebhooks\HandleCheckoutOrder;
 use Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo;
 
 return [
@@ -47,13 +48,13 @@ return [
              * The classname of the model to be used to store call. The class should be equal
              * or extend Spatie\WebhookClient\Models\WebhookCall.
              */
-            'webhook_model' => WebhookCall::class,
+            'webhook_model' => Webhook::class,
 
             /*
              * The class name of the job that will process the webhook request.
              * This should be set to a class that extends \Spatie\WebhookClient\ProcessWebhookJob.
              */
-            'process_webhook_job' => HandleCheckoutOrderSuccess::class,
+            'process_webhook_job' => HandleCheckoutOrder::class,
         ],
     ],
 ];

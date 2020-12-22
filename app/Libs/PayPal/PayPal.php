@@ -16,8 +16,6 @@ class PayPal
     use PayPalHttpClient;
 
     protected $mode = 'sandbox';
-    protected $success_url;
-    protected $cancel_url;
     protected $access_token;
     protected $expires_in;
     protected $headers = [
@@ -45,8 +43,6 @@ class PayPal
         $this->validateSSL  = config('paypal.validate_ssl');
         $this->certificate  = config('paypal.certificate');
         $this->credentials  = config('paypal.'.$this->mode);
-        $this->success_url  = route('payment.paypal.success');
-        $this->cancel_url   = route('payment.paypal.cancel');
         $this->config['api_url']    = config('paypal.'.$this->mode.'.api_url');
         $this->config['base_uri']   = $this->config['api_url'];
         $this->config['notify_url'] = config('paypal.notify_url');
