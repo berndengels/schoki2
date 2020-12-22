@@ -2,17 +2,17 @@
 namespace App\Validators;
 
 use Illuminate\Http\Request;
-use Spatie\WebhookClient\Exceptions\WebhookFailed;
 use Spatie\WebhookClient\WebhookConfig;
+use Spatie\WebhookClient\Exceptions\WebhookFailed;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 
 class PayPalSignatureValidator implements SignatureValidator
 {
     public function isValid(Request $request, WebhookConfig $config): bool
     {
-        $signature = $request->header($config->signatureHeaderName);
         return true;
 /*
+        $signature = $request->header($config->signatureHeaderName);
 
         if (! $signature) {
             return false;

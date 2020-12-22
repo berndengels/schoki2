@@ -5,6 +5,7 @@ use App\Libs\PayPal\PayPalWebhookProfile;
 use App\Validators\PayPalSignatureValidator;
 use App\Jobs\PayPalWebhooks\HandleCheckoutOrderSuccess;
 use Spatie\WebhookClient\SignatureValidator\DefaultSignatureValidator;
+use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 use Spatie\WebhookClient\WebhookProfile\ProcessEverythingWebhookProfile;
 use Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo;
 
@@ -21,7 +22,7 @@ return [
              * We expect that every webhook call will be signed using a secret. This secret
              * is used to verify that the payload has not been tampered with.
              */
-            'signing_secret' => env('WEBHOOK_CLIENT_SECRET'),
+            'signing_secret' => env('WEBHOOK_CLIENT_SECRET', null),
 
             /*
              * The name of the header containing the signature.
@@ -33,7 +34,7 @@ return [
              *
              * It should implement \Spatie\WebhookClient\SignatureValidator\SignatureValidator
              */
-            'signature_validator' => PayPalSignatureValidator::class,
+            'signature_validator' => SignatureValidator::class,
 
             /*
              * This class determines if the webhook call should be stored and processed.
