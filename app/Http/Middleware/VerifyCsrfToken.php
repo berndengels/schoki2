@@ -13,7 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'stripe/*',
-        'payment/strip/webhook',
+        'payment/stripe/webhook',
         'payment/paypal/webhook',
     ];
 }
