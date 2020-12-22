@@ -9,10 +9,8 @@ use App\Events\PaymentSucceeded;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-//use Spatie\WebhookClient\Models\WebhookCall;
 
-
-class HandleSessionCheckoutCompleted implements ShouldQueue
+class HandleSessionCheckout implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -39,7 +37,6 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
         $paymentId      = $payload['id'];
         $created        = $payload['created'];
         $eventType      = $payload['type'];
-        $eventTypeShort = strtolower(substr($eventType, strrpos($eventType,'.') + 1));
 
         if (in_array($eventType, $this->events)) {
             $object         = $payload['data']['object'];

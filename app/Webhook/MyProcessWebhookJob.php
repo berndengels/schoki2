@@ -7,9 +7,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Spatie\StripeWebhooks\ProcessStripeWebhookJob as ParentJob;
+use Spatie\StripeWebhooks\ProcessStripeWebhookJob;
 
-abstract class MyProcessWebhookJob extends ParentJob
+abstract class MyProcessWebhookJob extends ProcessStripeWebhookJob
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

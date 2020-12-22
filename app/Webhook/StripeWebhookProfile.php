@@ -1,10 +1,10 @@
 <?php
-namespace App\Libs\PayPal;
+namespace App\Webhook;
 
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\WebhookProfile\WebhookProfile;
 
-class PayPalWebhookProfile implements WebhookProfile
+class StripeWebhookProfile implements WebhookProfile
 {
     public function shouldProcess(Request $request): bool
     {

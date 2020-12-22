@@ -12,6 +12,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\PaymentPayPalController;
 use App\Http\Controllers\PaymentStripeController;
+use App\Http\Controllers\Payment\WebhookController;
 
 Auth::routes();
 
@@ -457,10 +458,11 @@ Route::prefix('payment')
             Route::get('invoice/{invoiceId}', [PaymentStripeController::class , 'invoice'])->name('payment.stripe.invoice');
         });
     });
-Route::stripeWebhooks('/payment/stripe/webhook');
+//Route::stripeWebhooks('/payment/stripe/webhook');
 //Route::post('/payment/paypal/webhook', [PaymentPayPalController::class , 'webhook'])->name('payment.paypal.webhook');
-Route::webhooks('payment/paypal/webhook', 'paypal');
 
+Route::myWebhooks('payment/stripe/webhook', 'stripe');
+Route::myWebhooks('payment/paypal/webhook', 'paypal');
 /*
 Route::prefix('payment')
     ->group(function() {

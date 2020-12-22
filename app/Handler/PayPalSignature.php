@@ -3,7 +3,6 @@ namespace App\Handler;
 
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\WebhookConfig;
-use Spatie\WebhookClient\Exceptions\WebhookFailed;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 
 class PayPalSignature implements SignatureValidator

@@ -34,8 +34,6 @@ class HandleCheckoutOrder extends SpatieProcessWebhookJob
     public function handle()
     {
         try {
-//            $data           = json_decode($this->webhook, true);
-//            $payload        = $data['payload'];
             $payload        = $this->webhook->payload;
             $paymentId      = $payload['id'];
             $created        = $payload['create_time'];

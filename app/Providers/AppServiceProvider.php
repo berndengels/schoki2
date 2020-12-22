@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use App\Providers\MyWebhookClientServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(TelescopeServiceProvider::class);
             $this->app->register(\PrettyRoutes\ServiceProvider::class);
         }
+        $this->app->register(MyWebhookClientServiceProvider::class);
     }
 
     /**
