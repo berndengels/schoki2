@@ -18,7 +18,7 @@ class PaymentNotification
         if($event->customer && $event->params && $event->orderId > 0) {
             // @TODO: email notification for admin user, who handles payment stuff
             Mail::to(env('LOGGER_EMAIL'))
-                ->send(new OrderPayed($event->customer, $event->params, $event->orderId))
+                ->send(new OrderPayed($event->provider, $event->customer, $event->params, $event->orderId))
             ;
         }
     }

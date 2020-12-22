@@ -16,6 +16,10 @@ class PaymentSucceeded
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
+     * @var string
+     */
+    public $provider;
+    /**
      * @var Customer
      */
     public $customer;
@@ -33,9 +37,10 @@ class PaymentSucceeded
      *
      * @return void
      */
-    public function __construct( array $params = null, int $orderId = null, Customer $customer = null )
+    public function __construct(string $provider, array $params = null, int $orderId = null, Customer $customer = null)
     {
         if($params && $orderId > 0 && $customer) {
+            $this->provider = $provider;
             $this->customer = $customer;
             $this->orderId  = $orderId;
             $this->params   = $params;

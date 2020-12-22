@@ -33,8 +33,8 @@ class AppServiceProvider extends ServiceProvider
     {
         if (!$this->app->environment('prod')) {
             $this->app->register(IdeHelperServiceProvider::class);
-            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-            $this->app->register(TelescopeServiceProvider::class);
+//            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+//            $this->app->register(TelescopeServiceProvider::class);
             $this->app->register(\PrettyRoutes\ServiceProvider::class);
         }
     }

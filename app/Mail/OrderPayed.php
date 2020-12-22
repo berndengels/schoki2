@@ -11,6 +11,11 @@ use Illuminate\Queue\SerializesModels;
 class OrderPayed extends Mailable
 {
     use Queueable, SerializesModels;
+
+    /**
+     * @var string
+     */
+    public $provider;
     /**
      * @var Customer
      */
@@ -28,8 +33,9 @@ class OrderPayed extends Mailable
      *
      * @return void
      */
-    public function __construct(Customer $customer, array $params, int $orderId)
+    public function __construct(string $provider, Customer $customer, array $params, int $orderId)
     {
+        $this->provider = $provider;
         $this->customer = $customer;
         $this->params   = $params;
         $this->orderId  = $orderId;

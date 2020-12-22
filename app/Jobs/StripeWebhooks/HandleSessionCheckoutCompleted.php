@@ -15,6 +15,7 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $provider = 'stripe';
     /**
      * @var WebhookCall
      */
@@ -52,12 +53,13 @@ class HandleSessionCheckoutCompleted implements ShouldQueue
                 'paid_on'           => $paid ? Carbon::createFromTimestamp($created) : null,
                 'amount_received'   => $amountTotal,
                 'payment_id'        => $paymentId,
-                'payment_provider'  => 'stripe',
+                'payment_provider'  => $this->provider,
             ];
             // @todo: queue stuff
             if($orderId && $customer) {
-                event(new PaymentSucceeded($params, $orderId, $customer));
+                event(new PaymentSucceeded($this->provider, $params, $orderId, $customer));
             }
+            http_response_code(200); //Acknowledge you received the response
         }
     }
 }
