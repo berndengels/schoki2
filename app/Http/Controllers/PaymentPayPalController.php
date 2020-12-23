@@ -85,14 +85,6 @@ class PaymentPayPalController extends Controller
             if(isset($result->status) && 'CREATED' === $result->status ) {
                 $links = $result->links;
                 $approveLink = collect($links)->firstWhere('rel','===','approve')->href;
-                $params = [
-                    'payment_id'        => $result->id,
-                    'payment_provider'  => 'paypal',
-                ];
-                Order::find($result->purchase_units[0]->reference_id)
-                    ->update($params)
-                ;
-                $cart->destroy();
                 return redirect($approveLink)->with(['orderId' => $order->id]);
             }
         } catch(Exception $e) {

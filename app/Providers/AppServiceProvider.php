@@ -63,6 +63,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('nettoRounded', function ($expression) {
             return "<?php echo \App\Helper\MyMoney::getNettoRounded($expression); ?>";
         });
+        Blade::directive('round', function ($expression) {
+            return "<?php echo \App\Helper\MyMoney::getRounded($expression); ?>";
+        });
 
         Blade::component('inp.text', Text::class);
         Blade::component('inp.email', Email::class);

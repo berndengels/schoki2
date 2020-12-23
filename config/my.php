@@ -28,5 +28,16 @@ return [
     'payment'   => [
         'tax'       => env('PAYMENT_TAX_RATE', 19),
         'types' => ['sepa_debit','sofort','card'],
+        'stripe' => env('STRIPE_ENABLED'),
+        'paypal' => env('PAYPAL_ENABLED'),
+    ],
+    'vendor'    => [
+        'name'      => 'Schokoladen Berlin-Mitte',
+        'email'     => 'info@schokoladen-mitte.de',
+        'phone'     => '030 - 282 65 27',
+        'street'    => 'Ackerstraße 169',
+        'postcode'  => '10115',
+        'city'      => 'Berlin',
+        'url'       => env('APP_URL'),
     ],
 ];

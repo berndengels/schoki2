@@ -13,26 +13,28 @@ use Stripe\InvoiceItem;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+    <title>Rechnung</title>
     <style>
         body {
             background: #fff none;
             font-size: 12px;
         }
-
+        .logo {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 0 0 10px 15px;
+        }
         h2 {
             font-size: 28px;
             color: #ccc;
         }
-
         .container {
             padding-top: 30px;
         }
-
         .invoice-head td {
             padding: 0 8px;
         }
-
         .table th {
             vertical-align: bottom;
             font-weight: bold;
@@ -41,11 +43,9 @@ use Stripe\InvoiceItem;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-
         .table tr.row td {
             border-bottom: 1px solid #ddd;
         }
-
         .table td {
             padding: 8px;
             line-height: 20px;
@@ -64,7 +64,7 @@ use Stripe\InvoiceItem;
 
             <!-- Organization Name / Image -->
             <td align="right">
-                <strong>{{ $header ?? $vendor }}</strong>
+                <strong>{{ $header ?? $vendor->name }}</strong>
             </td>
         </tr>
         <tr valign="top">
@@ -75,41 +75,26 @@ use Stripe\InvoiceItem;
             <!-- Organization Name / Date -->
             <td>
                 <br><br>
-                <strong>To:</strong> {{ $owner->stripeEmail() ?: $owner->name }}
+                <strong>An:</strong> {{ $owner->stripeEmail() ?: $owner->name }}
                 <br>
-                <strong>Date:</strong> {{ $invoice->date()->toFormattedDateString() }}
+                <strong>Datum:</strong> {{ $invoice->date()->formatLocalized('%d.%m.%Y') }}
             </td>
         </tr>
         <tr valign="top">
             <!-- Organization Details -->
-            <td style="font-size:9px;">
-                {{ $vendor }}<br>
-
-                @if (isset($street))
-                    {{ $street }}<br>
-                @endif
-
-                @if (isset($location))
-                    {{ $location }}<br>
-                @endif
-
-                @if (isset($phone))
-                    <strong>T</strong> {{ $phone }}<br>
-                @endif
-
-                @if (isset($vendorVat))
-                    {{ $vendorVat }}<br>
-                @endif
-
-                @if (isset($url))
-                    <a href="{{ $url }}">{{ $url }}</a>
-                @endif
+            <td style="font-size:11px;">
+                <h3>{{ $vendor->name }}</h3>
+                <img class="img-rounded logo" width="100" height="100" src="data:image/png;base64,{{ $logo }}"><br>
+                {{ $vendor->street }}, {{ $vendor->postcode }} {{ $vendor->city }}<br>
+                <strong>Fon</strong> {{ $vendor->phone }}<br>
+                <a href="mailto:{{ $vendor->email }}">{{ $vendor->email }}</a><br>
+                <a href="{{ $vendor->url }}">{{ $vendor->url }}</a><br>
             </td>
             <td>
                 <!-- Invoice Info -->
                 <p>
-                    <strong>Product:</strong> {{ $product }}<br>
-                    <strong>Invoice Number:</strong> {{ $id ?? $invoice->number }}<br>
+                    <strong>Produkt:</strong> {{ $product }}<br>
+                    <strong>Rechnungs Nummer:</strong> {{ $id ?? $invoice->number }}<br>
                 </p>
 
                 <!-- Extra / VAT Information -->

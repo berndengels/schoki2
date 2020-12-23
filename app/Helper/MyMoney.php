@@ -18,6 +18,11 @@ class MyMoney implements Calculator
         return $brutto / $divisor;
     }
 
+    public static function getRounded($val)
+    {
+        return round($val) * 100 / 100;
+    }
+
     public static function getNettoRounded($val, $decimal = 2)
     {
         $tmp = round(self::getNetto($val), 3);

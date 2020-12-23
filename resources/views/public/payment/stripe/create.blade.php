@@ -17,10 +17,9 @@
                             @csrf
                             <button id="submit" role="button"
                                 class="btn btn-primary btnPay align-middle"
-                                type="button"
-                            >
+                                type="button">
                                 <span id="start">
-                                    <i class="fab fa-cc-stripe mr-1"></i>Summe {{ $cart->total() }} € jetzt bezahlen
+                                    <i class="fab fa-cc-stripe mr-1"></i>Summe @round($cart->total()) € jetzt bezahlen
                                 </span>
                                 <span id="loading" class="align-content-center px-5" style="display:none">
                                     <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>

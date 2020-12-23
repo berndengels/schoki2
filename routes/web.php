@@ -366,6 +366,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
             Route::get('/',	'OrderController@index')->name('index');
             Route::get('/create',	'OrderController@create')->name('create');
             Route::post('/',	'OrderController@store')->name('store');
+            Route::get('/{order}/show',	'OrderController@show')->name('show');
             Route::get('/{order}/edit',	'OrderController@edit')->name('edit');
             Route::post('/bulk-destroy',	'OrderController@bulkDestroy')->name('bulk-destroy');
             Route::post('/{order}',	'OrderController@update')->name('update');

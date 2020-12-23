@@ -108,12 +108,8 @@ class PaymentStripeController extends Controller
                 'order_id'      => $order ? (int) $order->id : null,
                 'customer_id'   => (int) $customer->id,
             ];
-            /**
-             * create a checkout session and listen on related webhook event
-             * on App\Jobs\\StripeWebhooks\HandleSessionCheckoutCompleted
-             * @var Session $stripeSession
-             */
-            $stripeSession = $this->stripeClient->checkout->sessions->create([
+
+            $params = [
                 'payment_method_types' => $paymentMethods,
                 'customer'          => $stripeCustomerID,
                 'mode'              => 'payment',
@@ -122,7 +118,15 @@ class PaymentStripeController extends Controller
                 'metadata'          => $metadata,
                 'success_url'       => route('payment.stripe.success'),
                 'cancel_url'        => route('payment.stripe.success'),
-            ]);
+            ];
+            /**
+             * create a checkout session and listen on related webhook event
+             * on App\Jobs\\StripeWebhooks\HandleSessionCheckoutCompleted
+             * @var Session $stripeSession
+             */
+            $stripeSession = $this->stripeClient->checkout->sessions->create($params);
+            // warenkorb leeren
+            $cart->destroy();
 
             return response()->json(['sessionId' => $stripeSession->id]);
         }
@@ -152,8 +156,10 @@ class PaymentStripeController extends Controller
         $filename = Carbon::now()->format('YmdHi').'-schokladen-rechnung';
         /** @var Customer $customer */
         $customer = $request->user();
+        $logo = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
         return $customer->downloadInvoice($invoiceId, [
-            'vendor'    => 'Schokoladen Berlin-Mitte',
+            'vendor'    => json_decode(json_encode(config('my.vendor'))),
+            'logo'      => $logo,
             'product'   => 'Ihre aktuelle Bestellung',
             'id'        => $invoiceId,
             'vat'       => env('PAYMENT_TAX_RATE'),

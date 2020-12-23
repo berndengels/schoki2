@@ -1,5 +1,9 @@
 @extends('layouts.public')
 
+@section('extra-headers')
+    <script src="{{ asset('js/payment-stripe.js') }}" async></script>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -12,7 +16,7 @@
                         <table class="table table-striped table-sm table-borderless">
                             <tr>
                                 <th>ID</th>
-                                <th>Movie</th>
+                                <th>Artikel</th>
                                 <th>Preis</th>
                                 <th>Anzahl</th>
                                 <th>Summe Preis</th>
@@ -27,7 +31,7 @@
                                 </tr>
                             @endforeach
                             <tr><td class="text-center align-middle text-light font-weight-bold p-0" colspan="8">
-                                    <h4 class="mt-3">Preise Total: {{ $cart->total() }} €</h4></td></tr>
+                                    <h4 class="mt-3">Preise Total: @round($cart->total()) €</h4></td></tr>
                         </table>
                         @if($shippings)
                         <h3>Lieferadresse wählen</h3>
@@ -42,16 +46,26 @@
                                          :value="$shippingDefault"
                                     />
 
-                                    <button role="button" name="submit"
-                                        class="btn btn-primary btnPay align-middle"
-                                        data-toggle="tooltip" data-placement="top" data-html="true"
-                                        title="Bezahlung per:<br>
-                                            EC-Karte (SEPA-Lastschrift)<br>Sofort, Visa, MasterCard"
-                                        formaction="{{ route('payment.stripe.create') }}">
-                                            <i class="fab fa-cc-stripe mr-1"></i>
-                                            @lang('Checkout Payment')
-                                    </button>
+                                    @if(config('my.payment.stripe'))
+                                    <form id="frmSubmit" method="post" disabled="true">
+                                        @csrf
+                                        <button id="submit" role="button"
+                                                class="btn btn-primary btnPay align-middle"
+                                                type="button"
+                                                data-toggle="tooltip" data-placement="top" data-html="true"
+                                                title="Bezahlung per<br>EC-Lastschrift (IBAN)<br>Visa, MasterCard">
+                                            <span id="start">
+                                                <i class="fab fa-cc-stripe mr-2"></i>Summe @round($cart->total()) € jetzt bezahlen
+                                            </span>
+                                            <span id="loading" class="align-content-center px-5" style="display:none">
+                                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                                                <span>Bitte warten ...</span>
+                                            </span>
+                                        </button>
+                                    </form>
+                                    @endif
                                     &nbsp;
+                                    @if(config('my.payment.paypal'))
                                     <button role="button" name="submit"
                                         class="btn btn-primary ml-2 btnPay align-middle"
                                         data-toggle="tooltip" data-placement="top" data-html="true"
@@ -60,6 +74,7 @@
                                             <i class="fab fa-cc-paypal mr-1"></i>
                                             @lang('Checkout PayPal')
                                     </button>
+                                    @endif
                                 </div>
                             </div>
                         </form>
@@ -73,9 +88,16 @@
     </div>
 @endsection
 @section('inline-scripts')
-    <script>
-	    $(function () {
-		    $('[data-toggle="tooltip"]').tooltip()
-	    })
-    </script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+    $('#submit').click(function(e) {
+        e.preventDefault();
+        $('#start').hide();
+        $('#loading').show();
+        $(this).attr({disable:true});
+        return true;
+    });
+</script>
 @endsection

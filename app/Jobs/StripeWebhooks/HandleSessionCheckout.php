@@ -2,6 +2,7 @@
 namespace App\Jobs\StripeWebhooks;
 
 use Carbon\Carbon;
+use App\Models\Order;
 use App\Models\Webhook;
 use App\Models\Customer;
 use Illuminate\Bus\Queueable;
@@ -52,15 +53,19 @@ class HandleSessionCheckout implements ShouldQueue
             $paid           = $object['payment_status'];
             $orderId        = isset($metadata['order_id']) ? (int) $metadata['order_id'] : null;
 
+            $order = null;
+            if($orderId) {
+                $order = Order::find($orderId);
+            }
+
             $params = [
                 'paid_on'           => $paid ? Carbon::createFromTimestamp($created) : null,
                 'amount_received'   => $amountTotal,
                 'payment_id'        => $paymentId,
                 'payment_provider'  => $this->provider,
             ];
-            // @todo: queue stuff
-            if($orderId && $customer) {
-                event(new PaymentSucceeded($this->provider, $params, $orderId, $customer));
+            if($order && $customer) {
+                event(new PaymentSucceeded($this->provider, $customer, $order, $params));
             }
             http_response_code(200); //Acknowledge you received the response
         }

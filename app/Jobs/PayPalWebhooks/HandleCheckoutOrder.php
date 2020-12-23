@@ -1,13 +1,13 @@
 <?php
 namespace App\Jobs\PayPalWebhooks;
 
-use App\Events\PaymentSucceeded;
-use App\Models\Customer;
-use App\Models\Webhook;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Order;
+use App\Models\Webhook;
+use App\Models\Customer;
+use App\Events\PaymentSucceeded;
 use Spatie\WebhookClient\ProcessWebhookJob as SpatieProcessWebhookJob;
-use function PHPUnit\Framework\throwException;
 
 class HandleCheckoutOrder extends SpatieProcessWebhookJob
 {
@@ -52,6 +52,11 @@ class HandleCheckoutOrder extends SpatieProcessWebhookJob
                     $customer = Customer::whereEmail($email)->first();
                 }
 
+                $order = null;
+                if($orderId) {
+                    $order = Order::find($orderId);
+                }
+
                 $params = [
                     'paid_on'           => Carbon::make($created)->format('Y-m-d H:i:s'),
                     'amount_received'   => $amountTotal,
@@ -59,8 +64,8 @@ class HandleCheckoutOrder extends SpatieProcessWebhookJob
                     'payment_provider'  => $this->provider,
                 ];
 
-                if($orderId && $customer) {
-                    event(new PaymentSucceeded($this->provider, $params, $orderId, $customer));
+                if($order && $customer) {
+                    event(new PaymentSucceeded($this->provider, $customer, $order, $params));
                 }
             }
 

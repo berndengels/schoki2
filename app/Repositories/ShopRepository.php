@@ -78,25 +78,10 @@ class ShopRepository
                 $order->createdBy()->associate($customer);
                 $order->orderItems()->createMany($orderItemData);
 
-                event(new ProductOrdered($order));
-
                 return $order;
             }
         } catch(Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-    }
-
-    public static function updateOrder( array $params, int $orderId)
-    {
-        try {
-            $order = Order::whereId($orderId)->first();
-            if($order) {
-                return $order->update($params);
-            }
             return null;
-        } catch(Exception $e) {
-            throw new Exception($e->getMessage());
         }
     }
 }

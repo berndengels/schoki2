@@ -83,7 +83,8 @@
 <body>
 <header>
     <div style="position:absolute; left:0pt; width:250pt;">
-        <img class="img-rounded" height="{{ $invoice->logo_height }}" src="{{ $invoice->logo }}">
+        <!--img class="img-rounded" height="{{ $invoice->logo_height }}" src="{{ $invoice->logo }}"-->
+        <img class="img-rounded" width="167" height="167" src="{{ asset('img/logo-167x167.png') }}">
     </div>
     <div style="margin-left:300pt;">
         <b>Date: </b> {{ $invoice->date->formatLocalized('%A %d %B %Y') }}<br />
@@ -101,7 +102,7 @@
 <main>
     <div style="clear:both; position:relative;">
         <div style="position:absolute; left:0pt; width:250pt;">
-            <h4>Business Details:</h4>
+            <h4>Verkäufer Details:</h4>
             <div class="panel panel-default">
                 <div class="panel-body">
                     {!! $invoice->business->count() == 0 ? '<i>No business details</i><br />' : '' !!}
@@ -115,7 +116,7 @@
             </div>
         </div>
         <div style="margin-left: 300pt;">
-            <h4>Customer Details:</h4>
+            <h4>Kunden Details:</h4>
             <div class="panel panel-default">
                 <div class="panel-body">
                     {!! $invoice->customer->count() == 0 ? '<i>No customer details</i><br />' : '' !!}

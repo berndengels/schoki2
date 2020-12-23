@@ -49,7 +49,7 @@
                             </tr>
                         @endforeach
                             <tr><td class="text-center align-middle text-light font-weight-bold p-0" colspan="8">
-                                    <h4 class="mt-3">Preise Total: {{ $cart->total() }} €</h4></td></tr>
+                                    <h4 class="mt-3">Preise Total: @round($cart->total()) €</h4></td></tr>
                         </table>
                         <div>
                             @guest
@@ -59,14 +59,14 @@
                                         href="{{ route('login', ['redirectTo' => 'public.scard.index']) }}" ><i class="fas fa-user-alt mr-1"></i>
                                         @lang('Login')
                                     </a>
-                                    &nbsp;
+                                        &nbsp;
                                     <a role="button"class="btn btn-primary ml-2 btnPay align-middle"
                                             href="{{ route('register', ['redirectTo' => 'public.scard.index']) }}"><i class="fas fa-cash-register mr-1"></i>
                                         @lang('Register')
                                     </a>
                                 </div>
                                 @else
-                                <a role="button" class="btn btn-block btn-primary"
+                                <a role="button" class="btn btn-block btn-primary px-5"
                                    href="{{ route('public.order.index') }}">@lang('Order now')</a>
                             @endauth
                         </div>
