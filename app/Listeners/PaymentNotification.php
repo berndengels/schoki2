@@ -3,6 +3,7 @@ namespace App\Listeners;
 
 use App\Mail\OrderPayed;
 use App\Events\PaymentSucceeded;
+use App\Models\AdminUser;
 use Illuminate\Support\Facades\Mail;
 
 class PaymentNotification
@@ -17,7 +18,8 @@ class PaymentNotification
     {
         if($event->provider && $event->customer && $event->order && $event->params) {
             // @TODO: email notification for admin user, who handles payment stuff
-            Mail::to(env('LOGGER_EMAIL'))
+            $to = AdminUser::role('Shop')->pluck('email')->toArray();
+            Mail::to($to)
                 ->send(new OrderPayed($event->provider, $event->customer, $event->order, $event->params))
             ;
         }

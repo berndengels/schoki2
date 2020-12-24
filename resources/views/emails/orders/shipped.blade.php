@@ -20,12 +20,13 @@ Wir übersenden an folgende Adresse Deine bestellten Artikel
 @endforeach
 @endcomponent
 
-@component('mail::button', ['url' => route('admin/orders/show',['order' => $order])])
+@component('mail::button', ['url' => URL::signedRoute('payment.invoice.download', ['customerId' => $customer->id, 'invoiceId' => $invoice->id])])
 Rechnung herunterladen
 @endcomponent
 
 @slot('footer')
 @component('mail::footer')
+Danke für Deine Bestellung
 © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
 @endcomponent
 @endslot

@@ -459,6 +459,10 @@ Route::prefix('payment')
             Route::get('invoice/{invoiceId}', [PaymentStripeController::class , 'invoice'])->name('payment.stripe.invoice');
         });
     });
+
+Route::get('download/invoice/{customerId}/{invoiceId}', [PaymentStripeController::class , 'download'])
+    ->name('payment.invoice.download')->middleware('signed');
+
 //Route::stripeWebhooks('/payment/stripe/webhook');
 //Route::post('/payment/paypal/webhook', [PaymentPayPalController::class , 'webhook'])->name('payment.paypal.webhook');
 

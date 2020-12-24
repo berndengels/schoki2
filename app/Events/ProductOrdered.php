@@ -7,23 +7,24 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
+use stdClass;
 
 class ProductOrdered
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @var Order
+     * @var stdClass
      */
-    public $order;
+    public $invoice;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(array $invoice)
     {
-        $this->order = $order;
+        $this->invoice = json_decode(json_encode($invoice));
     }
 
     /**

@@ -172,6 +172,31 @@ class PaymentStripeController extends Controller
         ], $filename);
     }
 
+    public function download(Request $request, int $customerId, string $invoiceId)
+    {
+        if (! $request->hasValidSignature()) {
+            abort(401);
+        }
+        /** @var Customer $customer */
+        $customer = Customer::find($customerId);
+        $logo = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
+        try {
+            $invoice = $customer->findInvoice($invoiceId);
+        } catch (Exception $e) {
+            $title = 'Fehler';
+            $message = 'Kann keine korrekten Daten finden';
+            return view('errors.message', compact('message','title'));
+        }
+        $data = [
+            'vendor'    => json_decode(json_encode(config('my.vendor'))),
+            'logo'      => $logo,
+            'product'   => 'Schokoladen-Bestellung',
+            'id'        => $invoiceId,
+            'vat'       => env('PAYMENT_TAX_RATE'),
+        ];
+        return $invoice->download($data);
+    }
+
     public function config()
     {
         return response()->json(['publicKey' => env('STRIPE_KEY')]);

@@ -29,6 +29,10 @@ class OrderPayed extends Mailable
     /**
      * @var array
      */
+    public $invoice;
+    /**
+     * @var array
+     */
     public $params;
     /**
      * @var string
@@ -46,8 +50,8 @@ class OrderPayed extends Mailable
         $this->params   = $params;
         $this->order    = $order;
         $this->logo     = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
-        $to = AdminUser::role('Shop')->pluck('email')->toArray();
-        $this->to($to);
+//        $to = AdminUser::role('Shop')->pluck('email')->toArray();
+//        $this->to($to);
         $this->from(config('my.shop.email.from'));
         $this->subject("Schoki Payment Success via $provider");
     }
