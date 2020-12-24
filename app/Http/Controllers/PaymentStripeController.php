@@ -175,7 +175,7 @@ class PaymentStripeController extends Controller
     public function download(Request $request, int $customerId, string $invoiceId)
     {
         if (! $request->hasValidSignature()) {
-            abort(401);
+//            abort(401);
         }
         /** @var Customer $customer */
         $customer = Customer::find($customerId);
