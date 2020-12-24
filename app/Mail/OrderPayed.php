@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\AdminUser;
 use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
@@ -45,9 +46,9 @@ class OrderPayed extends Mailable
         $this->params   = $params;
         $this->order    = $order;
         $this->logo     = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
-
-        $this->to(env('LOGGER_EMAIL'));
-        $this->from(env('LOGGER_EMAIL'));
+        $to = AdminUser::role('Shop')->pluck('email')->toArray();
+        $this->to($to);
+        $this->from(config('my.shop.email.from'));
         $this->subject("Schoki Payment Success via $provider");
     }
 
@@ -58,6 +59,6 @@ class OrderPayed extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.orders.payed2');
+        return $this->markdown('emails.orders.payed');
     }
 }

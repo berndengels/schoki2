@@ -40,4 +40,9 @@ return [
         'city'      => 'Berlin',
         'url'       => env('APP_URL'),
     ],
+    'shop' => [
+        'email' => [
+            'from'  => env('SHOP_EMAIL_FROM', 'info@schokoladen-mitte.de')
+        ],
+    ],
 ];

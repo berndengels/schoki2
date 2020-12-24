@@ -17,6 +17,7 @@ class HandleSessionCheckout implements ShouldQueue
 
     protected $provider = 'stripe';
     protected $events = [
+        'invoice.created',
         'checkout.session.completed',
     ];
 

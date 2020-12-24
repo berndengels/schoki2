@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', trans('admin.admin-user.actions.index'))
+@section('title', trans('Index'))
 
 @section('body')
 
@@ -14,8 +14,8 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> {{ trans('admin.admin-user.actions.index') }}
-                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/admin-users/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.admin-user.actions.create') }}</a>
+                        <i class="fa fa-align-justify"></i> {{ trans('index') }}
+                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/admin-users/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('Create Admin-User') }}</a>
                     </div>
                     <div class="card-body" v-cloak>
                         <form @submit.prevent="">
@@ -24,7 +24,7 @@
                                     <div class="input-group">
                                         <input class="form-control" placeholder="{{ trans('brackets/admin-ui::admin.placeholder.search') }}" v-model="search" @keyup.enter="filter('search', $event.target.value)" />
                                         <span class="input-group-append">
-                                            <button type="button" class="btn btn-primary" @click="filter('search', search)"><i class="fa fa-search"></i>&nbsp; {{ trans('brackets/admin-ui::admin.btn.search') }}</button>
+                                            <button type="button" class="btn btn-primary" @click="filter('search', search)"><i class="fa fa-search"></i>&nbsp; {{ trans('Search') }}</button>
                                         </span>
                                     </div>
                                 </div>

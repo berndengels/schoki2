@@ -151,12 +151,18 @@ class PaymentStripeController extends Controller
         return view('public.payment.stripe.success', compact('customer','invoices'));
     }
 
+    public function listInvoices(Customer $customer) {
+        $invoices = $customer->invoices()->toArray();
+        dd($invoices);
+    }
+
     public function invoice(Request $request, string $invoiceId)
     {
         $filename = Carbon::now()->format('YmdHi').'-schokladen-rechnung';
         /** @var Customer $customer */
         $customer = $request->user();
         $logo = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
+
         return $customer->downloadInvoice($invoiceId, [
             'vendor'    => json_decode(json_encode(config('my.vendor'))),
             'logo'      => $logo,
