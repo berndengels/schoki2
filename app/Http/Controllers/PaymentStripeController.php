@@ -175,7 +175,7 @@ class PaymentStripeController extends Controller
 
     public function download(string $token)
     {
-        $download = Download::findOrFail($token);
+        $download   = Download::findOrFail($token);
         $customerId = $download->customer_id;
         $invoiceId  = $download->object_id;
 
@@ -189,6 +189,7 @@ class PaymentStripeController extends Controller
             $message = 'Kann keine korrekten Daten finden';
             return view('errors.message', compact('message','title'));
         }
+        $fileName = Carbon::now()->format('YmdHi') . '_Schokoladen-Bestellung.pdf';
         $data = [
             'vendor'    => json_decode(json_encode(config('my.vendor'))),
             'logo'      => $logo,
@@ -196,7 +197,7 @@ class PaymentStripeController extends Controller
             'id'        => $invoiceId,
             'vat'       => env('PAYMENT_TAX_RATE'),
         ];
-        return $invoice->download($data);
+        return $invoice->downloadAs($fileName, $data);
     }
 
     public function config()
