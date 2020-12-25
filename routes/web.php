@@ -463,8 +463,6 @@ Route::prefix('payment')
 
 Route::get('download/invoice/{token}', [PaymentStripeController::class , 'download'])
     ->name('payment.invoice.download');
-Route::get('download/get/{token}', [DownloadController::class , 'get'])
-    ->name('download.get');
 
 //Route::stripeWebhooks('/payment/stripe/webhook');
 //Route::post('/payment/paypal/webhook', [PaymentPayPalController::class , 'webhook'])->name('payment.paypal.webhook');

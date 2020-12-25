@@ -5,7 +5,9 @@ use App\Models\Customer;
 use App\Models\Download;
 use App\Mail\OrderShipped;
 use App\Events\ProductOrdered;
+use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class OrderNotification
 {
@@ -19,14 +21,18 @@ class OrderNotification
     {
         $email      = $event->invoice->customer_email;
         $customer   = Customer::whereEmail($email)->first();
-        $token      = Hash::make(json_encode($event->invoice));
+        $token      = hash_hmac('sha256',json_encode($event->invoice), $customer->password);
         $params     = [
-            'token' => $token,
-            'route' => route('payment.invoice.download', compact('token')),
+            'token'         => $token,
+            'object_id'     => $event->invoice->id,
+            'customer_id'   => $customer->id,
             'valid_until'   => null,
         ];
-        $download   = Download::updateOrCreate($params);
-        $download->customer()->associate($customer);
+        try {
+            Download::updateOrCreate($params);
+        } catch(Exception $e) {
+            die($e->getMessage());
+        }
 
         // @TODO: email notification for customer and shop owner
         Mail::to($email)

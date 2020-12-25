@@ -15,9 +15,9 @@ class CreateDownloadTable extends Migration
     {
         Schema::create('download', function (Blueprint $table) {
             $table->string('token', 100)->primary();
-            $table->string('route', 100);
+            $table->string('object_id', 50);
 
-            $table->unsignedInteger('customer_id', false);
+            $table->unsignedInteger('customer_id', false)->index();
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('customers')

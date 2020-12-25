@@ -10,8 +10,8 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\Download
  *
- * @property string $token
- * @property string $route
+ * @property int $token
+ * @property string $object_id
  * @property int $customer_id
  * @property string|null $valid_until
  * @property Carbon|null $created_at
@@ -22,7 +22,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Download query()
  * @method static Builder|Download whereCreatedAt($value)
  * @method static Builder|Download whereCustomerId($value)
- * @method static Builder|Download whereRoute($value)
+ * @method static Builder|Download whereObjectId($value)
  * @method static Builder|Download whereToken($value)
  * @method static Builder|Download whereUpdatedAt($value)
  * @method static Builder|Download whereValidUntil($value)
@@ -34,7 +34,8 @@ class Download extends Model
 
     protected $table        = 'download';
     protected $primaryKey   = 'token';
-    protected $fillable     = ['token','route','valid_until'];
+    protected $fillable     = ['token','object_id','valid_until','customer_id'];
+    protected $with         = ['customer'];
 
     /**
      * @return BelongsTo

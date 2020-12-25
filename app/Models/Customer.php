@@ -63,6 +63,8 @@ use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
  * @method static Builder|Customer permission($permissions)
  * @method static Builder|Customer role($roles, $guard = null)
  * @property-read mixed $shipping
+ * @property-read Collection|Download[] $downloads
+ * @property-read int|null $downloads_count
  */
 class Customer extends Authenticatable implements InstanceIdentifier
 {
@@ -131,6 +133,12 @@ class Customer extends Authenticatable implements InstanceIdentifier
     {
         return $this->hasMany(Shipping::class, 'customer_id', 'id');
     }
+
+    public function downloads()
+    {
+        return $this->hasMany(Download::class, 'customer_id', 'id');
+    }
+
     /* ************************ ACCESSOR ************************* */
 
     public function getResourceUrlAttribute()

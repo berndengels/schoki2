@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Download;
 use Exception;
 use Carbon\Carbon;
 use Laravel\Cashier\Invoice;
@@ -172,11 +173,12 @@ class PaymentStripeController extends Controller
         ], $filename);
     }
 
-    public function download(Request $request, int $customerId, string $invoiceId)
+    public function download(string $token)
     {
-        if (! $request->hasValidSignature()) {
-//            abort(401);
-        }
+        $download = Download::findOrFail($token);
+        $customerId = $download->customer_id;
+        $invoiceId  = $download->object_id;
+
         /** @var Customer $customer */
         $customer = Customer::find($customerId);
         $logo = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
