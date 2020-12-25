@@ -133,6 +133,7 @@ class MenuController extends Controller
 						'nodeWithAncestors'	=> $nodeWithAncestors->toArray(),
 						'id'	        => $node->id,
 						'name'	        => $node->name,
+                        'css_class'	    => $node->css_class,
 						'icon'	        => $node->icon,
                         'fa_icon'	    => $node->fa_icon,
 						'url'	        => $node->url,
