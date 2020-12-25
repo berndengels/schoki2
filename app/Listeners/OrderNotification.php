@@ -32,8 +32,6 @@ class OrderNotification
         } catch(Exception $e) {
             die($e->getMessage());
         }
-
-        // @TODO: email notification for customer and shop owner
         Mail::to($email)
             ->queue(new OrderShipped($event->invoice, $token))
         ;
