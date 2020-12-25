@@ -47,22 +47,22 @@
 
            {{-- Do not delete me :) I'm used for auto-generation menu items --}}
 
-            <li class="nav-title">{{ trans('Settings') }}</li>
-            <li class="nav-item"><a class="nav-link" href="{{ url('admin/admin-users') }}"><i class="nav-icon icon-customer"></i> {{ __('Manage access') }}</a></li>
-            @can('role')
-            <li class="nav-item"><a class="nav-link" href="{{ url('admin/roles') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.role.title') }}</a></li>
-            @endcan
-
-            @can('permission')
-            <li class="nav-item"><a class="nav-link" href="{{ url('admin/permissions') }}"><i class="nav-icon icon-book-open"></i> {{ trans('admin.permission.title') }}</a></li>
-            @endcan
-            @can('translation.index')
-            <li class="nav-item"><a class="nav-link" href="{{ url('admin/translations') }}"><i class="nav-icon icon-location-pin"></i> {{ __('Translations') }}</a></li>
-            @endcan
-            <!--li class="nav-item"><a class="nav-link" href="{{ url('admin/configuration') }}"><i class="nav-icon icon-settings"></i> {{ __('Configuration') }}</a></li-->
+            <a class="nav-link dropdown-toggle" href="#settings" data-toggle="collapse" aria-expanded="false">Settings</a>
+            <ul class="collapse list-unstyled" id="settings">
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/admin-users') }}"><i class="nav-icon icon-user"></i> {{ __('Manage access') }}</a></li>
+                @can('role')
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/roles') }}"><i class="nav-icon icon-plane"></i> {{ trans('admin.role.title') }}</a></li>
+                @endcan
+                @can('permission')
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/permissions') }}"><i class="nav-icon icon-book-open"></i> {{ trans('admin.permission.title') }}</a></li>
+                @endcan
+                @can('translation.index')
+                <li class="nav-item"><a class="nav-link" href="{{ url('admin/translations') }}"><i class="nav-icon icon-location-pin"></i> {{ __('Translations') }}</a></li>
+                @endcan
+                <!--li class="nav-item"><a class="nav-link" href="{{ url('admin/configuration') }}"><i class="nav-icon icon-settings"></i> {{ __('Configuration') }}</a></li-->
+            </ul>
 
             {{-- Do not delete me :) I'm also used for auto-generation menu items --}}
-
         </ul>
     </nav>
     <button class="sidebar-minimizer brand-minimizer" type="button"></button>
