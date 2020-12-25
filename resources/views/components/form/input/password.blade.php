@@ -3,7 +3,7 @@
     <div class="col-md-10">
         <input
             type="password"
-            required autocomplete="new-password"
+            autocomplete="new-password"
             id="{{ $name }}"
             name="{{ $name }}"
             value="{{ $value ?? '' }}"

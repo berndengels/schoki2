@@ -16,11 +16,21 @@
                             <a class="nav-link dropdown-toggle" href="{{ $item->url }}" id="dropdown{{ $item->name }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ $item->name }}<span class="ml-2 sr-only">(current)</span></a>
                             <div class="dropdown-menu" aria-labelledby="dropdown{{ $item->name }}">
                                 @foreach ($item->children as $child)
-                                    <a class="dropdown-item" href="{{ $child->url }}">{{ $child->name }}</a>
+                                    <a class="dropdown-item {{ $child->css_class ?? null }}" href="{{ $child->url }}">
+                                        @if($child->fa_icon && '' !== $child->fa_icon)
+                                            <i class="{{ $child->fa_icon }}"></i>
+                                        @endif
+                                        {{ $child->name }}
+                                    </a>
                                 @endforeach
                             </div>
                         @else
-                            <a class="nav-link" href="{{ $item->url }}" aria-haspopup="false">{{ $item->name }}<span class="ml-2 sr-only">(current)</span></a>
+                            <a class="nav-link {{ $item->css_class ?? null }}" href="{{ $item->url }}" aria-haspopup="false">
+                                @if($item->fa_icon && '' !== $item->fa_icon)
+                                    <i class="{{ $item->fa_icon }}"></i>
+                                @endif
+                                {{ $item->name }}<span class="ml-2 sr-only">(current)</span>
+                            </a>
                         @endif
                     </li>
                 @endforeach
@@ -57,7 +67,8 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('shipping.index') }}">{{ __('Adressen') }}</a><br>
+                            <a class="dropdown-item" href="{{ route('customer.edit', ['customer' => Auth::user('web') ]) }}">{{ __('Profil') }}</a>
+                            <a class="dropdown-item" href="{{ route('shipping.index') }}">{{ __('Adressen') }}</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">

@@ -35,10 +35,10 @@ class UpdateShipping extends FormRequest
     {
         return [
             'customer_id'   => '',
-            'country_id'    => ['required', 'integer'],
-            'postcode'      => ['required', 'string'],
-            'city'          => ['required', 'string'],
-            'street'        => ['required', 'string'],
+            'country_id'    => ['required'],
+            'postcode'      => ['required'],
+            'city'          => ['required'],
+            'street'        => ['required'],
             'is_default'    => ['nullable', 'boolean'],
         ];
     }

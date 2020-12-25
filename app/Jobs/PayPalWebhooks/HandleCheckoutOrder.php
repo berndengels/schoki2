@@ -7,10 +7,15 @@ use App\Models\Order;
 use App\Models\Webhook;
 use App\Models\Customer;
 use App\Events\PaymentSucceeded;
-use Spatie\WebhookClient\ProcessWebhookJob as SpatieProcessWebhookJob;
+use Illuminate\Bus\Queueable;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
-class HandleCheckoutOrder extends SpatieProcessWebhookJob
+class HandleCheckoutOrder
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     protected $provider = 'paypal';
     protected $events = [
         'CHECKOUT.ORDER.COMPLETED',

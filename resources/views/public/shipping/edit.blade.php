@@ -11,8 +11,7 @@
                     <div class="row">
                         <form
                               action="{{ route('shipping.update', ['shipping' => $data]) }}"
-                              method="post"
-                        >
+                              method="post">
                             @csrf
                             <x-inp.select name="country_id" label="Land"
                                 :value="$data->country_id"
@@ -26,7 +25,6 @@
                             <x-inp.checkbox name="is_default" label="Standard Adresse" :value="$data->is_default"/>
                             <x-inp.submit name="submit" value="speichern"/>
                         </form>
-
                     </div>
                 </div>
             </div>

@@ -31,6 +31,8 @@
     @include('debug.bootstrap.display')
 @endif
 
+@include('components.flash-message')
+
 <div class="container col-12">
     <div class="header">
         @section('header')

@@ -253,6 +253,7 @@ class MenuController extends Controller
 				$node->icon					= $data['icon'];
                 $node->fa_icon				= $data['fa_icon'];
 				$node->name					= $data['name'];
+                $node->css_class			= $data['css_class'];
 				$node->is_published 		= isset($data['is_published']) ? 1 : 0;
                 $node->api_enabled 		    = isset($data['api_enabled']) ? 1 : 0;
 				$node->menu_item_type_id	= $type;

@@ -9,10 +9,11 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Webhook\Parser\StripePayloadParser;
+use Illuminate\Foundation\Bus\Dispatchable;
 
 class HandleSessionCheckout implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $provider = 'stripe';
     protected $events = [

@@ -27,6 +27,7 @@ class MenuForm extends Form
             ->add('name', Field::TEXT, [
                 'rules' => 'required',
             ])
+            ->add('css_class', Field::TEXT)
 			->add('icon', Field::TEXT, [
 			])
             ->add('fa_icon', Field::TEXT, [

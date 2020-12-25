@@ -50,10 +50,11 @@ class MyWebhookProcessor
         try {
             $job = new $this->config->processWebhookJobClass($webhook);
             $webhook->clearException();
-            dispatch($job);
+            dispatch($job)
+                ->delay(now()->addSeconds(5))
+            ;
         } catch (Exception $exception) {
             $webhook->saveException($exception);
-
             throw $exception;
         }
     }

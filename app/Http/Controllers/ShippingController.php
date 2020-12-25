@@ -62,7 +62,7 @@ class ShippingController extends Controller
      * @param  StoreShipping  $request
      * @return Response
      */
-    public function store(StoreShipping $request )
+    public function store(ShippingRequest $request )
     {
         $customer   = $request->user('web');
         $validated = $request->getSanitized();
@@ -90,7 +90,7 @@ class ShippingController extends Controller
      * @param Shipping $shipping
      * @return Response
      */
-    public function edit(FormBuilder $formBuilder, Shipping $shipping)
+    public function edit(Shipping $shipping)
     {
         $language   = MyLang::getPrimary();
         $countries  = Country::all()->sortBy($language);
@@ -107,7 +107,7 @@ class ShippingController extends Controller
      * @param Shipping $shipping
      * @return Response
      */
-    public function update(UpdateShipping $request, Shipping $shipping)
+    public function update(ShippingRequest $request, Shipping $shipping)
     {
         $customer   = $request->user('web');
         $validated  = $request->getSanitized();

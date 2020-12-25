@@ -13,7 +13,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\PaymentPayPalController;
 use App\Http\Controllers\PaymentStripeController;
-use App\Http\Controllers\Payment\WebhookController;
 
 Auth::routes();
 
@@ -487,7 +486,8 @@ Route::prefix('payment')
 Route::prefix('customer')
     ->middleware('auth')
     ->group(function() {
-        Route::get('/',[CustomerController::class, 'index'])->name('customer.show');
+//        Route::get('/',[CustomerController::class, 'index'])->name('customer.show');
+        Route::get('/update/{customer}',[CustomerController::class, 'edit'])->name('customer.edit');
         Route::post('/update/{customer}',[CustomerController::class, 'update'])->name('customer.update');
     });
 Route::prefix('shipping')
