@@ -29,6 +29,7 @@ class UpdateMenu extends FormRequest
             'parent_id' => ['nullable', 'integer'],
             'menu_item_type_id' => ['nullable', 'integer'],
             'name' => ['sometimes', 'string'],
+            'css_class' => '',
             'icon' => ['nullable', 'string'],
             'fa_icon' => ['nullable', 'string'],
             'url' => ['nullable', 'string'],
@@ -37,7 +38,6 @@ class UpdateMenu extends FormRequest
             'lvl' => ['sometimes', 'integer'],
             'api_enabled' => ['sometimes', 'boolean'],
             'is_published' => ['sometimes', 'boolean'],
-            
         ];
     }
 

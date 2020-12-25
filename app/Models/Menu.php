@@ -97,6 +97,7 @@ class Menu extends Model
 //        'menu_item_type_id',
         'menuItemType',
         'name',
+        'css_class',
         'icon',
         'fa_icon',
         'url',

@@ -160,6 +160,7 @@
                             var formId = '#frmMenu',
                                 $form = $(formId);
                             $('#name', formId).val(d.name);
+                            $('#css_class', formId).val(d.css_class);
                             $('#icon', formId).val(d.icon);
                             $('#fa_icon', formId).val(d.fa_icon);
                             $('input[name=id]', formId).val(d.id);

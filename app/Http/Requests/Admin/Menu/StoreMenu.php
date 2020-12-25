@@ -29,6 +29,7 @@ class StoreMenu extends FormRequest
             'parent_id' => ['nullable', 'integer'],
             'menu_item_type_id' => ['nullable', 'integer'],
             'name' => ['required', 'string'],
+            'css_class' => '',
             'icon' => ['nullable', 'string'],
             'fa_icon' => ['nullable', 'string'],
             'url' => ['nullable', 'string'],
@@ -37,7 +38,6 @@ class StoreMenu extends FormRequest
             'lvl' => ['required', 'integer'],
             'api_enabled' => ['required', 'boolean'],
             'is_published' => ['required', 'boolean'],
-            
         ];
     }
 
