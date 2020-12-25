@@ -28,16 +28,21 @@ class OrderShipped extends Mailable
      */
     public $logo;
     /**
+     * @var string
+     */
+    public $token;
+    /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(stdClass $invoice)
+    public function __construct(stdClass $invoice, string $token)
     {
         $this->invoice  = $invoice;
         $this->customer = Customer::whereStripeId($this->invoice->customer)->first();
         $this->order    = Order::whereCreatedBy($this->customer->id)->orderBy('created_at', 'desc')->first();
         $this->logo     = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
+        $this->token    = $token;
 
 //        $this->to($order->createdBy->email);
         $this->from(config('my.shop.email.from'));

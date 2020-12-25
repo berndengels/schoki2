@@ -1,11 +1,21 @@
 <?php
 namespace App\Models;
 
+use Eloquent;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\WebhookConfig;
 
+/**
+ * App\Models\PayPalWebhookCall
+ *
+ * @method static Builder|PayPalWebhookCall newModelQuery()
+ * @method static Builder|PayPalWebhookCall newQuery()
+ * @method static Builder|PayPalWebhookCall query()
+ * @mixin Eloquent
+ */
 class PayPalWebhookCall extends Model
 {
     protected $table = 'webhook_paypal';

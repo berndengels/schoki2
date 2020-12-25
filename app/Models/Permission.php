@@ -33,6 +33,7 @@ use Spatie\Permission\Models\Permission as BaseModel;
  * @method static Builder|Permission whereName($value)
  * @method static Builder|Permission whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read mixed $list_name
  */
 class Permission extends BaseModel
 {

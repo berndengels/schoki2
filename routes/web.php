@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\ScardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
@@ -460,8 +461,10 @@ Route::prefix('payment')
         });
     });
 
-Route::get('download/invoice/{customerId}/{invoiceId}', [PaymentStripeController::class , 'download'])
-    ->name('payment.invoice.download')->middleware('signed');
+Route::get('download/invoice/{token}', [PaymentStripeController::class , 'download'])
+    ->name('payment.invoice.download');
+Route::get('download/get/{token}', [DownloadController::class , 'get'])
+    ->name('download.get');
 
 //Route::stripeWebhooks('/payment/stripe/webhook');
 //Route::post('/payment/paypal/webhook', [PaymentPayPalController::class , 'webhook'])->name('payment.paypal.webhook');

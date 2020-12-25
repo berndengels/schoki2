@@ -1,11 +1,36 @@
 <?php
 namespace App\Models;
 
+use Eloquent;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Webhook\MyWebhookConfig;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\Webhook
+ *
+ * @property int $id
+ * @property string|null $name
+ * @property string|null $event
+ * @property array|null $payload
+ * @property array|null $exception
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Webhook newModelQuery()
+ * @method static Builder|Webhook newQuery()
+ * @method static Builder|Webhook query()
+ * @method static Builder|Webhook whereCreatedAt($value)
+ * @method static Builder|Webhook whereEvent($value)
+ * @method static Builder|Webhook whereException($value)
+ * @method static Builder|Webhook whereId($value)
+ * @method static Builder|Webhook whereName($value)
+ * @method static Builder|Webhook wherePayload($value)
+ * @method static Builder|Webhook whereUpdatedAt($value)
+ * @mixin Eloquent
+ */
 class Webhook extends Model
 {
     protected $table = 'webhook_calls';

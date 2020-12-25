@@ -20,7 +20,7 @@ Wir übersenden an folgende Adresse Deine bestellten Artikel
 @endforeach
 @endcomponent
 
-@component('mail::button', ['url' => URL::signedRoute('payment.invoice.download', ['customerId' => $customer->id, 'invoiceId' => $invoice->id])])
+@component('mail::button', ['url' => route('download.get', ['token' => $token])])
 Rechnung herunterladen
 @endcomponent
 
