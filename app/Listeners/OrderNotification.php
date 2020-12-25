@@ -1,12 +1,11 @@
 <?php
 namespace App\Listeners;
 
+use Exception;
 use App\Models\Customer;
 use App\Models\Download;
 use App\Mail\OrderShipped;
 use App\Events\ProductOrdered;
-use Exception;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class OrderNotification
@@ -36,7 +35,7 @@ class OrderNotification
 
         // @TODO: email notification for customer and shop owner
         Mail::to($email)
-            ->send(new OrderShipped($event->invoice, $token))
+            ->queue(new OrderShipped($event->invoice, $token))
         ;
     }
 }

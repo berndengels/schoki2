@@ -20,7 +20,7 @@ class PaymentNotification
             // @TODO: email notification for admin user, who handles payment stuff
             $to = AdminUser::role('Shop')->pluck('email')->toArray();
             Mail::to($to)
-                ->send(new OrderPayed($event->provider, $event->customer, $event->order, $event->params))
+                ->queue(new OrderPayed($event->provider, $event->customer, $event->order, $event->params))
             ;
         }
     }

@@ -5,10 +5,11 @@ namespace App\Mail;
 use App\Models\Message;
 use App\Models\MusicStyle;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotifyBooker extends Mailable
+class NotifyBooker extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
