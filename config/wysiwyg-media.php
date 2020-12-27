@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
    |--------------------------------------------------------------------------
    | Maximum Image Width
@@ -12,9 +11,7 @@ return [
    | the camera to wysiwyg editor and so increase the page load significantly
    |
    */
-
     'maximum_image_width' => env('WYSIWYG_MAXIMUM_IMAGE_WIDTH', 1000),
-
     /*
     |--------------------------------------------------------------------------
     | Media folder
@@ -25,7 +22,5 @@ return [
     | be inside "public" folder.
     |
     */
-
     'media_folder' => env('WYSIWYG_MEDIA_FOLDER', 'uploads'),
-
 ];

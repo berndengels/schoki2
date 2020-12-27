@@ -15,8 +15,8 @@ class MyWebhookProcessor
 
     public function __construct(Request $request, MyWebhookConfig $config)
     {
-        $this->request = $request;
-        $this->config = $config;
+        $this->request  = $request;
+        $this->config   = $config;
     }
 
     public function process()

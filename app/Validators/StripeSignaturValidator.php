@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Webhook\MyWebhookConfig;
 use Jenssegers\Agent\Facades\Agent;
 
-class StripeSignatureValidator implements MySignatureValidator
+class StripeSignaturValidator implements MySignatureValidator
 {
     public function isValid(Request $request, MyWebhookConfig $config): bool
     {
