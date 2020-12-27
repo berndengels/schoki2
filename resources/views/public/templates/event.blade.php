@@ -85,7 +85,7 @@
     @endif
 
     <div class="text col-12 m-0 p-2">
-        {!! $event->getDescriptionSanitized() !!}
+        {!! $event->getDescription() !!}
     </div>
     @if ( $event->getLinks() && $event->getLinks()->count() )
         <div class="links col-12 m-0 p-2">
