@@ -3,6 +3,9 @@ import AppForm from '../app-components/Form/AppForm';
 Vue.component('event-template-form', {
     mixins: [AppForm],
     props: ['categories', 'themes'],
+    beforeCreate() {
+        delete $.ajaxSettings.headers["X-CSRF-TOKEN"]
+    },
     data: function() {
         return {
             form: {

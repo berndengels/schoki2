@@ -23,13 +23,13 @@ return [
      * Reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
      * Available Value: 'deny', 'sameorigin', 'allow-from <uri>'
      */
-    'x-frame-options' => 'sameorigin',
+//    'x-frame-options' => 'sameorigin',
     /*
      * X-Permitted-Cross-Domain-Policies
      * Reference: https://www.adobe.com/devnet/adobe-media-server/articles/cross-domain-xml-for-streaming.html
      * Available Value: 'all', 'none', 'master-only', 'by-content-type', 'by-ftp-filename'
      */
-    'x-permitted-cross-domain-policies' => 'none',
+    'x-permitted-cross-domain-policies' => 'all',
     /*
      * X-Powered-By
      * Note: it will not add to response header if the value is empty string.

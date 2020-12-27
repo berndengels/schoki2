@@ -3,6 +3,9 @@ import AppForm from '../app-components/Form/AppForm';
 Vue.component('event-periodic-form', {
     mixins: [AppForm],
     props: ['categories', 'themes', 'periodic_positions', 'periodic_weekdays'],
+    beforeCreate() {
+        delete $.ajaxSettings.headers["X-CSRF-TOKEN"]
+    },
     data: function() {
         return {
             form: {
