@@ -186,7 +186,6 @@ return [
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         MisterPhilip\MaintenanceMode\MaintenanceModeServiceProvider::class,
         MisterPhilip\MaintenanceMode\MaintenanceCommandServiceProvider::class,
-        Bengels\LaravelEmailExceptions\EmailExceptionsServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
     ],
 
