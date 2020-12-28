@@ -27,7 +27,8 @@ return [
     ],
     'payment'   => [
         'tax'       => env('PAYMENT_TAX_RATE', 19),
-        'types' => ['sepa_debit','sofort','card'],
+        'types' => ['sepa_debit','sofort','card','giropay'],
+
         'stripe' => env('STRIPE_ENABLED'),
         'paypal' => env('PAYPAL_ENABLED'),
     ],
