@@ -26,7 +26,7 @@ class ShippingController extends Controller
     public function index()
     {
         $customer = auth('web')->user();
-        $data = Shipping::whereCustomerId($customer->id)->get();
+        $data = Shipping::with('country')->whereCustomerId($customer->id)->get();
         return view('public.shipping.index', compact( 'data'));
     }
 
@@ -114,7 +114,6 @@ class ShippingController extends Controller
         $shipping->update($validated);
         if($shipping->is_default) {
             Shipping::whereKeyNot($shipping->id)->update(['is_default' => false]);
-            dd('is default');
         } else {
             if(1 === Shipping::whereCustomerId($customer->id)->count()) {
                 $shipping->update(['is_default' => true]);

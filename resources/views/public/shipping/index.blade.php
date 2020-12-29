@@ -17,7 +17,7 @@
                 <table class="table">
                     @foreach($data as $item)
                     <tr @if($item->is_default)class="font-weight-bold text-primary" @endif>
-                        <td>{{ $item->country_id }}</td>
+                        <td>{{ $item->country }}</td>
                         <td>{{ $item->postcode }} {{ $item->city }}</td>
                         <td>{{ $item->street }}</td>
                         <td>{{ $item->is_default ? 'default' : null }}</td>

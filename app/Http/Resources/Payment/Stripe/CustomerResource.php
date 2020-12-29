@@ -25,13 +25,26 @@ class CustomerResource extends JsonResource
         /**
          * @var Customer $this
          */
-        $shipping = json_decode(json_encode($this->shipping), true);
+        $shipping = $this->shipping;
+
         return [
             'name'      => $this->name,
             'email'     => $this->email,
-//            'currency'  => 'eur',
-            'shipping'  => $shipping,
-            'address'   => $shipping,
+            'shipping'  => [
+                'name'  => $this->name,
+                'address' => [
+                    'line1'     => $shipping->street,
+                    'city'      => $shipping->city,
+                    'country'   => $shipping->country->code,
+                    'postal_code'   => $shipping->postcode,
+                ],
+            ],
+            'address'   => [
+                'line1'     => $shipping->street,
+                'city'      => $shipping->city,
+                'country'   => $shipping->country->code,
+                'postal_code'   => $shipping->postcode,
+            ],
             'preferred_locales' => [MyLang::getLocaleRfc5646()],
         ];
     }

@@ -104,22 +104,6 @@ class Customer extends Authenticatable implements InstanceIdentifier
     public function getShippingAttribute()
     {
         return $this->shippings()->whereIsDefault(true)->first();
-/*
-        if($shipping) {
-            $data = [
-                'name'  => $this->name,
-                'address'   => [
-                    'line1'         => $shipping->street,
-                    'city'          => $shipping->city,
-                    'country'       => $shipping->country->code,
-                    'postal_code'   => $shipping->postcode,
-                ]
-            ];
-        } else {
-            $data = [null];
-        }
-*/
-//        return json_decode(json_encode($data));
     }
 
     public function getShippingListAttribute() {

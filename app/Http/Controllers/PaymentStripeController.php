@@ -36,14 +36,19 @@ class PaymentStripeController extends Controller
 
     public function process(Request $request, Cart $cart)
     {
-        try {
             /**
              * @var Customer $customer
              * @var StripeCustomer $stripeCustomer
              */
             $customer       = $request->user('web');
             $customerData   = (new CustomerResource($customer))->toArray($request);
-            $stripeCustomer = $customer->createOrGetStripeCustomer($customerData);
+
+            try {
+                $stripeCustomer = $customer->createOrGetStripeCustomer($customerData);
+            } catch(Exception $e) {
+                throw new Exception($e);
+            }
+
             $stripeCustomerID = $stripeCustomer->id;
             $paymentMethods = config('my.payment.types');
 
@@ -110,6 +115,7 @@ class PaymentStripeController extends Controller
                 'customer_id'   => (int) $customer->id,
             ];
 
+        try {
             $params = [
                 'payment_method_types' => $paymentMethods,
                 'customer'          => $stripeCustomerID,
