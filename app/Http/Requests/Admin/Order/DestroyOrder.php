@@ -14,7 +14,7 @@ class DestroyOrder extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.order.delete', $this->order);
+        return Gate::allows('admin.order');
     }
 
     /**

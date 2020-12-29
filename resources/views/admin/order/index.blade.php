@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="col-sm-auto form-group ">
                                         <select class="form-control" v-model="pagination.state.per_page">
-                                            
+
                                             <option value="10">10</option>
                                             <option value="25">25</option>
                                             <option value="100">100</option>
@@ -50,13 +50,11 @@
                                             </label>
                                         </th>
 
-                                        <th is='sortable' :column="'id'">{{ trans('admin.order.columns.id') }}</th>
-                                        <th is='sortable' :column="'shoppingcart_id'">{{ trans('admin.order.columns.shoppingcart_id') }}</th>
-                                        <th is='sortable' :column="'instance'">{{ trans('admin.order.columns.instance') }}</th>
-                                        <th is='sortable' :column="'price_total'">{{ trans('admin.order.columns.price_total') }}</th>
-                                        <th is='sortable' :column="'created_by'">{{ trans('admin.order.columns.created_by') }}</th>
-                                        <th is='sortable' :column="'updated_by'">{{ trans('admin.order.columns.updated_by') }}</th>
-                                        <th is='sortable' :column="'delivered'">{{ trans('admin.order.columns.delivered') }}</th>
+                                        <th is='sortable' :column="'id'">ID</th>
+                                        <th is='sortable' :column="'amount_received'">Betrag erhalten</th>
+                                        <th is='sortable' :column="'created_by'">Kunde</th>
+                                        <th is='sortable' :column="'paid_on'">bezahlt am</th>
+                                        <th is='sortable' :column="'delivered_on'">ausgeleifert am</th>
 
                                         <th></th>
                                     </tr>
@@ -81,13 +79,10 @@
                                         </td>
 
                                     <td>@{{ item.id }}</td>
-                                        <td>@{{ item.shoppingcart_id }}</td>
-                                        <td>@{{ item.instance }}</td>
-                                        <td>@{{ item.price_total }}</td>
-                                        <td>@{{ item.created_by }}</td>
-                                        <td>@{{ item.updated_by }}</td>
-                                        <td>@{{ item.delivered }}</td>
-                                        
+                                        <td>@{{ item.amount_received }}</td>
+                                        <td>@{{ item.created_by.name }}</td>
+                                        <td>@{{ item.paid_on | date('DD.MM.Y H:m') }}</td>
+                                        <td>@{{ item.delivered_on | date('DD.MM.Y H:m') }}</td>
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">

@@ -40,10 +40,10 @@ class OrderController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'shoppingcart_id', 'instance', 'price_total', 'created_by', 'updated_by', 'delivered'],
+            ['id', 'amount_received', 'created_by', 'paid_on', 'delivered_on'],
 
             // set columns to searchIn
-            ['id', 'shoppingcart_id', 'instance', 'content']
+            ['id', 'created_by',]
         );
 
         if ($request->ajax()) {

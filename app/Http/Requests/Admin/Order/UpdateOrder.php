@@ -26,14 +26,10 @@ class UpdateOrder extends FormRequest
     public function rules(): array
     {
         return [
-            'shoppingcart_id' => ['sometimes', 'string'],
-            'instance' => ['sometimes', 'string'],
-            'content' => ['sometimes', 'string'],
-            'price_total' => ['sometimes', 'numeric'],
-            'created_by' => ['sometimes', 'integer'],
-            'updated_by' => ['nullable', 'integer'],
-            'delivered' => ['sometimes', 'boolean'],
-            
+            'amount_received' => '',
+            'price_total' => '',
+            'paid_on' => '',
+            'delivered_on' => '',
         ];
     }
 

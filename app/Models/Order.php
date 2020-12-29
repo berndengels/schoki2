@@ -62,8 +62,7 @@ class Order extends Model
     use HasCustomer, HasFactory;
 
     protected $table = 'order';
-    protected $with = ['orderItems'];
-//    protected $with = ['createdBy','updatedBy'];
+    protected $with = ['orderItems','createdBy','updatedBy'];
     protected $fillable = [
         'price_total',
         'delivered_at',

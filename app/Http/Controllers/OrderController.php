@@ -17,9 +17,6 @@ use Laravel\Cashier\Cashier;
 
 class OrderController extends Controller
 {
-    public function __contsruct() {
-    }
-
     public function index(Cart $cart) {
         $this->middleware('auth');
         /**
