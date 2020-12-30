@@ -31,11 +31,6 @@ class CustomerController extends Controller
      */
     protected $guard = 'web';
 
-    public function __construct()
-    {
-//        $this->middleware('customer');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -49,11 +44,11 @@ class CustomerController extends Controller
             // pass the request with params
             $request,
             // set columns to query
-            ['id', 'name', 'email', 'email_verified_at', 'stripe_id', 'card_brand', 'card_last_four', 'trial_ends_at'],
+            ['id', 'name', 'email', 'email_verified_at', 'stripe_id'],
             // set columns to searchIn
-            ['id', 'name', 'email', 'stripe_id', 'card_brand', 'card_last_four'],
+            ['id', 'name', 'email', 'stripe_id'],
             function (Builder $query) {
-                $query->with('shippings','roles','permissions');
+                $query->with(['shippings','roles','permissions']);
             }
         );
 
@@ -118,8 +113,8 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         $this->authorize('customer', $customer);
-
-        // TODO your code goes here
+        $invoices = $customer->invoices(true);
+        return view('admin.customer.show', compact('customer', 'invoices'));
     }
 
     /**

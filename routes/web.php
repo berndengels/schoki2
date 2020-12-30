@@ -191,6 +191,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
                 Route::get('/',	'CustomerController@index')->name('index');
                 Route::get('/create',	'CustomerController@create')->name('create');
                 Route::post('/',	'CustomerController@store')->name('store');
+                Route::get('/{customer}/show',	'CustomerController@show')->name('show');
                 Route::get('/{customer}/edit',	'CustomerController@edit')->name('edit');
                 Route::post('/bulk-destroy',	'CustomerController@bulkDestroy')->name('bulk-destroy');
                 Route::post('/{customer}',	'CustomerController@update')->name('update');
@@ -323,22 +324,6 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
     });
 });
 
-/* Auto-generated admin routes */
-/*
-Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
-    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
-        Route::prefix('orders')->name('orders/')->group(static function() {
-            Route::get('/',	'OrderController@index')->name('index');
-            Route::get('/create',	'OrderController@create')->name('create');
-            Route::post('/',	'OrderController@store')->name('store');
-            Route::get('/{order}/edit',	'OrderController@edit')->name('edit');
-            Route::post('/bulk-destroy',	'OrderController@bulkDestroy')->name('bulk-destroy');
-            Route::post('/{order}',	'OrderController@update')->name('update');
-            Route::delete('/{order}',	'OrderController@destroy')->name('destroy');
-        });
-    });
-});
-*/
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {

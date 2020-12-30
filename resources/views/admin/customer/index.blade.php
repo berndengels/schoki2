@@ -49,11 +49,10 @@
                                             </label>
                                         </th>
 
-                                        <th is='sortable' :column="'id'">{{ trans('admin.customer.columns.id') }}</th>
-                                        <th is='sortable' :column="'name'">{{ trans('admin.customer.columns.name') }}</th>
-                                        <th is='sortable' :column="'email'">{{ trans('admin.customer.columns.email') }}</th>
-                                        <th is='sortable' :column="'email_verified_at'">{{ trans('admin.customer.columns.email_verified_at') }}</th>
-                                        <th is='sortable' :column="'stripe_id'">{{ trans('admin.customer.columns.stripe_id') }}</th>
+                                        <th is='sortable' :column="'id'">ID</th>
+                                        <th is='sortable' :column="'name'">Name</th>
+                                        <th is='sortable' :column="'email'">Email</th>
+                                        <th is='sortable' :column="'stripe_id'">StripeID</th>
                                         <th></th>
                                     </tr>
                                     <tr v-show="(clickedBulkItemsCount > 0) || isClickedAll">
@@ -77,17 +76,19 @@
                                         </td>
 
                                         <td>@{{ item.id }}</td>
-                                        <td v-tooltip="(item.roles.map(o => o.name)).join('<br>')">@{{ item.name }}</td>
-                                        <td>@{{ item.email }}</td>
-                                        <td>@{{ item.email_verified_at | datetime }}</td>
+                                        <td v-tooltip="(item.roles.map(o => o.name)).join('<br>')"><a :href="item.resource_url + '/show'" title="anzeigen">@{{ item.name }}</a></td>
+                                        <td><a :href="'mailto:' + item.email">@{{ item.email }}</a></td>
                                         <td>@{{ item.stripe_id }}</td>
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">
-                                                    <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/show'" title="anzeigen" role="button"><i class="fa fa-eye"></i></a>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="bearbeiten" role="button"><i class="fa fa-edit"></i></a>
                                                 </div>
                                                 <form class="col" @submit.prevent="deleteItem(item.resource_url)">
-                                                    <button type="submit" class="btn btn-sm btn-danger" title="{{ trans('brackets/admin-ui::admin.btn.delete') }}"><i class="fa fa-trash-o"></i></button>
+                                                    <button type="submit" class="btn btn-sm btn-danger" title="löschen"><i class="fa fa-trash-o"></i></button>
                                                 </form>
                                             </div>
                                         </td>

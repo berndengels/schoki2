@@ -9,7 +9,7 @@
                 <h5>Kunde</h5>
                 <div>
                     <p>
-                        {{ $order->createdBy->name }} <a href="mailto:{{$order->createdBy->email}}">{{$order->createdBy->email}}</a>
+                        {{ $order->createdBy->name }}, <a href="mailto:{{$order->createdBy->email}}">{{$order->createdBy->email}}</a>
                         <br>
                         {{ $order->createdBy->shipping->street }}, {{ $order->createdBy->shipping->postcode }} {{ $order->createdBy->shipping->city }}
                     </p>

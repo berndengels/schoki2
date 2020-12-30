@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\Order\DestroyOrder;
 use App\Http\Requests\Admin\Order\IndexOrder;
 use App\Http\Requests\Admin\Order\StoreOrder;
 use App\Http\Requests\Admin\Order\UpdateOrder;
+use App\Models\Customer;
 use App\Models\Order;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
@@ -83,7 +84,7 @@ class OrderController extends Controller
         $sanitized = $request->getSanitized();
 
         // Store the Order
-        $order = Order::create($sanitized);
+        Order::create($sanitized);
 
         if ($request->ajax()) {
             return ['redirect' => url('admin/orders'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
@@ -102,9 +103,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $this->authorize('admin.order.show', $order);
-        return view('admin.order.show', [
-            'order' => $order,
-        ]);
+        return view('admin.order.show', compact('order'));
     }
 
     /**
