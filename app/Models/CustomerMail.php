@@ -4,10 +4,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerEmail extends Model
+class CustomerMail extends Model
 {
     use HasFactory;
-    protected $table = 'customer_email';
+    protected $table = 'customer_mail';
     protected $fillable = ['result', 'error'];
 
     /**
