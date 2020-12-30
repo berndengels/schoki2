@@ -38,7 +38,7 @@ class OrderNotification
                 CustomerEmail::create(['result' => true]);
             }
         } catch(Exception $e) {
-            CustomerEmail::create(['error' => $e->getMessage() ."\n" . $e->getTraceAsString()]);
+            CustomerEmail::create(['error' => $e->getMessage() . "\n" . $e->getTraceAsString()]);
         }
     }
 }
