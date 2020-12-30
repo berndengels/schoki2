@@ -72,6 +72,7 @@ class Order extends Model
         'amount_received',
         'payment_id',
         'payment_provider',
+        'mail_to_shop',
     ];
     public $timestamps = true;
     protected $dates = ['created_at','updated_at','delivered_at'];
