@@ -1,11 +1,7 @@
 <?php
 namespace App\Webhook;
 
-use App\Validators\MySignatureValidator;
-use Spatie\WebhookClient\Exceptions\InvalidConfig;
-use Spatie\WebhookClient\WebhookProfile\WebhookProfile;
 use Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo;
-use Spatie\WebhookClient\WebhookResponse\RespondsToWebhook;
 
 class MyWebhookConfig
 {

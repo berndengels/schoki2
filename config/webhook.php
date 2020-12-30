@@ -1,12 +1,9 @@
 <?php
 
 use App\Models\Webhook;
-use App\Webhook\PayPalWebhookProfile;
 use App\Webhook\StripeWebhookProfile;
 use App\Webhook\MyDefaultRespondsTo;
-use App\Validators\PayPalSignatureValidator;
-use App\Validators\StripeSignatureValidator;
-use App\Jobs\PayPalWebhooks\HandleCheckoutOrder;
+use App\Validators\StripeSignaturValidator;
 use App\Jobs\StripeWebhooks\HandleSessionCheckout;
 
 return [
@@ -28,9 +25,9 @@ return [
             'webhook_model'     => Webhook::class,
             'signing_secret'    => env('STRIPE_WEBHOOK_SECRET'),
             'signature_header_name' => 'Stripe-Signature',
-            'signature_validator'   => StripeSignatureValidator::class,
             'webhook_profile'       => StripeWebhookProfile::class,
             'webhook_response'      => MyDefaultRespondsTo::class,
+            'signature_validator'   => StripeSignaturValidator::class,
             'process_webhook_job'   => HandleSessionCheckout::class,
         ],
     ],

@@ -5,7 +5,7 @@ namespace App\Webhook;
 class MyWebhookConfigRepository
 {
     /** @var MyWebhookConfig[] */
-    protected array $configs;
+    protected $configs;
 
     public function addConfig(MyWebhookConfig $webhookConfig)
     {
