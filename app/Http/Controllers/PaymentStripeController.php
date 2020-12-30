@@ -124,11 +124,11 @@ class PaymentStripeController extends Controller
                 'line_items'        => $orderItems,
                 'metadata'          => $metadata,
                 'success_url'       => route('payment.stripe.success'),
-                'cancel_url'        => route('payment.stripe.success'),
+                'cancel_url'        => route('payment.stripe.cancel'),
             ];
             /**
              * create a checkout session and listen on related webhook event
-             * on App\Jobs\\StripeWebhooks\HandleSessionCheckoutCompleted
+             * on App\Jobs\StripeWebhooks\HandleSessionCheckout
              * @var Session $stripeSession
              */
             $stripeSession = $this->stripeClient->checkout->sessions->create($params);

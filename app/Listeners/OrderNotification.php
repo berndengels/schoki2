@@ -1,6 +1,7 @@
 <?php
 namespace App\Listeners;
 
+use App\Models\CustomerEmail;
 use Exception;
 use App\Models\Customer;
 use App\Models\Download;
@@ -32,8 +33,12 @@ class OrderNotification
         } catch(Exception $e) {
             die($e->getMessage());
         }
-        Mail::to($email)
-            ->queue(new OrderShipped($event->invoice, $token))
-        ;
+        try {
+            if(Mail::to($email)->queue(new OrderShipped($event->invoice, $token))) {
+                CustomerEmail::create(['result' => true]);
+            }
+        } catch(Exception $e) {
+            CustomerEmail::create(['error' => $e->getMessage() ."\n" . $e->getTraceAsString()]);
+        }
     }
 }
