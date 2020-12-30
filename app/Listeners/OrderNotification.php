@@ -35,10 +35,18 @@ class OrderNotification
         }
         try {
             if(Mail::to($email)->queue(new OrderShipped($event->invoice, $token))) {
-                CustomerMail::create(['result' => true]);
+                CustomerMail::create([
+                    'customer_id' => $customer->id,
+                    'result'      => true,
+                    'error'       => null,
+                ]);
             }
         } catch(Exception $e) {
-            CustomerMail::create(['error' => $e->getMessage() . "\n" . $e->getTraceAsString()]);
+            CustomerMail::create([
+                'customer_id' => $customer->id,
+                'result'      => false,
+                'error'       => $e->getMessage() . "\n" . $e->getTraceAsString(),
+            ]);
         }
     }
 }
