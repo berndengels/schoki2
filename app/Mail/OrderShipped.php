@@ -37,11 +37,11 @@ class OrderShipped extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(stdClass $invoice, string $token)
+    public function __construct(stdClass $invoice, Customer $customer,string $token)
     {
         $this->invoice  = $invoice;
-        $this->customer = Customer::whereStripeId($this->invoice->customer)->first();
-        $this->order    = Order::whereCreatedBy($this->customer->id)->orderBy('created_at', 'desc')->first();
+        $this->customer = $customer;
+        $this->order    = Order::whereCreatedBy($customer->id)->orderBy('created_at', 'desc')->first();
         $this->logo     = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
         $this->token    = $token;
 

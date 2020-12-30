@@ -8,7 +8,7 @@ class CustomerMail extends Model
 {
     use HasFactory;
     protected $table = 'customer_mail';
-    protected $fillable = ['result', 'error'];
+    protected $fillable = ['customer_id', 'result', 'error'];
 
     /**
      * @return BelongsTo
