@@ -11,6 +11,7 @@ use App\Jobs\StripeWebhooks\HandleSessionCheckout;
 
 return [
     'configs' => [
+/*
         [
             'name' => 'paypal',
             'webhook_model'     => Webhook::class,
@@ -21,6 +22,7 @@ return [
             'webhook_response'      => MyDefaultRespondsTo::class,
             'process_webhook_job'   => HandleCheckoutOrder::class,
         ],
+*/
         [
             'name' => 'stripe',
             'webhook_model'     => Webhook::class,
