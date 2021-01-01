@@ -34,7 +34,7 @@ return [
     ],
     'vendor'    => [
         'name'      => 'Schokoladen Berlin-Mitte',
-        'email'     => 'info@schokoladen-mitte.de',
+        'email'     => 'shop@schokoladen-mitte.de',
         'phone'     => '030 - 282 65 27',
         'street'    => 'Ackerstraße 169',
         'postcode'  => '10115',
@@ -43,7 +43,7 @@ return [
     ],
     'shop' => [
         'email' => [
-            'from'  => env('SHOP_EMAIL_FROM', 'info@schokoladen-mitte.de')
+            'from'  => env('SHOP_EMAIL_FROM', 'shop@schokoladen-mitte.de')
         ],
     ],
 ];
