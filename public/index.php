@@ -1,11 +1,6 @@
 <?php
 //phpinfo();exit();
-$empfaenger = 'engels@f50.de';
-$betreff = 'Mail Test';
-$nachricht = 'Hallo ein Test';
-$header = 'From: engels@f50.de' . "\r\n";
 
-mail($empfaenger, $betreff, $nachricht, $header);
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
