@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Eloquent;
@@ -56,6 +55,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Order whereCartInstance($value)
  * @method static Builder|Order wherePaymentId($value)
  * @method static Builder|Order wherePaymentProvider($value)
+ * @property string|null $mail_to_shop
+ * @method static Builder|Order whereMailToShop($value)
  */
 class Order extends Model
 {

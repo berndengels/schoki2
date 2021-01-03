@@ -341,6 +341,21 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
 });
 
 /* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+        Route::prefix('product-stocks')->name('product-stocks/')->group(static function() {
+            Route::get('/',                   'ProductStockController@index')->name('index');
+            Route::get('/create',             'ProductStockController@create')->name('create');
+            Route::post('/',                  'ProductStockController@store')->name('store');
+            Route::get('/{productStock}/edit','ProductStockController@edit')->name('edit');
+            Route::post('/bulk-destroy',      'ProductStockController@bulkDestroy')->name('bulk-destroy');
+            Route::post('/{productStock}',    'ProductStockController@update')->name('update');
+            Route::delete('/{productStock}',  'ProductStockController@destroy')->name('destroy');
+        });
+    });
+});
+
+/* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
     ->group(static function () {
     Route::prefix('admin')

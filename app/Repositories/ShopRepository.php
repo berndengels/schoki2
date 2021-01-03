@@ -1,6 +1,8 @@
 <?php
 namespace App\Repositories;
 
+use App\Models\ProductSize;
+use App\Models\ProductStock;
 use Exception;
 use App\Models\Order;
 use App\Helper\MyMoney;
@@ -62,12 +64,31 @@ class ShopRepository
                 $total = 0;
                 foreach ($content as $item) {
                     $priceTotal = MyMoney::getBrutto($item->price) * $item->qty;
+                    $size = isset($item->options['size']) ? ProductSize::whereName($item->options['size'])->first() : null;
                     $orderItemData[] = [
+                        'size'          => $size ?? null,
                         'product_id'    => $item->id,
                         'quantity'      => $item->qty,
                         'price_total'   => $priceTotal,
                     ];
                     $total += $priceTotal;
+                    // decrease stocks
+                    if($size) {
+                        $stock = ProductStock::whereProductId($item->id)
+                            ->whereProductSizeId($size->id)
+                            ->first();
+                        if($stock) {
+                            $stock->update(['stock' => $stock->stock - $item->qty]);
+                        }
+                    } else {
+                        $stock = ProductStock::whereProductId($item->id)
+                            ->whereNull('product_size_id')
+                            ->first()
+                        ;
+                        if($stock) {
+                            $stock->update(['stock' => $stock->stock - $item->qty]);
+                        }
+                    }
                 }
 
                 $params = [

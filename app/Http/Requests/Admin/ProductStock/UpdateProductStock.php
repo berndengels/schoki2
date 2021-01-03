@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Country;
+namespace App\Http\Requests\Admin\ProductStock;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
-class UpdateCountry extends FormRequest
+class UpdateProductStock extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,7 @@ class UpdateCountry extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('admin.country.edit', $this->country);
+        return Gate::allows('product-stock.edit', $this->productStock);
     }
 
     /**
@@ -26,14 +26,9 @@ class UpdateCountry extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['sometimes', 'string'],
-            'en' => ['sometimes', 'string'],
-            'de' => ['sometimes', 'string'],
-            'es' => ['sometimes', 'string'],
-            'fr' => ['sometimes', 'string'],
-            'it' => ['sometimes', 'string'],
-            'ru' => ['sometimes', 'string'],
-
+            'product_id'        => ['required'],
+            'product_size_id'   => '',
+            'stock'             => ['required', 'integer'],
         ];
     }
 
@@ -45,7 +40,12 @@ class UpdateCountry extends FormRequest
     public function getSanitized(): array
     {
         $sanitized = $this->validated();
-        //Add your code for manipulation with request data here
+        $sanitized['product_id']        = $sanitized['product_id']['id'];
+        if(isset($sanitized['product_size_id'])) {
+            $sanitized['product_size_id']   = $sanitized['product_size_id']['id'];
+        } else {
+            $sanitized['product_size_id'] = null;
+        }
         return $sanitized;
     }
 }

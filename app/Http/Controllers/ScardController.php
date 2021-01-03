@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Scard;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\ScardRequest;
 use Gloudemans\Shoppingcart\Cart;
@@ -29,9 +30,12 @@ class ScardController extends Controller
         return view('public.scard.index', compact('cart','content'));
     }
 
-    public function add(Product $product, Cart $cart)
+    public function add(Request $request, Product $product, Cart $cart)
     {
-        $cart->add($product, 1);
+        if($request->input('size')) {
+            $product->size = $request->input('size');
+        }
+        $cart->add($product, 1)->options = ['size' => $request->input('size')];
         return redirect()->back();
     }
 

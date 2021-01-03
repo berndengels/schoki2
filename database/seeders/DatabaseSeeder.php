@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             PermissionsAndRolesSeeder::class,
             CountriesSeeder::class,
             MenuSeeder::class,
+            ProductSizeSeeder::class,
 */
         ]);
     }

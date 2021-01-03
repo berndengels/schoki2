@@ -17,6 +17,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Artikel</th>
+                                <th>Größe</th>
                                 <th>Preis</th>
                                 <th>Anzahl</th>
                                 <th>Summe Preis</th>
@@ -25,6 +26,7 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
+                                    <td>{{ isset($item->options['size']) ? $item->options['size'] : null }}</td>
                                     <td>@brutto($item->price) €</td>
                                     <td>{{ $item->qty }} </td>
                                     <td>Total {{ $item->total }} €</td>

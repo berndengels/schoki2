@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Admin\Page;
+namespace App\Http\Requests\Admin\ProductStock;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class IndexPage extends FormRequest
+class BulkDestroyProductStock extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class IndexPage extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('page.index');
+        return Gate::allows('admin.product-stock.bulk-delete');
     }
 
     /**
@@ -25,11 +25,7 @@ class IndexPage extends FormRequest
     public function rules(): array
     {
         return [
-            'orderBy' => 'in:id,created_by,updated_by,title,is_published|nullable',
-            'orderDirection' => 'in:asc,desc|nullable',
-            'search' => 'string|nullable',
-            'page' => 'integer|nullable',
-            'per_page' => 'integer|nullable',
+            'ids.*' => 'integer'
         ];
     }
 }

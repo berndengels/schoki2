@@ -1,20 +1,20 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
-@section('title', trans('admin.product.actions.index'))
+@section('title', trans('admin.product-stock.actions.index'))
 
 @section('body')
-    <product-listing
+
+    <product-stock-listing
         :data="{{ $data->toJson() }}"
-        :url="'{{ url('admin/products') }}'"
+        :url="'{{ url('admin/product-stocks') }}'"
         inline-template>
 
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> {{ trans('admin.product.actions.index') }}
-                        <a class="btn btn-primary btn-sm pull-right m-b-0 ml-2" href="{{ url('admin/products/export') }}" role="button"><i class="fa fa-file-excel-o"></i>&nbsp; {{ trans('admin.product.actions.export') }}</a>
-                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/products/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.product.actions.create') }}</a>
+                        <i class="fa fa-align-justify"></i> {{ trans('admin.product-stock.actions.index') }}
+                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/product-stocks/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.product-stock.actions.create') }}</a>
                     </div>
                     <div class="card-body" v-cloak>
                         <div class="card-block">
@@ -38,6 +38,7 @@
                                     </div>
                                 </div>
                             </form>
+
                             <table class="table table-hover table-listing">
                                 <thead>
                                     <tr>
@@ -48,21 +49,16 @@
                                             </label>
                                         </th>
                                         <th is='sortable' :column="'id'">ID</th>
-                                        <th is='sortable' :column="'name'">Name</th>
-                                        <th is='sortable' :column="'price'">Preis</th>
-                                        <th is='sortable' :column="'is_published'">published</th>
-                                        <th is='sortable' :column="'is_available'">available</th>
-                                        <th is='sortable' :column="'is_available'">Größen</th>
-                                        <th is='sortable' :column="'is_available'">Vorrat</th>
-                                        <th is='sortable' :column="'created_by'">createdBy</th>
-                                        <th is='sortable' :column="'updated_by'">UpdatedBy</th>
+                                        <th is='sortable' :column="'product_id'">Produkt</th>
+                                        <th is='sortable' :column="'product_size_id'">Größe</th>
+                                        <th is='sortable' :column="'stock'">Anzahl</th>
                                         <th></th>
                                     </tr>
                                     <tr v-show="(clickedBulkItemsCount > 0) || isClickedAll">
-                                        <td class="bg-bulk-info d-table-cell text-center" colspan="9">
-                                            <span class="align-middle font-weight-light text-dark">{{ trans('brackets/admin-ui::admin.listing.selected_items') }} @{{ clickedBulkItemsCount }}.  <a href="#" class="text-primary" @click="onBulkItemsClickedAll('/admin/products')" v-if="(clickedBulkItemsCount < pagination.state.total)"> <i class="fa" :class="bulkCheckingAllLoader ? 'fa-spinner' : ''"></i> {{ trans('brackets/admin-ui::admin.listing.check_all_items') }} @{{ pagination.state.total }}</a> <span class="text-primary">|</span> <a href="#" class="text-primary" @click="onBulkItemsClickedAllUncheck()">{{ trans('brackets/admin-ui::admin.listing.uncheck_all_items') }}</a>  </span>
+                                        <td class="bg-bulk-info d-table-cell text-center" colspan="6">
+                                            <span class="align-middle font-weight-light text-dark">{{ trans('brackets/admin-ui::admin.listing.selected_items') }} @{{ clickedBulkItemsCount }}.  <a href="#" class="text-primary" @click="onBulkItemsClickedAll('/admin/product-stocks')" v-if="(clickedBulkItemsCount < pagination.state.total)"> <i class="fa" :class="bulkCheckingAllLoader ? 'fa-spinner' : ''"></i> {{ trans('brackets/admin-ui::admin.listing.check_all_items') }} @{{ pagination.state.total }}</a> <span class="text-primary">|</span> <a href="#" class="text-primary" @click="onBulkItemsClickedAllUncheck()">{{ trans('brackets/admin-ui::admin.listing.uncheck_all_items') }}</a>  </span>
                                             <span class="pull-right pr-2">
-                                                <button class="btn btn-sm btn-danger pr-3 pl-3" @click="bulkDelete('/admin/products/bulk-destroy')">{{ trans('brackets/admin-ui::admin.btn.delete') }}</button>
+                                                <button class="btn btn-sm btn-danger pr-3 pl-3" @click="bulkDelete('/admin/product-stocks/bulk-destroy')">{{ trans('brackets/admin-ui::admin.btn.delete') }}</button>
                                             </span>
                                         </td>
                                     </tr>
@@ -75,36 +71,11 @@
                                             </label>
                                         </td>
 
-                                        <td>@{{ item.id }}</td>
-                                        <td>@{{ item.name }}</td>
-                                        <td>@{{ item.price }}</td>
-                                        <td>
-                                            <label class="switch switch-3d switch-success">
-                                                <input type="checkbox" class="switch-input" v-model="collection[index].is_published" @change="toggleSwitch(item.resource_url, 'is_published', collection[index])">
-                                                <span class="switch-slider"></span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="switch switch-3d switch-success">
-                                                <input type="checkbox" class="switch-input" v-model="collection[index].is_available" @change="toggleSwitch(item.resource_url, 'is_available', collection[index])">
-                                                <span class="switch-slider"></span>
-                                            </label>
-                                        </td>
-                                        <td>@{{ item.hasSize ? 'Ja' : 'Nein' }}</td>
-                                        <td v-if="item.stocks">
-                                            <table v-if="item.hasSize" class="table-sm">
-                                                <tr :key="index" v-for="(stock,index) in item.stocks">
-                                                    <td>@{{ stock.size.name }}</td>
-                                                    <td>@{{ stock.stock }}</td>
-                                                </tr>
-                                            </table>
-                                            <table v-else>
-                                                <tr><td>@{{ item.stocks[0].stock }}</td></tr>
-                                            </table>
-                                        </td>
-                                        <td v-else>no stocks</td>
-                                        <td>@{{ item.created_by.full_name }}</td>
-                                        <td>@{{ item.updated_by ? item.updated_by.full_name : null }}</td>
+                                    <td>@{{ item.id }}</td>
+                                        <td>@{{ item.product.name }}</td>
+                                        <td>@{{ item.size ? item.size.name : null }}</td>
+                                        <td>@{{ item.stock }}</td>
+
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">
@@ -132,13 +103,13 @@
                                 <i class="icon-magnifier"></i>
                                 <h3>{{ trans('brackets/admin-ui::admin.index.no_items') }}</h3>
                                 <p>{{ trans('brackets/admin-ui::admin.index.try_changing_items') }}</p>
-                                <a class="btn btn-primary btn-spinner" href="{{ url('admin/products/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.product.actions.create') }}</a>
+                                <a class="btn btn-primary btn-spinner" href="{{ url('admin/product-stocks/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.product-stock.actions.create') }}</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </product-listing>
+    </product-stock-listing>
 
 @endsection

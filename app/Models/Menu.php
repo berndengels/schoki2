@@ -85,6 +85,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static QueryBuilder|Menu whereNotDescendantOf($id)
  * @method static QueryBuilder|Menu withDepth(string $as = 'depth')
  * @method static QueryBuilder|Menu withoutRoot()
+ * @property string|null $css_class
+ * @method static QueryBuilder|Menu whereCssClass($value)
  */
 class Menu extends Model
 {

@@ -8,6 +8,7 @@ use App\Http\Requests\CustomerRequest;
 use App\Models\Order;
 use App\Models\Shoppingcart;
 use App\Models\Customer;
+use App\Repositories\ShopRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -23,6 +24,8 @@ class OrderController extends Controller
          * @var Customer $customer
          */
         $customer = auth('web')->user();
+        $order = ShopRepository::createOrderByCart($customer, $cart);
+
         $shippings = $customer->shippings;
         if(!$shippings->count() > 0) {
             return redirect()->route('shipping.create', ['redirectTo' => 'public.order.index'])

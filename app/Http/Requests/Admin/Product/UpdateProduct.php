@@ -42,10 +42,7 @@ class UpdateProduct extends FormRequest
     public function getSanitized(): array
     {
         $sanitized = $this->validated();
-
-
         //Add your code for manipulation with request data here
-
         return $sanitized;
     }
 }

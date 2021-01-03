@@ -683,5 +683,23 @@ return [
         ],
     ],
 
+    'product-stock' => [
+        'title' => 'Product Stock',
+
+        'actions' => [
+            'index' => 'Product Stock',
+            'create' => 'New Product Stock',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'product_id' => 'Product',
+            'product_size_id' => 'Product size',
+            'stock' => 'Stock',
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

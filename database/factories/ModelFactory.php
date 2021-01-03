@@ -348,7 +348,7 @@ $factory->define(App\Models\AddressCategory::class, static function (Faker\Gener
 
     ];
 });
-/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+/** @var  Factory $factory */
 $factory->define(App\Models\Shipping::class, static function (Faker\Generator $faker) {
     return [
         'user_id' => $faker->randomNumber(5),
@@ -358,11 +358,11 @@ $factory->define(App\Models\Shipping::class, static function (Faker\Generator $f
         'is_default' => $faker->boolean(),
         'created_at' => $faker->dateTime,
         'updated_at' => $faker->dateTime,
-        
-        
+
+
     ];
 });
-/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+/** @var  Factory $factory */
 $factory->define(App\Models\Country::class, static function (Faker\Generator $faker) {
     return [
         'code' => $faker->sentence,
@@ -372,7 +372,19 @@ $factory->define(App\Models\Country::class, static function (Faker\Generator $fa
         'fr' => $faker->sentence,
         'it' => $faker->sentence,
         'ru' => $faker->sentence,
-        
-        
+
+
+    ];
+});
+/** @var  Factory $factory */
+$factory->define(App\Models\ProductStock::class, static function (Faker\Generator $faker) {
+    return [
+        'product_id' => $faker->randomNumber(5),
+        'product_size_id' => $faker->randomNumber(5),
+        'stock' => $faker->randomNumber(5),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+
+
     ];
 });

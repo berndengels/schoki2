@@ -57,6 +57,10 @@ use Spatie\TaxCalculator\Traits\HasTaxWithRate;
  * @mixin Eloquent
  * @property string|null $price_netto
  * @method static Builder|Product wherePriceNetto($value)
+ * @property-read mixed $has_size
+ * @property-read \Illuminate\Database\Eloquent\Collection|ProductStock[] $stocks
+ * @property-read int|null $stocks_count
+ * @method static Builder|Product whereStock($value)
  */
 class Product extends Model implements Buyable, HasMedia
 {
@@ -70,7 +74,7 @@ class Product extends Model implements Buyable, HasMedia
     use HasTaxWithRate;
 
     protected $table = 'product';
-    protected $appends = ['resource_url'];
+    protected $appends = ['resource_url','hasSize','size'];
     protected $fillable = [
         'name',
         'description',
@@ -106,12 +110,19 @@ class Product extends Model implements Buyable, HasMedia
         return $cartItem->count() ? $cartItem->first() : null;
     }
 
-    public function taxPrice(): float
+    public function getHasSizeAttribute()
     {
+        return $this->stocks()->whereHas('size')->count() > 0;
     }
 
-    public function taxedPrice(): float
+    public function getSizeAttribute()
     {
+        return $this->size ?? null;
+    }
+
+    public function stocks()
+    {
+        return $this->hasMany(ProductStock::class, 'product_id', 'id');
     }
 
     /* ************************ ACCESSOR ************************* */

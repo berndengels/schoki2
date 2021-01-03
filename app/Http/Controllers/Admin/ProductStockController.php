@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Product\BulkDestroyProduct;
-use App\Http\Requests\Admin\Product\DestroyProduct;
-use App\Http\Requests\Admin\Product\IndexProduct;
-use App\Http\Requests\Admin\Product\StoreProduct;
-use App\Http\Requests\Admin\Product\UpdateProduct;
+use App\Http\Requests\Admin\ProductStock\BulkDestroyProductStock;
+use App\Http\Requests\Admin\ProductStock\DestroyProductStock;
+use App\Http\Requests\Admin\ProductStock\IndexProductStock;
+use App\Http\Requests\Admin\ProductStock\StoreProductStock;
+use App\Http\Requests\Admin\ProductStock\UpdateProductStock;
 use App\Models\Product;
+use App\Models\ProductSize;
+use App\Models\ProductStock;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -19,35 +20,27 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\View\View;
 
-class ProductController extends Controller
+class ProductStockController extends Controller
 {
 
     /**
      * Display a listing of the resource.
      *
-     * @param IndexProduct $request
+     * @param IndexProductStock $request
      * @return array|Factory|View
      */
-    public function index(IndexProduct $request)
+    public function index(IndexProductStock $request)
     {
         // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(Product::class)->processRequestAndGet(
+        $data = AdminListing::create(ProductStock::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
-            ['id', 'name', 'price', 'is_published', 'is_available', 'created_by', 'updated_by'],
-
+            ['id', 'product_id', 'product_size_id', 'stock'],
             // set columns to searchIn
-            ['id', 'name', 'description'],
-
-            function ($query) use ($request) {
-                $query->with(['createdBy','updatedBy','stocks']);
-            }
+            ['id'],
         );
 
         if ($request->ajax()) {
@@ -59,7 +52,7 @@ class ProductController extends Controller
             return ['data' => $data];
         }
 
-        return view('admin.product.index', ['data' => $data]);
+        return view('admin.product-stock.index', ['data' => $data]);
     }
 
     /**
@@ -70,45 +63,45 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin.product.create');
-
-        return view('admin.product.create');
+        $this->authorize('product-stock.create');
+        $products   = Product::all(['id','name']);
+        $sizes      = ProductSize::all(['id', 'name']);
+        return view('admin.product-stock.create', compact('products', 'sizes'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreProduct $request
+     * @param StoreProductStock $request
      * @return array|RedirectResponse|Redirector
      */
-    public function store(StoreProduct $request)
+    public function store(StoreProductStock $request)
     {
         // Sanitize input
         $sanitized = $request->getSanitized();
-
-        // Store the Product
-        Product::create($sanitized);
+        // Store the ProductStock
+        ProductStock::create($sanitized);
 
         if ($request->ajax()) {
             return [
-                'redirect'  => url('admin/products'),
+                'redirect'  => url('admin/product-stocks'),
                 'message'   => trans('brackets/admin-ui::admin.operation.succeeded')
             ];
         }
 
-        return redirect('admin/products');
+        return redirect('admin/product-stocks');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Product $product
+     * @param ProductStock $productStock
      * @throws AuthorizationException
      * @return void
      */
-    public function show(Product $product)
+    public function show(ProductStock $productStock)
     {
-        $this->authorize('admin.product.show', $product);
+        $this->authorize('product-stock.show', $productStock);
 
         // TODO your code goes here
     }
@@ -116,55 +109,55 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Product $product
+     * @param ProductStock $productStock
      * @throws AuthorizationException
      * @return Factory|View
      */
-    public function edit(Product $product)
+    public function edit(ProductStock $productStock)
     {
-        $this->authorize('admin.product.edit', $product);
+        $this->authorize('product-stock.edit', $productStock);
+        $products   = Product::all(['id','name'])->keyBy('id')->map->name;
+        $sizes      = ProductSize::all(['id', 'name'])->keyBy('id')->map->name;
 
-        return view('admin.product.edit', [
-            'product' => $product,
-        ]);
+        return view('admin.product-stock.edit', compact('productStock','products','sizes'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateProduct $request
-     * @param Product $product
+     * @param UpdateProductStock $request
+     * @param ProductStock $productStock
      * @return array|RedirectResponse|Redirector
      */
-    public function update(UpdateProduct $request, Product $product)
+    public function update(UpdateProductStock $request, ProductStock $productStock)
     {
         // Sanitize input
         $sanitized = $request->getSanitized();
 
-        // Update changed values Product
-        $product->update($sanitized);
+        // Update changed values ProductStock
+        $productStock->update($sanitized);
 
         if ($request->ajax()) {
             return [
-                'redirect'  => url('admin/products'),
-                'message'   => trans('brackets/admin-ui::admin.operation.succeeded'),
+                'redirect' => url('admin/product-stocks'),
+                'message' => trans('brackets/admin-ui::admin.operation.succeeded'),
             ];
         }
 
-        return redirect('admin/products');
+        return redirect('admin/product-stocks');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param DestroyProduct $request
-     * @param Product $product
+     * @param DestroyProductStock $request
+     * @param ProductStock $productStock
      * @throws Exception
      * @return ResponseFactory|RedirectResponse|Response
      */
-    public function destroy(DestroyProduct $request, Product $product)
+    public function destroy(DestroyProductStock $request, ProductStock $productStock)
     {
-        $product->delete();
+        $productStock->delete();
 
         if ($request->ajax()) {
             return response(['message' => trans('brackets/admin-ui::admin.operation.succeeded')]);
@@ -176,32 +169,22 @@ class ProductController extends Controller
     /**
      * Remove the specified resources from storage.
      *
-     * @param BulkDestroyProduct $request
+     * @param BulkDestroyProductStock $request
      * @throws Exception
      * @return Response|bool
      */
-    public function bulkDestroy(BulkDestroyProduct $request) : Response
+    public function bulkDestroy(BulkDestroyProductStock $request) : Response
     {
         DB::transaction(static function () use ($request) {
             collect($request->data['ids'])
                 ->chunk(1000)
                 ->each(static function ($bulkChunk) {
-                    Product::whereIn('id', $bulkChunk)->delete();
+                    ProductStock::whereIn('id', $bulkChunk)->delete();
 
                     // TODO your code goes here
                 });
         });
 
         return response(['message' => trans('brackets/admin-ui::admin.operation.succeeded')]);
-    }
-
-    /**
-     * Export entities
-     *
-     * @return BinaryFileResponse|null
-     */
-    public function export(): ?BinaryFileResponse
-    {
-        return Excel::download(app(ProductExport::class), 'products.xlsx');
     }
 }

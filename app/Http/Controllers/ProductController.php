@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index(Cart $cart)
     {
-        $data = Product::all()->map(function (Product $product) use ($cart) {
+        $data = Product::with('stocks')->get()->map(function (Product $product) use ($cart) {
             $product->thumb = null;
             $product->added = $cart->count();
             if( $product->getThumbs200ForCollection('product_images')->count() ) {
@@ -44,6 +44,7 @@ class ProductController extends Controller
             });
             $product->images = $images;
         }
+        $product->load('stocks');
 
         $cartItem = $cart->search(function($cartItem, $rowId) use ($product) {
             return $cartItem->id === $product->getBuyableIdentifier();

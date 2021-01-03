@@ -22,3 +22,4 @@ import './order';
 import './address-category';
 import './shipping';
 import './country';
+import './product-stock';
