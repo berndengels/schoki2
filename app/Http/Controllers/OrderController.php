@@ -23,10 +23,8 @@ class OrderController extends Controller
         /**
          * @var Customer $customer
          */
-        $customer = auth('web')->user();
-        $order = ShopRepository::createOrderByCart($customer, $cart);
-
-        $shippings = $customer->shippings;
+        $customer   = auth('web')->user();
+        $shippings  = $customer->shippings;
         if(!$shippings->count() > 0) {
             return redirect()->route('shipping.create', ['redirectTo' => 'public.order.index'])
                 ->with(['ordering' => true, 'customer' => $customer]);
