@@ -42,4 +42,3 @@
         <div v-if="errors.has('delivered_on')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('delivered_on') }}</div>
     </div>
 </div>
-
