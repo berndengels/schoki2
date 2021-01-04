@@ -39,10 +39,8 @@ class OrderController extends Controller
         $data = AdminListing::create(Order::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'amount_received', 'created_by', 'paid_on', 'delivered_on'],
-
             // set columns to searchIn
             ['id', 'created_by',]
         );
@@ -68,7 +66,6 @@ class OrderController extends Controller
     public function create()
     {
         $this->authorize('admin.order.create');
-
         return view('admin.order.create');
     }
 
@@ -82,7 +79,6 @@ class OrderController extends Controller
     {
         // Sanitize input
         $sanitized = $request->getSanitized();
-
         // Store the Order
         Order::create($sanitized);
 
@@ -116,9 +112,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         $this->authorize('admin.order.edit', $order);
-        return view('admin.order.edit', [
-            'order' => $order,
-        ]);
+        return view('admin.order.edit', compact('order'));
     }
 
     /**
@@ -132,7 +126,6 @@ class OrderController extends Controller
     {
         // Sanitize input
         $sanitized = $request->getSanitized();
-
         // Update changed values Order
         $order->update($sanitized);
 

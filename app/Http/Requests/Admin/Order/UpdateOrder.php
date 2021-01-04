@@ -26,10 +26,10 @@ class UpdateOrder extends FormRequest
     public function rules(): array
     {
         return [
-            'amount_received' => '',
-            'price_total' => '',
-            'paid_on' => '',
-            'delivered_on' => '',
+            'amount_received'   => '',
+            'price_total'       => '',
+            'paid_on'           => '',
+            'delivered_on'      => '',
         ];
     }
 
@@ -41,10 +41,7 @@ class UpdateOrder extends FormRequest
     public function getSanitized(): array
     {
         $sanitized = $this->validated();
-
-
         //Add your code for manipulation with request data here
-
         return $sanitized;
     }
 }

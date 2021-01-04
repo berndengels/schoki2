@@ -54,7 +54,7 @@
                                         <th is='sortable' :column="'amount_received'">Betrag erhalten</th>
                                         <th is='sortable' :column="'created_by'">Kunde</th>
                                         <th is='sortable' :column="'paid_on'">bezahlt am</th>
-                                        <th is='sortable' :column="'delivered_on'">ausgeleifert am</th>
+                                        <th is='sortable' :column="'delivered_on'">ausgeliefert am</th>
 
                                         <th></th>
                                     </tr>
@@ -82,7 +82,7 @@
                                         <td>@{{ item.amount_received }}</td>
                                         <td><a :href="item.resource_url + '/show'" title="anzeigen">@{{ item.created_by.name }}</a></td>
                                         <td>@{{ item.paid_on | date('DD.MM.Y H:m') }}</td>
-                                        <td>@{{ item.delivered_on | date('DD.MM.Y H:m') }}</td>
+                                        <td>@{{ item.delivered_on | date('DD.MM.Y H:mm') }}</td>
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">

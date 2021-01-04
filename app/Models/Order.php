@@ -66,7 +66,7 @@ class Order extends Model
     protected $with = ['orderItems','createdBy','updatedBy'];
     protected $fillable = [
         'price_total',
-        'delivered_at',
+        'delivered_on',
         'created_by',
         'updated_by',
         'paid_on',
@@ -76,7 +76,7 @@ class Order extends Model
         'mail_to_shop',
     ];
     public $timestamps = true;
-    protected $dates = ['created_at','updated_at','delivered_at'];
+    protected $dates = ['created_at','updated_at','delivered_on'];
     protected $appends = ['resource_url','delivered'];
 
     public function getDeliveredAttribute()

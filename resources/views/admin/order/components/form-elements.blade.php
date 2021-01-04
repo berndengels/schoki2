@@ -28,7 +28,16 @@
     <div :class="isFormLocalized ? 'col-md-4' : 'col-sm-8'">
         <div class="input-group input-group--custom">
             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-            <datetime v-model="form.delivered_on" :config="datePickerConfig" v-validate="''" class="flatpickr" :class="{'form-control-danger': errors.has('delivered_on'), 'form-control-success': fields.delivered_on && fields.delivered_on.valid}" id="delivered_on" name="delivered_on" placeholder="{{ trans('brackets/admin-ui::admin.forms.select_a_date') }}"></datetime>
+            <datetime
+                id="delivered_on"
+                name="delivered_on"
+                v-model="form.delivered_on"
+                class="flatpickr"
+                :config="timePickerConfig"
+                :class="{'form-control-danger': errors.has('delivered_on'), 'form-control-success': fields.delivered_on && fields.delivered_on.valid}"
+                placeholder="Datum/Uhrzeit wählen"
+            >
+            </datetime>
         </div>
         <div v-if="errors.has('delivered_on')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('delivered_on') }}</div>
     </div>
