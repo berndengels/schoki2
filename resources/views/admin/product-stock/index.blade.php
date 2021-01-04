@@ -1,14 +1,11 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
 @section('title', trans('admin.product-stock.actions.index'))
-
 @section('body')
-
     <product-stock-listing
         :data="{{ $data->toJson() }}"
         :url="'{{ url('admin/product-stocks') }}'"
         inline-template>
-
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -111,5 +108,4 @@
             </div>
         </div>
     </product-stock-listing>
-
 @endsection

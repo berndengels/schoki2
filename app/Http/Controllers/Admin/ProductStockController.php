@@ -116,9 +116,8 @@ class ProductStockController extends Controller
     public function edit(ProductStock $productStock)
     {
         $this->authorize('product-stock.edit', $productStock);
-        $products   = Product::all(['id','name'])->keyBy('id')->map->name;
-        $sizes      = ProductSize::all(['id', 'name'])->keyBy('id')->map->name;
-
+        $products   = Product::all(['id','name']);
+        $sizes      = ProductSize::all(['id', 'name']);
         return view('admin.product-stock.edit', compact('productStock','products','sizes'));
     }
 
@@ -133,7 +132,6 @@ class ProductStockController extends Controller
     {
         // Sanitize input
         $sanitized = $request->getSanitized();
-
         // Update changed values ProductStock
         $productStock->update($sanitized);
 

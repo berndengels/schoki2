@@ -28,7 +28,7 @@ class UpdateProductStock extends FormRequest
         return [
             'product_id'        => ['required'],
             'product_size_id'   => '',
-            'stock'             => ['required', 'integer'],
+            'stock'             => ['required','integer'],
         ];
     }
 
@@ -40,12 +40,6 @@ class UpdateProductStock extends FormRequest
     public function getSanitized(): array
     {
         $sanitized = $this->validated();
-        $sanitized['product_id']        = $sanitized['product_id']['id'];
-        if(isset($sanitized['product_size_id'])) {
-            $sanitized['product_size_id']   = $sanitized['product_size_id']['id'];
-        } else {
-            $sanitized['product_size_id'] = null;
-        }
         return $sanitized;
     }
 }
