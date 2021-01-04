@@ -72,6 +72,12 @@ class PaymentStripeController extends Controller
                     'price'         => $stripePrice->id,
                     'description'   => $cartItem->name,
                     'quantity'      => $cartItem->qty,
+                    'product_data'  => [
+                        'name'  => $cartItem->name,
+                        'metadata'  => [
+                            'size'  => isset($cartItem->options['size']) ? $cartItem->options['size'] : null,
+                        ],
+                    ],
                 ];
                 // create invoice Items
                 $this->stripeClient->invoiceItems->create($params);
