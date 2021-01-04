@@ -69,6 +69,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('customer.edit', ['customer' => Auth::user('web') ]) }}">{{ __('Profil') }}</a>
                             <a class="dropdown-item" href="{{ route('shipping.index') }}">{{ __('Adressen') }}</a>
+                            <a class="dropdown-item" href="{{ route('payment.stripe.success') }}">{{ __('Rechnungen') }}</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">

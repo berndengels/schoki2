@@ -120,9 +120,15 @@ use Stripe\InvoiceItem;
                     <!-- Display The Invoice Items -->
                     @foreach ($invoice->invoiceItems() as $item)
                         <tr class="row">
-                            <td>{{ $item->description }}</td>
+                            <td>{{ $item->description }}
+                                @if($item->metadata->size)
+                                &nbsp;
+                                    (Größe {{ $item->metadata->size }})
+                                @endif
+                            </td>
                             <td>{{ $item->quantity }} @lang('Stück')
-                                a {{ $item->price->unit_amount/100 }} €</td>
+                                a {{ $item->price->unit_amount/100 }} €
+                            </td>
                             @if ($invoice->hasTax())
                                 <td>
                                     @if ($inclusiveTaxPercentage = $item->inclusiveTaxPercentage())

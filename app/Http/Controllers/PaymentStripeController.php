@@ -72,11 +72,8 @@ class PaymentStripeController extends Controller
                     'price'         => $stripePrice->id,
                     'description'   => $cartItem->name,
                     'quantity'      => $cartItem->qty,
-                    'product_data'  => [
-                        'name'  => $cartItem->name,
-                        'metadata'  => [
-                            'size'  => isset($cartItem->options['size']) ? $cartItem->options['size'] : null,
-                        ],
+                    'metadata'  => [
+                        'size'  => isset($cartItem->options['size']) ? $cartItem->options['size'] : null,
                     ],
                 ];
                 // create invoice Items
@@ -166,7 +163,6 @@ class PaymentStripeController extends Controller
 
     public function listInvoices(Customer $customer) {
         $invoices = $customer->invoices()->toArray();
-        dd($invoices);
     }
 
     public function invoice(Request $request, string $invoiceId)
