@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Download;
@@ -36,98 +37,98 @@ class PaymentStripeController extends Controller
 
     public function process(Request $request, Cart $cart)
     {
-            /**
-             * @var Customer $customer
-             * @var StripeCustomer $stripeCustomer
-             */
-            $customer       = $request->user('web');
-            $customerData   = (new CustomerResource($customer))->toArray($request);
+        /**
+         * @var Customer $customer
+         * @var StripeCustomer $stripeCustomer
+         */
+        $customer = $request->user('web');
+        $customerData = (new CustomerResource($customer))->toArray($request);
 
-            try {
-                $stripeCustomer = $customer->createOrGetStripeCustomer($customerData);
-            } catch(Exception $e) {
-                throw new Exception($e);
-            }
+        try {
+            $stripeCustomer = $customer->createOrGetStripeCustomer($customerData);
+        } catch (Exception $e) {
+            throw new Exception($e);
+        }
 
-            $stripeCustomerID = $stripeCustomer->id;
-            $paymentMethods = config('my.payment.types');
+        $stripeCustomerID = $stripeCustomer->id;
+        $paymentMethods = config('my.payment.types');
 
-            // create taxRate
-            $params         = [
-                'display_name'  => 'VAT',
-                'description'   => 'VAT Germany',
-                'jurisdiction'  => 'DE',
-                'percentage'    => env('PAYMENT_TAX_RATE'),
-                'inclusive'     => true,
-            ];
-            $taxRate = $this->stripeClient->taxRates->create($params);
+        // create taxRate
+        $params = [
+            'display_name' => 'VAT',
+            'description' => 'VAT Germany',
+            'jurisdiction' => 'DE',
+            'percentage' => env('PAYMENT_TAX_RATE'),
+            'inclusive' => true,
+        ];
+        $taxRate = $this->stripeClient->taxRates->create($params);
 
-            // create prices by cartItems
-            $prices       = ShopRepository::getStripePriceItems($cart, $request);
-            $stripePrices = $prices->map(function($price, $cartItemId) use ($stripeCustomerID, $cart) {
-                $cartItem       = $cart->get($cartItemId);
-                $stripePrice    = $this->stripeClient->prices->create($price);
-                $params = [
-                    'customer'      => $stripeCustomerID,
-                    'price'         => $stripePrice->id,
-                    'description'   => $cartItem->name,
-                    'quantity'      => $cartItem->qty,
-                    'metadata'  => [
-                        'size'  => isset($cartItem->options['size']) ? $cartItem->options['size'] : null,
-                    ],
-                ];
-                // create invoice Items
-                $this->stripeClient->invoiceItems->create($params);
-                return [
-                    'price'         => $stripePrice,
-                    'cartItemId'    => $cartItemId,
-                ];
-            });
-
-            // create invoice
+        // create prices by cartItems
+        $prices = ShopRepository::getStripePriceItems($cart, $request);
+        $stripePrices = $prices->map(function ($price, $cartItemId) use ($stripeCustomerID, $cart) {
+            $cartItem = $cart->get($cartItemId);
+            $stripePrice = $this->stripeClient->prices->create($price);
             $params = [
-                'customer'      => $stripeCustomerID,
-                'auto_advance'  => true,
-                'description'   => 'Rechnung für Schokoladen Bestellung vom '. Carbon::today()->format('d.m.Y H:i'),
-                'default_tax_rates' => [$taxRate],
+                'customer' => $stripeCustomerID,
+                'price' => $stripePrice->id,
+                'description' => $cartItem->name,
+                'quantity' => $cartItem->qty,
+                'metadata' => [
+                    'size' => isset($cartItem->options['size']) ? $cartItem->options['size'] : null,
+                ],
             ];
+            // create invoice Items
+            $this->stripeClient->invoiceItems->create($params);
+            return [
+                'price' => $stripePrice,
+                'cartItemId' => $cartItemId,
+            ];
+        });
+
+        // create invoice
+        $params = [
+            'customer' => $stripeCustomerID,
+            'auto_advance' => true,
+            'description' => 'Rechnung für Schokoladen Bestellung vom ' . Carbon::today()->format('d.m.Y H:i'),
+            'default_tax_rates' => [$taxRate],
+        ];
+        /**
+         * @var Invoice
+         */
+        $invoice = $this->stripeClient->invoices->create($params);
+        $invoice->finalizeInvoice();
+
+        // create order, must be updated by webhook event 'checkout.session.completed'
+        $orderItems = $stripePrices->map(function ($item) use ($cart) {
             /**
-             * @var Invoice
+             * @var Price $price
+             * @var CartItem $cartItem
              */
-            $invoice = $this->stripeClient->invoices->create($params);
-            $invoice->finalizeInvoice();
-
-            // create order, must be updated by webhook event 'checkout.session.completed'
-            $orderItems = $stripePrices->map(function($item) use ($cart) {
-                /**
-                 * @var Price $price
-                 * @var CartItem $cartItem
-                 */
-                $price      = $item['price'];
-                $cartItem   = $cart->get($item['cartItemId']);
-                return [
-                    'price'     => $price->id,
-                    'quantity'  => $cartItem->qty,
-                ];
-            })->values()->toArray();
-
-            $order = ShopRepository::createOrderByCart($customer, $cart);
-            // set metadata for using in webhook response
-            $metadata = [
-                'order_id'      => $order ? (int) $order->id : null,
-                'customer_id'   => (int) $customer->id,
+            $price = $item['price'];
+            $cartItem = $cart->get($item['cartItemId']);
+            return [
+                'price' => $price->id,
+                'quantity' => $cartItem->qty,
             ];
+        })->values()->toArray();
+
+        $order = ShopRepository::createOrderByCart($customer, $cart);
+        // set metadata for using in webhook response
+        $metadata = [
+            'order_id' => $order ? (int)$order->id : null,
+            'customer_id' => (int)$customer->id,
+        ];
 
         try {
             $params = [
                 'payment_method_types' => $paymentMethods,
-                'customer'          => $stripeCustomerID,
-                'mode'              => 'payment',
-                'locale'            => MyLang::getPrimary(),
-                'line_items'        => $orderItems,
-                'metadata'          => $metadata,
-                'success_url'       => route('payment.stripe.success'),
-                'cancel_url'        => route('payment.stripe.cancel'),
+                'customer' => $stripeCustomerID,
+                'mode' => 'payment',
+                'locale' => MyLang::getPrimary(),
+                'line_items' => $orderItems,
+                'metadata' => $metadata,
+                'success_url' => route('payment.stripe.success'),
+                'cancel_url' => route('payment.stripe.cancel'),
             ];
             /**
              * create a checkout session and listen on related webhook event
@@ -139,8 +140,7 @@ class PaymentStripeController extends Controller
             $cart->destroy();
 
             return response()->json(['sessionId' => $stripeSession->id]);
-        }
-        catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception($e);
         }
     }
@@ -158,52 +158,53 @@ class PaymentStripeController extends Controller
          */
         $customer = $request->user();
         $invoices = $customer->invoicesIncludingPending();
-        return view('public.payment.stripe.success', compact('customer','invoices'));
+        return view('public.payment.stripe.success', compact('customer', 'invoices'));
     }
 
-    public function listInvoices(Customer $customer) {
+    public function listInvoices(Customer $customer)
+    {
         $invoices = $customer->invoices()->toArray();
     }
 
     public function invoice(Request $request, string $invoiceId)
     {
-        $filename = Carbon::now()->format('YmdHi').'-schokladen-rechnung';
+        $filename = Carbon::now()->format('YmdHi') . '-schokladen-rechnung';
         /** @var Customer $customer */
         $customer = $request->user();
-        $logo = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
+        $logo = base64_encode(file_get_contents(public_path('img') . '/logo-167x167.png'));
 
         return $customer->downloadInvoice($invoiceId, [
-            'vendor'    => json_decode(json_encode(config('my.vendor'))),
-            'logo'      => $logo,
-            'product'   => 'Ihre aktuelle Bestellung',
-            'id'        => $invoiceId,
-            'vat'       => env('PAYMENT_TAX_RATE'),
+            'vendor' => json_decode(json_encode(config('my.vendor'))),
+            'logo' => $logo,
+            'product' => 'Ihre aktuelle Bestellung',
+            'id' => $invoiceId,
+            'vat' => env('PAYMENT_TAX_RATE'),
         ], $filename);
     }
 
     public function download(string $token)
     {
-        $download   = Download::findOrFail($token);
+        $download = Download::findOrFail($token);
         $customerId = $download->customer_id;
-        $invoiceId  = $download->object_id;
+        $invoiceId = $download->object_id;
 
         /** @var Customer $customer */
         $customer = Customer::find($customerId);
-        $logo = base64_encode(file_get_contents(public_path('img').'/logo-167x167.png'));
+        $logo = base64_encode(file_get_contents(public_path('img') . '/logo-167x167.png'));
         try {
             $invoice = $customer->findInvoice($invoiceId);
         } catch (Exception $e) {
             $title = 'Fehler';
             $message = 'Kann keine korrekten Daten finden';
-            return view('errors.message', compact('message','title'));
+            return view('errors.message', compact('message', 'title'));
         }
         $fileName = Carbon::now()->format('YmdHi') . '_Schokoladen-Bestellung.pdf';
         $data = [
-            'vendor'    => json_decode(json_encode(config('my.vendor'))),
-            'logo'      => $logo,
-            'product'   => 'Schokoladen-Bestellung',
-            'id'        => $invoiceId,
-            'vat'       => env('PAYMENT_TAX_RATE'),
+            'vendor' => json_decode(json_encode(config('my.vendor'))),
+            'logo' => $logo,
+            'product' => 'Schokoladen-Bestellung',
+            'id' => $invoiceId,
+            'vat' => env('PAYMENT_TAX_RATE'),
         ];
         return $invoice->downloadAs($fileName, $data);
     }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
+use App\Models\Order;
+use App\Models\Customer;
 use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\BulkDestroyOrder;
@@ -9,13 +12,11 @@ use App\Http\Requests\Admin\Order\DestroyOrder;
 use App\Http\Requests\Admin\Order\IndexOrder;
 use App\Http\Requests\Admin\Order\StoreOrder;
 use App\Http\Requests\Admin\Order\UpdateOrder;
-use App\Models\Customer;
-use App\Models\Order;
 use Brackets\AdminListing\Facades\AdminListing;
-use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -40,9 +41,12 @@ class OrderController extends Controller
             // pass the request with params
             $request,
             // set columns to query
-            ['id', 'amount_received', 'created_by', 'paid_on', 'delivered_on'],
+            ['id', 'created_at','amount_received', 'created_by', 'paid_on', 'delivered_on'],
             // set columns to searchIn
-            ['id', 'created_by',]
+            ['id', 'created_by'],
+            function (Builder $query) {
+                $query->orderBy('created_at','DESC');
+            }
         );
 
         if ($request->ajax()) {

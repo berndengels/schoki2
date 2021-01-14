@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\EventExport;
+use Exception;
+use App\Models\Event;
+use App\Models\Theme;
 use App\Helper\MyDate;
+use App\Models\Category;
+use Illuminate\View\View;
+use App\Exports\EventExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Event\BulkDestroyEvent;
 use App\Http\Requests\Admin\Event\DestroyEvent;
 use App\Http\Requests\Admin\Event\IndexEvent;
 use App\Http\Requests\Admin\Event\StoreEvent;
 use App\Http\Requests\Admin\Event\UpdateEvent;
-use App\Models\Category;
-use App\Models\Event;
-use App\Models\Theme;
 use Brackets\AdminListing\Facades\AdminListing;
-use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
@@ -25,7 +26,6 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Illuminate\View\View;
 
 class EventController extends Controller
 {
