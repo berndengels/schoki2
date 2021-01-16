@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Role;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Role;
 use App\Models\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Customer\BulkDestroyCustomer;
@@ -17,10 +18,13 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
+use Stripe\Invoice;
 
 class CustomerController extends Controller
 {
@@ -112,9 +116,23 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        $this->authorize('customer', $customer);
         $invoices = $customer->invoices(true);
         return view('admin.customer.show', compact('customer', 'invoices'));
+    }
+
+    public function invoice(Customer $customer, string $invoiceId)
+    {
+        $name = Str::slug($customer->name);
+        $filename = $name . '-rechnung';
+        $logo = base64_encode(file_get_contents(public_path('img') . '/logo-167x167.png'));
+
+        return $customer->downloadInvoice($invoiceId, [
+            'vendor' => json_decode(json_encode(config('my.vendor'))),
+            'logo' => $logo,
+            'product' => 'Ihre aktuelle Bestellung',
+            'id' => $invoiceId,
+            'vat' => env('PAYMENT_TAX_RATE'),
+        ], $filename);
     }
 
     /**

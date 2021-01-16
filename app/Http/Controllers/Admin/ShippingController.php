@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -38,7 +39,11 @@ class ShippingController extends Controller
             // set columns to query
             ['id', 'customer_id', 'postcode', 'city', 'street', 'is_default'],
             // set columns to searchIn
-            ['id', 'postcode', 'city', 'street']
+            ['id', 'postcode', 'city', 'street'],
+            function (Builder $query) {
+                $query->with(['customer','country']);
+            }
+
         );
 
         if ($request->ajax()) {

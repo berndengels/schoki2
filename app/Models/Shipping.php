@@ -42,7 +42,6 @@ use Illuminate\Support\Carbon;
 class Shipping extends Model
 {
     protected $table = 'shipping';
-    protected $with = ['customer','country'];
     protected $appends = ['resource_url','name'];
     protected $fillable = [
         'customer_id',

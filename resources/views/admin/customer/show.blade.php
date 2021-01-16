@@ -48,7 +48,7 @@
                                 @endforeach
                             </table>
                         </td>
-                        <td><a href="{{ route('payment.stripe.invoice', ['invoiceId' => $item->id]) }}">Download</a></td>
+                        <td><a href="{{ route('admin/customers/invoice', ['customer' => $customer,'invoiceId' => $item->id]) }}">Download</a></td>
                     </tr>
                 @endforeach
             </table>

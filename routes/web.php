@@ -187,11 +187,14 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
         Route::prefix('admin')
             ->namespace('App\Http\Controllers\Admin')
             ->name('admin/')->group(static function() {
-            Route::prefix('customers')->name('customers/')->group(static function() {
+            Route::prefix('customers')
+                ->name('customers/')
+                ->group(static function() {
                 Route::get('/',	'CustomerController@index')->name('index');
                 Route::get('/create',	'CustomerController@create')->name('create');
                 Route::post('/',	'CustomerController@store')->name('store');
                 Route::get('/{customer}/show',	'CustomerController@show')->name('show');
+                Route::get('/{customer}/invoice/{invoiceId}',	'CustomerController@invoice')->name('invoice');
                 Route::get('/{customer}/edit',	'CustomerController@edit')->name('edit');
                 Route::post('/bulk-destroy',	'CustomerController@bulkDestroy')->name('bulk-destroy');
                 Route::post('/{customer}',	'CustomerController@update')->name('update');
@@ -310,6 +313,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
 });
 
 /* Auto-generated admin routes */
+/*
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
         Route::prefix('products')->name('products/')->group(static function() {
@@ -323,7 +327,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
         });
     });
 });
-
+*/
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
@@ -443,7 +447,7 @@ Route::prefix('order')
         Route::get('/show',[OrderController::class, 'show'])->name('public.order.show');
     });
 Route::prefix('payment')
-    ->middleware('auth')
+    ->middleware(['auth'])
     ->group(function() {
         Route::prefix('paypal')->group(static function() {
             Route::post('process', [PaymentPayPalController::class , 'process'])->name('payment.paypal.process');
