@@ -3,7 +3,7 @@
         <ul class="nav">
             <li class="nav-title">{{ trans('brackets/admin-ui::admin.sidebar.content') }}</li>
             <a class="nav-link dropdown-toggle" href="#datenSubmenu" data-toggle="collapse" aria-expanded="true">Daten</a>
-            <ul class="collapsing list-unstyled active" id="datenSubmenu">
+            <ul class="collapsing list-unstyled" id="datenSubmenu">
                 @can('event.index')
                     <li class="nav-item"><a class="nav-link" href="{{ url('admin/events') }}"><i class="nav-icon icon-compass"></i> {{ trans('admin.event.title') }}</a></li>
                 @endcan
