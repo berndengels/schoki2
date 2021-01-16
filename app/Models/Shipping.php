@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use App\Models\Customer;
+use Eloquent;
 use Illuminate\Auth\Access\Gate;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Shipping
@@ -16,29 +19,30 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $city
  * @property string $street
  * @property int $is_default
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Country $country
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Country $country
  * @property-read Customer $customer
  * @property-read mixed $name
  * @property-read mixed $resource_url
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping query()
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping whereCountryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping whereCustomerId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping whereIsDefault($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping wherePostcode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping whereStreet($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipping whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|Shipping newModelQuery()
+ * @method static Builder|Shipping newQuery()
+ * @method static Builder|Shipping query()
+ * @method static Builder|Shipping whereCity($value)
+ * @method static Builder|Shipping whereCountryId($value)
+ * @method static Builder|Shipping whereCreatedAt($value)
+ * @method static Builder|Shipping whereCustomerId($value)
+ * @method static Builder|Shipping whereId($value)
+ * @method static Builder|Shipping whereIsDefault($value)
+ * @method static Builder|Shipping wherePostcode($value)
+ * @method static Builder|Shipping whereStreet($value)
+ * @method static Builder|Shipping whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Shipping extends Model
 {
     protected $table = 'shipping';
+    protected $with = ['customer','country'];
     protected $appends = ['resource_url','name'];
     protected $fillable = [
         'customer_id',

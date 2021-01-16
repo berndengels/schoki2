@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -35,12 +36,13 @@ class PermissionController extends Controller
         $data = AdminListing::create(Permission::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'name', 'guard_name'],
-
             // set columns to searchIn
-            ['id', 'name', 'guard_name']
+            ['id', 'name', 'guard_name'],
+            function (Builder $query) use ($request) {
+                $query->orderBy('name');
+            }
         );
 
         if ($request->ajax()) {

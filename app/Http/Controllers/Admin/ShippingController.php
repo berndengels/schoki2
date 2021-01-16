@@ -35,10 +35,8 @@ class ShippingController extends Controller
         $data = AdminListing::create(Shipping::class)->processRequestAndGet(
             // pass the request with params
             $request,
-
             // set columns to query
             ['id', 'customer_id', 'postcode', 'city', 'street', 'is_default'],
-
             // set columns to searchIn
             ['id', 'postcode', 'city', 'street']
         );
