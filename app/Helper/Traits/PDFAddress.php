@@ -2,9 +2,8 @@
 namespace App\Helper\Traits;
 
 use App\Models\Shipping;
-use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\App;
+use Barryvdh\DomPDF\Facade as PDF;
 
 trait PDFAddress
 {
