@@ -247,6 +247,7 @@ return [
 		'Curl'			=> Ixudra\Curl\Facades\Curl::class,
 		'Newsletter' 	=> Spatie\Newsletter\NewsletterFacade::class,
         'PayPal'        => Srmklive\PayPal\Facades\PayPal::class,
+        'PDF'           => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];
