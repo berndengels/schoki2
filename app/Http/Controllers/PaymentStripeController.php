@@ -84,7 +84,6 @@ class PaymentStripeController extends Controller
                 'cartItemId' => $cartItemId,
             ];
         });
-
         // create invoice
         $params = [
             'customer' => $stripeCustomerID,
@@ -136,7 +135,6 @@ class PaymentStripeController extends Controller
              * @var Session $stripeSession
              */
             $stripeSession = $this->stripeClient->checkout->sessions->create($params);
-            $stripeSession->shipping->updateAttributes();
             // warenkorb leeren
             $cart->destroy();
 
