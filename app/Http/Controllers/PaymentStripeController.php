@@ -136,6 +136,7 @@ class PaymentStripeController extends Controller
              * @var Session $stripeSession
              */
             $stripeSession = $this->stripeClient->checkout->sessions->create($params);
+            $stripeSession->shipping->updateAttributes();
             // warenkorb leeren
             $cart->destroy();
 

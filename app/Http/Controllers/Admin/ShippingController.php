@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\Traits\PDFAddress;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Shipping\BulkDestroyShipping;
 use App\Http\Requests\Admin\Shipping\DestroyShipping;
@@ -23,7 +24,7 @@ use Illuminate\View\View;
 
 class ShippingController extends Controller
 {
-
+    use PDFAddress;
     /**
      * Display a listing of the resource.
      *
@@ -102,8 +103,19 @@ class ShippingController extends Controller
     public function show(Shipping $shipping)
     {
         $this->authorize('admin.shipping.show', $shipping);
+    }
 
-        // TODO your code goes here
+    /**
+     * Display the specified resource.
+     *
+     * @param Shipping $shipping
+     * @throws AuthorizationException
+     * @return void
+     */
+    public function print(Shipping $shipping)
+    {
+        $this->authorize('admin.shipping.show', $shipping);
+        return self::download($shipping);
     }
 
     /**

@@ -78,7 +78,7 @@
                                             </label>
                                         </td>
 
-                                    <td>@{{ item.id }}</td>
+                                        <td>@{{ item.id }}</td>
                                         <td>@{{ item.customer.name }}</td>
                                         <td>@{{ item.postcode }}</td>
                                         <td>@{{ item.city }}</td>
@@ -87,6 +87,9 @@
 
                                         <td>
                                             <div class="row no-gutters">
+                                                <div class="col-auto">
+                                                    <a class="btn btn-sm btn-spinner btn-primary" :href="item.resource_url + '/print'" title="PDF" role="button"><i class="far fa-file-pdf"></i> PDF</a>
+                                                </div>
                                                 <div class="col-auto">
                                                     <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-edit"></i></a>
                                                 </div>

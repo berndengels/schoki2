@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\Traits\PDFAddress;
+use App\Models\Shipping;
 use Exception;
 use App\Models\Order;
 use App\Models\Customer;
@@ -27,7 +29,7 @@ use Illuminate\View\View;
 
 class OrderController extends Controller
 {
-
+    use PDFAddress;
     /**
      * Display a listing of the resource.
      *
@@ -104,6 +106,19 @@ class OrderController extends Controller
     {
         $this->authorize('admin.order.show', $order);
         return view('admin.order.show', compact('order'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Shipping $shipping
+     * @throws AuthorizationException
+     * @return void
+     */
+    public function print(Order $order)
+    {
+        $this->authorize('admin.order.show', $order);
+        return self::download($order->createdBy->shipping);
     }
 
     /**

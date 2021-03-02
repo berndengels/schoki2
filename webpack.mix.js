@@ -19,6 +19,7 @@ mix.autoload({
     .js(['resources/js/admin/admin.js'], 'public/js')
     .sass('resources/sass/admin/admin.scss', 'public/css')
     .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/pdf.scss', 'css/pdf.css')
     .sass('resources/sass/red.scss', 'css/red.css')
     .sass('resources/sass/dark.scss', 'css/dark.css')
     .copy('resources/vendor/calendar/zabuto_calendar.min.js', 'public/vendor/calendar/js')

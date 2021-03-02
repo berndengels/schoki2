@@ -196,6 +196,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
                 Route::get('/{customer}/show',	'CustomerController@show')->name('show');
                 Route::get('/{customer}/invoice/{invoiceId}',	'CustomerController@invoice')->name('invoice');
                 Route::get('/{customer}/edit',	'CustomerController@edit')->name('edit');
+                Route::get('/{customer}/print',	'CustomerController@print')->name('print');
                 Route::post('/bulk-destroy',	'CustomerController@bulkDestroy')->name('bulk-destroy');
                 Route::post('/{customer}',	'CustomerController@update')->name('update');
                 Route::delete('/{customer}',	'CustomerController@destroy')->name('destroy');
@@ -371,6 +372,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
             Route::get('/create',	'OrderController@create')->name('create');
             Route::post('/',	'OrderController@store')->name('store');
             Route::get('/{order}/show',	'OrderController@show')->name('show');
+            Route::get('/{order}/print',	'OrderController@print')->name('print');
             Route::get('/{order}/edit',	'OrderController@edit')->name('edit');
             Route::post('/bulk-destroy',	'OrderController@bulkDestroy')->name('bulk-destroy');
             Route::post('/{order}',	'OrderController@update')->name('update');
@@ -388,6 +390,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
             Route::get('/create',                                       'ShippingController@create')->name('create');
             Route::post('/',                                            'ShippingController@store')->name('store');
             Route::get('/{shipping}/edit',                              'ShippingController@edit')->name('edit');
+            Route::get('/{shipping}/print',                              'ShippingController@print')->name('print');
             Route::post('/bulk-destroy',                                'ShippingController@bulkDestroy')->name('bulk-destroy');
             Route::post('/{shipping}',                                  'ShippingController@update')->name('update');
             Route::delete('/{shipping}',                                'ShippingController@destroy')->name('destroy');

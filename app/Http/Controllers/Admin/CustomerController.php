@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\Traits\PDFAddress;
+use App\Models\Shipping;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Role;
@@ -28,6 +30,7 @@ use Stripe\Invoice;
 
 class CustomerController extends Controller
 {
+    use PDFAddress;
     /**
      * Guard used for admin user
      *
@@ -118,6 +121,19 @@ class CustomerController extends Controller
     {
         $invoices = $customer->invoices(true);
         return view('admin.customer.show', compact('customer', 'invoices'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Shipping $shipping
+     * @throws AuthorizationException
+     * @return void
+     */
+    public function print(Customer $customer)
+    {
+        $this->authorize('admin.customer.show', $customer);
+        return self::download($customer->shipping);
     }
 
     public function invoice(Customer $customer, string $invoiceId)

@@ -88,6 +88,9 @@
                                         <td>
                                             <div class="row no-gutters">
                                                 <div class="col-auto">
+                                                    <a class="btn btn-sm btn-spinner btn-primary" :href="item.resource_url + '/print'" title="PDF" role="button"><i class="far fa-file-pdf"></i> Address</a>
+                                                </div>
+                                                <div class="col-auto">
                                                     <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/show'" title="anzeigen" role="button"><i class="fa fa-eye"></i></a>
                                                 </div>
                                                 <div class="col-auto">
