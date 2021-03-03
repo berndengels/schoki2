@@ -20,7 +20,7 @@ class PortoPrice
             $quantity += $item->qty;
         });
 
-        if($quantity >= self::$maxQuantity) {
+        if ($quantity >= self::$maxQuantity) {
             self::$price = self::$maxPorto;
         }
         return [
