@@ -16,7 +16,7 @@ Kunde:
 - Payment ID: {{ $params['payment_id'] }}
 
 # Folgende Artikel wurden bestellt
-### Summe Total: {{ $order->price_total }} €
+### Summe Total: {{ $order->price_total }} € + {{ $order->porto }} € Versandkosten (Porto)
 @component('mail::table')
 | ID | Artikel | Stückzahl | Einzelpreis | Total |
 | :--: | :------- | :---------: | :-----------: | :-----: |

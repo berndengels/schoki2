@@ -11,7 +11,7 @@ Wir übersenden an folgende Adresse Deine bestellten Artikel
 {{ $customer->shipping->street }}, {{ $customer->shipping->postcode }} {{ $customer->shipping->city }}
 
 # Folgende Artikel wurden bestellt
-### Summe Total: {{ $order->price_total }} €
+### Summe Total: {{ $order->price_total }} € + {{ $order->porto }} € Versandkosten (Porto)
 @component('mail::table')
 | ID | Artikel | Stückzahl | Einzelpreis | Total |
 | :--: | :------- | :---------: | :-----------: | :-----: |

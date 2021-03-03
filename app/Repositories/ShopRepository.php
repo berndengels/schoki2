@@ -20,11 +20,11 @@ class ShopRepository
 {
     public static function getCartItems(Cart $cart, $provider, Request $request)
     {
-        if(!$cart->content() || $cart->content()->count() < 1) {
+        if (!$cart->content() || $cart->content()->count() < 1) {
             return collect([]);
         }
         return $cart->content()->map(function (CartItem $item) use ($provider, $request) {
-            switch($provider) {
+            switch ($provider) {
                 case 'paypal':
                     return (new PayPalCartItemResource($item));
                 case 'stripe':
@@ -37,7 +37,7 @@ class ShopRepository
 
     public static function getStripePriceItems(Cart $cart, Request $request)
     {
-        if(!$cart->content() || $cart->content()->count() < 1) {
+        if (!$cart->content() || $cart->content()->count() < 1) {
             return collect([]);
         }
         return $cart->content()->map(function (CartItem $item) use ($request) {
@@ -55,11 +55,12 @@ class ShopRepository
         return self::getStripePriceItems($cart, $request)->values()->toArray();
     }
 
-    public static function createOrderByCart( Customer $customer, Cart $cart, int $porto ) {
+    public static function createOrderByCart(Customer $customer, Cart $cart, int $porto)
+    {
         try {
             $content = $cart->content();
 
-            if($content && $content->count() > 0) {
+            if ($content && $content->count() > 0) {
                 $orderItemData = [];
                 $total = 0;
                 foreach ($content as $item) {
@@ -73,11 +74,11 @@ class ShopRepository
                     ];
                     $total += $priceTotal;
                     // decrease stocks
-                    if($size) {
+                    if ($size) {
                         $stock = ProductStock::whereProductId($item->id)
                             ->whereProductSizeId($size->id)
                             ->first();
-                        if($stock) {
+                        if ($stock) {
                             $stock->update(['stock' => $stock->stock - $item->qty]);
                         }
                     } else {
@@ -85,7 +86,7 @@ class ShopRepository
                             ->whereNull('product_size_id')
                             ->first()
                         ;
-                        if($stock) {
+                        if ($stock) {
                             $stock->update(['stock' => $stock->stock - $item->qty]);
                         }
                     }
@@ -102,7 +103,7 @@ class ShopRepository
 
                 return $order;
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
     }

@@ -25,16 +25,16 @@ class ScardController extends Controller
     public function index(Cart $cart)
     {
         $content = null;
-        if($cart->content()->count()) {
+        if ($cart->content()->count()) {
             $content = $cart->content();
         }
         $porto = PortoPrice::getPrice($cart);
-        return view('public.scard.index', compact('cart','content', 'porto'));
+        return view('public.scard.index', compact('cart', 'content', 'porto'));
     }
 
     public function add(Request $request, Product $product, Cart $cart)
     {
-        if($request->input('size')) {
+        if ($request->input('size')) {
             $product->size = $request->input('size');
         }
         $cart->add($product, 1)->options = ['size' => $request->input('size')];
