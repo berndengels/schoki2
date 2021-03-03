@@ -2,19 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ProductOrdered;
-use App\Helper\MyMoney;
-use App\Http\Requests\CustomerRequest;
-use App\Models\Order;
-use App\Models\Shoppingcart;
 use App\Models\Customer;
-use App\Repositories\ShopRepository;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Http\Requests\OrderRequest;
 use Gloudemans\Shoppingcart\Cart;
-use Laravel\Cashier\Cashier;
+use App\Http\Requests\OrderRequest;
 
 class OrderController extends Controller
 {

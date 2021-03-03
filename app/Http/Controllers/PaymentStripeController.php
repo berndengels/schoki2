@@ -16,6 +16,7 @@ use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\CartItem;
 use Stripe\Customer as StripeCustomer;
 use App\Repositories\ShopRepository;
+use App\Http\Resources\Payment\Stripe\PortoPrice;
 use App\Http\Resources\Payment\Stripe\CustomerResource;
 
 class PaymentStripeController extends Controller
@@ -62,9 +63,19 @@ class PaymentStripeController extends Controller
             'inclusive' => true,
         ];
         $taxRate = $this->stripeClient->taxRates->create($params);
+        // create Porto taxRate
+        $params = [
+            'display_name' => 'VAT',
+            'description' => 'VAT Germany',
+            'jurisdiction' => 'DE',
+            'percentage' => 0,
+            'inclusive' => true,
+        ];
+        $taxRatePorto = $this->stripeClient->taxRates->create($params);
 
         // create prices by cartItems
         $prices = ShopRepository::getStripePriceItems($cart, $request);
+
         $stripePrices = $prices->map(function ($price, $cartItemId) use ($stripeCustomerID, $cart) {
             $cartItem = $cart->get($cartItemId);
             $stripePrice = $this->stripeClient->prices->create($price);
@@ -84,12 +95,27 @@ class PaymentStripeController extends Controller
                 'cartItemId' => $cartItemId,
             ];
         });
+        // create porto
+        $porto = PortoPrice::get($cart);
+        $portoPrice = $this->stripeClient->prices->create($porto);
+
+        $params = [
+            'customer' => $stripeCustomerID,
+            'price' => $portoPrice->id,
+            'description' => 'Porto Versandkosten',
+            'quantity' => 1,
+            'tax_rates' => [$taxRatePorto],
+
+        ];
+        // create invoice Items
+        $this->stripeClient->invoiceItems->create($params);
+
         // create invoice
         $params = [
             'customer' => $stripeCustomerID,
             'auto_advance' => true,
             'description' => 'Rechnung für Schokoladen Bestellung vom ' . Carbon::today()->format('d.m.Y H:i'),
-            'default_tax_rates' => [$taxRate],
+            'default_tax_rates' => [$taxRate, $taxRatePorto],
         ];
         /**
          * @var Invoice
@@ -110,6 +136,11 @@ class PaymentStripeController extends Controller
                 'quantity' => $cartItem->qty,
             ];
         })->values()->toArray();
+
+        $orderItems[] = [
+            'price' => $portoPrice->id,
+            'quantity' => 1,
+        ];
 
         $order = ShopRepository::createOrderByCart($customer, $cart);
         // set metadata for using in webhook response

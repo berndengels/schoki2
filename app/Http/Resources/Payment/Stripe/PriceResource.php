@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Resources\Payment\Stripe;
 
-use App\Helper\MyLang;
 use App\Helper\MyMoney;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Resources\Json\JsonResource;

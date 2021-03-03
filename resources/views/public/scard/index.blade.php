@@ -69,7 +69,7 @@
                                 </div>
                                 @else
                                 <a role="button" class="btn btn-block btn-primary px-5"
-                                   href="{{ route('public.order.index') }}">@lang('Order now')</a>
+                                   href="{{ route('public.order.index') }}">@lang('Kaufen')</a>
                             @endauth
                         </div>
                     @else

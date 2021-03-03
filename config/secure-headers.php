@@ -374,9 +374,11 @@ return [
         'script-src' => [
             'none' => false,
             'self' => true,
+            'blob:' => true,
             'report-sample' => false,
             'allow' => [
                 'https://js.stripe.com',
+                'https://schoki2.test',
             ],
             'schemes' => [
                 'data:',
@@ -387,6 +389,7 @@ return [
             /* followings are only work for `script` and `style` related directives */
             'unsafe-inline' => true,
             'unsafe-eval' => true,
+            'blob:' => true,
             // https://www.w3.org/TR/CSP3/#unsafe-hashes-usage
             'unsafe-hashes' => false,
             // Enable `strict-dynamic` will *ignore* `self`, `unsafe-inline`,
