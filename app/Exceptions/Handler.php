@@ -1,7 +1,6 @@
 <?php
 namespace App\Exceptions;
 
-use Illuminate\Contracts\Container\Container;
 use Throwable;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -17,18 +16,21 @@ use Bengels\LaravelEmailExceptions\Exceptions\EmailHandler as ExceptionHandler;
 class Handler extends ExceptionHandler
 {
     /**
-     * @param Request $request
-     * @param Throwable $e
-     * @return JsonResponse|RedirectResponse|\Illuminate\Http\Response|Response
-     * @throws Throwable
+     * A list of the exception types that are not reported.
+     *
+     * @var array
      */
-    public function render($request, Throwable $e)
-    {
-        if ($e instanceof ModelNotFoundException && $request->wantsJson()) {
-            return response()->json([
-                'error' => 'Resource not found'
-            ], 404);
-        }
-        return parent::render($request, $e);
-    }
+    protected $dontReport = [
+        //
+    ];
+
+    /**
+     * A list of the inputs that are never flashed for validation exceptions.
+     *
+     * @var array
+     */
+    protected $dontFlash = [
+        'password',
+        'password_confirmation',
+    ];
 }
