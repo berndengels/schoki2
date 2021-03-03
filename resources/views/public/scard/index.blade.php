@@ -51,7 +51,7 @@
                             </tr>
                         @endforeach
                             <tr><td class="text-center align-middle text-light font-weight-bold p-0" colspan="8">
-                                    <h4 class="mt-3">Preise Total: @round($cart->total()) €</h4></td></tr>
+                                    <h4 class="mt-3">Preise Total: @round($cart->total()) € + {{ $porto }} € Porto</h4></td></tr>
                         </table>
                         <div>
                             @guest

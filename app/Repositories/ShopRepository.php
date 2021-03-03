@@ -55,7 +55,7 @@ class ShopRepository
         return self::getStripePriceItems($cart, $request)->values()->toArray();
     }
 
-    public static function createOrderByCart( Customer $customer, Cart $cart ) {
+    public static function createOrderByCart( Customer $customer, Cart $cart, int $porto ) {
         try {
             $content = $cart->content();
 
@@ -92,7 +92,8 @@ class ShopRepository
                 }
 
                 $params = [
-                    'price_total'   => (float) $total
+                    'price_total'   => (float) $total,
+                    'porto' => $porto / 100,
                 ];
 
                 $order = Order::create($params);

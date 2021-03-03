@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Payment\Stripe\PortoPrice;
 use App\Models\Scard;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class ScardController extends Controller
         if($cart->content()->count()) {
             $content = $cart->content();
         }
-        return view('public.scard.index', compact('cart','content'));
+        $porto = PortoPrice::getPrice($cart);
+        return view('public.scard.index', compact('cart','content', 'porto'));
     }
 
     public function add(Request $request, Product $product, Cart $cart)

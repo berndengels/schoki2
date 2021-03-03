@@ -142,7 +142,7 @@ class PaymentStripeController extends Controller
             'quantity' => 1,
         ];
 
-        $order = ShopRepository::createOrderByCart($customer, $cart);
+        $order = ShopRepository::createOrderByCart($customer, $cart, $porto);
         // set metadata for using in webhook response
         $metadata = [
             'order_id' => $order ? (int)$order->id : null,

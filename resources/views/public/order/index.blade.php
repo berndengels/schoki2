@@ -33,7 +33,7 @@
                                 </tr>
                             @endforeach
                             <tr><td class="text-center align-middle text-light font-weight-bold p-0" colspan="8">
-                                    <h4 class="mt-3">Preise Total: @round($cart->total()) €</h4></td></tr>
+                                    <h4 class="mt-3">Preise Total: @round($cart->total()) € + {{ $porto }} € Porto</h4></td></tr>
                         </table>
                         @if($shippings)
                         <h3>Lieferadresse wählen</h3>
@@ -57,7 +57,7 @@
                                                 data-toggle="tooltip" data-placement="top" data-html="true"
                                                 title="Bezahlung per<br>EC-Lastschrift (IBAN)<br>Visa, MasterCard">
                                             <span id="start">
-                                                <i class="fab fa-cc-stripe mr-2"></i>Summe @round($cart->total()) € jetzt bezahlen
+                                                <i class="fab fa-cc-stripe mr-2"></i>Summe @round($cart->total()) € + {{ $porto }} € Porto jetzt bezahlen
                                             </span>
                                             <span id="loading" class="align-content-center px-5" style="display:none">
                                                 <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>

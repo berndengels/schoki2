@@ -6,7 +6,6 @@ use Gloudemans\Shoppingcart\Cart;
 class PortoPrice
 {
     protected static $price = 300;
-    protected static $minPorto = 300;
     protected static $maxPorto = 500;
     protected static $maxQuantity = 3;
 
@@ -30,5 +29,11 @@ class PortoPrice
                 'name'  => 'Porto Versandkosten',
             ],
         ];
+    }
+
+    public static function getPrice(Cart $cart, $decimal = true)
+    {
+        $price = self::get($cart);
+        return $decimal ? $price['unit_amount'] / 100 : $price['unit_amount'];
     }
 }

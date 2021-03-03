@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Payment\Stripe\PortoPrice;
 use App\Models\Customer;
 use Gloudemans\Shoppingcart\Cart;
 use App\Http\Requests\OrderRequest;
@@ -26,7 +27,8 @@ class OrderController extends Controller
         if ($cart->content()->count()) {
             $content = $cart->content();
         }
+        $porto = PortoPrice::getPrice($cart);
 
-        return view('public.order.index', compact('cart', 'content', 'customer', 'shippings', 'shippingDefault'));
+        return view('public.order.index', compact('cart', 'content', 'customer', 'shippings', 'shippingDefault', 'porto'));
     }
 }
