@@ -71,6 +71,7 @@ class Order extends Model
         'updated_by',
         'paid_on',
         'amount_received',
+        'porto',
         'payment_id',
         'payment_provider',
         'mail_to_shop',
@@ -84,7 +85,8 @@ class Order extends Model
         return !!$this->delivered_at;
     }
 
-    public function orderItems() {
+    public function orderItems()
+    {
         return $this->hasMany(OrderItem::class);
     }
 
