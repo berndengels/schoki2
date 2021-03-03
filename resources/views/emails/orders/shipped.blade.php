@@ -11,7 +11,6 @@ Wir übersenden an folgende Adresse Deine bestellten Artikel
 {{ $customer->shipping->street }}, {{ $customer->shipping->postcode }} {{ $customer->shipping->city }}
 
 # Folgende Artikel wurden bestellt
-### Summe Total: {{ $order->price_total }} € + {{ $order->porto }} € Versandkosten (Porto)
 @component('mail::table')
 | ID | Artikel | Stückzahl | Einzelpreis | Total |
 | :--: | :------- | :---------: | :-----------: | :-----: |
@@ -19,6 +18,7 @@ Wir übersenden an folgende Adresse Deine bestellten Artikel
 | {{$item->product->id}} | {{$item->product->name}} | {{$item->quantity}} | {{$item->product->price}} € | {{$item->price_total}} € |
 @endforeach
 @endcomponent
+### Summe Total: {{ $order->price_total + $order->porto }} € inklusive {{ $order->porto }} € Versandkosten (Porto)
 
 @component('mail::button', ['url' => route('payment.invoice.download', ['token' => $token])])
 Rechnung herunterladen
