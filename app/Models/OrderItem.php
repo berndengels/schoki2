@@ -30,6 +30,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|OrderItem whereQuantity($value)
  * @method static Builder|OrderItem whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property string|null $size
+ * @method static Builder|OrderItem whereSize($value)
  */
 class OrderItem extends Model
 {
@@ -61,7 +63,8 @@ class OrderItem extends Model
     /**
      * @return BelongsTo
      */
-    public function order() {
+    public function order()
+    {
         return $this->belongsTo(Order::class);
     }
 }

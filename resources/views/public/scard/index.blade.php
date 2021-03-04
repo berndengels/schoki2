@@ -27,12 +27,12 @@
                             </tr>
                         @foreach ($content as $index => $item)
                             <tr>
-                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->product_id }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ isset($item->options['size']) ? $item->options['size'] : null }}</td>
                                 <td>@brutto($item->price) €</td>
                                 <td>{{ $item->qty }}</td>
-                                <td>Total {{ round($item->total*10)/10 }} €</td>
+                                <td>Total {{ round(($item->total) * 10)/10 }} €</td>
                                 <td><form class="d-inline m-0 p-0" action="{{ route( 'public.scard.increment', ['rawId' => $index]) }}" method="post">
                                         @csrf
                                         <button type="submit" class="btn btn-link m-0 p-0 small" role="link"><i class="fas fa-plus"></i></button>

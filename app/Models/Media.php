@@ -57,6 +57,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @method static Builder|Media whereUpdatedAt($value)
  * @method static Builder|Media whereUuid($value)
  * @mixin Eloquent
+ * @property array|null $generated_conversions
+ * @method static Builder|Media whereGeneratedConversions($value)
  */
 class Media extends BaseMedia
 {

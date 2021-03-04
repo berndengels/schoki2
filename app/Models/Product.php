@@ -61,6 +61,9 @@ use Spatie\TaxCalculator\Traits\HasTaxWithRate;
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductStock[] $stocks
  * @property-read int|null $stocks_count
  * @method static Builder|Product whereStock($value)
+ * @property-read mixed $size
+ * @property-read \Illuminate\Database\Eloquent\Collection|ProductBySize[] $sizes
+ * @property-read int|null $sizes_count
  */
 class Product extends Model implements Buyable, HasMedia
 {
@@ -90,24 +93,33 @@ class Product extends Model implements Buyable, HasMedia
         'updated_at',
     ];
 
-    public function getBuyableIdentifier($options = null){
+    public function getBuyableIdentifier($options = null)
+    {
         return $this->id;
     }
 
-    public function getBuyableDescription($options = null){
+    public function getBuyableDescription($options = null)
+    {
         return $this->name;
     }
 
-    public function getBuyablePrice($options = null){
+    public function getBuyablePrice($options = null)
+    {
         return $this->price_netto;
     }
 
-    public function getCartItem(Cart $cart = null)
+    public function getCartItems(Cart $cart = null)
     {
-        $cartItem = $cart->search(function($cartItem, $rowId) {
-            return $cartItem->id === $this->getBuyableIdentifier();
+        if (!$cart) {
+            return null;
+        }
+        $cartItems = $cart->search(function ($item) {
+            $productID  = $item->options['product_id'];
+            $size       = $item->options['size'] ?? null;
+            $id         = $size ? $productID.'-'.$size : $productID;
+            return $item->id === $id;
         });
-        return $cartItem->count() ? $cartItem->first() : null;
+        return $cartItems->values() ?? null;
     }
 
     public function getHasSizeAttribute()
@@ -118,6 +130,22 @@ class Product extends Model implements Buyable, HasMedia
     public function getSizeAttribute()
     {
         return $this->size ?? null;
+    }
+
+    public function setSize($size)
+    {
+        $this->size = $size;
+        return $this;
+    }
+
+    public function setSizeAttribute($size)
+    {
+        $this->attributes['size'] = $size;
+    }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(ProductSize::class, 'product_by_size', 'product_id', 'size_id');
     }
 
     public function stocks()
@@ -134,7 +162,7 @@ class Product extends Model implements Buyable, HasMedia
 
     /************** media ****************/
 
-    public function registerMediaConversions( Media $media = null ): void
+    public function registerMediaConversions(Media $media = null): void
     {
         $this->autoRegisterThumb200();
         $this->addMediaConversion('detail_hd')
@@ -147,64 +175,64 @@ class Product extends Model implements Buyable, HasMedia
     {
         $this->addMediaCollection('product_images')
             ->useDisk('images')
-            ->accepts('image/jpeg','image/jpg')
+            ->accepts('image/jpeg', 'image/jpg')
             ->maxNumberOfFiles(3) // Set the file count limit
-            ->maxFilesize(5*1024*1024) // Set the file size limit
+            ->maxFilesize(5 * 1024 * 1024) // Set the file size limit
         ;
     }
-/*
-    public function getMedia(string $collectionName = 'default', $filters = []): Collection
-    {}
+    /*
+        public function getMedia(string $collectionName = 'default', $filters = []): Collection
+        {}
 
-    public function media(): MorphMany
-    {
-        return $this->morphTo(Media::class);
-    }
+        public function media(): MorphMany
+        {
+            return $this->morphTo(Media::class);
+        }
 
-    public function addMedia($file): FileAdder
-    {
-        $this->addMedia($file);
-        return $this;
-    }
+        public function addMedia($file): FileAdder
+        {
+            $this->addMedia($file);
+            return $this;
+        }
 
-    public function copyMedia($file): FileAdder
-    {
-        // TODO: Implement copyMedia() method.
-    }
+        public function copyMedia($file): FileAdder
+        {
+            // TODO: Implement copyMedia() method.
+        }
 
-    public function hasMedia(string $collectionMedia = ''): bool
-    {
-        // TODO: Implement hasMedia() method.
-    }
+        public function hasMedia(string $collectionMedia = ''): bool
+        {
+            // TODO: Implement hasMedia() method.
+        }
 
-    public function clearMediaCollection(string $collectionName = 'default'): HasMedia
-    {
-        // TODO: Implement clearMediaCollection() method.
-    }
+        public function clearMediaCollection(string $collectionName = 'default'): HasMedia
+        {
+            // TODO: Implement clearMediaCollection() method.
+        }
 
-    public function clearMediaCollectionExcept(string $collectionName = 'default', $excludedMedia = []): HasMedia
-    {
-        // TODO: Implement clearMediaCollectionExcept() method.
-    }
+        public function clearMediaCollectionExcept(string $collectionName = 'default', $excludedMedia = []): HasMedia
+        {
+            // TODO: Implement clearMediaCollectionExcept() method.
+        }
 
-    public function shouldDeletePreservingMedia(): bool
-    {
-        // TODO: Implement shouldDeletePreservingMedia() method.
-    }
+        public function shouldDeletePreservingMedia(): bool
+        {
+            // TODO: Implement shouldDeletePreservingMedia() method.
+        }
 
-    public function loadMedia(string $collectionName)
-    {
-        $this->loadMedia('product_images');
-    }
+        public function loadMedia(string $collectionName)
+        {
+            $this->loadMedia('product_images');
+        }
 
-    public function addMediaConversion(string $name): Conversion
-    {
-        // TODO: Implement addMediaConversion() method.
-    }
+        public function addMediaConversion(string $name): Conversion
+        {
+            // TODO: Implement addMediaConversion() method.
+        }
 
-    public function registerAllMediaConversions(): void
-    {
-        // TODO: Implement registerAllMediaConversions() method.
-    }
-*/
+        public function registerAllMediaConversions(): void
+        {
+            // TODO: Implement registerAllMediaConversions() method.
+        }
+    */
 }

@@ -13,7 +13,7 @@ Vue.component('product-form', {
                 is_available:  false ,
                 created_by:  '' ,
                 updated_by:  '' ,
-
+                sizes: [],
             }
         }
     }

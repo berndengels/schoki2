@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\Product\IndexProduct;
 use App\Http\Requests\Admin\Product\StoreProduct;
 use App\Http\Requests\Admin\Product\UpdateProduct;
 use App\Models\Product;
+use App\Models\ProductSize;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -72,7 +73,9 @@ class ProductController extends Controller
     {
         $this->authorize('admin.product.create');
 
-        return view('admin.product.create');
+        return view('admin.product.create', [
+            'sizes' => ProductSize::all(),
+        ]);
     }
 
     /**
@@ -87,7 +90,8 @@ class ProductController extends Controller
         $sanitized = $request->getSanitized();
 
         // Store the Product
-        Product::create($sanitized);
+        $product = Product::create($sanitized);
+        $product->sizes()->sync(collect($request->input('sizes', []))->map->id->toArray());
 
         if ($request->ajax()) {
             return [
@@ -126,6 +130,7 @@ class ProductController extends Controller
 
         return view('admin.product.edit', [
             'product' => $product,
+            'sizes' => ProductSize::all(),
         ]);
     }
 
@@ -143,6 +148,7 @@ class ProductController extends Controller
 
         // Update changed values Product
         $product->update($sanitized);
+        $product->sizes()->sync(collect($request->input('sizes', []))->map->id->toArray());
 
         if ($request->ajax()) {
             return [

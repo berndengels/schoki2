@@ -57,6 +57,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Order wherePaymentProvider($value)
  * @property string|null $mail_to_shop
  * @method static Builder|Order whereMailToShop($value)
+ * @property string|null $porto
+ * @method static Builder|Order wherePorto($value)
  */
 class Order extends Model
 {

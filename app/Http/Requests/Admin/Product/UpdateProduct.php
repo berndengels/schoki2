@@ -29,6 +29,7 @@ class UpdateProduct extends FormRequest
             'name' => ['sometimes', 'string'],
             'description' => ['sometimes', 'string'],
             'price' => ['sometimes', 'numeric'],
+            'sizes' => '',
             'is_published' => ['sometimes', 'boolean'],
             'is_available' => ['sometimes', 'boolean'],
         ];

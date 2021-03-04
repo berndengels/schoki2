@@ -47,6 +47,26 @@
     </div>
 </div>
 
+@can('Shop')
+    <div class="form-group row align-items-center" :class="{'has-danger': errors.has('sizes'), 'has-success': fields.sizes && fields.sizes.valid }">
+        <label for="sizes" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">Größen</label>
+        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+            <multiselect
+                id="sizes"
+                name="sizes"
+                v-model="form.sizes"
+                placeholder="{{ trans('bitte wählen') }}"
+                label="name"
+                track-by="id"
+                :options="{{ $sizes->toJson() }}"
+                :multiple="true"
+                open-direction="bottom">
+            </multiselect>
+            <div v-if="errors.has('sizes')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('sizes') }}</div>
+        </div>
+    </div>
+@endcan
+
 @if( isset($product) )
     @include('brackets/admin-ui::admin.includes.media-uploader', [
         'id'    => 'product_images',

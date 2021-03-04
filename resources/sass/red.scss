@@ -9,6 +9,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~include-media/dist/_include-media';
+@import "~select2/src/scss/core";
+@import "~@ttskch/select2-bootstrap4-theme/src/select2-bootstrap4";
 
 //@import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
@@ -105,6 +107,18 @@ html, body {
                 tr {
                     th,td {
                         color: $sFontColor;
+                    }
+                }
+                &.product-list {
+                    tr {
+                        td {
+                            vertical-align: middle;
+                            img {
+                                height: auto;
+                                max-height: 80px;
+                                border-radius: 40px;
+                            }
+                        }
                     }
                 }
             }
@@ -614,18 +628,6 @@ pre {
         }
     }
 }
-.product-list {
-    tr {
-        td {
-            vertical-align: middle;
-            img {
-                height: auto;
-                max-height: 80px;
-                border-radius: 40px;
-            }
-        }
-    }
-}
 button {
     #loading {
         .spinner-border {
@@ -654,3 +656,8 @@ button {
     padding: 20px;
     z-index: 10000;
 }
+.no-scroll::-webkit-scrollbar {display:none;}
+.no-scroll::-moz-scrollbar {display:none;}
+.no-scroll::-o-scrollbar {display:none;}
+.no-scroll::-google-ms-scrollbar {display:none;}
+.no-scroll::-khtml-scrollbar {display:none;}
