@@ -24,7 +24,7 @@ class ProductController extends Controller
                 $product->thumb = $product->getThumbs200ForCollection('product_images')->first()['thumb_url'];
             }
             $product->cartItems = $product->getCartItems($cart);
-            if($activeSize) {
+            if ($activeSize) {
                 $activeCartItem = $cart->content()->firstWhere('id', $product->id.'-'.$activeSize);
             } else {
                 $activeCartItem = null;
@@ -32,7 +32,7 @@ class ProductController extends Controller
             $product->activeCartItem = $activeCartItem;
             return $product;
         });
-        return view('public.product.index', compact('data','activeSize'));
+        return view('public.product.index', compact('data', 'activeSize'));
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductController extends Controller
             return $cartItem->id === $activeSize ? $product->id.'-'.$activeSize : $product->id;
         })->first();
 
-        if($activeSize) {
+        if ($activeSize) {
             $activeCartItem = $cart->content()->firstWhere('id', $product->id.'-'.$activeSize);
         } else {
             $activeCartItem = null;
