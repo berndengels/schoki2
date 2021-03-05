@@ -12,7 +12,7 @@
     <meta name="description" content="Schokoladen-Mitte Berlin" />
     <meta name="keywords" content="Schokoladen,Berlin,Musik,Musik Cafe,Kneipe,Kultur,Szene,Subkultur,Konzerte,Livemusik,live music,Veranstaltungs-Kneipe,Veranstaltungen,Lesung,alternativ" />
     <meta http-equiv="Content-Security-Policy"
-          content="default-src * data: blob: 'self' 'unsafe-inline';script-src * data: blob: 'self' 'inline' 'unsafe-inline' 'unsafe-eval'"/>
+          content="default-src * data: blob: 'self' 'unsafe-inline';script-src * data: blob: 'self' 'inline' 'unsafe-inline' 'unsafe-eval';img-src * 'self' data:"/>
     <meta http-equiv="imagetoolbar" content="no" />
     @yield('extra-headers-top')
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">

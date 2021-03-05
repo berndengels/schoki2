@@ -44,5 +44,3 @@ window.myModale = function (action, title, text) {
     );
     $modal.modal(action);
 };
-$(function() {
-});

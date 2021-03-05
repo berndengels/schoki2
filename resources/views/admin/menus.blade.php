@@ -73,7 +73,7 @@
                         'url': operationRoute + '/get_node',
                         'method': 'post',
                         'data': function (node) {
-                            console.info(node);
+//                            console.info(node);
                             return { 'id': node.id };
                         }
                     },
