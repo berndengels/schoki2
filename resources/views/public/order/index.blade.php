@@ -15,7 +15,6 @@
                     @if($content)
                         <table class="table table-striped table-sm table-borderless">
                             <tr>
-                                <th>ID</th>
                                 <th>Artikel</th>
                                 <th>Größe</th>
                                 <th>Preis</th>
@@ -24,15 +23,14 @@
                             </tr>
                             @foreach ($content as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ isset($item->options['size']) ? $item->options['size'] : null }}</td>
                                     <td>@brutto($item->price) €</td>
                                     <td>{{ $item->qty }} </td>
-                                    <td>Total {{ $item->total }} €</td>
+                                    <td>Total {{ round(($item->total) * 10)/10 }} €</td>
                                 </tr>
                             @endforeach
-                            <tr><td class="text-center align-middle text-light font-weight-bold p-0" colspan="8">
+                            <tr><td class="text-center align-middle text-light font-weight-bold p-0" colspan="5">
                                     <h4 class="mt-3">Preise Total: @round($cart->total()) € + {{ $porto }} € Porto</h4></td></tr>
                         </table>
                         @if($shippings)
