@@ -23,7 +23,6 @@ class CreateProductBySizeTable extends Migration
                 ->references('id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
             $table->foreign('size_id')
                 ->on('product_size')
                 ->references('id')
