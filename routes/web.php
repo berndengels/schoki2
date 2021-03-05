@@ -431,8 +431,8 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])
 
 Route::prefix('product')
     ->group(function() {
-        Route::get('/',	        [ProductController::class, 'index'])->name('public.product.index');
-        Route::get('/{product}',[ProductController::class, 'show'])->name('public.product.show');
+        Route::get('show/{product}/{activeSize?}', [ProductController::class, 'show'])->name('public.product.show');
+        Route::get('{activeSize?}', [ProductController::class, 'index'])->name('public.product.index');
     });
 Route::prefix('scard')
     ->group(function() {

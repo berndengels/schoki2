@@ -38,21 +38,19 @@ class ScardController extends Controller
     public function add(Request $request, Product $product, Cart $cart)
     {
         $size = $request->input('size');
+
         if ($size) {
-            $product->setSize($size);
             $product->name .= " Size: $size";
             $cartItem = new CartItemResource($product, $size);
-
-            $cart->add($cartItem->toArray($request), 1)->options = [
-                'product_id'    => $product->id,
-                'size'          => $size,
-            ];
         } else {
             $cartItem = new CartItemResource($product);
-            $cart->add($cartItem->toArray($request), 1)->options = [
-                'product_id' => $product->id,
-            ];
         }
+
+        $cart->add($cartItem->toArray($request), 1)->options = [
+            'product_id' => $product->id,
+            'size'       => $size,
+        ];
+
         return redirect()->back();
     }
 

@@ -85,7 +85,8 @@ class PaymentStripeController extends Controller
                 'description' => $cartItem->name,
                 'quantity' => $cartItem->qty,
                 'metadata' => [
-                    'size' => isset($cartItem->options['size']) ? $cartItem->options['size'] : null,
+                    'size'          => $cartItem->options['size'] ?? null,
+                    'product_id'    => $cartItem->options['product_id'] ?? null,
                 ],
             ];
             // create invoice Items
@@ -143,11 +144,6 @@ class PaymentStripeController extends Controller
         ];
 
         $order = ShopRepository::createOrderByCart($customer, $cart, $porto['unit_amount']);
-        // set metadata for using in webhook response
-        $metadata = [
-            'order_id' => $order ? (int)$order->id : null,
-            'customer_id' => (int)$customer->id,
-        ];
 
         try {
             $params = [
@@ -156,7 +152,11 @@ class PaymentStripeController extends Controller
                 'mode' => 'payment',
                 'locale' => MyLang::getPrimary(),
                 'line_items' => $orderItems,
-                'metadata' => $metadata,
+                // set metadata for using in webhook response
+                'metadata' => [
+                    'order_id' => $order ? (int)$order->id : null,
+                    'customer_id' => (int)$customer->id,
+                ],
                 'success_url' => route('payment.stripe.success'),
                 'cancel_url' => route('payment.stripe.cancel'),
             ];

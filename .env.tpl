@@ -33,13 +33,13 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 
 MAIL_DRIVER=smtp
-MAIL_HOST=goldenacker.de
-MAIL_PORT=25
-MAIL_USERNAME=engels@goldenacker.de
+MAIL_HOST=smtp.cryptix.net
+MAIL_PORT=587
+MAIL_USERNAME=shop@schokoladen-mitte.de
 MAIL_PASSWORD=
-MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS=engels@goldenacker.de
-MAIL_FROM_NAME=engels@goldenacker.de
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=shop@schokoladen-mitte.de
+MAIL_FROM_NAME="Schokoladen Shop"
 
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=

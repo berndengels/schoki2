@@ -65,30 +65,25 @@ class ShopRepository
                 $total = 0;
                 foreach ($content as $item) {
                     $priceTotal = MyMoney::getBrutto($item->price) * $item->qty;
-                    $size = isset($item->options['size']) ? ProductSize::whereName($item->options['size'])->first() : null;
+                    $productId  = $item->options['product_id'];
+                    $size       = $item->options['size'] ? ProductSize::whereName($item->options['size'])->first() : null;
+
                     $orderItemData[] = [
                         'size'          => $size ?? null,
-                        'product_id'    => $item->id,
+                        'product_id'    => $productId,
                         'quantity'      => $item->qty,
                         'price_total'   => $priceTotal,
                     ];
                     $total += $priceTotal;
                     // decrease stocks
+                    $stock = ProductStock::whereProductId($productId);
                     if ($size) {
-                        $stock = ProductStock::whereProductId($item->id)
-                            ->whereProductSizeId($size->id)
-                            ->first();
-                        if ($stock) {
-                            $stock->update(['stock' => $stock->stock - $item->qty]);
-                        }
+                        $stock->whereProductSizeId($size->id)->first();
                     } else {
-                        $stock = ProductStock::whereProductId($item->id)
-                            ->whereNull('product_size_id')
-                            ->first()
-                        ;
-                        if ($stock) {
-                            $stock->update(['stock' => $stock->stock - $item->qty]);
-                        }
+                        $stock->whereNull('product_size_id')->first();
+                    }
+                    if ($stock) {
+                        $stock->update(['stock' => $stock->stock - $item->qty]);
                     }
                 }
 

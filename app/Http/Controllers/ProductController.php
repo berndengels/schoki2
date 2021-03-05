@@ -15,18 +15,24 @@ class ProductController extends Controller
      *
      * @return Response
      */
-    public function index(Cart $cart)
+    public function index(Cart $cart, $activeSize = null)
     {
-        $data = Product::with('sizes')->get()->map(function (Product $product) use ($cart) {
+        $data = Product::with('sizes')->get()->map(function (Product $product) use ($cart, $activeSize) {
             $product->thumb = null;
             $product->added = $cart->count();
             if ($product->getThumbs200ForCollection('product_images')->count()) {
                 $product->thumb = $product->getThumbs200ForCollection('product_images')->first()['thumb_url'];
             }
             $product->cartItems = $product->getCartItems($cart);
+            if($activeSize) {
+                $activeCartItem = $cart->content()->firstWhere('id', $product->id.'-'.$activeSize);
+            } else {
+                $activeCartItem = null;
+            }
+            $product->activeCartItem = $activeCartItem;
             return $product;
         });
-        return view('public.product.index', compact('data'));
+        return view('public.product.index', compact('data','activeSize'));
     }
 
     /**
@@ -35,7 +41,7 @@ class ProductController extends Controller
      * @param Product $product
      * @return Response
      */
-    public function show(Product $product, Cart $cart)
+    public function show(Product $product, Cart $cart, $activeSize = null)
     {
         $product->images = null;
         $product->added = null;
@@ -47,9 +53,17 @@ class ProductController extends Controller
         }
         $product->load('stocks');
 
-        $cartItem = $cart->search(function ($cartItem, $rowId) use ($product) {
-            return $cartItem->id === $product->getBuyableIdentifier();
+        $cartItem = $cart->search(function ($cartItem, $rowId) use ($product, $activeSize) {
+            return $cartItem->id === $activeSize ? $product->id.'-'.$activeSize : $product->id;
         })->first();
-        return view('public.product.show', compact('product', 'cartItem'));
+
+        if($activeSize) {
+            $activeCartItem = $cart->content()->firstWhere('id', $product->id.'-'.$activeSize);
+        } else {
+            $activeCartItem = null;
+        }
+        $product->activeCartItem = $activeCartItem;
+
+        return view('public.product.show', compact('product', 'cartItem', 'activeSize'));
     }
 }

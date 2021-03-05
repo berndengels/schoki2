@@ -108,6 +108,14 @@ class Product extends Model implements Buyable, HasMedia
         return $this->price_netto;
     }
 
+    public function getCartItem(Cart $cart = null, $id)
+    {
+        if (!$cart) {
+            return null;
+        }
+        return $cart->content()->firstWhere('id', $id);
+    }
+
     public function getCartItems(Cart $cart = null)
     {
         if (!$cart) {

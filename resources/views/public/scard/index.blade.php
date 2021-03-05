@@ -13,7 +13,7 @@
                         Warenkorb leeren</a>
                    @endif
                 </div>
-                <div class="card-body row p-0 justify-content-center">
+                <div class="card-body row p-0 m-0 justify-content-center">
                     @if($content)
                         <table class="table table-striped">
                             <tr>
@@ -50,8 +50,11 @@
                                 </td>
                             </tr>
                         @endforeach
-                            <tr><td class="text-center align-middle text-light font-weight-bold p-0" colspan="8">
-                                    <h4 class="mt-3">Preise Total: @round($cart->total()) € + {{ $porto }} € Porto</h4></td></tr>
+                            <tr>
+                                <td class="text-center align-middle text-light font-weight-bold p-0" colspan="9">
+                                    <h4 class="mt-3">Preise Total: @round($cart->total()) € + {{ $porto }} € Porto</h4>
+                                </td>
+                            </tr>
                         </table>
                         <div>
                             @guest
@@ -67,10 +70,10 @@
                                         @lang('Register')
                                     </a>
                                 </div>
-                                @else
+                            @else
                                 <a role="button" class="btn btn-block btn-primary px-5"
                                    href="{{ route('public.order.index') }}">@lang('Kaufen')</a>
-                            @endauth
+                            @endguest
                         </div>
                     @else
                        <h3>Keine Daten vorhanden!</h3>
