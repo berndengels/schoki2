@@ -127,7 +127,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $this->authorize('admin.product.edit', $product);
-
+        $product->load(['sizes']);
         return view('admin.product.edit', [
             'product' => $product,
             'sizes' => ProductSize::all(),
