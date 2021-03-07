@@ -44,6 +44,6 @@ class ProductBySize extends Model
 
     public function stock()
     {
-        return $this->belongsTo(ProductStock::class,'size_id', 'size_id');
+        return $this->belongsTo(ProductStock::class, 'size_id', 'size_id');
     }
 }
