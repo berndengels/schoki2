@@ -29,7 +29,7 @@ class ProductBySize extends Model
     use HasFactory;
 
     protected $table = 'product_by_size';
-    protected $with = ['product', 'size'];
+    protected $with = ['product', 'size', 'stock'];
     protected $fillable = ['product_id','size_id'];
 
     public function product()
@@ -40,5 +40,10 @@ class ProductBySize extends Model
     public function size()
     {
         return $this->belongsTo(ProductSize::class);
+    }
+
+    public function stock()
+    {
+        return $this->belongsTo(ProductStock::class,'size_id', 'size_id');
     }
 }

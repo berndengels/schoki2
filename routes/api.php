@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\SPA\SpaMenuController;
 use App\Http\Controllers\Api\SPA\SpaPageController;
 use App\Http\Controllers\Api\SPA\SpaMusicStyleController;
 use App\Http\Controllers\Api\SPA\SpaContactController;
+use App\Http\Controllers\Api\SPA\SpaProductController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,6 +39,8 @@ Route::group([
     Route::get('menu/tree', [SpaMenuController::class, 'tree']);
     Route::get('menu/top', [SpaMenuController::class, 'top']);
     Route::get('menu/bottom', [SpaMenuController::class, 'bottom']);
+    Route::get('products', [SpaProductController::class, 'products']);
+    Route::get('product/{id}', [SpaProductController::class, 'product']);
     Route::get('pages', [SpaPageController::class, 'pages']);
     Route::get('page/routes', [SpaPageController::class, 'routes']);
     Route::get('page/{slug}', [SpaPageController::class, 'page']);
