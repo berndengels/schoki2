@@ -1,6 +1,6 @@
 const mix = require('laravel-mix');
 mix.webpackConfig({
-    target: 'node',
+//    target: 'node',
     resolve: {
         alias: {
             jquery: "jquery/src/jquery"
@@ -8,12 +8,13 @@ mix.webpackConfig({
     },
     externals: {
         canvas: "commonjs canvas" // Important (2)
-    }
+    },
 });
 
 mix.autoload({
         'jquery': ['jQuery', '$']
     })
+    .js('resources/js/header-app.js', 'public/js')
     .js('resources/js/app.js', 'public/js')
     .js('resources/js/payment-stripe.js', 'public/js')
     .js(['resources/js/admin/admin.js'], 'public/js')

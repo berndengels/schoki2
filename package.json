@@ -41,6 +41,7 @@
         "trumbowyg": "^2.23.0",
         "uglify-js": "^3.4.10",
         "utf-8-validate": "^5.0.3",
-        "vue-jstree": "^2.1.6"
+        "vue-jstree": "^2.1.6",
+        "vue-loader": "^15.9.6"
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\SPA\SpaPageController;
 use App\Http\Controllers\Api\SPA\SpaMusicStyleController;
 use App\Http\Controllers\Api\SPA\SpaContactController;
 use App\Http\Controllers\Api\SPA\SpaProductController;
+use App\Http\Controllers\Api\SPA\SpaScardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,12 +40,21 @@ Route::group([
     Route::get('menu/tree', [SpaMenuController::class, 'tree']);
     Route::get('menu/top', [SpaMenuController::class, 'top']);
     Route::get('menu/bottom', [SpaMenuController::class, 'bottom']);
-    Route::get('products', [SpaProductController::class, 'products']);
-    Route::get('product/{id}', [SpaProductController::class, 'product']);
     Route::get('pages', [SpaPageController::class, 'pages']);
     Route::get('page/routes', [SpaPageController::class, 'routes']);
     Route::get('page/{slug}', [SpaPageController::class, 'page']);
     Route::get('musicStyles', [SpaMusicStyleController::class, 'all']);
     Route::get('contact/bands/fields', [SpaContactController::class, 'fields']);
     Route::post('contact/bands/send', [SpaContactController::class, 'send']);
+    // shop
+    Route::get('products', [SpaProductController::class, 'products']);
+    Route::get('product/{id}', [SpaProductController::class, 'product']);
+
+    Route::get('carts', [SpaScardController::class, 'index']);
+    Route::post('carts/add', [SpaScardController::class, 'add']);
+    Route::put('carts/increment/{rawId}', [SpaScardController::class, 'increment']);
+    Route::put('carts/decrement/{rawId}', [SpaScardController::class, 'decrement']);
+    Route::delete('carts/{rawId}', [SpaScardController::class, 'delete']);
+    Route::delete('carts', [SpaScardController::class, 'destroy']);
+
 });
