@@ -2,6 +2,6 @@
 
 @section('content')
     <div id="app" class="col-12">
-        <Shop />
+        <Shop :products='@json($data)' />
     </div>
 @endsection

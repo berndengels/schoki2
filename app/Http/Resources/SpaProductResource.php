@@ -4,12 +4,11 @@ namespace App\Http\Resources;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Resources\SpaProductStockResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SpaProductResource extends JsonResource
 {
-
+    public static $wrap = 'products';
     /**
      * Transform the resource into an array.
      *
@@ -25,13 +24,12 @@ class SpaProductResource extends JsonResource
             'id'            => $this->id,
             'name'    		=> $this->name,
             'description'   => $this->description,
-            'price'         => $this->netto,
+            'price'         => $this->price,
             'price_netto'   => $this->price_netto,
             'hasSize'       => $this->hasSize,
-            'sizes'         => $this->sizes,
-            'stocks'        => SpaProductStockResource::collection($this->stocks),
+            'sizes'         => $this->sizes->toArray(),
+            'stocks'        => SpaProductStockResource::collection($this->stocks)->toArray($request),
             'thumb'         => $this->thumb,
-
         ];
     }
 }

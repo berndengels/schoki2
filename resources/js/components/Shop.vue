@@ -5,40 +5,7 @@
                 <div class="card-header">Order Products</div>
                 <div class="card-body">
                     <table v-if="products.length > 0" class="table product-list border-0">
-                        <tr v-for="item in products" :key="item.id">
-                            <td>
-                                <img v-if="item.thumb" :src="item.thumb"/>
-                                <br v-else/>
-                            </td>
-                            <td>
-                                <a>{{ item.name }}</a>
-                            </td>
-                            <td v-if="item.hasSize">
-                                Größe wählen: &nbsp;
-                                <select
-                                    :data-object-id="item.id"
-                                    :size="item.sizes.length"
-                                    class="size-select no-scroll"
-                                    multiple
-                                    name="size"
-                                    required
-                                >
-                                    <option v-for="size in item.sizes" :key="size.id" :value="size.name"
-                                    >{{ size.name }}
-                                    </option>
-                                </select>
-                            </td>
-                            <td v-else><br/></td>
-                            <td>{{ item.price }} €</td>
-                            <td>
-                                <button class="form-control btn btn-primary d-inline-block" type="submit">
-                                    <i class="d-inline-block float-left fas fa-shopping-cart mr-2"></i>
-                                    Add
-                                    <span class="ml-1">(0)</span>
-                                </button>
-                            </td>
-
-                        </tr>
+                        <Product v-for="item in products" :key="item.id" :product="item" />
                     </table>
                     <h3 v-else>Bitte warten</h3>
                 </div>
@@ -48,42 +15,21 @@
 </template>
 
 <script>
-import axios from "axios";
-
-const apiURL = "https://schoki2.test/api/spa/products",
-    Shop = {
-        data() {
-            return {
-                products: [],
-            }
-        },
-        created() {
-            this.getProducts()
-        },
-        methods: {
-            getProducts() {
-                axios.get(apiURL)
-                    .then(resp => {
-                        console.info(resp.data)
-                        this.products = resp.data
-                    })
-                    .catch(err => console.error(err))
-                ;
-            }
-        }
-    };
-export default Shop;
+import Product from "./Product";
+export default {
+    name: 'Shop',
+    components: {Product},
+    props: ['products'],
+};
 </script>
 
-<style scoped>
+<style lang="scss">
 .product-list {
     border: none !important;
 }
-
 td {
     margin: 0 !important;
 }
-
 .size-select {
     display: inline;
     overflow: hidden;
@@ -97,7 +43,6 @@ td {
     scrollbar-width: none; /*For Firefox*/;
     -ms-overflow-style: none; /*For Internet Explorer 10+*/;
 }
-
 .size-select option {
     display: inline-block !important;
     width: 1.6rem;
@@ -114,7 +59,6 @@ td {
     vertical-align: middle;
     cursor: pointer;
 }
-
 .size-select option:hover,
 .size-select option:selected {
     font-weight: bold;
