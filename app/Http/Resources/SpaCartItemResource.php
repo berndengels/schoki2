@@ -26,7 +26,9 @@ class SpaCartItemResource extends JsonResource
             'name'    		=> $this->name,
             'qty'           => $this->qty,
             'price'         => $this->price,
+            'tax'           => $this->tax,
             'priceTotal'    => $this->priceTotal,
+            'weight'        => 0,
             'options'       => $this->options,
         ];
     }

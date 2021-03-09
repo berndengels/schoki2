@@ -2,7 +2,6 @@
 import _env from './_env'
 
 const myConfig = {
-	originURL: _env.url.ORIGIN,
 	apiURL: _env.url.API,
 };
 

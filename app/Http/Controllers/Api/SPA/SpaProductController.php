@@ -11,7 +11,7 @@ class SpaProductController extends Controller
 
     public function __construct()
     {
-        SpaProductResource::withoutWrapping();
+//        SpaProductResource::withoutWrapping();
     }
 
     public function products()

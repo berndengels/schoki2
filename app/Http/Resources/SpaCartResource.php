@@ -8,11 +8,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SpaCartResource extends JsonResource
 {
-
     /**
      * Transform the resource into an array.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request)
@@ -21,7 +20,7 @@ class SpaCartResource extends JsonResource
          * @var $this Cart
          */
         return [
-            'content'       => $this->content(),
+            'content'       => $this->content()->values(),
             'priceTotal'    => $this->priceTotal(2),
             'subtotal'      => $this->subtotal(2),
             'tax'           => $this->tax(2),

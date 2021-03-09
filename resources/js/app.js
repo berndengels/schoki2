@@ -3,8 +3,9 @@ window.Vue = require('vue');
 import axios from "axios";
 import store from "./store";
 import myConfig from "./config/config";
-import Shop from './components/Shop.vue';
-import ShoppingCart from './components/ShoppingCart.vue';
+import Products from './components/Products';
+import ShoppingCart from './components/ShoppingCart';
+import ShoppingCartDestroyButton from './components/ShoppingCartDestroyButton';
 
 window.iAxios = axios.create({
     ...axios.defaults,
@@ -24,7 +25,11 @@ window.iAxios = axios.create({
 const app = new Vue({
     el: '#app',
     store,
-    components: { Shop, ShoppingCart }
+    components: {
+        Products ,
+        ShoppingCart,
+        ShoppingCartDestroyButton,
+    }
 });
 var isMobile = false; //initiate as false
 // device detection

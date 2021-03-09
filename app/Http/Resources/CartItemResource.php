@@ -28,7 +28,7 @@ class CartItemResource extends JsonResource
         return [
             'id'            => $this->size ? $this->id . '-' . $this->size : $this->id,
             'name'          => $this->name,
-            'price'         => $this->price_netto,
+            'price'         => $this->price,
             'weight'        => 0,
             'qty'           => 1,
         ];

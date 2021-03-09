@@ -2,6 +2,17 @@
 
 @section('content')
     <div id="app" class="col-12">
-        <Shop :products='@json($data)' />
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Order Products</div>
+                    <div class="card-body">
+                        <Products :products='@json($data)' />
+                        <ShoppingCartDestroyButton />
+                        <ShoppingCart />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

@@ -1,11 +1,21 @@
 /* eslint-disable */
 
-const apiRoute = "/api/spa/carts";
+const apiRoute = "/carts";
+
+function array_values(assoc) {
+    let a = [];
+    for(let item in assoc) {
+        a.push(assoc[item])
+    }
+    return a;
+}
 
 const state = {
-    cartItems: [],
+    porto: 0,
+    priceTotal: 0,
+    cart: [],
+    count: 0,
     cartItem: {
-        rowId: null,
         id: null,
         name: null,
         qty: 0,
@@ -15,66 +25,76 @@ const state = {
 }
 
 const getters = {
-    cartItems: state => state.cartItems,
-    cartItem: state => state.cartItems,
+    cart: state => state.cart,
+    cartItem: state => state.cartItem,
+    porto: state => {
+        state.porto = state.cartItem.qty >= 3 ? 5 : 3;
+    },
 }
 
 const actions = {
-    all({commit}) {
-        iAxios.get(apiRoute)
-            .then(resp => {
-                commit('set', resp.data)
-            })
-            .catch(err => console.error(err));
+    setSize({commit}, evt) {
+        commit('setSize', evt.target.value);
     },
-    add({commit}, newItem) {
-        iAxios.post(apiRoute, newItem)
-            .then(resp => {
-                commit('add', resp.data)
-            })
-            .catch(err => console.error(err));
+    add({commit}, product) {
+        commit('add', product)
     },
     increment({commit}, item) {
-        iAxios.put(apiRoute + "/" + item.id, item)
-            .then(resp => {
-                commit('increment', resp.data)
-            })
-            .catch(err => console.error(err));
+        commit('increment', item)
     },
     decrement({commit}, item) {
-        iAxios.put(apiRoute + "/" + item.id, item)
-            .then(resp => {
-                commit('decrement', resp.data)
-            })
-            .catch(err => console.error(err));
+        commit('decrement', item)
     },
     delete({commit}, item) {
-        iAxios.delete(apiRoute + "/" + item.id)
-            .then(resp => {
-                if(resp.data) {
-                    commit('delete', item)
-                }
-            })
-            .catch(err => console.error(err));
+        commit('delete', item)
     },
     destroy({commit}, item) {
-        iAxios.delete(apiRoute)
-            .then(resp => {
-                if(resp.data) {
-                    commit('destroy')
-                }
-            })
-            .catch(err => console.error(err));
+        commit('destroy')
     }
 }
 
 const mutations = {
-    set: (state, items) => state.cartItems = items,
-    add: (state, item) => (state.cartItems.push(item)),
-    increment: (state, item) => state.cartItems,
-    decrement: (state, item) => state.cartItems,
-    delete: (state, item) => (state.cartItems = state.cartItems.filter(i => i !== item)),
-    destroy: (state) => (state.cartItems = null),
+    add: (state, item) => {
+        state.cartItem = {
+            ...state.cartItem,
+            id: state.cartItem.size ? item.id +"-" + state.cartItem.size : item.id,
+            name: state.cartItem.size ? item.name +" Size: " + state.cartItem.size : item.name,
+            price: item.price,
+        }
+        state.cartItem.qty++
+        state.cartItem.priceTotal = state.cartItem.price * state.cartItem.qty
+        state.porto = state.cartItem.qty >= 3 ? 5 : 3
+
+        let arr = {[state.cartItem.id]: state.cartItem};
+        for(let key in arr) {
+            if(0 === state.cart.length) {
+                state.cart.push(arr[key])
+            } else {
+                for(let index in state.cart) {
+                    if(state.cart[index].id === arr[key].id) {
+                        state.cart[index] = arr[key]
+                    } else {
+                        state.cart.push(arr[key])
+                    }
+                }
+            }
+        }
+        console.info(state.cart);
+    },
+    setSize: (state, size) => {
+        state.cartItem.qty = 0
+        state.cartItem.size = size
+    },
+    increment: (state, item) => {
+        state.cartItem = item
+        state.cartItem.qty++
+    },
+    decrement: (state, item) => {
+        state.cartItem = item
+        state.cartItem.qty--
+    },
+    delete: (state, item) => (state.cart = state.cart.filter(i => i !== item)),
+    destroy: (state) => (state.cart = []),
 }
 
 export default {

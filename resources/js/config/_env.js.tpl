@@ -1,8 +1,7 @@
 
 const _env = {
 	url: {
-		ORIGIN: 'https://www.schokoladen-mitte.de',
-		API: 'https://test.schokoladen-mitte.de',
+		API: 'https://test.schokoladen-mitte.de/api/spa',
 	},
 }
 export default _env

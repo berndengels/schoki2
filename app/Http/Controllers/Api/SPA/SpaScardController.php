@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers\Api\SPA;
 
-use App\Models\ProductBySize;
-use App\Models\ProductSize;
+use App\Http\Requests\ApiProductRequest;
+use App\Http\Resources\SpaCartItemResource;
+use App\Http\Resources\SpaCartResource;
 use App\Models\Scard;
 use App\Models\Product;
+use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\ScardRequest;
@@ -12,6 +14,7 @@ use Gloudemans\Shoppingcart\Cart;
 use Illuminate\Http\Request\Session;
 use App\Http\Resources\CartItemResource;
 use App\Http\Resources\Payment\Stripe\PortoPrice;
+use App\Http\Controllers\Controller;
 
 /**
  * Class ScardController
@@ -33,28 +36,33 @@ class SpaScardController extends Controller
         }
         $porto = PortoPrice::getPrice($cart);
         $response = [
-            'cartItems' => CartItemResource::collection($content),
+            'cartItems' => CartItemResource::collection($content)->toArray(),
             'porto'     => $porto,
         ];
         return response()->json($response);
     }
 
-    public function add(Request $request, Product $product, Cart $cart)
+    public function add(ApiProductRequest $request, Cart $cart)
     {
-        $size = $request->input('size');
-
-        if ($size) {
-            $product->name .= " Size: $size";
-            $cartItem = new CartItemResource($product, $size);
-        } else {
-            $cartItem = new CartItemResource($product);
-        }
-
-        $response = $cart->add($cartItem->toArray($request), 1)->options = [
-            'product_id' => $product->id,
+        $validated = $request->validated();
+        $size = $validated['size'] ?? null;
+        /**
+         * @var $cartItem CartItem
+         */
+        $cartItem = $cart->add($validated);
+        $cartItem->options = [
+            'product_id' => $validated['id'],
             'size'       => $size,
         ];
-        return response()->json($response);
+        $result = [
+            'cartItem'      => new SpaCartItemResource($cartItem),
+            'content'       => $cart->content()->values(),
+            'priceTotal'    => $cart->priceTotal(2),
+            'subtotal'      => $cart->subtotal(2),
+            'tax'           => $cart->tax(2),
+        ];
+//        $cart = new SpaCartResource($cart);
+        return response()->json($result);
     }
 
     public function increment(Cart $cart, $rawId)
