@@ -27,8 +27,8 @@ class SpaProductResource extends JsonResource
             'price'         => $this->price,
             'price_netto'   => $this->price_netto,
             'hasSize'       => $this->hasSize,
-            'sizes'         => $this->sizes->toArray(),
-            'stocks'        => SpaProductStockResource::collection($this->stocks)->toArray($request),
+            'sizes'         => $this->sizes->map->name,
+//            'stocks'        => SpaProductStockResource::collection($this->stocks)->toArray($request),
             'thumb'         => $this->thumb,
         ];
     }

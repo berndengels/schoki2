@@ -14,23 +14,24 @@
                     <select
                         class="size-select no-scroll"
                         multiple
+                        :data-item="JSON.stringify(item)"
                         :size="item.sizes.length"
                         @change="setSize"
                     >
-                        <option v-for="size in item.sizes" :key="size.id" :value="size.name">
-                            {{ size.name }}
+                        <option v-for="size in item.sizes" :key="size" :value="size">
+                            {{ size }}
                         </option>
                     </select>
                 </td>
                 <td v-else><br/></td>
-                <td>{{ item.price }} €</td>
+                <td class="nowrap">{{ item.price }} €</td>
                 <td>
                     <button
-                        class="form-control btn btn-primary d-inline-block"
+                        class="btn btn-primary nowrap"
                         @click="add(item)"
                     >
                         <i class="d-inline-block float-left fas fa-shopping-cart mr-2"></i>
-                        Add <input class="inpQty" v-model="cartItem.qty" disabled/>
+                        Add <span class="ml-1" v-if="(cartItem.qty) > 0">{{ cartItem.qty }}</span>
                     </button>
                 </td>
             </tr>
@@ -45,7 +46,10 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
     name: "Products",
     props: ['products'],
-    computed: mapGetters({cartItem: 'cart/cartItem'}),
+    computed: mapGetters({
+        cart: 'cart/cart',
+        cartItem: 'cart/cartItem',
+    }),
     methods: mapActions({
         add: 'cart/add',
         setSize: 'cart/setSize'
@@ -54,18 +58,11 @@ export default {
 </script>
 
 <style lang="scss">
-.inpQty {
-    border: 0 !important;
-    height: 1.5rem;
-    width: 1.2rem;
-    line-height: 1.5rem;
-    padding: 0;
-    margin: 0 0 0 0.5rem;
-    display: inline;
-    background-color: transparent;
-    border-color: transparent;
-    color: #fff;
+/*
+button {
+    white-space: nowrap !important;
 }
+*/
 .fas {
     line-height: 1.3rem;
 }

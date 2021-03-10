@@ -7,9 +7,7 @@
                 <div class="card">
                     <div class="card-header">Order Products</div>
                     <div class="card-body">
-                        <Products :products='@json($data)' />
-                        <ShoppingCartDestroyButton />
-                        <ShoppingCart />
+                        <Shop :products='@json($data)' />
                     </div>
                 </div>
             </div>

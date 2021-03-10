@@ -3,6 +3,7 @@ window.Vue = require('vue');
 import axios from "axios";
 import store from "./store";
 import myConfig from "./config/config";
+import Shop from "./components/Shop";
 import Products from './components/Products';
 import ShoppingCart from './components/ShoppingCart';
 import ShoppingCartDestroyButton from './components/ShoppingCartDestroyButton';
@@ -26,6 +27,7 @@ const app = new Vue({
     el: '#app',
     store,
     components: {
+        Shop,
         Products ,
         ShoppingCart,
         ShoppingCartDestroyButton,

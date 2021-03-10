@@ -8,7 +8,7 @@
             <th>Preis Total</th>
             <th colspan="3">&nbsp</th>
         </tr>
-        <tr v-for="item in cart" :key="item.id">
+        <tr v-for="item in cartList" :key="item.id">
             <td>{{ item.name }}</td>
             <td>{{ item.size }}</td>
             <td>{{ item.price }} €</td>
@@ -29,7 +29,7 @@
         </tr>
         <tr>
             <td class="text-center align-middle text-light font-weight-bold p-0" colspan="8">
-                <h4 class="mt-3">Preise Total: {{ Math.round(cart.total) }} € + {{ porto }} € Porto</h4>
+                <h4 class="mt-3">Preise Total: {{ Math.round(priceTotal) }} € + {{ porto }} € Porto</h4>
             </td>
         </tr>
     </table>
@@ -41,7 +41,8 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     name: "ShoppingCart",
     computed: mapGetters({
-        cart: 'cart/cart',
+        cartList: 'cart/cartList',
+        priceTotal: 'cart/priceTotal',
         porto: 'cart/porto',
     }),
     methods: mapActions({
