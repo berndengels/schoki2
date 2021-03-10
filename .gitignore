@@ -34,3 +34,4 @@ public_html
 /database/dumps/20210116_schokoladen_test.sql
 /package-lock.json
 /resources/js/config/_env.js
+/.php_cs.cache
