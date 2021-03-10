@@ -8,7 +8,6 @@
     "/css/red.css": "/css/red.css",
     "/css/dark.css": "/css/dark.css",
     "/js/payment-stripe.js": "/js/payment-stripe.js",
-    "/vendor/calendar/js/zabuto_calendar.min.js": "/vendor/calendar/js/zabuto_calendar.min.js",
-    "/vendor/calendar/css/zabuto_calendar.min.css": "/vendor/calendar/css/zabuto_calendar.min.css",
-    "/vendor/jstree/js/jstree.min.js": "/vendor/jstree/js/jstree.min.js"
+    "/vendor/calendar/js/zabuto_calendar.js": "/vendor/calendar/js/zabuto_calendar.js",
+    "/vendor/calendar/css/zabuto_calendar.min.css": "/vendor/calendar/css/zabuto_calendar.min.css"
 }

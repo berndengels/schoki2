@@ -7,7 +7,7 @@
 @endsection
 
 @section('extra-headers')
-    <script src="{{ asset('vendor/calendar/js/zabuto_calendar.min.js') }}"></script>
+    <script src="{{ asset('vendor/calendar/js/zabuto_calendar.js') }}"></script>
 @endsection
 
 @section('header-content')
@@ -124,9 +124,9 @@
                     ;
             });
 
-            var now = new Date();
-            var year = now.getFullYear();
-            var month = now.getMonth() + 1;
+            const now = new Date(),
+                year = now.getFullYear(),
+                month = now.getMonth() + 1;
 
             $("#calendar").zabuto_calendar({
                 language: 'de',
@@ -148,7 +148,7 @@
                 },
                 legend: false, // object array, [{type: string, label: string, classname: string}]
             });
-        });
+        })();
 
     </script>
 

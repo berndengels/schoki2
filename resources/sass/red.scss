@@ -1,22 +1,4 @@
-// Fonts
-// see media queries: https://include-media.com/
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-// Variables
-@import 'variables';
-@import 'mixins';
-@import "stripe";
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import '~include-media/dist/_include-media';
-@import "~select2/src/scss/core";
-@import "~@ttskch/select2-bootstrap4-theme/src/select2-bootstrap4";
-
-//@import '~@fortawesome/fontawesome-free/css/all.css';
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import '~@fortawesome/fontawesome-free/scss/regular';
-@import '~@fortawesome/fontawesome-free/scss/solid';
-@import '~@fortawesome/fontawesome-free/scss/brands';
+@import "./bootstrap";
 
 html, body {
     height: 100vh;
